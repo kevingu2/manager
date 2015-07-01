@@ -1,9 +1,15 @@
-import xlrd as excel
+import xlrd
+from xlrd import open_workbook
+from xlutils.copy import copy
 from collections import OrderedDict
 import simplejson as json
+import xlsxwriter
+import xlwt
+import xlutils.copy
+import sys
 
 def openFile(path):
-  workBook = excel.open_workbook(path) #open file
+  workBook = open_workbook(path) #open file
   workSheet = workBook.sheet_by_name('PipelineView') # convert to spreadsheet
   info = [] # lists of dictionaries
   row_content = {}
@@ -18,5 +24,6 @@ def openFile(path):
   info.append(row_content)
   return info
 
+args = sys.argv # command line arguments
 data = []
-data = openFile('BD-PipelineViewer8 13 April.xlsm')
+data = openFile(args[1])
