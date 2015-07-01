@@ -8,6 +8,7 @@ import xlwt
 import xlutils.copy
 import sys
 import datetime
+import collections
 
 def openFile(path):
   workBook = open_workbook(path) #open file
@@ -22,21 +23,21 @@ def openFile(path):
 
   for rows in range(workSheet.nrows):
       for cols in range(workSheet.ncols):
+        test = 0
         row_content[list_of_cols[cols]] = workSheet.cell_value(rows,cols)
 
         ###############excel date conversion to string##############
         # because excel stores dates as floats, need to convert to datetime
         # and then convert that into a string
-        if list_of_cols[cols] == "RFPDate": # need to expand for other columns
-            date = row_content['RFPDate']
-            if date != 'RFPDate': # ignore first column which is just RFPDate itself
-                newDate = datetime.datetime(*xlrd.xldate_as_tuple(date, workBook.datemode)) # conert to datetime
-                date = newDate.strftime('%d/%m/%Y') #convert to string
-                #print(newDate.strftime('%d/%m/%y'))
-                row_content['RFPDate'] = date
+        # if list_of_cols[cols] == "RFPDate": # need to expand for other columns
+        #     date = row_content['RFPDate']
+        #     if date != 'RFPDate': # ignore first column which is just RFPDate itself
+        #         newDate = datetime.datetime(*xlrd.xldate_as_tuple(date, workBook.datemode)) # conert to datetime
+        #         date = newDate.strftime('%d/%m/%Y') #convert to string
+        #         #print(newDate.strftime('%d/%m/%y'))
+        #         row_content['RFPDate'] = date
 
-        info.append(row_content)
-
+        info.append(row_content.copy())
   return info
 
 args = sys.argv # command line arguments
