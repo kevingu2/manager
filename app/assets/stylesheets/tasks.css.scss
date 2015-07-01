@@ -1,0 +1,111 @@
+// Place all the styles related to the Tasks controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+body {
+
+  background-color: #333333;
+}
+
+.jumbotron {
+  padding-top: 5px;
+  padding-bottom: 55px;
+}
+
+.btn-container {
+  text-align:center;
+}
+
+.btn-left {
+  float: left;
+}
+
+.btn-right {
+  float: right;
+}
+
+.btn-center {
+  width: 90px;
+}
+
+.btn-x {
+  position:absolute;
+  top:30px;
+  left:15px;
+  padding: 0px;
+  text-align: center;
+  color: white;
+  background-color: red;
+  width: 20px;
+  height: 20px;
+  z-index: 2;
+}
+
+.btn-x:hover {
+  background-color: #CC0000 !important;
+  color: white !important;
+}
+
+.op-title {
+  text-align: center;
+  color: black;
+}
+
+.op-title-bg-left {
+  background-color: #A9A9A9;
+  border-right:1px solid white;
+}
+
+.op-title-bg-middle {
+  background-color: #A9A9A9;
+}
+
+.op-title-bg-right {
+  background-color: #A9A9A9;
+  border-left:1px solid white;
+}
+
+.task-bg-done {
+  background-image: url("done-3.png");
+  background-position: center;
+  z-index: -1;
+}
+
+.task-bg {
+  background-color: #F8F8F8;
+  padding: 10px;
+  color: black;
+  text-align: center;
+  z-index: 1;
+}
+
+.task-link:hover {
+  background-color: #F8F8F8 !important;
+}
+
+.tasks-queue {
+  padding-bottom: 25px;
+}
+
+.op-body-bg-left {
+  border-right:1px solid white;
+}
+
+.op-body-bg-right {
+  border-left:1px solid white;
+}
+
+.navbar {
+  padding-top: 10px;
+}
+
+.nav-logo {
+  float: left;
+}
+
+.active-logo {
+  background-color: #E7E7E7;
+}
+
+.top-container-task {
+  text-align: center;
+}

@@ -1,0 +1,101 @@
+<%= form_for(@oppty) do |f| %>
+  <% if @oppty.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@oppty.errors.count, "error") %> prohibited this oppty from being saved:</h2>
+
+      <ul>
+      <% @oppty.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :opptyId %><br>
+    <%= f.text_field :opptyId %>
+  </div>
+  <div class="field">
+    <%= f.label :opptyName %><br>
+    <%= f.text_field :opptyName %>
+  </div>
+  <div class="field">
+    <%= f.label :idiqCA %><br>
+    <%= f.text_field :idiqCA %>
+  </div>
+  <div class="field">
+    <%= f.label :status2 %><br>
+    <%= f.text_field :status2 %>
+  </div>
+  <div class="field">
+    <%= f.label :value %><br>
+    <%= f.text_field :value %>
+  </div>
+  <div class="field">
+    <%= f.label :pWin %><br>
+    <%= f.number_field :pWin %>
+  </div>
+  <div class="field">
+    <%= f.label :captureMgr %><br>
+    <%= f.text_field :captureMgr %>
+  </div>
+  <div class="field">
+    <%= f.label :programMgr %><br>
+    <%= f.text_field :programMgr %>
+  </div>
+  <div class="field">
+    <%= f.label :proposalMgr %><br>
+    <%= f.text_field :proposalMgr %>
+  </div>
+  <div class="field">
+    <%= f.label :sslOrg %><br>
+    <%= f.text_field :sslOrg %>
+  </div>
+  <div class="field">
+    <%= f.label :technicalLead %><br>
+    <%= f.text_field :technicalLead %>
+  </div>
+  <div class="field">
+    <%= f.label :sslArch %><br>
+    <%= f.text_field :sslArch %>
+  </div>
+  <div class="field">
+    <%= f.label :ed %><br>
+    <%= f.text_field :ed %>
+  </div>
+  <div class="field">
+    <%= f.label :on %><br>
+    <%= f.text_field :on %>
+  </div>
+  <div class="field">
+    <%= f.label :ate %><br>
+    <%= f.text_field :ate %>
+  </div>
+  <div class="field">
+    <%= f.label :slComments %><br>
+    <%= f.text_field :slComments %>
+  </div>
+  <div class="field">
+    <%= f.label :rfpDate %><br>
+    <%= f.date_select :rfpDate %>
+  </div>
+  <div class="field">
+    <%= f.label :awardDate %><br>
+    <%= f.date_select :awardDate %>
+  </div>
+  <div class="field">
+    <%= f.label :submitDate %><br>
+    <%= f.date_select :submitDate %>
+  </div>
+  <div class="field">
+    <%= f.label :valid %><br>
+    <%= f.text_field :valid %>
+  </div>
+  <div class="field">
+    <%= f.label :numWriters %><br>
+    <%= f.text_field :numWriters %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,2 @@
+module OpptiesHelper
+end

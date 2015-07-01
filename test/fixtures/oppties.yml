@@ -1,0 +1,47 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  opptyId: MyString
+  opptyName: MyString
+  idiqCA: MyString
+  status2: MyString
+  value: 
+  pWin: 1
+  captureMgr: MyString
+  programMgr: MyString
+  proposalMgr: MyString
+  sslOrg: MyString
+  technicalLead: MyString
+  sslArch: MyString
+  ed: MyString
+  'on': MyString
+  ate: MyString
+  slComments: MyString
+  rfpDate: 2015-06-30
+  awardDate: 2015-06-30
+  submitDate: 2015-06-30
+  valid: 
+  numWriters: 
+
+two:
+  opptyId: MyString
+  opptyName: MyString
+  idiqCA: MyString
+  status2: MyString
+  value: 
+  pWin: 1
+  captureMgr: MyString
+  programMgr: MyString
+  proposalMgr: MyString
+  sslOrg: MyString
+  technicalLead: MyString
+  sslArch: MyString
+  ed: MyString
+  'on': MyString
+  ate: MyString
+  slComments: MyString
+  rfpDate: 2015-06-30
+  awardDate: 2015-06-30
+  submitDate: 2015-06-30
+  valid: 
+  numWriters: 

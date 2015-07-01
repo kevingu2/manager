@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Oppty:</strong>
+  <%= @user_oppty.oppty %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @user_oppty.user %>
+</p>
+
+<%= link_to 'Edit', edit_user_oppty_path(@user_oppty) %> |
+<%= link_to 'Back', user_oppties_path %>

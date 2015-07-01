@@ -1,0 +1,1 @@
+json.extract! @oppty, :id, :opptyId, :opptyName, :idiqCA, :status2, :value, :pWin, :captureMgr, :programMgr, :proposalMgr, :sslOrg, :technicalLead, :sslArch, :ed, :on, :ate, :slComments, :rfpDate, :awardDate, :submitDate, :valid, :numWriters, :created_at, :updated_at
