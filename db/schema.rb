@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150630214942) do
+ActiveRecord::Schema.define(version: 20150701223526) do
 
   create_table "histories", force: true do |t|
     t.string   "opptyName"
@@ -45,10 +45,10 @@ ActiveRecord::Schema.define(version: 20150630214942) do
     t.date     "rfpDate"
     t.date     "awardDate"
     t.date     "submitDate"
-    t.integer  "valid"
     t.integer  "numWriters"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "done",          default: false
   end
 
   create_table "user_oppties", force: true do |t|
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 20150630214942) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "status"
   end
 
   add_index "user_oppties", ["oppty_id"], name: "index_user_oppties_on_oppty_id"

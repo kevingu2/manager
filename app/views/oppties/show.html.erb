@@ -96,14 +96,15 @@
 </p>
 
 <p>
-  <strong>Valid:</strong>
-  <%= @oppty.valid %>
-</p>
-
-<p>
   <strong>Numwriters:</strong>
   <%= @oppty.numWriters %>
 </p>
 
 <%= link_to 'Edit', edit_oppty_path(@oppty) %> |
-<%= link_to 'Back', oppties_path %>
+<%= link_to 'Back', url_for(:back) %>
+<%if session[:role]=="writer" %>
+    <%= button_to 'Add', user_oppties_path(oppty_id: @oppty.id) %>
+<%end%>
+<%if session[:role]=="manager" %>
+    <%= button_to 'Assign', user_oppties_path(oppty_id: @oppty.id) %>
+<%end%>

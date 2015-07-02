@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'invalid_entry/index'
+
+  get 'allocated_tasks/index'
+
   get 'statistics/index'
 
   get 'upload_crm/index'

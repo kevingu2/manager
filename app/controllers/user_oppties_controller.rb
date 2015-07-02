@@ -1,4 +1,5 @@
 class UserOpptiesController < ApplicationController
+  before_action :set_user, only: [:create]
   before_action :set_user_oppty, only: [:show, :edit, :update, :destroy]
 
   # GET /user_oppties
@@ -24,8 +25,8 @@ class UserOpptiesController < ApplicationController
   # POST /user_oppties
   # POST /user_oppties.json
   def create
-    @user_oppty = UserOppty.new(user_oppty_params)
-
+    oppty=Oppty.find(params[:oppty_id])
+    @user_oppty=@user.add_oppty(oppty.id)
     respond_to do |format|
       if @user_oppty.save
         format.html { redirect_to @user_oppty, notice: 'User oppty was successfully created.' }
@@ -71,4 +72,9 @@ class UserOpptiesController < ApplicationController
     def user_oppty_params
       params.require(:user_oppty).permit(:oppty_id, :user_id)
     end
+  def set_user
+    if session.has_key?(:user_id)
+      @user = User.find(session[:user_id])
+    end
+  end
 end

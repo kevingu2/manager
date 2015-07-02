@@ -6,8 +6,25 @@ class ApplicationController < ActionController::Base
 
   protected
   def authorize
+    puts "AUTHORIZE"
+    puts "Role: "+session[:role]
     unless User.find_by(id: session[:user_id])
       redirect_to sessions_new_path, notice: "Please log in"
     end
+    writer=['tasks']
+    manager=['allocated_tasks', 'invalid_data', 'upload_crm', 'statistics']
+    if session[:role]=="writer"
+      puts "Controller Name: "+params[:controller]
+      if manager.include? params[:controller]
+        redirect_to invalid_entry_index_path, notice: "No Access"
+      end
+    end
+    if session[:role]=="manager"
+      if writer.include? params[:controller]
+        redirect_to invalid_entry_index_path, notice: "No Access"
+      end
+    end
+
   end
+
 end

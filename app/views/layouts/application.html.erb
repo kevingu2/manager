@@ -26,17 +26,22 @@
       <div id="navbar" class="navbar-collapse collapse">
         <img class="nav-logo" src="/assets/saic-logo-social-small-grey.png" height="50" width="108">
         <ul class="nav navbar-nav">
-          <li class="active"><a href=<%= tasks_index_path%>>Assigned Tasks</a></li>
+          <%if session[:role]=="writer" %>
+            <li><a href=<%= tasks_index_path%>>Assigned Tasks</a></li>
+          <%end%>
+          <%if session[:role]=="manager" %>
+              <li ><a href=<%= allocated_tasks_index_path%>>Allocated Tasks</a></li>
+              <li><a href=<%= invalid_data_index_path%>>Invalid Data</a></li>
+              <li><a href=<%= upload_crm_index_path%>>Upload CRM</a></li>
+              <li><a href=<%= statistics_index_path%>>Statistics</a></li>
+          <%end%>
           <li><a href=<%= browse_index_path%> >Browse</a></li>
-          <li><a href=<%= invalid_data_index_path%>>Invalid Data</a></li>
           <li><a href=<%= history_index_path%>>History</a></li>
-          <li><a href=<%= upload_crm_index_path%>>Upload CRM</a></li>
-          <li><a href=<%= statistics_index_path%>>Statistics</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li ><a>Welcome <%=session[:username] %></a></li>
           <li><a href="./notifications.html"><img src="/assets/notif-bell-2.png" height="30" width="30"></a></li>
-          <li><a href="url"><%= link_to 'Logout', sessions_destroy_path %></a><li>
+          <li><a href=<%=sessions_destroy_path %>>Logout</a><li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>

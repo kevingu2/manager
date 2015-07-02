@@ -4,7 +4,9 @@
 </head>
 
 <body>
-
+<% @oppties.each do |o|%>
+    <a href="url"><%= link_to o.oppty.opptyName, o.oppty %></a><br>
+<% end%>
 <div class="container tasks-queue">
   <!-- Example row of columns -->
   <div class="row">
