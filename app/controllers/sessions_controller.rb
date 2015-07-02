@@ -14,8 +14,9 @@ class SessionsController < ApplicationController
       if user.role=="writer"
         redirect_to tasks_index_path
       end
-      elsif user.role=="manager"
-        redirect_to tasks_index_path
+      if user.role=="manager"
+        redirect_to allocated_tasks_index_path
+      end
     else
       redirect_to sessions_new_path, notice: "Invalid user/password combination" end
   end

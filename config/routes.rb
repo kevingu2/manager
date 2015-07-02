@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   get 'upload_crm/index'
 
+  post 'upload_crm/upload'
+
   get 'history/index'
 
   get 'invalid_data/index'
@@ -20,6 +22,7 @@ Rails.application.routes.draw do
   get 'sessions/create'
 
   get 'sessions/destroy'
+
 
   resources :histories
 

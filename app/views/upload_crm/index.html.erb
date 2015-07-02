@@ -1,2 +1,20 @@
-<h1>UploadCrm#index</h1>
-<p>Find me in app/views/upload_crm/index.html.erb</p>
+<form id="upload" method="post" action="upload" enctype="multipart/form-data">
+  <div id="drop">
+    Drop Here
+
+    <a>Browse</a>
+    <input type="file" id="upl" name="upl" multiple />
+  </div>
+
+  <ul>
+    <!-- The file uploads will be shown here -->
+  </ul>
+
+</form>
+
+<!-- JavaScript Includes -->
+<%= javascript_include_tag('jquery.knob.js') %>
+<%= javascript_include_tag('jquery.ui.widget.js') %>
+<%= javascript_include_tag('jquery.iframe-transport.js') %>
+<%= javascript_include_tag('jquery.fileupload.js') %>
+<%= javascript_include_tag('upload.js') %>

@@ -106,5 +106,5 @@
     <%= button_to 'Add', user_oppties_path(oppty_id: @oppty.id) %>
 <%end%>
 <%if session[:role]=="manager" %>
-    <%= button_to 'Assign', user_oppties_path(oppty_id: @oppty.id) %>
+    <%= button_to 'Assign', nil %>
 <%end%>

@@ -26,15 +26,19 @@ class UserOpptiesController < ApplicationController
   # POST /user_oppties.json
   def create
     oppty=Oppty.find(params[:oppty_id])
-    @user_oppty=@user.add_oppty(oppty.id)
-    respond_to do |format|
-      if @user_oppty.save
-        format.html { redirect_to @user_oppty, notice: 'User oppty was successfully created.' }
-        format.json { render :show, status: :created, location: @user_oppty }
-      else
-        format.html { render :new }
-        format.json { render json: @user_oppty.errors, status: :unprocessable_entity }
+    begin
+      @user_oppty=@user.add_oppty(oppty.id)
+      respond_to do |format|
+        if @user_oppty.save
+          format.html { redirect_to @user_oppty, notice: 'User oppty was successfully created.' }
+          format.json { render :show, status: :created, location: @user_oppty }
+        else
+          format.html { render :new }
+          format.json { render json: @user_oppty.errors, status: :unprocessable_entity }
+        end
       end
+    rescue => e
+      redirect_to invalid_entry_index_path, notice: e.message
     end
   end
 
