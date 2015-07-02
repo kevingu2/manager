@@ -1,3 +1,13 @@
+######################################################################
+
+#TO DO:
+# FIX:
+#   the date format
+#   search by keywords that aren't strings
+
+#####################################################################
+
+
 '''
 excelToCSV.py
 This file converts an excel file to a csv file
@@ -11,8 +21,8 @@ import numpy as np
 def csvFromExcel(path):
   #opening the excel file
   workbook = excel.open_workbook(path)
-  #using sheet index 1 (second sheet in this case)
-  sheet = workbook.sheet_by_index(0)
+  #using PipelineView sheet
+  sheet = workbook.sheet_by_name('PipelineView')
   #openning the csv file to move/write the data from excel to csv file
   csv_file = open('myCSVFile.csv', 'w')
   write_data = csv.writer(csv_file, quoting = csv.QUOTE_ALL)
@@ -35,25 +45,32 @@ def csvFromExcel(path):
   #returning the csv file
   return csv_file
 
-
+#saving the names of all columns in a list
 def find_list(path):
+  #openning the excel file
   workbook = excel.open_workbook(path)
-  sheet = workbook.sheet_by_index(1)
+  #using PipelineView sheet
+  sheet = workbook.sheet_by_name('PipelineView')
   #list of the name of all columns
   list_of_cols = []
   #getting the first row's data which is the name of the columns
   for cols in range(sheet.ncols):
     list_of_cols.append(sheet.cell_value(0,cols))
-   
+  #returning the list
   return list_of_cols
 
-
+#searching by a keyword
 def search_by_keyword(keyword, csv_file):
+  #openning the csv file
   with open('myCSVFile.csv', 'rb') as csvFile:
+    #get the content
     content = csv.reader(csvFile, delimiter=',')
+    #searching for the keyword in csv file
     for row in content:
+      #if the keyword is found, return the data for that row
       if keyword in row:
         return row
+    #if the keyword is not found, print out an error
     print str(keyword) + " not found!"      
 
 
