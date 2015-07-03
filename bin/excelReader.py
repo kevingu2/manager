@@ -9,7 +9,9 @@ import xlutils.copy
 import sys
 import datetime
 import collections
-
+########################################
+# USAGE: python excelReader.py file.xlsm
+########################################
 def openFile(path):
   workBook = open_workbook(path) #open file
   workSheet = workBook.sheet_by_name('PipelineView') # convert to spreadsheet
@@ -42,9 +44,32 @@ def openFile(path):
 
 args = sys.argv # command line arguments
 data = []
-data = openFile(args[1])
-print(data) # print for kevin :D
+#data = openFile(args[1])
+data = openFile('BD-PipelineViewer8 13 April.xlsm')
 
+def maxValue(data):
+    return max(data)
+
+def avgValue(data):
+    return sum(data) / len(data)
+
+def lowValue(data):
+    return min(data)
+
+def getColumn(data, columnName):
+    list = []
+    for d in data:
+        if columnName in d:
+            if d[columnName] != columnName:
+                list.append(d[columnName])
+    return list
+
+####################################################
+# example usage of how to get statistics
+# print maxValue(getColumn(data, 'Total Value $M'))
+####################################################
+
+#print(data) # print for kevin :D
 #below is stuff to make graph for RFPDate
 #import pickle
-#pickle.dump(data, open("graph.json", "wb"))
+#pickle.dump(rfp, open("graph.json", "wb"))
