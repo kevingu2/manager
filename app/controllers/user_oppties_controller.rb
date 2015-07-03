@@ -26,8 +26,11 @@ class UserOpptiesController < ApplicationController
   # POST /user_oppties.json
   def create
     oppty=Oppty.find(params[:oppty_id])
-    begin
-      @user_oppty=@user.add_oppty(oppty.id)
+    @user_oppty=@user.add_oppty(@user.id, oppty.id)
+    if !@user_oppty
+      redirect_to invalid_entry_index_path, notice: "Already Added Opportunity"
+      return
+    end
       respond_to do |format|
         if @user_oppty.save
           format.html { redirect_to @user_oppty, notice: 'User oppty was successfully created.' }
@@ -37,9 +40,6 @@ class UserOpptiesController < ApplicationController
           format.json { render json: @user_oppty.errors, status: :unprocessable_entity }
         end
       end
-    rescue => e
-      redirect_to invalid_entry_index_path, notice: e.message
-    end
   end
 
   # PATCH/PUT /user_oppties/1

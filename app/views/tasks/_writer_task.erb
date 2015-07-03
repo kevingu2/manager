@@ -1,0 +1,28 @@
+<li><a style="padding:0px" class="btn-x" href="#delete" role="button">X</a>
+  <div class="task-bg"> <h3><b><%=@current_task.opptyName%></b></h3>
+    <p>Due in <%= (@current_task.proposalDueDate-Date.today).to_i%> days</p>
+    <p>Priority: (HIGH,MED,LOW)</p>
+    <form action ="/tasks/updateStatus" method="post">
+      <input name="_method" type="hidden" value="put" />
+      <input hidden=true type="integer" name="status" value=2>
+      <input hidden=true type="integer" name="id" value=<%= @current_task.id%>>
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+      <button type="submit">to do</button>
+    </form>
+    <form action ="/tasks/updateStatus" method="post">
+      <input name="_method" type="hidden" value="put" />
+      <input hidden=true type="integer" name="status" value=1>
+      <input hidden=true type="integer" name="id" value=<%= @current_task.id%>>
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+      <button type="submit">doing</button>
+    </form>
+    <form action ="/tasks/updateStatus" method="post">
+      <input name="_method" type="hidden" value="put" />
+      <input hidden=true type="integer" name="status" value=0>
+      <input hidden=true type="integer" name="id" value=<%= @current_task.id%>>
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+      <button type="submit">do</button>
+    </form>
+
+  </div>
+</li>

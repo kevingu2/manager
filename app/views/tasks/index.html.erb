@@ -4,9 +4,22 @@
 </head>
 
 <body>
-<% @oppties.each do |o|%>
-    <a href="url"><%= link_to o.oppty.opptyName, o.oppty %></a><br>
+
+To Do
+<% @to_do.each do |o|%>
+    <a href="url"><%= link_to o.oppty.opptyName, o.oppty %></a>
 <% end%>
+<br>
+Doing
+<% @doing.each do |o|%>
+    <a href="url"><%= link_to o.oppty.opptyName, o.oppty %></a>
+<% end%>
+<br>
+Done
+<% @done.each do |o|%>
+    <a href="url"><%= link_to o.oppty.opptyName, o.oppty %></a>
+<% end%>
+
 <div class="container tasks-queue">
   <!-- Example row of columns -->
   <div class="row">
@@ -21,74 +34,102 @@
     </div>
     <div class="row-2">
       <div class="col-md-4 op-body-bg-left">
-        <ul class="nav">
-          <li><a style="padding:0px" class="btn-x" href="#delete" role="button">X</a>
-            <a class="task-link" href="./single-opportunity.html">
-              <div class="task-bg"> <h3><b>Task Title</b></h3><p>Due in (#) days</p><p>Priority: (HIGH,MED,LOW)</p>
-              </div></a>
-          </li>
-          <li><a style="padding:0px" class="btn-x" href="#delete" role="button">X</a>
-            <a class="task-link" href="./single-opportunity.html">
-              <div class="task-bg"> <h3><b>Task Title</b></h3><p>Due in (#) days</p><p>Priority: (HIGH,MED,LOW)</p>
-              </div></a>
-          </li>
-          <li><a style="padding:0px" class="btn-x" href="#delete" role="button">X</a>
-            <a class="task-link" href="./single-opportunity.html">
-              <div class="task-bg"> <h3><b>Task Title</b></h3><p>Due in (#) days</p><p>Priority: (HIGH,MED,LOW)</p>
-              </div></a>
-          </li>
-          <li><a style="padding:0px" class="btn-x" href="#delete" role="button">X</a>
-            <a class="task-link" href="./single-opportunity.html">
-              <div class="task-bg"> <h3><b>Task Title</b></h3><p>Due in (#) days</p><p>Priority: (HIGH,MED,LOW)</p>
-              </div></a>
-          </li>
-        </ul>
-      </div>
-      <div class="col-md-4 op-body-bg-middle">
-        <ul class="nav">
-          <li><a style="padding:0px" class="btn-x" href="#delete" role="button">X</a>
-            <a class="task-link" href="./single-opportunity.html">
-              <div class="task-bg"> <h3><b>Task Title</b></h3><p>Due in (#) days</p><p>Priority: (HIGH,MED,LOW)</p>
-              </div></a>
-          </li>
-          <li><a style="padding:0px" class="btn-x" href="#delete" role="button">X</a>
-            <a class="task-link" href="./single-opportunity.html">
-              <div class="task-bg"> <h3><b>Task Title</b></h3><p>Due in (#) days</p><p>Priority: (HIGH,MED,LOW)</p>
-              </div></a>
-          </li>
-          <li><a style="padding:0px" class="btn-x" href="#delete" role="button">X</a>
-            <a class="task-link" href="./single-opportunity.html">
-              <div class="task-bg"> <h3><b>Task Title</b></h3><p>Due in (#) days</p><p>Priority: (HIGH,MED,LOW)</p>
-              </div></a>
-          </li>
-        </ul>
-      </div>
-      <div class="col-md-4 op-body-bg-right">
-        <ul class="nav">
-          <li><a style="padding:0px" class="btn-x" href="#delete" role="button">X</a>
-            <a class="task-link" href="./single-opportunity.html">
-              <div class="task-bg task-bg-done"> <h3><b>Task Title</b></h3><p>Due in (#) days</p><p>Priority: (HIGH,MED,LOW)</p>
-              </div></a>
-          </li>
-          <li><a style="padding:0px" class="btn-x" href="#delete" role="button">X</a>
-            <a class="task-link" href="./single-opportunity.html">
-              <div class="task-bg-done task-bg"> <h3><b>Task Title</b></h3><p>Due in (#) days</p><p>Priority: (HIGH,MED,LOW)</p>
-              </div></a>
-          </li>
-          <li><a style="padding:0px" class="btn-x" href="#delete" role="button">X</a>
-            <a class="task-link" href="./single-opportunity.html">
-              <div class="task-bg task-bg-done"> <h3><b>Task Title</b></h3><p>Due in (#) days</p><p>Priority: (HIGH,MED,LOW)</p>
-              </div></a>
-          </li>
-          <li><a style="padding:0px" class="btn-x" href="#delete" role="button">X</a>
-            <a class="task-link" href="./single-opportunity.html">
-              <div class="task-bg task-bg-done"> <h3><b>Task Title</b></h3><p>Due in (#) days</p><p>Priority: (HIGH,MED,LOW)</p>
-              </div></a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
+        <!--<ul class="nav"> -->
+          <% @to_do.each do |o|%>
+              <li><a style="padding:0px" class="btn-x" href="/tasks/deleteOpportunity?id="+<%= o.id%> role="button">X</a>
+                <div class="task-bg"> <h3><b><%=o.oppty.opptyName%></b></h3>
+                  <p>Due in <%= (o.oppty.proposalDueDate-Date.today).to_i%> days</p>
+                  <p>Priority: (HIGH,MED,LOW)</p>
+                  <form action ="/tasks/updateStatus" method="post">
+                  <input name="_method" type="hidden" value="put" />
+                  <input hidden=true type="integer" name="status" value=2>
+                  <input hidden=true type="integer" name="id" value=<%= o.id%>>
+                  <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                  <button type="submit">todo</button>
+                  </form>
+                  <form action ="/tasks/updateStatus" method="post">
+                    <input name="_method" type="hidden" value="put" />
+                    <input hidden=true type="integer" name="status" value=1>
+                    <input hidden=true type="integer" name="id" value=<%= o.id%>>
+                    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                    <button type="submit">doing</button>
+                  </form>
+                  <form action ="/tasks/updateStatus" method="post">
+                    <input name="_method" type="hidden" value="put" />
+                    <input hidden=true type="integer" name="status" value=0>
+                    <input hidden=true type="integer" name="id" value=<%= o.id%>>
+                    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                    <button type="submit">done</button>
+                  </form>
+                </div>
+              </li>
+          <% end%>
+        <!--</ul>-->
+     </div>
+     <div class="col-md-4 op-body-bg-middle">
+         <% @doing.each do |o|%>
+             <li><a style="padding:0px" class="btn-x" href=<%="/tasks/deleteOpportunity?id="+ o.id.to_s%>  role="button">X</a>
+               <div class="task-bg"> <h3><b><%=o.oppty.opptyName%></b></h3>
+                 <p>Due in <%= (o.oppty.proposalDueDate-Date.today).to_i%> days</p>
+                 <p>Priority: (HIGH,MED,LOW)</p>
+                 <form action ="/tasks/updateStatus" method="post">
+                   <input name="_method" type="hidden" value="put" />
+                   <input hidden=true type="integer" name="status" value=2>
+                   <input hidden=true type="integer" name="id" value=<%= o.id%>>
+                   <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                   <button type="submit">todo</button>
+                 </form>
+                 <form action ="/tasks/updateStatus" method="post">
+                   <input name="_method" type="hidden" value="put" />
+                   <input hidden=true type="integer" name="status" value=1>
+                   <input hidden=true type="integer" name="id" value=<%= o.id%>>
+                   <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                   <button type="submit">doing</button>
+                 </form>
+                 <form action ="/tasks/updateStatus" method="post">
+                   <input name="_method" type="hidden" value="put" />
+                   <input hidden=true type="integer" name="status" value=0>
+                   <input hidden=true type="integer" name="id" value=<%= o.id%>>
+                   <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                   <button type="submit">done</button>
+                 </form>
+               </div>
+             </li>
+         <% end%>
+     </div>
+     <div class="col-md-4 op-body-bg-right">
+         <% @doing.each do |o|%>
+             <li><a style="padding:0px" class="btn-x" href="/tasks/deleteOpportunity" role="button">X</a>
+               <div > <h3><b><%=o.oppty.opptyName%></b></h3>
+                 <p>Due in <%= (o.oppty.proposalDueDate-Date.today).to_i%> days</p>
+                 <p>Priority: (HIGH,MED,LOW)</p>
+                 <form action ="/tasks/updateStatus" method="post">
+                   <input name="_method" type="hidden" value="put" />
+                   <input hidden=true type="integer" name="status" value=2>
+                   <input hidden=true type="integer" name="id" value=<%= o.id%>>
+                   <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                   <button type="submit">todo</button>
+                 </form>
+                 <form action ="/tasks/updateStatus" method="post">
+                   <input name="_method" type="hidden" value="put" />
+                   <input hidden=true type="integer" name="status" value=1>
+                   <input hidden=true type="integer" name="id" value=<%= o.id%>>
+                   <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                   <button type="submit">doing</button>
+                 </form>
+                 <form action ="/tasks/updateStatus" method="post">
+                   <input name="_method" type="hidden" value="put" />
+                   <input hidden=true type="integer" name="status" value=0>
+                   <input hidden=true type="integer" name="id" value=<%= o.id%>>
+                   <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                   <button type="submit">done</button>
+                 </form>
+               </div>
+             </li>
+         <% end%>
+     </div>
+   </div>
+ </div>
 </div>
 </body>
 </html>

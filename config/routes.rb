@@ -9,6 +9,10 @@ Rails.application.routes.draw do
 
   post 'upload_crm/upload'
 
+  put 'tasks/updateStatus'
+
+  get 'tasks/deleteOpportunity'
+
   get 'history/index'
 
   get 'invalid_data/index'
