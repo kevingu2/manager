@@ -1,3 +1,4 @@
 <% @oppties.each do |o|%>
-    <a href="url"><%= link_to o.opptyName, o %></a><br>
+    <a href="url"><%= link_to o.opptyName+' - '+o.proposalDueDate.to_s, o %></a><br>
+    <br>
 <% end%>

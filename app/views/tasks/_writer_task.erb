@@ -1,6 +1,6 @@
 <ul class="nav">
 <li><a style="padding: 0px" class="btn-x" href=<%="/tasks/deleteOpportunity?id="+ @current_task.id.to_s%>  role="button">X</a>
-  <a class="task-link" href=<%= oppties_url+'/'+@current_task.oppty.id.to_s %> />
+  <!--<a class="task-link" href=<%= oppties_url+'/'+@current_task.oppty.id.to_s %> />-->
   <div class="task-bg"> <h3><b><%=@current_task.oppty.opptyName%></b></h3>
     <p>Due in <%= (@current_task.oppty.proposalDueDate-Date.today).to_i%> days</p>
     <p>Priority: (HIGH,MED,LOW)</p>

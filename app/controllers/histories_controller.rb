@@ -1,11 +1,11 @@
 class HistoriesController < ApplicationController
   before_action :set_history, only: [:show, :edit, :update, :destroy]
-  before_action :set_user, only: [:create]
+  before_action :set_user, only: [:create, :index]
 
   # GET /histories
   # GET /histories.json
   def index
-    @histories = History.all
+    @histories = History.where(user_id: @user.id)
   end
 
   # GET /histories/1
@@ -27,9 +27,13 @@ class HistoriesController < ApplicationController
   def create
     oppty=Oppty.find(params[:oppty_id])
     @history=@user.add_history(@user.id, oppty.id)
+    if !@history
+      redirect_to invalid_entry_index_path, notice: "Already Added History"
+      return
+    end
     respond_to do |format|
       if @history.save
-        format.html { redirect_to @history, notice: 'History was successfully created.' }
+        format.html { redirect_to histories_path, notice: 'History was successfully created.' }
         format.json { render :show, status: :created, location: @history }
       else
         format.html { render :new }

@@ -11,11 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150702213248) do
+ActiveRecord::Schema.define(version: 20150706220322) do
 
   create_table "histories", force: true do |t|
-    t.string   "opptyName"
-    t.string   "opptyId"
     t.integer  "oppty_id"
     t.integer  "user_id"
     t.datetime "created_at"
