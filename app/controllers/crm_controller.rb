@@ -1,9 +1,6 @@
-class UploadCrmController < ApplicationController
+class CrmController < ApplicationController
+  CRM_PATH = File.join(Rails.root, "public", "uploads")
   def index
-    #Code for running python script
-    #test=`python Rails.root.join('bin','test.py')`
-    #puts "TEST Python script"
-    #puts test
   end
 
   def upload
@@ -12,9 +9,12 @@ class UploadCrmController < ApplicationController
       file.write(uploaded_io.read)
     end
     #test=`python Rails.root.join('bin','test.py')`
-    #puts "TEST Python script"
     #puts test
     redirect_to invalid_entry_index_path, notice: "File uploaded"
+  end
+
+  def download
+    send_file CRM_PATH, :filename =>'test.txt', :type=>"application/txt", :x_sendfile=>true
   end
 
 end

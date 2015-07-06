@@ -5,9 +5,11 @@ Rails.application.routes.draw do
 
   get 'statistics/index'
 
-  get 'upload_crm/index'
+  get 'crm/index'
 
-  post 'upload_crm/upload'
+  post 'crm/upload'
+
+  get 'crm/download'
 
   put 'tasks/updateStatus'
 
