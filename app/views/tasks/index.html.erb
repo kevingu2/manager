@@ -19,12 +19,10 @@
     </div>
     <div class="row-2">
       <div class="col-md-4 op-body-bg-left">
-        <!--<ul class="nav"> -->
           <% @to_do.each do |o|%>
             <% @current_task=o %>
             <%= render partial: "writer_task" %>
           <% end%>
-        <!--</ul>-->
      </div>
      <div class="col-md-4 op-body-bg-middle">
          <% @doing.each do |o|%>

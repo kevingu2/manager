@@ -25,6 +25,7 @@ class SessionsController < ApplicationController
     session[:user_id] = nil
     session[:username]=nil
     session[:role]=nil
+    session[:remember_me]=nil
     redirect_to sessions_new_path, notice: "Logged out"
   end
 end
