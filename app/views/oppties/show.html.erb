@@ -23,8 +23,8 @@
     <p><b>ATE:</b> <%= @oppty.ate%></p>
     <p><b>SL Comments:</b> <%= @oppty.slComments%></p>
     <p>
-    <div class="btn-container">
-      <a class="btn btn-lg btn-primary btn-left" href=<%=url_for(:back)%> role="button">Cancel</a>
+    <div class="btn-container" style="margin:20px">
+      <a class="btn btn-lg btn-primary btn-left" href=<%=url_for(:back)%> role="button" style="color:white">Cancel</a>
       <%if session[:role]=="writer" %>
         <form method="post" action= <%=user_oppties_path(oppty_id: @oppty.id)%> >
             <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
@@ -32,8 +32,8 @@
         </form>
       <%end%>
       <%if session[:role]=="manager" %>
-          <a class="btn btn-lg btn-primary btn-center" href=<%= edit_oppty_path(@oppty)%>  role="button">Edit</a>
-          <a class="btn btn-lg btn-primary btn-right" role="button">Assign</a>
+          <a class="btn btn-lg btn-primary btn-center" href=<%= edit_oppty_path(@oppty)%>  role="button" style="color:white">Edit</a>
+          <a class="btn btn-lg btn-primary btn-right" role="button" style="color:white">Assign</a>
       <%end%>
     </div>
     </p>

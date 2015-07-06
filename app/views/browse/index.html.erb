@@ -1,3 +1,28 @@
-<% @oppties.each do |o|%>
-    <a href="url"><%= link_to o.opptyName, o %></a><br>
-<% end%>
+<div class="jumbotron">
+<div class="upper-search-box">
+	<div class="inner-search-bar">
+		<form method="get" action="..."> 
+			<table cellpadding="0px" cellspacing="0px"> 
+			<tr> 
+			<td style="border-style:solid none solid solid;border-color:#4B7B9F;border-width:1px; font-size:24px;">
+			<input type="text" placeholder="Search" name="search_query" style="width:1000px; border:0px solid; height:36px; padding:0px 0px; position:relative;"> 
+			</td>
+			<td> 
+				<input class="btn-search" type="image" src="/assets/search.png" alt="Submit Search">
+			</td>
+			</tr>
+			</table>
+		</form>		
+	</div>		
+<br>
+<table class="browse-bg">
+	<% @oppties.each do |o|%>
+    	<tr>
+    		<td><h2><%= link_to o.opptyName, o %></h2></td>
+  		</tr>
+  		<tr>
+  			<td>o.opptyName<td>
+  		<tr>		
+	<% end%>
+</table>
+</div>
