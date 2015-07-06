@@ -9,6 +9,7 @@ import xlutils.copy
 import sys
 import datetime
 import collections
+import json
 ########################################
 # USAGE: python excelReader.py file.xlsm
 ########################################
@@ -24,10 +25,13 @@ def openFile(path):
     list_of_cols.append(workSheet.cell_value(0, cols))
 
   for rows in range(workSheet.nrows):
-      info = []
-      for cols in range(workSheet.ncols):
+      #info = []
+    row_content = {}
+    for cols in range(workSheet.ncols):
         test = 0
         value = workSheet.cell_value(rows,cols)
+        if list_of_cols[cols] == value:
+            continue
         if not isinstance(value, float):
             value = value.encode('utf8')
         row_content[list_of_cols[cols].encode('utf8')] = value
@@ -43,10 +47,10 @@ def openFile(path):
         #         #print(newDate.strftime('%d/%m/%y'))
         #         row_content['RFPDate'] = date
 
-        info.append(row_content.copy())
+    info.append(row_content.copy())
   return info
 
 args = sys.argv # command line arguments
 data = []
 data = openFile(args[1])
-print data
+print json.dumps(data, ensure_ascii=True)
