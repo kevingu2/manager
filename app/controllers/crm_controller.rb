@@ -8,8 +8,9 @@ class CrmController < ApplicationController
     File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
       file.write(uploaded_io.read)
     end
-    #test=`python Rails.root.join('bin','test.py')`
-    #puts test
+    fileName = uploaded_io.original_filename.to_s
+    test= `python bin/excelReader.py "public/uploads/#{fileName}"`
+    Oppties.create(test)
     redirect_to invalid_entry_index_path, notice: "File uploaded"
   end
 

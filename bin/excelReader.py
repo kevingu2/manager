@@ -24,9 +24,13 @@ def openFile(path):
     list_of_cols.append(workSheet.cell_value(0, cols))
 
   for rows in range(workSheet.nrows):
+      info = []
       for cols in range(workSheet.ncols):
         test = 0
-        row_content[list_of_cols[cols]] = workSheet.cell_value(rows,cols)
+        value = workSheet.cell_value(rows,cols)
+        if not isinstance(value, float):
+            value = value.encode('utf8')
+        row_content[list_of_cols[cols].encode('utf8')] = value
 
         ###############excel date conversion to string##############
         # because excel stores dates as floats, need to convert to datetime
@@ -44,32 +48,5 @@ def openFile(path):
 
 args = sys.argv # command line arguments
 data = []
-#data = openFile(args[1])
-data = openFile('BD-PipelineViewer8 13 April.xlsm')
-
-def maxValue(data):
-    return max(data)
-
-def avgValue(data):
-    return sum(data) / len(data)
-
-def lowValue(data):
-    return min(data)
-
-def getColumn(data, columnName):
-    list = []
-    for d in data:
-        if columnName in d:
-            if d[columnName] != columnName:
-                list.append(d[columnName])
-    return list
-
-####################################################
-# example usage of how to get statistics
-# print maxValue(getColumn(data, 'Total Value $M'))
-####################################################
-
-#print(data) # print for kevin :D
-#below is stuff to make graph for RFPDate
-#import pickle
-#pickle.dump(rfp, open("graph.json", "wb"))
+data = openFile(args[1])
+print data
