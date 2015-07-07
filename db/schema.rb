@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20150706220322) do
-=======
-ActiveRecord::Schema.define(version: 20150706183808) do
->>>>>>> 14f4c802d0e131db7d249dc65e99b854a7d1b89d
+ActiveRecord::Schema.define(version: 20150707175336) do
 
   create_table "histories", force: true do |t|
     t.integer  "oppty_id"
@@ -59,7 +55,7 @@ ActiveRecord::Schema.define(version: 20150706183808) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "status",     default: 2
+    t.integer  "status"
   end
 
   add_index "user_oppties", ["oppty_id"], name: "index_user_oppties_on_oppty_id"
@@ -71,7 +67,6 @@ ActiveRecord::Schema.define(version: 20150706183808) do
     t.string   "role"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "remember_digest"
   end
 
 end
