@@ -36,6 +36,10 @@ Rails.application.configure do
   config.assets.precompile += %w( jquery.iframe-transport.js )
   config.assets.precompile += %w( jquery.fileupload.js)
   config.assets.precompile += %w( upload.js)
+  config.assets.precompile += %w( amcharts.js)
+  config.assets.precompile += %w( serial.js)
+  config.assets.precompile += %w( light.js)
+  config.assets.precompile += %w( chart.js)
 
 
 
