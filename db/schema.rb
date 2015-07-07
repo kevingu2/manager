@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20150707182754) do
     t.string   "role"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "remember_digest"
   end
 
 end
