@@ -27,21 +27,21 @@
         <img class="nav-logo" src="/assets/saic-logo-social-small-grey.png" height="50" width="108">
         <ul class="nav navbar-nav">
           <%if session[:role]=="writer" %>
-            <li><a href=<%= tasks_index_path%>>Assigned Tasks</a></li>
-            <li><a href=<%= browse_index_path%> >Browse</a></li>
+            <li class="tab nav-tasks"><a href=<%= tasks_index_path%>>Assigned Tasks</a></li>
+            <li class="tab nav-browse"><a href=<%= browse_index_path%> >Browse</a></li>
           <%end%>
           <%if session[:role]=="manager" %>
-              <li ><a href=<%= allocated_tasks_index_path%>>Allocated Tasks</a></li>
-              <li><a href=<%= browse_index_path%> >Browse</a></li>
-              <li><a href=<%= invalid_data_index_path%>>Invalid Data</a></li>
-              <li><a href=<%= crm_index_path%>>Upload CRM</a></li>
-              <li><a href=<%= statistics_index_path%>>Statistics</a></li>
+            <li class="tab nav-allocated_tasks"><a href=<%= allocated_tasks_index_path%>>Allocated Tasks</a></li>
+            <li class="tab nav-browse"><a href=<%= browse_index_path%> >Browse</a></li>
+            <li class="tab nav-invalid_data"><a href=<%= invalid_data_index_path%>>Invalid Data</a></li>
+            <li class="tab nav-crm"><a href=<%= crm_index_path%>>Upload CRM</a></li>
+            <li class="tab nav-statistics"><a href=<%= statistics_index_path%>>Statistics</a></li>
           <%end%>
-          <li><a href=<%= histories_path%>>History</a></li>
+          <li class="tab nav-histories"><a href=<%= histories_path%>>History</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li ><a>Welcome <%=session[:username] %></a></li>
-          <li><a href="./notifications.html"><img src="/assets/notif-bell-2.png" height="30" width="30"></a></li>
+          <li class="tab nav-notifications"><a href="./notifications.html"><img src="/assets/notif-bell-2.png" height="30" width="30" style="padding-bottom: 5px"></a></li>
           <li><a href=<%=sessions_destroy_path %>>Logout</a><li>
         </ul>
       </div><!--/.nav-collapse -->
@@ -49,5 +49,11 @@
   </nav>
   <%end%>
 <%= yield %>
+
+<style type="text/css">
+.nav-<%=controller.controller_name%> {
+  background-color: #e7e7e7;
+}
+</style>
 </body>
 </html>

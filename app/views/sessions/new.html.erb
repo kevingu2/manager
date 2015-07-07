@@ -1,49 +1,43 @@
 <html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="login">
+    <!--favicon-->
+    <link rel="shortcut icon" href="/public/favicon.ico" />
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <meta name="description" content="login">
-  <!--favicon-->
-  <link rel="shortcut icon" href="http://example.com/favicon.ico" />
+    <title>Login</title>
 
-  <title>Login</title>
-
-  <!-- Latest compiled and minified CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <!-- Latest compiled and minified JavaScript -->
-  <!--script src="C:\Users\milkovitsr\Desktop\bootstrap-3.3.5-dist"></script -->
-  <!-- Custom CSS -->
-  <!-- Angular -->
-
-</head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  </head>
 <body>
-<div class="highercontainer">
-  <div class="container">
-    <form class="form-signin" action=<%= sessions_create_path%>>
-      <% if notice %>
-          <p id="notice"><%= notice %></p>
-      <% end %>
-      <img class="form-signin-logo" src="/assets/saic-logo-social-small.png"
-           height="139" width="300">
-      <h2 class="form-signin-heading"></h2>
-          <label for="inputEmail" class="sr-only">SAIC Username</label>
-          <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
-          <label for="inputPassword" class="sr-only">Password</label>
-          <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-          <input name="utf8" type="hidden" value="&#x2713;" />
-          <div class="checkbox" style="visibility:hidden; height: 0px">
-            <label>
-              <input type="checkbox" name="remember_me" value="true"> Remember me
-            </label>
-          </div>
-          <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-          <a href="url"><div class="sign-up-div" ><%= link_to 'Sign Up', new_user_path %></div></a>
-    </form>
-  </div> <!-- /container -->
-</div> <!-- /highercontainer -->
+  <div class="highercontainer">
+    <div class="container">
+      <form class="form-signin" action=<%= sessions_create_path%>>
+        <% if notice %>
+            <p id="notice"><%= notice %></p>
+        <% end %>
+        <img class="form-signin-logo" src="/assets/saic-logo-social-small.png"
+             height="139" width="300">
+        <h2 class="form-signin-heading"></h2>
+            <label for="inputEmail" class="sr-only">SAIC Username</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+            <input name="utf8" type="hidden" value="&#x2713;" />
+            <div class="checkbox" style="visibility:hidden; height: 0px">
+              <label>
+                <input type="checkbox" name="remember_me" value="true"> Remember me
+              </label>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+            <a href="url"><div class="sign-up-div" ><%= link_to 'Sign Up', new_user_path %></div></a>
+      </form>
+    </div> <!-- /container -->
+  </div> <!-- /highercontainer -->
 </body>
 
 </html>
