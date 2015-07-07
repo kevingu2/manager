@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-<% @oppties.each do |o|%>
-    <a href="url"><%= link_to o.opptyName+' - '+o.proposalDueDate.to_s, o %></a><br>
-    <br>
-<% end%>
-=======
+
 <div class="jumbotron">
 <div class="upper-search-box">
 	<div class="inner-search-bar">
@@ -24,12 +19,9 @@
 <table class="browse-bg">
 	<% @oppties.each do |o|%>
     	<tr>
-    		<td><h2><%= link_to o.opptyName, o %></h2></td>
+    		<td><h2><%= link_to o.opptyName+' - '+o.proposalDueDate.to_s, o %></h2></td>
   		</tr>
-  		<tr>
-  			<td>o.opptyName<td>
-  		<tr>		
 	<% end%>
 </table>
 </div>
->>>>>>> 14f4c802d0e131db7d249dc65e99b854a7d1b89d
+</div>
