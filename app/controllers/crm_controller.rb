@@ -1,9 +1,3 @@
-# TO DO:
-#   Fix the Download button on line 39
-
-#uploading the crm (excel file)
-#also allows for downloading the modified excel file
-
 class CrmController < ApplicationController
   CRM_PATH = File.join(Rails.root, "public", "uploads")
   def index
@@ -22,7 +16,7 @@ class CrmController < ApplicationController
       #puts o
       #puts "************************************************"
       @oppty=Oppty.new
-      # @oppty.opptyId    = o["OpptyID"]
+      
 
       #fields
       @oppty.opptyName  = o["OpptyName"]
@@ -52,7 +46,7 @@ class CrmController < ApplicationController
 
   #downloading the modified excel file from the browser
   def download
-    send_file CRM_PATH+'/test.txt', :type=>'application/text', :x_sendfile=>true
+    send_file CRM_PATH, :filename =>'test.txt', :type=>"application/txt", :x_sendfile=>true
   end
 
 end
