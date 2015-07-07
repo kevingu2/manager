@@ -1,3 +1,5 @@
+#individual opportunity page
+
 class OpptiesController < ApplicationController
   before_action :set_oppty, only: [:show, :edit, :update, :destroy]
 

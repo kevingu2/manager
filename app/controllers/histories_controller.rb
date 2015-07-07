@@ -1,3 +1,7 @@
+#handles one of the databases
+#when the task is passed the due date, it'll move to the history database so
+#users can view their previous tasks
+
 class HistoriesController < ApplicationController
   before_action :set_history, only: [:show, :edit, :update, :destroy]
   before_action :set_user, only: [:create, :index]
