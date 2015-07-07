@@ -37,14 +37,14 @@ class CrmController < ApplicationController
       @oppty.technicalLead = o["TechnicalLead"]
       @oppty.sslArch = o["SLArch"]
       @oppty.slComments = o["SL Comments"]
-      @oppty.rfpDate = DateTime.new(1899,12,30) + o["RFPDate"].to_f
-      @oppty.awardDate = DateTime.new(1899,12,30) + o["AwardDate"].to_f
+      @oppty.rfpDate = Date.new(1899,12,30) + o["RFPDate"].to_f
+      @oppty.awardDate = Date.new(1899,12,30) + o["AwardDate"].to_f
       @oppty.slDir = o["SLDir"]
       @oppty.leadEstim = o["LeadEstim"]
       @oppty.engaged = o["Engaged r/y/g"]
       @oppty.solution = o["Solution r/y/g"]
       @oppty.estimate = o["Estimate r/y/g"]
-      @oppty.proposalDueDate = DateTime.new(1899,12,30) + o["ProposalDueDate"].to_f
+      @oppty.proposalDueDate = Date.new(1899,12,30) + o["ProposalDueDate"].to_f
       @oppty.save
     end
     redirect_to invalid_entry_index_path, notice: "File uploaded"
