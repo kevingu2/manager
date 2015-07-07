@@ -1,5 +1,5 @@
 class CrmController < ApplicationController
-  CRM_PATH = File.join(Rails.root, "public", "uploads")
+  CRM_PATH = File.join(Rails.root, "public", "uploads", 'test.txt')
   def index
   end
 
@@ -36,7 +36,7 @@ class CrmController < ApplicationController
   end
 
   def download
-    send_file CRM_PATH, :filename =>'test.txt', :type=>"application/txt", :x_sendfile=>true
+    send_file CRM_PATH, :type=>'application/text', :x_sendfile=>true
   end
 
 end
