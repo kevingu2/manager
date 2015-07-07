@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150707175336) do
+ActiveRecord::Schema.define(version: 20150707182754) do
 
   create_table "histories", force: true do |t|
     t.integer  "oppty_id"
@@ -23,32 +23,8 @@ ActiveRecord::Schema.define(version: 20150707175336) do
   add_index "histories", ["oppty_id"], name: "index_histories_on_oppty_id"
   add_index "histories", ["user_id"], name: "index_histories_on_user_id"
 
-  create_table "oppties", force: true do |t|
-    t.string   "opptyId"
-    t.string   "opptyName"
-    t.string   "idiqCA"
-    t.string   "status2"
-    t.float    "value"
-    t.integer  "pWin"
-    t.string   "captureMgr"
-    t.string   "programMgr"
-    t.string   "proposalMgr"
-    t.string   "sslOrg"
-    t.string   "technicalLead"
-    t.string   "sslArch"
-    t.string   "ed"
-    t.string   "on"
-    t.string   "ate"
-    t.string   "slComments"
-    t.date     "rfpDate"
-    t.date     "awardDate"
-    t.date     "submitDate"
-    t.integer  "numWriters"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "done",            default: false
-    t.date     "proposalDueDate"
-  end
+# Could not dump table "oppties" because of following NoMethodError
+#   undefined method `[]' for nil:NilClass
 
   create_table "user_oppties", force: true do |t|
     t.integer  "oppty_id"
