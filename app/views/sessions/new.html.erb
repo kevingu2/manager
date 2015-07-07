@@ -7,7 +7,7 @@
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <meta name="description" content="login">
   <!--favicon-->
-  <!--link rel="shortcut icon" href="http://example.com/favicon.ico" / -->
+  <link rel="shortcut icon" href="http://example.com/favicon.ico" />
 
   <title>Login</title>
 
@@ -34,13 +34,13 @@
           <label for="inputPassword" class="sr-only">Password</label>
           <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
           <input name="utf8" type="hidden" value="&#x2713;" />
-          <div class="checkbox">
+          <div class="checkbox" style="visibility:hidden; height: 0px">
             <label>
               <input type="checkbox" name="remember_me" value="true"> Remember me
             </label>
           </div>
           <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-          <a href="url"><%= link_to 'Sign Up', new_user_path %></a>
+          <a href="url"><div class="sign-up-div" ><%= link_to 'Sign Up', new_user_path %></div></a>
     </form>
   </div> <!-- /container -->
 </div> <!-- /highercontainer -->
