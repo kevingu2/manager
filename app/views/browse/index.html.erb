@@ -17,9 +17,11 @@
 	</div>		
 <br>
 <table class="browse-bg">
+    <%i=1%>
 	<% @oppties.each do |o|%>
     	<tr>
-    		<td><h2><%= link_to (o.opptyName.to_s+" - ").to_s+o.proposalDueDate.to_s, o %></h2></td>
+    		<td><h2><%= link_to (i.to_s+' '+o.opptyName.to_s+" - ").to_s+o.proposalDueDate.to_s, o %></h2></td>
+            <%i+=1%>
   		</tr>
 	<% end%>
 </table>

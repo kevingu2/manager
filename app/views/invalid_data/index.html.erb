@@ -1,2 +1,9 @@
-<h1>InvalidData#index</h1>
-<p>Find me in app/views/invalid_data/index.html.erb</p>
+<table class="browse-bg">
+  <%j=1%>
+  <% @invalid_data.each do |i|%>
+      <tr>
+        <td><h2><%= link_to (j.to_s+' '+i.opptyName.to_s+" - ").to_s+i.rfpDate.to_s, i %></h2></td>
+        <%j+=1%>
+      </tr>
+  <% end%>
+</table>
