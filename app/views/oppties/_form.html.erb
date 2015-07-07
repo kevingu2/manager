@@ -12,85 +12,34 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :opptyId %><br>
-    <%= f.text_field :opptyId %>
+    <%= f.label :"SL Director"  %><br>
+    <%= f.text_field :slDir %>
   </div>
   <div class="field">
-    <%= f.label :opptyName %><br>
-    <%= f.text_field :opptyName %>
+    <%= f.label :"Lead Estimator" %><br>
+    <%= f.text_field :leadEstim %>
   </div>
   <div class="field">
-    <%= f.label :idiqCA %><br>
-    <%= f.text_field :idiqCA %>
+    <%= f.label :Engaged %><br>
+    <%= f.text_field :engaged %>
   </div>
   <div class="field">
-    <%= f.label :status2 %><br>
-    <%= f.text_field :status2 %>
+    <%= f.label :Solution %><br>
+    <%= f.text_field :solution %>
   </div>
   <div class="field">
-    <%= f.label :value %><br>
-    <%= f.text_field :value %>
+    <%= f.label :Estimate %><br>
+    <%= f.text_field :estimate %>
   </div>
+    <div class="field">
+      <%= f.label :"SL Architecture" %><br>
+      <%= f.text_field :sslArch%>
+    </div>
   <div class="field">
-    <%= f.label :pWin %><br>
-    <%= f.number_field :pWin %>
-  </div>
-  <div class="field">
-    <%= f.label :captureMgr %><br>
-    <%= f.text_field :captureMgr %>
-  </div>
-  <div class="field">
-    <%= f.label :programMgr %><br>
-    <%= f.text_field :programMgr %>
-  </div>
-  <div class="field">
-    <%= f.label :proposalMgr %><br>
-    <%= f.text_field :proposalMgr %>
-  </div>
-  <div class="field">
-    <%= f.label :sslOrg %><br>
-    <%= f.text_field :sslOrg %>
-  </div>
-  <div class="field">
-    <%= f.label :technicalLead %><br>
-    <%= f.text_field :technicalLead %>
-  </div>
-  <div class="field">
-    <%= f.label :sslArch %><br>
-    <%= f.text_field :sslArch %>
-  </div>
-  <div class="field">
-    <%= f.label :ed %><br>
-    <%= f.text_field :ed %>
-  </div>
-  <div class="field">
-    <%= f.label :on %><br>
-    <%= f.text_field :on %>
-  </div>
-  <div class="field">
-    <%= f.label :ate %><br>
-    <%= f.text_field :ate %>
-  </div>
-  <div class="field">
-    <%= f.label :slComments %><br>
+    <%= f.label :"SL Comments" %><br>
     <%= f.text_field :slComments %>
   </div>
-  <div class="field">
-    <%= f.label :rfpDate %><br>
-    <%= f.date_select :rfpDate %>
-  </div>
-  <div class="field">
-    <%= f.label :awardDate %><br>
-    <%= f.date_select :awardDate %>
-  </div>
-  <div class="field">
-    <%= f.label :submitDate %><br>
-    <%= f.date_select :submitDate %>
-  </div>
-  <div class="field">
-    <%= f.label :numWriters %><br>
-    <%= f.text_field :numWriters %>
-  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

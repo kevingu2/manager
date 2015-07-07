@@ -3,6 +3,7 @@ class CrmController < ApplicationController
   def index
   end
 
+  #uploading an excel file from user's computer
   def upload
     uploaded_io = params[:upl]
     File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
@@ -15,7 +16,9 @@ class CrmController < ApplicationController
       #puts o
       #puts "************************************************"
       @oppty=Oppty.new
-      # @oppty.opptyId    = o["OpptyID"]
+      
+
+      #fields
       @oppty.opptyName  = o["OpptyName"]
       @oppty.idiqCA     = o["IDIQ_CA"]
       @oppty.status2    = o["Status2"]
@@ -28,13 +31,20 @@ class CrmController < ApplicationController
       @oppty.technicalLead = o["TechnicalLead"]
       @oppty.sslArch = o["SLArch"]
       @oppty.slComments = o["SL Comments"]
-      @oppty.rfpDate = DateTime.new(1899,12,30) + o["RFPDate"].to_f
-      @oppty.awardDate = DateTime.new(1899,12,30) + o["AwardDate"].to_f
+      @oppty.rfpDate = Date.new(1899,12,30) + o["RFPDate"].to_f
+      @oppty.awardDate = Date.new(1899,12,30) + o["AwardDate"].to_f
+      @oppty.slDir = o["SLDir"]
+      @oppty.leadEstim = o["LeadEstim"]
+      @oppty.engaged = o["Engaged r/y/g"]
+      @oppty.solution = o["Solution r/y/g"]
+      @oppty.estimate = o["Estimate r/y/g"]
+      @oppty.proposalDueDate = Date.new(1899,12,30) + o["ProposalDueDate"].to_f
       @oppty.save
     end
     redirect_to invalid_entry_index_path, notice: "File uploaded"
   end
 
+  #downloading the modified excel file from the browser
   def download
     send_file CRM_PATH, :filename =>'test.txt', :type=>"application/txt", :x_sendfile=>true
   end

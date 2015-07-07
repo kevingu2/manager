@@ -17,3 +17,6 @@
 
 # gemfile
 /Gemfile
+
+#uploads
+/public/uploads
