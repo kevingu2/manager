@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20150707182754) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "status"
+    t.integer  "status",     default: 2
   end
 
   add_index "user_oppties", ["oppty_id"], name: "index_user_oppties_on_oppty_id"
