@@ -8,7 +8,7 @@ class CrmController < ApplicationController
   CRM_PATH = File.join(Rails.root, "public", "uploads")
   def index
   end
-  
+
   #uploading an excel file from user's computer
   def upload
     uploaded_io = params[:upl]
@@ -23,7 +23,7 @@ class CrmController < ApplicationController
       #puts "************************************************"
       @oppty=Oppty.new
       # @oppty.opptyId    = o["OpptyID"]
-      
+
       #fields
       @oppty.opptyName  = o["OpptyName"]
       @oppty.idiqCA     = o["IDIQ_CA"]
@@ -39,11 +39,17 @@ class CrmController < ApplicationController
       @oppty.slComments = o["SL Comments"]
       @oppty.rfpDate = DateTime.new(1899,12,30) + o["RFPDate"].to_f
       @oppty.awardDate = DateTime.new(1899,12,30) + o["AwardDate"].to_f
+      @oppty.slDir = o["SLDir"]
+      @oppty.leadEstim = o["LeadEstim"]
+      @oppty.engaged = o["Engaged r/y/g"]
+      @oppty.solution = o["Solution r/y/g"]
+      @oppty.estimate = o["Estimate r/y/g"]
+      @oppty.proposalDueDate = DateTime.new(1899,12,30) + o["ProposalDueDate"].to_f
       @oppty.save
     end
     redirect_to invalid_entry_index_path, notice: "File uploaded"
   end
-  
+
   #downloading the modified excel file from the browser
   def download
     send_file CRM_PATH+'/test.txt', :type=>'application/text', :x_sendfile=>true
