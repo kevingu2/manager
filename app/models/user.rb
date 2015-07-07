@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   has_secure_password
   has_many :user_oppty, dependent: :destroy
   has_many :history, dependent: :destroy
+  has_many :oppty, through: :user_oppty
+  has_many :oppty, through: :history
 
   def add_oppty(user_id, oppty_id)
     user=nil

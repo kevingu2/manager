@@ -11,6 +11,7 @@ class TasksController < ApplicationController
     userOppty.update(status: params[:status])
     redirect_to tasks_index_path
   end
+
   def deleteOpportunity
     userOppty=UserOppty.find(params[:id])
     userOppty.delete

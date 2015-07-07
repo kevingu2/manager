@@ -21,7 +21,6 @@ class ApplicationController < ActionController::Base
         redirect_to invalid_entry_index_path, notice: "No Access"
       end
     end
-
   end
 
 end

@@ -1,5 +1,7 @@
 class Oppty < ActiveRecord::Base
   has_many :user_oppties, dependent: :destroy
-  has_many :history, dependent: :destroy
+  has_many :histories, dependent: :destroy
+  has_many :users, through: :user_oppties
+
 
 end

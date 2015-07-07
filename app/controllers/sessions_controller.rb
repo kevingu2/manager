@@ -18,7 +18,8 @@ class SessionsController < ApplicationController
         redirect_to allocated_tasks_index_path
       end
     else
-      redirect_to sessions_new_path, notice: "Invalid user/password combination" end
+      redirect_to sessions_new_path, notice: "Invalid user/password combination"
+    end
   end
 
   def destroy
