@@ -28,8 +28,8 @@ class CrmController < ApplicationController
       @oppty.technicalLead = o["TechnicalLead"]
       @oppty.sslArch = o["SLArch"]
       @oppty.slComments = o["SL Comments"]
-      @oppty.rfpDate = o["RFPDate"]
-      @oppty.awardDate = o["AwardDate"]
+      @oppty.rfpDate = DateTime.new(1899,12,30) + o["RFPDate"].to_f
+      @oppty.awardDate = DateTime.new(1899,12,30) + o["AwardDate"].to_f
       @oppty.save
     end
     redirect_to invalid_entry_index_path, notice: "File uploaded"
