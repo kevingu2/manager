@@ -40,6 +40,7 @@ Rails.application.configure do
   config.assets.precompile += %w( serial.js)
   config.assets.precompile += %w( light.js)
   config.assets.precompile += %w( chart.js)
+  config.assets.precompile += %w( dataloader.min.js)
 
 
 
