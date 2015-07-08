@@ -29,7 +29,7 @@
     <script>
       var chartdata = [ {
         "Month": "January",
-        "proposals": 2025
+        "proposals": <%=@months[0]%>
       }, {
         "Month": "February",
         "proposals": 1882
@@ -56,7 +56,7 @@
         "proposals": 665
       }, {
         "Month": "October",
-        "proposals": 580
+        "proposals": 1467
       }, {
         "Month": "November",
         "proposals": 443
@@ -72,7 +72,8 @@
       "valueAxes": [ {
         "gridColor": "#8E8E8E",
         "gridAlpha": 0.3,
-        "dashLength": 0
+        "dashLength": 0,
+        "minimum": 0
       } ],
       "gridAboveGraphs": true,
       "startDuration": 1,
