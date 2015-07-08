@@ -46,6 +46,9 @@ class OpptiesController < ApplicationController
   def update
     respond_to do |format|
       puts oppty_params
+      JSON.parse(oppty_params.to_json).each do |item|
+        puts item
+      end
       if @oppty.update(oppty_params)
         format.html { redirect_to @oppty, notice: 'Oppty was successfully updated.' }
         format.json { render :show, status: :ok, location: @oppty }
