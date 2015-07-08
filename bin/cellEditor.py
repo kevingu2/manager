@@ -33,7 +33,7 @@ fileName = args[1]
 strs = args[2]
 data = [[i for i in x.strip(" []").split(", ")] for x in strs.strip('[]').split("],")] # magic
 wb.open(fileName)
-ws = wb.active
+ws = wb.get_sheet_by_name('PipelineView')
 #####get the rows/cols/valuesToChange#########
 ids = []
 cols = []
@@ -48,4 +48,4 @@ cols = findCols(cols)
 for c in range(len(changes)): # make the changes
     ws.cell(str(cols[c]) + str(rows[c])).value = changes[c]
 wb.save(fileName)
-wb.close()
+#wb.close()
