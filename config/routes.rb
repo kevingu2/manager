@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'assign/index'
+
   get 'invalid_entry/index'
 
   get 'allocated_tasks/index'
