@@ -1,6 +1,7 @@
 class CrmController < ApplicationController
   CRM_PATH = File.join(Rails.root, "public", "uploads")
   def index
+    @oppty = Oppty.all
   end
 
   #uploading an excel file from user's computer
@@ -41,28 +42,70 @@ class CrmController < ApplicationController
       if data = Oppty.find_by(opptyId:id)
         diff = Hash.new
         diff.default = 0
-        diff["opptyId"] = id
+        change = false
+
       # if the cell changed, hashtable contains the new value and ID
-        if name             != data.opptyName       then diff["opptyName"]        = name            end
-        if idiqCA           != data.idiqCA          then diff["idiqCA"]           = idiqCA          end
-        if status2          != data.status2         then diff["status2"]          = status2         end
-        if value            != data.value           then diff["value"]            = value           end
-        if pWin             != data.pWin            then diff["pWin"]             = pWin            end
-        if captureMgr       != data.captureMgr      then diff["captureMgr"]       = captureMgr      end
-        if programMgr       != data.programMgr      then diff["programMgr"]       = programMgr      end
-        if proposalMgr      != data.proposalMgr     then diff["proposalMgr"]      = proposalMgr     end
-        if technicalLead    != data.technicalLead   then diff["technicalLead"]    = technicalLead   end
-        if sslArch          != data.sslArch         then diff["sslArch"]          = sslArch         end
-        if slComments       != data.slComments      then diff["slComments"]       = slComments      end
-        if rfpDate          != data.rfpDate         then diff["rfpDate"]          = rfpDate         end
-        if awardDate        != data.awardDate       then diff["awardDate"]        = awardDate       end
-        if slDir            != data.slDir           then diff["slDir"]            = slDir           end
-        if leadEstim        != data.leadEstim       then diff["leadEstim"]        = leadEstim       end
-        if engaged          != data.engaged         then diff["engaged"]          = engaged         end
-        if solution         != data.solution        then diff["solution"]         = solution        end
-        if estimate         != data.estimate        then diff["estimate"]         = estimate        end
-        if proposalDueDate  != data.proposalDueDate then diff["proposalDueDate"]  = proposalDueDate end
-        @changes.push(diff) # add hash to list
+        if name             != data.opptyName
+          diff["opptyName"]        = name
+          change = true end
+        if idiqCA           != data.idiqCA
+          diff["idiqCA"]           = idiqCA
+          change = true end
+        if status2          != data.status2
+          diff["status2"]          = status2
+          change = true end
+        if value            != data.value
+          diff["value"]            = value
+          change = true end
+        # if pWin             != data.pWin
+        #   diff["pWin"]             = pWin
+        #   change = true end
+        if captureMgr       != data.captureMgr
+          diff["captureMgr"]       = captureMgr
+          change = true end
+        if programMgr       != data.programMgr
+          diff["programMgr"]       = programMgr
+          change = true end
+        if proposalMgr      != data.proposalMgr
+          diff["proposalMgr"]      = proposalMgr
+          change = true end
+        if technicalLead    != data.technicalLead
+          diff["technicalLead"]    = technicalLead
+          change = true end
+        if sslArch          != data.sslArch
+          diff["sslArch"]          = sslArch
+          change = true end
+        if slComments       != data.slComments
+          diff["slComments"]       = slComments
+          change = true end
+        if rfpDate          != data.rfpDate
+          diff["rfpDate"]          = rfpDate
+          change = true end
+        if awardDate        != data.awardDate
+          diff["awardDate"]        = awardDate
+          change = true end
+        if slDir            != data.slDir
+          diff["slDir"]            = slDir
+          change = true end
+        if leadEstim        != data.leadEstim
+          diff["leadEstim"]        = leadEstim
+          change = true end
+        if engaged          != data.engaged
+          diff["engaged"]          = engaged
+          change = true end
+        if solution         != data.solution
+          diff["solution"]         = solution
+          change = true end
+        if estimate         != data.estimate
+          diff["estimate"]         = estimate
+          change = true end
+        if proposalDueDate  != data.proposalDueDate
+          diff["proposalDueDate"]  = proposalDueDate
+          change = true end
+        if change == true
+          diff["opptyId"] = id
+          @changes.push(diff) # add hash to list
+        end
       else
         @oppty=Oppty.new
         #fields
@@ -89,7 +132,10 @@ class CrmController < ApplicationController
         @oppty.save
       end
     end
-    redirect_to invalid_entry_index_path, notice: "File uploaded"
+    puts @changes.length
+    redirect_to crm_upload_path(:changes => @changes)
+    #redirect_to invalid_entry_index_path, notice: "File uploaded"
+    #redirect_to crm_index_path(:changes => @changes)
   end
 
   #downloading the modified excel file from the browser
