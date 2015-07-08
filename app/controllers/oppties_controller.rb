@@ -12,6 +12,8 @@ class OpptiesController < ApplicationController
   # GET /oppties/1
   # GET /oppties/1.json
   def show
+    @numWriters=UserOppty.where(oppty_id: params[:id]).joins(:user).where('users.role'=>'writer').count
+    puts @numWriters
   end
 
   # GET /oppties/new

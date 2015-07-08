@@ -27,6 +27,7 @@
     <p><b>Engaged:</b> <%= @oppty.engaged%></p>
     <p><b>Solution:</b> <%= @oppty.solution%></p>
     <p><b>Estimate:</b> <%= @oppty.estimate%></p>
+    <p><b>Number of Writers</b>:</b> <%= @numWriters%></p>
     <p>
     <div class="btn-container" style="margin:20px">
       <a class="btn btn-lg btn-primary btn-left" href=<%=url_for(:back)%> role="button" style="color:white">Cancel</a>
@@ -38,12 +39,16 @@
       <%end%>
       <%if session[:role]=="manager" %>
           <a class="btn btn-lg btn-primary btn-center" href=<%= edit_oppty_path(@oppty)%>  role="button" style="color:white">Edit</a>
-          <a class="btn btn-lg btn-primary btn-right" href=<%= assign_index_path%> role="button" style="color:white">Assign</a>
+          <form action =<%= assign_index_path%> method="get">
+            <input hidden=true type="hidden" name="opptyId" value=<%= @oppty.id%>>
+            <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+            <a class="btn btn-lg btn-primary btn-right" type="submit" href=<%= assign_index_path%> role="button"
+               style="color:white">Assign</a>
+          </form>
       <%end%>
     </div>
     </p>
   </div>
-
 </div> <!-- /container -->
 <!-- Bootstrap core JavaScript
 ================================================== -->
