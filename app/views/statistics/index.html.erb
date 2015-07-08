@@ -29,40 +29,40 @@
     <script>
       var chartdata = [ {
         "Month": "January",
-        "proposals": 2025
+        "proposals": <%=@months[0]%>
       }, {
         "Month": "February",
-        "proposals": 1882
+        "proposals": <%=@months[1]%>
       }, {
         "Month": "March",
-        "proposals": 1809
+        "proposals": <%=@months[2]%>
       }, {
         "Month": "April",
-        "proposals": 1322
+        "proposals": <%=@months[3]%>
       }, {
         "Month": "May",
-        "proposals": 1122
+        "proposals": <%=@months[4]%>
       }, {
         "Month": "June",
-        "proposals": 1114
+        "proposals": <%=@months[5]%>
       }, {
         "Month": "July",
-        "proposals": 984
+        "proposals": <%=@months[6]%>
       }, {
         "Month": "August",
-        "proposals": 711
+        "proposals": <%=@months[7]%>
       }, {
         "Month": "September",
-        "proposals": 665
+        "proposals": <%=@months[8]%>
       }, {
         "Month": "October",
-        "proposals": 580
+        "proposals": <%=@months[9]%>
       }, {
         "Month": "November",
-        "proposals": 443
+        "proposals": <%=@months[10]%>
       }, {
         "Month": "December",
-        "proposals": 441
+        "proposals": <%=@months[11]%>
       }]
 
       var chart = AmCharts.makeChart( "chartdiv", {
@@ -72,7 +72,8 @@
       "valueAxes": [ {
         "gridColor": "#8E8E8E",
         "gridAlpha": 0.3,
-        "dashLength": 0
+        "dashLength": 0,
+        "minimum": 0
       } ],
       "gridAboveGraphs": true,
       "startDuration": 1,

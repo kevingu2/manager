@@ -32,3 +32,23 @@ wb = Workbook()
 fileName = args[1]
 strs = args[2]
 data = [[i for i in x.strip(" []").split(", ")] for x in strs.strip('[]').split("],")] # magic
+<<<<<<< HEAD
+=======
+wb.open(fileName)
+ws = wb.get_sheet_by_name('PipelineView')
+#####get the rows/cols/valuesToChange#########
+ids = []
+cols = []
+changes = []
+for d in data:
+    ids.append(d[0].strip('\''))
+    cols.append(d[1].strip('\''))
+    changes.append(d[2].strip('\''))
+rows = findRows(fileName, ids)
+cols = findCols(cols)
+
+for c in range(len(changes)): # make the changes
+    ws.cell(str(cols[c]) + str(rows[c])).value = changes[c]
+wb.save(fileName)
+#wb.close()
+>>>>>>> f3f52c401a974d67b7a4f6359d62e10629151fad

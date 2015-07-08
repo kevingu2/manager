@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20150708192123) do
+=======
+ActiveRecord::Schema.define(version: 20150707185042) do
+
+  create_table "allocated_tasks", force: true do |t|
+    t.string   "title"
+    t.string   "taskId"
+    t.text     "comment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+>>>>>>> f3f52c401a974d67b7a4f6359d62e10629151fad
 
   create_table "histories", force: true do |t|
     t.integer  "oppty_id"
@@ -59,7 +71,7 @@ ActiveRecord::Schema.define(version: 20150708192123) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "status"
+    t.integer  "status",     default: 2
   end
 
   add_index "user_oppties", ["oppty_id"], name: "index_user_oppties_on_oppty_id"
