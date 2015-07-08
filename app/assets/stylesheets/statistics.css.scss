@@ -3,7 +3,19 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #chartdiv {
-	width		: 100%;
+	width		: 90%;
 	height		: 500px;
 	font-size	: 11px;
-}					
+}		
+
+.jumbotron {
+	background-color: #F8F8F8 !important;
+}		
+
+.chart-container {
+	margin: 0px auto;
+}
+
+.chart-title {
+	text-align: center;
+}	
