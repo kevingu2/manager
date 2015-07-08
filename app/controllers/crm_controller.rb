@@ -42,26 +42,26 @@ class CrmController < ApplicationController
         diff = Hash.new
         diff.default = 0
         diff["opptyId"] = id
-      # if the value is 1, then it changed
-        if name             != data.opptyName       then diff["opptyName"]        = 1 end
-        if idiqCA           != data.idiqCA          then diff["idiqCA"]           = 1 end
-        if status2          != data.status2         then diff["status2"]          = 1 end
-        if value            != data.value           then diff["value"]            = 1 end
-        if pWin             != data.pWin            then diff["pWin"]             = 1 end
-        if captureMgr       != data.captureMgr      then diff["captureMgr"]       = 1 end
-        if programMgr       != data.programMgr      then diff["programMgr"]       = 1 end
-        if proposalMgr      != data.proposalMgr     then diff["proposalMgr"]      = 1 end
-        if technicalLead    != data.technicalLead   then diff["technicalLead"]    = 1 end
-        if sslArch          != data.sslArch         then diff["sslArch"]          = 1 end
-        if slComments       != data.slComments      then diff["slComments"]       = 1 end
-        if rfpDate          != data.rfpDate         then diff["rfpDate"]          = 1 end
-        if awardDate        != data.awardDate       then diff["awardDate"]        = 1 end
-        if slDir            != data.slDir           then diff["slDir"]            = 1 end
-        if leadEstim        != data.leadEstim       then diff["leadEstim"]        = 1 end
-        if engaged          != data.engaged         then diff["engaged"]          = 1 end
-        if solution         != data.solution        then diff["solution"]         = 1 end
-        if estimate         != data.estimate        then diff["estimate"]         = 1 end
-        if proposalDueDate  != data.proposalDueDate then diff["proposalDueDate"]  = 1 end
+      # if the cell changed, hashtable contains the new value and ID
+        if name             != data.opptyName       then diff["opptyName"]        = name            end
+        if idiqCA           != data.idiqCA          then diff["idiqCA"]           = idiqCA          end
+        if status2          != data.status2         then diff["status2"]          = status2         end
+        if value            != data.value           then diff["value"]            = value           end
+        if pWin             != data.pWin            then diff["pWin"]             = pWin            end
+        if captureMgr       != data.captureMgr      then diff["captureMgr"]       = captureMgr      end
+        if programMgr       != data.programMgr      then diff["programMgr"]       = programMgr      end
+        if proposalMgr      != data.proposalMgr     then diff["proposalMgr"]      = proposalMgr     end
+        if technicalLead    != data.technicalLead   then diff["technicalLead"]    = technicalLead   end
+        if sslArch          != data.sslArch         then diff["sslArch"]          = sslArch         end
+        if slComments       != data.slComments      then diff["slComments"]       = slComments      end
+        if rfpDate          != data.rfpDate         then diff["rfpDate"]          = rfpDate         end
+        if awardDate        != data.awardDate       then diff["awardDate"]        = awardDate       end
+        if slDir            != data.slDir           then diff["slDir"]            = slDir           end
+        if leadEstim        != data.leadEstim       then diff["leadEstim"]        = leadEstim       end
+        if engaged          != data.engaged         then diff["engaged"]          = engaged         end
+        if solution         != data.solution        then diff["solution"]         = solution        end
+        if estimate         != data.estimate        then diff["estimate"]         = estimate        end
+        if proposalDueDate  != data.proposalDueDate then diff["proposalDueDate"]  = proposalDueDate end
         @changes.push(diff) # add hash to list
       else
         @oppty=Oppty.new
