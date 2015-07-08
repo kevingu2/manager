@@ -1,2 +1,71 @@
-<h1>AllocatedTasks#index</h1>
-<p>Find me in app/views/allocated_tasks/index.html.erb</p>
+<div class="textColor">
+	<div class="textCenter">
+		<h1>Allocated Tasks</h1>
+	</div>
+</div>
+
+<html lang="en">
+<head>
+  <title>Tasks</title>
+</head>
+
+<body>
+
+<div class="container tasks-queue">
+  <!-- Example row of columns -->
+	<div class="row">
+    	<div class="col-md-4 op-title-bg-left">
+    		<h2 class="op-title">Assigned</h2>
+    	</div>
+    
+	    <div class="col-md-4 op-title-bg-middle">
+    		<h2 class="op-title">In Progress</h2>
+    	</div> 
+    	<div class="col-md-4 op-title-bg-right">
+    		<h2 class="op-title">Done</h2>
+    	</div>
+    	<div class="textColor">
+    		<div class="row-2">
+    			<div class="col-md-4 op-body-bg-left">
+         			<% @to_do.each do |oppty|  %>
+						<h2><%= link_to oppty.opptyName, oppty %></h2>
+  						<p><%= oppty.slComments %></p>
+  						<p>
+    						<%= link_to "Edit", edit_oppty_path(oppty) %>
+   							<%= link_to "Delete", oppty, :data => {:confirm => "Are you sure?"}, :method => :delete %>
+   						</p>
+  						<hr />
+					<% end %>
+    			</div>
+     			<div class="col-md-4 op-body-bg-middle">
+        			<% @doing.each do |oppty|  %>
+						<h2><%= link_to oppty.opptyName, oppty %></h2>
+  						<p><%= oppty.slComments %></p>
+  						<p>
+    						<%= link_to "Edit", edit_oppty_path(oppty) %>
+   							<%= link_to "Delete", oppty, :data => {:confirm => "Are you sure?"}, :method => :delete %>
+   						</p>
+  						<hr />
+					<% end %>
+     			</div>
+    			<div class="col-md-4 op-body-bg-right">
+        			<% @done.each do |oppty|  %>
+						<h2><%= link_to oppty.opptyName, oppty %></h2>
+  						<p><%= oppty.slComments %></p>
+  						<p>
+    						<%= link_to "Edit", edit_oppty_path(oppty) %>
+   							<%= link_to "Delete", oppty, :data => {:confirm => "Are you sure?"}, :method => :delete %>
+   						</p>
+  						<hr />
+					<% end %>
+    			</div>
+    		</div>
+		</div>
+	</div>
+</div>
+
+
+
+</body>
+</html>
+
