@@ -3,10 +3,19 @@
     <title>Statistics</title>
   </head>
   <body>
-    <div class="jumbotron">
-      <div class="chart-container">
+    <div class="jumbotron col-md-11">
+      <div class="chart-container col-md-10">
         <h2 class="chart-title">RFP per Month</h2>
         <div id="chartdiv"></div>
+      </div>
+      <div class="selector-container col-md-2">
+        <p class="selector-label">Select Year: </p>
+        <div>
+          <select class="selector">
+            <option value="2015">2015</option>
+          </select>
+          <a href="#" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
+        </div>
       </div>
     </div>
 
@@ -20,40 +29,40 @@
     <script>
       var chartdata = [ {
         "Month": "January",
-        "visits": 2025
+        "proposals": 2025
       }, {
         "Month": "February",
-        "visits": 1882
+        "proposals": 1882
       }, {
         "Month": "March",
-        "visits": 1809
+        "proposals": 1809
       }, {
         "Month": "April",
-        "visits": 1322
+        "proposals": 1322
       }, {
         "Month": "May",
-        "visits": 1122
+        "proposals": 1122
       }, {
         "Month": "June",
-        "visits": 1114
+        "proposals": 1114
       }, {
         "Month": "July",
-        "visits": 984
+        "proposals": 984
       }, {
         "Month": "August",
-        "visits": 711
+        "proposals": 711
       }, {
         "Month": "September",
-        "visits": 665
+        "proposals": 665
       }, {
         "Month": "October",
-        "visits": 580
+        "proposals": 580
       }, {
         "Month": "November",
-        "visits": 443
+        "proposals": 443
       }, {
         "Month": "December",
-        "visits": 441
+        "proposals": 441
       }]
 
       var chart = AmCharts.makeChart( "chartdiv", {
@@ -72,7 +81,7 @@
         "fillAlphas": 0.8,
         "lineAlpha": 0.2,
         "type": "column",
-        "valueField": "visits"
+        "valueField": "proposals"
       } ],
       "chartCursor": {
         "categoryBalloonEnabled": false,
