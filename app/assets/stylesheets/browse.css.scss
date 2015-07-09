@@ -45,6 +45,7 @@ td {
 	height:40px; 
 	padding:0px 0px !important; 
 	position:relative;
+	font-size: 20px;
 }
 
 .regular-text a:link {
@@ -58,7 +59,6 @@ td {
     color: #663366 !important;
 }
 
-
 .little-text {
 	font-size: 80%;
 }
@@ -68,19 +68,22 @@ td {
 }
 
 .selector {
-	//vertical-align:top;
 	float: left;
 }
 
 .selector-button {
 	height: 20px !important;
-	float: left;
+	float: right;
 	text-align: center;
 	vertical-align: top;
 	line-height: 22px !important;
 	padding-top:0px !important;
 	color: white !important;
+	background-color: #005DA0 !important;
+	border-color: #005DA0 !important;
 }
 
-
+.control-label {
+	padding-right: 30px !important;
+}
 
