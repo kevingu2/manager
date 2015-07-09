@@ -1,22 +1,33 @@
 
 <div class="jumbotron">
 <div class="upper-search-box">
-	<div class="inner-search-bar">
+	<div class="inner-search-bar col-md-12">
 		<form method="get" action="..." class="search-form"> 
 			<table cellpadding="0px" cellspacing="0px"> 
 			<tr> 
 			<td style="border-style:solid none solid solid;border-color:#4B7B9F;border-width:1px; font-size:24px;">
-			<input type="text" placeholder="Search" name="search_query" style="width:1000px; border:0px solid; height:36px; padding:0px 0px; position:relative;"> 
+			<input type="text" placeholder="Search" name="search_query" class="search-field"> 
 			</td>
 			<td> 
 				<input class="btn-search" type="image" src="/assets/search.png" alt="Submit Search">
 			</td>
 			</tr>
+
 			</table>
 		</form>		
 	</div>		
 <br>
-<table class="browse-bg">
+</div>
+
+
+
+<div class="title">
+	<%= "Opportunities" %>
+</div>
+
+<div class="media">
+	<div class="media-body">
+<table class="table table-hover">
     <%i=1%>
 	<% @oppties.each do |o|%>
     	<tr>
@@ -25,5 +36,6 @@
   		</tr>
 	<% end%>
 </table>
+	</div>
 </div>
 </div>

@@ -26,15 +26,26 @@
 }	
 
 .selector-container {
+	
+}
+
+.selector-year-container {
 	margin-top: 85px;
 	padding-top: 15px;
-	padding-bottom: 15px;
+	padding-right: 15px;
+	padding-left: 15px;
+	padding-bottom: 40px;
 	background-color: #8E8E8E !important;
 	border-radius: 2px;
 }
 
 .selector-label {
+	font-size: 19px !important;
+	text-align: center;
+}
 
+.selector-label-graph {
+	padding-top:15px;
 }
 
 .selector {
@@ -49,5 +60,27 @@
 	vertical-align: top;
 	line-height: 22px !important;
 	padding-top:0px !important;
+	color: white !important;
+}
+
+.graph-selector {
+	margin-top: 85px;
+	background-color: #8E8E8E !important;
+	height: 250px !important;
+	border-radius: 2px;
+}
+
+.select-list {
+	text-align: center;
+	padding-left: 0px !important;
+	list-style-type: none;
+}
+
+.select-list-item {
+	margin: 0px 0px 8px 0px !important;
+	border: 8px;
+}
+
+.select-list-text {
 	color: white !important;
 }

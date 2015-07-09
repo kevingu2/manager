@@ -9,12 +9,24 @@
         <div id="chartdiv"></div>
       </div>
       <div class="selector-container col-md-2">
-        <p class="selector-label">Select Year: </p>
-        <div>
-          <select class="selector">
-            <option value="2015">2015</option>
-          </select>
-          <a href="#" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
+        <div class="selector-year-container">
+          <p class="selector-label">Select Year:</p>
+          <div>
+            <select class="selector">
+              <option value="1">All</option>
+              <option value="2015">2015</option>
+              <option value="2014">2014</option>
+            </select>
+            <a href="#" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
+          </div>  
+        </div>
+        <br>
+        <div class="graph-selector">
+          <p class="selector-label selector-label-graph">Select Graph: </p>
+            <ul class="select-list">
+              <li class="select-list-item"><a href="#rfp" name="rfpByMonths" class="select-list-text">RFP by Months</a></li>
+              <li class="select-list-item"><a href="#mils" name="milsByMonths" class="select-list-text">Millions Awarded by Month</a></li>
+            </ul>
         </div>
       </div>
     </div>
@@ -26,7 +38,9 @@
     <%= javascript_include_tag('dataloader.min.js') %>
     <%= javascript_include_tag('chart.js') %>
 
+    <!-- Render the chart -->
     <script>
+      /* Default to the RFP by Months graph */
       var chartdata = [ {
         "Month": "January",
         "proposals": <%=@months[0]%>
@@ -99,7 +113,163 @@
       "export": {
         "enabled": true
       }
+      });
+
+      /* Select the RFP by Months graph */
+      $(document).on("click","a[name='rfpByMonths']", function (e) {
+        alert("rfp graph");
+        var chartdata = [ {
+        "Month": "January",
+        "proposals": <%=@months[0]%>
+      }, {
+        "Month": "February",
+        "proposals": <%=@months[1]%>
+      }, {
+        "Month": "March",
+        "proposals": <%=@months[2]%>
+      }, {
+        "Month": "April",
+        "proposals": <%=@months[3]%>
+      }, {
+        "Month": "May",
+        "proposals": <%=@months[4]%>
+      }, {
+        "Month": "June",
+        "proposals": <%=@months[5]%>
+      }, {
+        "Month": "July",
+        "proposals": <%=@months[6]%>
+      }, {
+        "Month": "August",
+        "proposals": <%=@months[7]%>
+      }, {
+        "Month": "September",
+        "proposals": <%=@months[8]%>
+      }, {
+        "Month": "October",
+        "proposals": <%=@months[9]%>
+      }, {
+        "Month": "November",
+        "proposals": <%=@months[10]%>
+      }, {
+        "Month": "December",
+        "proposals": <%=@months[11]%>
+      }]
+
+      var chart = AmCharts.makeChart( "chartdiv", {
+      "type": "serial",
+      "theme": "light",
+      "dataProvider": chartdata,
+      "valueAxes": [ {
+        "gridColor": "#8E8E8E",
+        "gridAlpha": 0.3,
+        "dashLength": 0,
+        "minimum": 0
+      } ],
+      "gridAboveGraphs": true,
+      "startDuration": 1,
+      "graphs": [ {
+        "balloonText": "[[category]]: <b>[[value]]</b>",
+        "fillAlphas": 0.8,
+        "lineAlpha": 0.2,
+        "type": "column",
+        "valueField": "proposals"
+      } ],
+      "chartCursor": {
+        "categoryBalloonEnabled": false,
+        "cursorAlpha": 0,
+        "zoomable": false
+      },
+      "categoryField": "Month",
+      "categoryAxis": {
+        "gridPosition": "start",
+        "gridAlpha": 0,
+        "tickPosition": "start",
+        "tickLength": 20
+      },
+      "export": {
+        "enabled": true
+      }
     } );
+    });
+
+      /* Select the Millions of Dollars by Months graph */
+      $(document).on("click","a[name='milsByMonths']", function (e) {
+        alert("mils graph");
+        var chartdata = [ {
+        "Month": "January",
+        "proposals": <%=@months[0]%>
+      }, {
+        "Month": "February",
+        "proposals": 25
+      }, {
+        "Month": "March",
+        "proposals": 12
+      }, {
+        "Month": "April",
+        "proposals": <%=@months[3]%>
+      }, {
+        "Month": "May",
+        "proposals": <%=@months[4]%>
+      }, {
+        "Month": "June",
+        "proposals": <%=@months[5]%>
+      }, {
+        "Month": "July",
+        "proposals": <%=@months[6]%>
+      }, {
+        "Month": "August",
+        "proposals": <%=@months[7]%>
+      }, {
+        "Month": "September",
+        "proposals": <%=@months[8]%>
+      }, {
+        "Month": "October",
+        "proposals": <%=@months[9]%>
+      }, {
+        "Month": "November",
+        "proposals": <%=@months[10]%>
+      }, {
+        "Month": "December",
+        "proposals": <%=@months[11]%>
+      }]
+
+      var chart = AmCharts.makeChart( "chartdiv", {
+      "type": "serial",
+      "theme": "light",
+      "dataProvider": chartdata,
+      "valueAxes": [ {
+        "gridColor": "#8E8E8E",
+        "gridAlpha": 0.3,
+        "dashLength": 0,
+        "minimum": 0
+      } ],
+      "gridAboveGraphs": true,
+      "startDuration": 1,
+      "graphs": [ {
+        "balloonText": "[[category]]: <b>[[value]]</b>",
+        "fillAlphas": 0.8,
+        "lineAlpha": 0.2,
+        "type": "column",
+        "valueField": "proposals"
+      } ],
+      "chartCursor": {
+        "categoryBalloonEnabled": false,
+        "cursorAlpha": 0,
+        "zoomable": false
+      },
+      "categoryField": "Month",
+      "categoryAxis": {
+        "gridPosition": "start",
+        "gridAlpha": 0,
+        "tickPosition": "start",
+        "tickLength": 20
+      },
+      "export": {
+        "enabled": true
+      }
+    } );
+    });
 
     function createClass(name,rules){
         var style = document.createElement('style');
