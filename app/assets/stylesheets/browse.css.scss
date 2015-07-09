@@ -9,16 +9,6 @@ td {
 	padding:0 !important;
 }
 
-a:link {
-    color: #0000FF;
-    background-color: transparent !important;
-}
-
-/* visited link */
-a:visited {
-    color: #663366 !important;
-}
-
 .jumbotron {
 	padding-top: 0px !important;
 	margin-right: 50px !important;
@@ -50,15 +40,24 @@ a:visited {
 }
 
 .search-field {
-	border:0px solid; 
+	border:1px solid;
+	border-color: black;
 	height:40px; 
 	padding:0px 0px !important; 
 	position:relative;
 }
 
-.regular-text {
+.regular-text a:link {
 	font-size: 120%;
+	color: #0000FF;
+	background-color: transparent !important;
 }
+
+/* visited link */
+.regular-text a:visited {
+    color: #663366 !important;
+}
+
 
 .little-text {
 	font-size: 80%;
