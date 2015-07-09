@@ -3,17 +3,67 @@
 <div class="upper-search-box">
 	<div class="inner-search-bar col-md-12">
 		<form method="get" action="..." class="search-form"> 
-			<table cellpadding="0px" cellspacing="0px"> 
-			<tr> 
-			<td style="border-style:solid none solid solid;border-color:#4B7B9F;border-width:1px; font-size:24px;">
-			<input type="text" placeholder="Search" name="search_query" class="search-field"> 
+			<table cellpadding="0px" cellspacing="0px" class="col-md-12"> 
+			<tr style="font-size:24px;">
+			<td class="col-md-11">
+			<input type="text" placeholder="Search" name="search_query" class="search-field col-md-12"> 
 			</td>
-			<td> 
+			<td class="col-md-1"> 
 				<input class="btn-search" type="image" src="/assets/search.png" alt="Submit Search">
 			</td>
 			</tr>
-
 			</table>
+
+			<%# Radio Buttons in Browse page to limit the search to opportunities within 30, 60, or 90 days %>
+            <div class="form">
+            <table>
+            	<tr>
+            	<div class="col-md-12">
+            		<td class="col-md-2">
+                		<label class="control-label black-text">
+                    		within:
+                		</label>
+            		</td>
+
+            		<td class="col-md-6">
+                		<label onclick="" class="toggle-btn noscript radio black-text">
+                    		<input name="group2" type="radio">30 Days
+                		</label>
+                		<label class="toggle-btn noscript radio black-text">
+                    		<input name="group2" type="radio">60 Days
+                		</label>
+                		<label class="toggle-btn noscript radio black-text">
+                    		<input name="group2" type="radio">90 Days
+                		</label>
+                	</td>
+                </div>
+
+                	<%# drop down menu in Browse Page to sort the opportunities by a specific field %>
+                <div class="col-md-12">
+                	<td class="col-md-2">
+                		<label class="black-text">
+                    		Sort By:
+                		</label>
+            		</td>
+
+                	<td>
+						<div>
+            				<select class="selector col-md-6">
+              					<option value="1">Days Left</option>
+              					<option value="2015">Writer's Names</option>
+              					<option value="2014">Manager's Names</option>
+            				</select>
+            				<a href="#" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
+          				</div>  
+                	</td>
+                </div>
+
+            	</tr>
+
+
+            </table>
+            </div>
+
 		</form>		
 	</div>		
 <br>
@@ -21,21 +71,68 @@
 
 
 
-<div class="title">
-	<%= "Opportunities" %>
-</div>
+<table class="table">
+   <caption><h2 class="black-text">Opportunities</h2></caption>
+   <thead>
+      <tr>
+      	 <th>Number</th>
+         <th>Opportunity Name</th>
+         <th>Due Date</th>
+         <th>Status</th>
+      </tr>
+   </thead>
 
-<div class="media">
-	<div class="media-body">
-<table class="table table-hover">
-    <%i=1%>
-	<% @oppties.each do |o|%>
-    	<tr>
-    		<td><h2><%= link_to (i.to_s+' '+o.opptyName.to_s+" - ").to_s+o.proposalDueDate.to_s, o %></h2></td>
-            <%i+=1%>
-  		</tr>
-	<% end%>
+
+   <tbody>
+   		<% i=1 %>
+		<% @oppties.each do |o, count| %>
+   			<% if @to_do.include?(o) %>
+   				<tr class="success">
+   					<td><%= i %></td>
+    	     		<td>
+    	     			<div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
+    	     			<div class="little-text"><%= o.slComments %></div>
+    	     		</td>
+        		 	<td><%= o.proposalDueDate.to_s %></td>
+         			<td>Assigned</td>
+    	  		</tr>
+
+      		<% elsif @doing.include?(o) %>
+      			<tr class="warning">
+      				<td><%= i %></td>
+    	     		<td>
+    	     			<div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
+    	     			<div class="little-text"><%= o.slComments %></div>
+    	     		</td>
+        		 	<td><%= o.proposalDueDate.to_s %></td>
+         			<td>In Progress</td>
+    	  		</tr>
+
+      		<% elsif @none.include?(o) %>
+      			<tr class="active">
+        			<td><%= i %></td>
+        	 		<td>
+        	 			<div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
+    	     			<div class="little-text"><%= o.slComments %></div>
+        	 		</td>
+        		 	<td><%= o.proposalDueDate.to_s %></td>
+         			<td>None</td>
+      			</tr>
+      		
+      		<% else %>
+      			<tr class="media">
+      				<td><%= i %></td>
+    	     		<td>
+    	     			<div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
+    	     			<div class="little-text"><%= o.slComments %></div>
+    	     		</td>
+        		 	<td><%= o.proposalDueDate.to_s %></td>
+         			<td>THIS BLOCK NEEDS TO BE DELETED WHEN THE CODE IS WORKING(view/browse/index.html.erb)</td>
+    	  		</tr>
+      		<% end %>
+      		<% i=i+1 %>
+      	<% end %>
+
+   </tbody>
 </table>
-	</div>
-</div>
 </div>

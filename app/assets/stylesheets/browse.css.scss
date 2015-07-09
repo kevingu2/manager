@@ -5,6 +5,20 @@
 	
 }
 
+td {
+	padding:0 !important;
+}
+
+a:link {
+    color: #0000FF;
+    background-color: transparent !important;
+}
+
+/* visited link */
+a:visited {
+    color: #663366 !important;
+}
+
 .jumbotron {
 	padding-top: 0px !important;
 	margin-right: 50px !important;
@@ -18,16 +32,16 @@
 }
 
 .btn-search {
-	padding: 0px; 
-	float:right;
+	padding: 0px !important; 
+	float:left;
 	border-style: none; 
 	background-color: #005DA0;
-	width: 38px; height: 38px;
+	width: 40px; height: 40px;
 }
 
 .inner-search-bar {
 	height: 150px;
-	background-color: #4C4C4C !important;
+	background-color: #8E8E8E !important;
 }
 
 .title {
@@ -37,7 +51,37 @@
 
 .search-field {
 	border:0px solid; 
-	height:36px; 
-	padding:0px 0px; 
+	height:40px; 
+	padding:0px 0px !important; 
 	position:relative;
 }
+
+.regular-text {
+	font-size: 120%;
+}
+
+.little-text {
+	font-size: 80%;
+}
+
+.black-text {
+	color: black;
+}
+
+.selector {
+	//vertical-align:top;
+	float: left;
+}
+
+.selector-button {
+	height: 20px !important;
+	float: left;
+	text-align: center;
+	vertical-align: top;
+	line-height: 22px !important;
+	padding-top:0px !important;
+	color: white !important;
+}
+
+
+
