@@ -1,5 +1,6 @@
 class ResetOppties < ActiveRecord::Migration
   def change
+    drop_table :oppties
     create_table :oppties do |t|
       t.string :opptyId
       t.string :opptyName
