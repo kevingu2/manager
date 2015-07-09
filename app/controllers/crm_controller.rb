@@ -72,7 +72,7 @@ class CrmController < ApplicationController
         if technicalLead    != data.technicalLead
           diff["technicalLead"]    = technicalLead
           change = true end
-        if sslArch          != data.sslArch
+        if sslArch          != data.slArch
           diff["sslArch"]          = sslArch
           change = true end
         if slComments       != data.slComments
@@ -133,9 +133,9 @@ class CrmController < ApplicationController
       end
     end
     puts @changes.length
-    redirect_to crm_upload_path(:changes => @changes)
+    #edirect_to crm_upload_path(:changes => @changes)
     #redirect_to invalid_entry_index_path, notice: "File uploaded"
-    #redirect_to crm_index_path(:changes => @changes)
+    redirect_to crm_index_path
   end
 
   #downloading the modified excel file from the browser

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <p id="notice"><%= notice %></p>
 
 <body>
@@ -44,47 +43,6 @@
             <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
             <a class="btn btn-lg btn-primary btn-right" type="submit" href=<%= assign_index_path%> role="button"
                style="color:white">Assign</a>
-=======
-<html lang="en">
-  <head>
-    <title>Oppurtunities</title>
-    <p id="notice"><%= notice %></p>
-  </head>
-  <body>
-  <div class="container">
-    <!-- Main component for a primary marketing message or call to action -->
-    <div class="jumbotron">
-      <h1 class="op-title"><%= @oppty.opptyName%></h1>
-    <p><b>IDIQ CA:</b> <%= @oppty.idiqCA%></p>
-      <p><b>Status:</b> <%= @oppty.status2%></p>
-      <p><b>Value:</b> <%= @oppty.value%></p>
-      <p><b>Percentage Win:</b> <%= @oppty.pWin%></p>
-      <p><b>RFP Date:</b> <%= @oppty.rfpDate%></p>
-      <p><b>Award Date:</b> <%= @oppty.awardDate%></p>
-      <p><b>Submit Date:</b> <%= @oppty.submitDate%></p>
-      <p><b>Number of Writers:</b> <%= @oppty.numWriters%></p>
-      <p><b>Capture Manager:</b> <%= @oppty.captureMgr%></p>
-      <p><b>Program Manager:</b> <%= @oppty.programMgr%></p>
-      <p><b>SSL Organization:</b> <%= @oppty.sslOrg%></p>
-      <p><b>Technical Lead:</b> <%= @oppty.technicalLead%></p>
-      <p><b>SLL Architect:</b> <%= @oppty.sslArch%></p>
-      <p><b>ED:</b> <%= @oppty.ed%></p>
-      <p><b>ON:</b> <%= @oppty.on%></p>
-      <p><b>ATE:</b> <%= @oppty.ate%></p>
-      <p><b>SL Comments:</b> <%= @oppty.slComments%></p>
-      <p><b>SL Director:</b> <%= @oppty.slDir%></p>
-      <p><b>Lead Estimator:</b> <%= @oppty.leadEstim%></p>
-      <p><b>Engaged:</b> <%= @oppty.engaged%></p>
-      <p><b>Solution:</b> <%= @oppty.solution%></p>
-      <p><b>Estimate:</b> <%= @oppty.estimate%></p>
-      <p>
-      <div class="btn-container" style="margin:20px">
-        <a class="btn btn-lg btn-primary btn-left" href=<%=url_for(:back)%> role="button" style="color:white">Cancel</a>
-        <%if session[:role]=="writer" %>
-          <form method="post" action= <%=user_oppties_path(oppty_id: @oppty.id)%> >
-              <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-              <button class="btn btn-lg btn-primary btn-right" type="submit">Add</button>
->>>>>>> 01221428a040467aa01ebfeeb9e6f9b1dcd8b2ef
           </form>
       <%end%>
     </div>
@@ -101,17 +59,3 @@
 <!--script src="../../assets/js/ie10-viewport-bug-workaround.js"></script-->
 </body>
 
-<<<<<<< HEAD
-=======
-  </div> <!-- /container -->
-  <!-- Bootstrap core JavaScript
-  ================================================== -->
-  <!-- Placed at the end of the document so the pages load faster -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-  <!--script src="../../assets/js/ie10-viewport-bug-workaround.js"></script-->
-  </body>
-</html>
->>>>>>> 01221428a040467aa01ebfeeb9e6f9b1dcd8b2ef
