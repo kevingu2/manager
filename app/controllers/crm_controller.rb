@@ -28,7 +28,7 @@ class CrmController < ApplicationController
       programMgr           = o["ProgramMgr"]
       proposalMgr          = o["ProposalMgr"]
       technicalLead        = o["TechnicalLead"]
-      sslArch              = o["SLArch"]
+      slArch              = o["SLArch"]
       slComments           = o["SL Comments"]
       rfpDate              = Date.new(1899,12,30) + o["RFPDate"].to_f
       awardDate            = Date.new(1899,12,30) + o["AwardDate"].to_f
@@ -72,8 +72,8 @@ class CrmController < ApplicationController
         if technicalLead    != data.technicalLead
           diff["technicalLead"]    = technicalLead
           change = true end
-        if sslArch          != data.slArch
-          diff["sslArch"]          = sslArch
+        if slArch          != data.slArch
+          diff["slArch"]          = slArch
           change = true end
         if slComments       != data.slComments
           diff["slComments"]       = slComments
@@ -119,7 +119,7 @@ class CrmController < ApplicationController
         @oppty.programMgr       = programMgr
         @oppty.proposalMgr      = proposalMgr
         @oppty.technicalLead    = technicalLead
-        @oppty.sslArch          = sslArch
+        @oppty.slArch           = slArch
         @oppty.slComments       = slComments
         @oppty.rfpDate          = rfpDate
         @oppty.awardDate        = awardDate
