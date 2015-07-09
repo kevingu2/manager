@@ -11,10 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20150708192123) do
-=======
-ActiveRecord::Schema.define(version: 20150707185042) do
+ActiveRecord::Schema.define(version: 20150709161644) do
 
   create_table "allocated_tasks", force: true do |t|
     t.string   "title"
@@ -23,7 +20,6 @@ ActiveRecord::Schema.define(version: 20150707185042) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
->>>>>>> f3f52c401a974d67b7a4f6359d62e10629151fad
 
   create_table "histories", force: true do |t|
     t.integer  "oppty_id"
@@ -55,7 +51,7 @@ ActiveRecord::Schema.define(version: 20150707185042) do
     t.date     "rfpDate"
     t.date     "awardDate"
     t.date     "submitDate"
-    t.boolean  "done",            default: false
+    t.boolean  "done",                  default: false
     t.date     "proposalDueDate"
     t.string   "slDir"
     t.string   "leadEstim"
@@ -64,6 +60,85 @@ ActiveRecord::Schema.define(version: 20150707185042) do
     t.string   "estimate"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "numWriters"
+    t.string   "codeName"
+    t.string   "descriptionOfWork"
+    t.string   "category"
+    t.string   "pwald"
+    t.integer  "pBid"
+    t.integer  "awardFV"
+    t.integer  "saicvaPercent"
+    t.integer  "saicva"
+    t.integer  "mat"
+    t.integer  "materialsTV"
+    t.integer  "subc"
+    t.integer  "subTV"
+    t.integer  "cg_va"
+    t.integer  "sss_va"
+    t.integer  "nwi_va"
+    t.integer  "hwi_va"
+    t.integer  "itms_va"
+    t.integer  "tss_va"
+    t.integer  "ccds_va"
+    t.integer  "mss_va"
+    t.integer  "swi_va"
+    t.integer  "lsc_va"
+    t.integer  "zzOth_va"
+    t.integer  "pri"
+    t.string   "aop"
+    t.string   "peg"
+    t.string   "mustWin"
+    t.string   "feeIndic"
+    t.string   "slutil"
+    t.string   "recompete"
+    t.string   "competitive"
+    t.string   "international"
+    t.string   "strategic"
+    t.string   "bundle"
+    t.string   "bidReviewStream"
+    t.string   "definedDelivPgm"
+    t.string   "evaluationCriteria"
+    t.string   "perfWorkLoc"
+    t.string   "classIfReqmt"
+    t.string   "grouping"
+    t.string   "reasonForWinLoss"
+    t.float    "egr"
+    t.string   "slCat"
+    t.string   "slPri"
+    t.string   "slNote"
+    t.date     "crmRunDate"
+    t.date     "contractStartDate"
+    t.string   "rfpFYPer"
+    t.string   "submitFYPer"
+    t.string   "awardFYPer"
+    t.string   "preBPprojID"
+    t.integer  "fy16PreBP"
+    t.integer  "fy16PreBPSpent"
+    t.integer  "fy16PreBPSpentPercent"
+    t.string   "bpProjID"
+    t.integer  "fy16BDTot"
+    t.integer  "fy16BDTotSpent"
+    t.integer  "fy16BDTotSpentPercent"
+    t.date     "financeDate"
+    t.string   "cgSecOrg"
+    t.string   "cgSecMgr"
+    t.string   "cgOrg"
+    t.string   "cgMgr"
+    t.string   "opOrg"
+    t.string   "cgOpMgr"
+    t.string   "cgPgmDir"
+    t.string   "bdMgr"
+    t.string   "crmRecOwner"
+    t.string   "sslMgr"
+    t.integer  "divNum"
+    t.string   "customer"
+    t.string   "endCustomer"
+    t.integer  "crn"
+    t.string   "contractType"
+    t.string   "opptyClass"
+    t.integer  "numberOfAwards"
+    t.integer  "totalPOP"
+    t.string   "primeSub"
   end
 
   create_table "user_oppties", force: true do |t|
@@ -83,6 +158,7 @@ ActiveRecord::Schema.define(version: 20150707185042) do
     t.string   "role"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "remember_digest"
   end
 
 end
