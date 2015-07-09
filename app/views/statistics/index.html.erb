@@ -5,7 +5,7 @@
   <body>
     <div class="jumbotron col-md-11">
       <div class="chart-container col-md-10">
-        <h2 class="chart-title">RFP per Month</h2>
+        <h2 class="chart-title" id="chart-title">Request for Proposals by Month</h2>
         <div id="chartdiv"></div>
       </div>
       <div class="selector-container col-md-2">
@@ -40,43 +40,43 @@
 
     <!-- Render the chart -->
     <script>
-      /* Default to the RFP by Months graph */
+      /* Default to the RFP by rfpMonths graph */
       var chartdata = [ {
         "Month": "January",
-        "proposals": <%=@months[0]%>
+        "proposals": <%=@rfpMonths[0]%>
       }, {
         "Month": "February",
-        "proposals": <%=@months[1]%>
+        "proposals": <%=@rfpMonths[1]%>
       }, {
         "Month": "March",
-        "proposals": <%=@months[2]%>
+        "proposals": <%=@rfpMonths[2]%>
       }, {
         "Month": "April",
-        "proposals": <%=@months[3]%>
+        "proposals": <%=@rfpMonths[3]%>
       }, {
         "Month": "May",
-        "proposals": <%=@months[4]%>
+        "proposals": <%=@rfpMonths[4]%>
       }, {
         "Month": "June",
-        "proposals": <%=@months[5]%>
+        "proposals": <%=@rfpMonths[5]%>
       }, {
         "Month": "July",
-        "proposals": <%=@months[6]%>
+        "proposals": <%=@rfpMonths[6]%>
       }, {
         "Month": "August",
-        "proposals": <%=@months[7]%>
+        "proposals": <%=@rfpMonths[7]%>
       }, {
         "Month": "September",
-        "proposals": <%=@months[8]%>
+        "proposals": <%=@rfpMonths[8]%>
       }, {
         "Month": "October",
-        "proposals": <%=@months[9]%>
+        "proposals": <%=@rfpMonths[9]%>
       }, {
         "Month": "November",
-        "proposals": <%=@months[10]%>
+        "proposals": <%=@rfpMonths[10]%>
       }, {
         "Month": "December",
-        "proposals": <%=@months[11]%>
+        "proposals": <%=@rfpMonths[11]%>
       }]
 
       var chart = AmCharts.makeChart( "chartdiv", {
@@ -87,7 +87,8 @@
         "gridColor": "#8E8E8E",
         "gridAlpha": 0.3,
         "dashLength": 0,
-        "minimum": 0
+        "minimum": 0,
+        "title": "# of RFPs"
       } ],
       "gridAboveGraphs": true,
       "startDuration": 1,
@@ -115,45 +116,45 @@
       }
       });
 
-      /* Select the RFP by Months graph */
+      /* Select the RFP by rfpMonths graph */
       $(document).on("click","a[name='rfpByMonths']", function (e) {
-        alert("rfp graph");
+        document.getElementById("chart-title").innerHTML = "Request for Proposals by Month";
         var chartdata = [ {
         "Month": "January",
-        "proposals": <%=@months[0]%>
+        "proposals": <%=@rfpMonths[0]%>
       }, {
         "Month": "February",
-        "proposals": <%=@months[1]%>
+        "proposals": <%=@rfpMonths[1]%>
       }, {
         "Month": "March",
-        "proposals": <%=@months[2]%>
+        "proposals": <%=@rfpMonths[2]%>
       }, {
         "Month": "April",
-        "proposals": <%=@months[3]%>
+        "proposals": <%=@rfpMonths[3]%>
       }, {
         "Month": "May",
-        "proposals": <%=@months[4]%>
+        "proposals": <%=@rfpMonths[4]%>
       }, {
         "Month": "June",
-        "proposals": <%=@months[5]%>
+        "proposals": <%=@rfpMonths[5]%>
       }, {
         "Month": "July",
-        "proposals": <%=@months[6]%>
+        "proposals": <%=@rfpMonths[6]%>
       }, {
         "Month": "August",
-        "proposals": <%=@months[7]%>
+        "proposals": <%=@rfpMonths[7]%>
       }, {
         "Month": "September",
-        "proposals": <%=@months[8]%>
+        "proposals": <%=@rfpMonths[8]%>
       }, {
         "Month": "October",
-        "proposals": <%=@months[9]%>
+        "proposals": <%=@rfpMonths[9]%>
       }, {
         "Month": "November",
-        "proposals": <%=@months[10]%>
+        "proposals": <%=@rfpMonths[10]%>
       }, {
         "Month": "December",
-        "proposals": <%=@months[11]%>
+        "proposals": <%=@rfpMonths[11]%>
       }]
 
       var chart = AmCharts.makeChart( "chartdiv", {
@@ -164,7 +165,8 @@
         "gridColor": "#8E8E8E",
         "gridAlpha": 0.3,
         "dashLength": 0,
-        "minimum": 0
+        "minimum": 0,
+        "title": "# of RFPs"
       } ],
       "gridAboveGraphs": true,
       "startDuration": 1,
@@ -193,45 +195,45 @@
     } );
     });
 
-      /* Select the Millions of Dollars by Months graph */
+      /* Select the Millions of Dollars by rfpMonths graph */
       $(document).on("click","a[name='milsByMonths']", function (e) {
-        alert("mils graph");
+        document.getElementById("chart-title").innerHTML = "Millions $ Awarded by Month";
         var chartdata = [ {
         "Month": "January",
-        "proposals": <%=@months[0]%>
+        "proposals": <%=@milMonths[0]%>
       }, {
         "Month": "February",
-        "proposals": 25
+        "proposals": <%=@milMonths[1]%>
       }, {
         "Month": "March",
-        "proposals": 12
+        "proposals": <%=@milMonths[2]%>
       }, {
         "Month": "April",
-        "proposals": <%=@months[3]%>
+        "proposals": <%=@milMonths[3]%>
       }, {
         "Month": "May",
-        "proposals": <%=@months[4]%>
+        "proposals": <%=@milMonths[4]%>
       }, {
         "Month": "June",
-        "proposals": <%=@months[5]%>
+        "proposals": <%=@milMonths[5]%>
       }, {
         "Month": "July",
-        "proposals": <%=@months[6]%>
+        "proposals": <%=@milMonths[6]%>
       }, {
         "Month": "August",
-        "proposals": <%=@months[7]%>
+        "proposals": <%=@milMonths[7]%>
       }, {
         "Month": "September",
-        "proposals": <%=@months[8]%>
+        "proposals": <%=@milMonths[8]%>
       }, {
         "Month": "October",
-        "proposals": <%=@months[9]%>
+        "proposals": <%=@milMonths[9]%>
       }, {
         "Month": "November",
-        "proposals": <%=@months[10]%>
+        "proposals": <%=@milMonths[10]%>
       }, {
         "Month": "December",
-        "proposals": <%=@months[11]%>
+        "proposals": <%=@milMonths[11]%>
       }]
 
       var chart = AmCharts.makeChart( "chartdiv", {
@@ -242,7 +244,8 @@
         "gridColor": "#8E8E8E",
         "gridAlpha": 0.3,
         "dashLength": 0,
-        "minimum": 0
+        "minimum": 0,
+        "title": "Millions of $"
       } ],
       "gridAboveGraphs": true,
       "startDuration": 1,
