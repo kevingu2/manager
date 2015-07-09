@@ -11,6 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
+ActiveRecord::Schema.define(version: 20150708192123) do
+=======
 ActiveRecord::Schema.define(version: 20150707185042) do
 
   create_table "allocated_tasks", force: true do |t|
@@ -20,6 +23,7 @@ ActiveRecord::Schema.define(version: 20150707185042) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+>>>>>>> f3f52c401a974d67b7a4f6359d62e10629151fad
 
   create_table "histories", force: true do |t|
     t.integer  "oppty_id"
@@ -31,8 +35,36 @@ ActiveRecord::Schema.define(version: 20150707185042) do
   add_index "histories", ["oppty_id"], name: "index_histories_on_oppty_id"
   add_index "histories", ["user_id"], name: "index_histories_on_user_id"
 
-# Could not dump table "oppties" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  create_table "oppties", force: true do |t|
+    t.string   "opptyId"
+    t.string   "opptyName"
+    t.string   "idiqCA"
+    t.string   "status2"
+    t.float    "value"
+    t.integer  "pWin"
+    t.string   "captureMgr"
+    t.string   "programMgr"
+    t.string   "proposalMgr"
+    t.string   "sslOrg"
+    t.string   "technicalLead"
+    t.string   "slArch"
+    t.string   "ed"
+    t.string   "on"
+    t.string   "ate"
+    t.string   "slComments"
+    t.date     "rfpDate"
+    t.date     "awardDate"
+    t.date     "submitDate"
+    t.boolean  "done",            default: false
+    t.date     "proposalDueDate"
+    t.string   "slDir"
+    t.string   "leadEstim"
+    t.string   "engaged"
+    t.string   "solution"
+    t.string   "estimate"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "user_oppties", force: true do |t|
     t.integer  "oppty_id"
@@ -51,7 +83,6 @@ ActiveRecord::Schema.define(version: 20150707185042) do
     t.string   "role"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "remember_digest"
   end
 
 end

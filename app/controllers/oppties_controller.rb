@@ -1,6 +1,7 @@
 #individual opportunity page
 
 class OpptiesController < ApplicationController
+  CRM_PATH = File.join(Rails.root, "public", "uploads")
   before_action :set_oppty, only: [:show, :edit, :update, :destroy]
 
   # GET /oppties
@@ -12,6 +13,8 @@ class OpptiesController < ApplicationController
   # GET /oppties/1
   # GET /oppties/1.json
   def show
+    @numWriters=UserOppty.where(oppty_id: params[:id]).joins(:user).where('users.role'=>'writer').count
+    puts @numWriters
   end
 
   # GET /oppties/new
@@ -44,6 +47,30 @@ class OpptiesController < ApplicationController
   def update
     respond_to do |format|
       puts oppty_params
+      excelFileName=nil
+      if Dir[CRM_PATH+'/*.xlsm'][0]
+        excelFileName=File.basename(Dir[CRM_PATH+'/*.xlsm'][0])
+      end
+      puts excelFileName
+      if excelFileName
+        puts oppty_params.to_json
+        key=true
+        arg=[]
+        change=[]
+        JSON.parse(oppty_params.to_json).each do |item|
+          puts item
+          if key
+            change<<'\''+@oppty.opptyId+'\''
+            change<<'\''+item+'\''
+            key=false
+          else
+            change<<'\''+item+'\''
+            arg<<change
+            key=true
+          end
+        end
+      end
+      puts arg
       if @oppty.update(oppty_params)
         format.html { redirect_to @oppty, notice: 'Oppty was successfully updated.' }
         format.json { render :show, status: :ok, location: @oppty }

@@ -21,7 +21,7 @@ def findRows(fileName, ids):
 
 def findCols(cols):
     # can only edit certain columns. if more are needed, add to this dictionary
-    column_hash = {'SLDir': 'CZ', 'SLArch': 'DA', 'LeadEstim': 'DB', 'Engaged r/y/g': 'DL', 'Solution r/y/g': 'DM', 'Estimate r/y/g': 'DN', 'SL Comments': 'DO'}
+    column_hash = {'slDir': 'CZ', 'slArch': 'DA', 'leadEstim': 'DB', 'engaged': 'DL', 'solution r/y/g': 'DM', 'estimate': 'DN', 'slComments': 'DO'}
     columns = []
     for c in cols:
         columns.append(column_hash[c])
@@ -32,6 +32,8 @@ wb = Workbook()
 fileName = args[1]
 strs = args[2]
 data = [[i for i in x.strip(" []").split(", ")] for x in strs.strip('[]').split("],")] # magic
+<<<<<<< HEAD
+=======
 wb.open(fileName)
 ws = wb.get_sheet_by_name('PipelineView')
 #####get the rows/cols/valuesToChange#########
@@ -49,3 +51,4 @@ for c in range(len(changes)): # make the changes
     ws.cell(str(cols[c]) + str(rows[c])).value = changes[c]
 wb.save(fileName)
 #wb.close()
+>>>>>>> f3f52c401a974d67b7a4f6359d62e10629151fad
