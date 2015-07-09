@@ -53,6 +53,4 @@ class StatisticsController < ApplicationController
 
   	#at this point @months has the RFP counts for each month
   end
-
-  def index/rfp-months
 end
