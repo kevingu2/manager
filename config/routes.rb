@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   get 'crm/index'
 
+  get 'crm/upload'
+  
   post 'crm/upload'
 
   get 'crm/download'
