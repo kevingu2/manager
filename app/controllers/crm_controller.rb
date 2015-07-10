@@ -15,6 +15,7 @@ class CrmController < ApplicationController
     data = JSON.parse(data)
     @changes = [] # holds list of hashes that contain what is changed
     newCount = 0
+    noChange = 0
     data.each do |o|
       #if there is some magical ruby way to do this better, please do it. I don't know ruby :(
       #quite possibly the hackiest code in this project
@@ -343,9 +344,10 @@ class CrmController < ApplicationController
         if fy16PreBPSpent   != data.fy16PreBPSpent
           diff["fy16PreBPSpent"]  = fy16PreBPSpent
           change = true end
-        if fy16PreBPSpentPercent   != data.fy16PreBPSpentPercent
-          diff["fy16PreBPSpentPercent"]  = fy16PreBPSpentPercent
-          change = true end
+        # for some reason this sometimes has the value "0Budget" which can be seen in the excelsheet
+        # if fy16PreBPSpentPercent   != data.fy16PreBPSpentPercent
+        #   diff["fy16PreBPSpentPercent"]  = fy16PreBPSpentPercent
+        #   change = true end
         if bpProjID   != data.bpProjID
           diff["bpProjID"]  = bpProjID
           change = true end
@@ -355,9 +357,10 @@ class CrmController < ApplicationController
         if fy16BDTotSpent   != data.fy16BDTotSpent
           diff["fy16BDTotSpent"]  = fy16BDTotSpent
           change = true end
-        if fy16BDTotSpentPercent   != data.fy16BDTotSpentPercent
-          diff["fy16BDTotSpentPercent"]  = fy16BDTotSpentPercent
-          change = true end
+        # "0Budget" issue
+        # if fy16BDTotSpentPercent   != data.fy16BDTotSpentPercent
+        #   diff["fy16BDTotSpentPercent"]  = fy16BDTotSpentPercent
+        #   change = true end
         if financeDate   != data.financeDate
           diff["financeDate"]  = financeDate
           change = true end
@@ -424,19 +427,25 @@ class CrmController < ApplicationController
         if fy16BPSpent   != data.fy16BPSpent
           diff["fy16BPSpent"]  = fy16BPSpent
           change = true end
-        if fy16BPSpentPercent   != data.fy16BPSpentPercent
-          diff["fy16BPSpentPercent"]  = fy16BPSpentPercent
-          change = true end
+        # "0Budget"
+        # if fy16BPSpentPercent   != data.fy16BPSpentPercent
+        #   diff["fy16BPSpentPercent"]  = fy16BPSpentPercent
+        #   change = true end
         if change == true
-          diff["opptyId"] = id
           # because if we input "" into the database, it goes in as nil
           # instead of "", so check if that's what happened, and if true, ignore
-          @changes.each do |key, value|
+          to_push = false
+          diff.each do |key, value|
             if value == "" #nil != ""
             else
-              @changes.push(diff) # add hash to list
+              puts key, value
+              to_push = true
               break
             end
+          end
+          if to_push == true
+            diff["opptyId"] = id
+            @changes.push(diff) # add hash to list
           end
         end
       else
@@ -552,6 +561,8 @@ class CrmController < ApplicationController
     puts "newCount: " + newCount.to_s
     #edirect_to crm_upload_path(:changes => @changes)
     #redirect_to invalid_entry_index_path, notice: "File uploaded"
+    #redirect_to crm_upload_path(@changes)
+    #redirect_to crm_index_path(@changes)
     redirect_to crm_index_path
   end
 
