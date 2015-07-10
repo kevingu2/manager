@@ -31,9 +31,9 @@ Rails.application.configure do
   # Checks for improperly declared sprockets dependencies.
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
-  config.assets.precompile += %w( jquery.knob.js )
+  config.assets.precompile += %w( jquery.knob.js)
   config.assets.precompile += %w( jquery.ui.widget.js)
-  config.assets.precompile += %w( jquery.iframe-transport.js )
+  config.assets.precompile += %w( jquery.iframe-transport.js)
   config.assets.precompile += %w( jquery.fileupload.js)
   config.assets.precompile += %w( upload.js)
   config.assets.precompile += %w( amcharts.js)
@@ -41,7 +41,8 @@ Rails.application.configure do
   config.assets.precompile += %w( light.js)
   config.assets.precompile += %w( chart.js)
   config.assets.precompile += %w( dataloader.min.js)
-
+  config.assets.precompile += %w( bootstrap-notify.min.js)
+  config.assets.precompile += %w( jquery.growl.js)
 
 
   # Raises error for missing translations
