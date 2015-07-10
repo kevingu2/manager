@@ -14,6 +14,7 @@ class CrmController < ApplicationController
     data = `python bin/excelReader.py "public/uploads/#{fileName}"`
     data = JSON.parse(data)
     @changes = [] # holds list of hashes that contain what is changed
+    newCount = 0
     data.each do |o|
       #if there is some magical ruby way to do this better, please do it. I don't know ruby :(
       #quite possibly the hackiest code in this project
@@ -138,9 +139,12 @@ class CrmController < ApplicationController
         if value             != data.value
           diff["value"]            = value
           change = true end
-         if pWin             != data.pWin
-           diff["pWin"]            = pWin
-           change = true end
+        #########Commented out values are due to being stored as floats########
+        #########yay for floating point inaccuracies###########
+        #  if pWin             != data.pWin
+        #    diff["pWin"]            = pWin
+        #    old["pWin"] = data.pWin
+        #    change = true end
         if captureMgr        != data.captureMgr
           diff["captureMgr"]       = captureMgr
           change = true end
@@ -425,9 +429,18 @@ class CrmController < ApplicationController
           change = true end
         if change == true
           diff["opptyId"] = id
-          @changes.push(diff) # add hash to list
+          # because if we input "" into the database, it goes in as nil
+          # instead of "", so check if that's what happened, and if true, ignore
+          @changes.each do |key, value|
+            if value == "" #nil != ""
+            else
+              @changes.push(diff) # add hash to list
+              break
+            end
+          end
         end
       else
+        newCount += 1
         @oppty=Oppty.new
         #fields
         @oppty.opptyId                = id
@@ -534,7 +547,9 @@ class CrmController < ApplicationController
         @oppty.save
       end
     end
-    puts @changes.length
+    puts "changes: " + @changes.length.to_s
+    puts @changes[0]
+    puts "newCount: " + newCount.to_s
     #edirect_to crm_upload_path(:changes => @changes)
     #redirect_to invalid_entry_index_path, notice: "File uploaded"
     redirect_to crm_index_path
