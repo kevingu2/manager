@@ -15,7 +15,6 @@ class CrmController < ApplicationController
     data = JSON.parse(data)
     @changes = [] # holds list of hashes that contain what is changed
     newCount = 0
-    noChange = 0
     data.each do |o|
       #if there is some magical ruby way to do this better, please do it. I don't know ruby :(
       #quite possibly the hackiest code in this project
@@ -437,10 +436,11 @@ class CrmController < ApplicationController
           to_push = false
           diff.each do |key, value|
             if value == "" #nil != ""
+              diff.delete(key)
             else
               puts key, value
               to_push = true
-              break
+              #break
             end
           end
           if to_push == true
@@ -559,10 +559,10 @@ class CrmController < ApplicationController
     puts "changes: " + @changes.length.to_s
     puts @changes[0]
     puts "newCount: " + newCount.to_s
-    #edirect_to crm_upload_path(:changes => @changes)
+    #redirect_to crm_upload_path(:changes => @changes)
     #redirect_to invalid_entry_index_path, notice: "File uploaded"
     #redirect_to crm_upload_path(@changes)
-    #redirect_to crm_index_path(@changes)
+    #redirect_to crm_upload_path
     redirect_to crm_index_path
   end
 
