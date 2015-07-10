@@ -414,6 +414,15 @@ class CrmController < ApplicationController
         if primeSub   != data.primeSub
           diff["primeSub"]  = primeSub
           change = true end
+        if fy16BP   != data.fy16BP
+          diff["fy16BP"]  = fy16BP
+          change = true end
+        if fy16BPSpent   != data.fy16BPSpent
+          diff["fy16BPSpent"]  = fy16BPSpent
+          change = true end
+        if fy16BPSpentPercent   != data.fy16BPSpentPercent
+          diff["fy16BPSpentPercent"]  = fy16BPSpentPercent
+          change = true end
         if change == true
           diff["opptyId"] = id
           @changes.push(diff) # add hash to list
@@ -477,7 +486,7 @@ class CrmController < ApplicationController
         @oppty.bundle                 = bundle
         @oppty.bidReviewStream        = bidReviewStream
         @oppty.definedDelivPgm        = definedDelivPgm
-        @oppty.evaluationCriteria     = evaluationCritera
+        @oppty.evaluationCriteria     = evaluationCriteria
         @oppty.perfWorkLoc            = perfWorkLoc
         @oppty.classIfReqmt           = classIfReqmt
         @oppty.grouping               = grouping
@@ -519,6 +528,9 @@ class CrmController < ApplicationController
         @oppty.numberOfAwards         = numberOfAwards
         @oppty.totalPOP               = totalPOP
         @oppty.primeSub               = primeSub
+        @oppty.fy16BP                 = fy16BP
+        @oppty.fy16BPSpent            = fy16BPSpent
+        @oppty.fy16BPSpentPercent     = fy16BPSpentPercent
         @oppty.save
       end
     end
