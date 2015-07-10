@@ -39,15 +39,6 @@ td {
 	text-align: center;
 }
 
-.search-field {
-	border:1px solid;
-	border-color: black;
-	height:40px; 
-	padding:0px 0px !important; 
-	position:relative;
-	font-size: 20px;
-}
-
 .regular-text a:link {
 	font-size: 120%;
 	color: #0000FF;
@@ -87,3 +78,11 @@ td {
 	padding-right: 30px !important;
 }
 
+input#search{
+	border:1px solid;
+	border-color: black;
+	height:40px;
+	padding:0px 0px !important; 
+	position:relative;
+	font-size: 20px;
+}
