@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150709161644) do
+ActiveRecord::Schema.define(version: 20150710145905) do
 
   create_table "allocated_tasks", force: true do |t|
     t.string   "title"
@@ -139,6 +139,9 @@ ActiveRecord::Schema.define(version: 20150709161644) do
     t.integer  "numberOfAwards"
     t.integer  "totalPOP"
     t.string   "primeSub"
+    t.integer  "fy16BP"
+    t.integer  "fy16BPSpent"
+    t.integer  "fy16BPSpentPercent"
   end
 
   create_table "user_oppties", force: true do |t|
