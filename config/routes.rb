@@ -25,6 +25,8 @@ Rails.application.routes.draw do
 
   get 'browse/index'
 
+  get 'browse/search'
+
   get 'tasks/index'
 
   get 'sessions/new'
