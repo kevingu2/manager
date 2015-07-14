@@ -6,7 +6,7 @@ include ActionView::Helpers::DateHelper
 class BrowseController < ApplicationController
   def index
     #get all Oppty objects from database into the @oppties collection
-    @oppties = Oppty.all
+    @oppties = Oppty.paginate(:per_page => 20, :page => params[:page])
     
     @done=UserOppty.where(user_id:session[:user_id]).where(status:0).joins(:oppty).includes(:oppty)
     @doing=UserOppty.where(user_id:session[:user_id]).where(status:1).joins(:oppty).includes(:oppty)
@@ -45,7 +45,7 @@ class BrowseController < ApplicationController
   end
 
   def search
-    @oppties = Oppty.where(["opptyName LIKE ?", "%#{params[:search]}%"])
+    @oppties = Oppty.where(["opptyName LIKE ?", "%#{params[:search]}%"]).paginate(:per_page => 20, :page => params[:page])
 
     @done=UserOppty.where(user_id:session[:user_id]).where(status:0).joins(:oppty).includes(:oppty)
     @doing=UserOppty.where(user_id:session[:user_id]).where(status:1).joins(:oppty).includes(:oppty)

@@ -57,9 +57,13 @@
                     <td class="col-md-3">
                       <div>
                         <select class="selector col-md-9">
-                          <option value="1">Days Left</option>
-                          <option value="2015">Writer's Names</option>
-                          <option value="2014">Manager's Names</option>
+                          <option value="none">none</option>
+                          <option value="days">Days Left</option>
+                          <option value="cmanager">Capture Managers</option>
+                          <option value="progmanager">Program Managers</option>
+                          <option value="pmanager">Proposal Managers</option>
+                          <option value="valuehl">Value(High to Low)</option>
+                          <option value="valuelh">Value(Low to High)</option>
                         </select>
                         <a href="#" name="sort-btn" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
                       </div>  
@@ -82,10 +86,10 @@
      <caption><h2 class="black-text">Opportunities</h2></caption>
      <thead>
         <tr>
-           <th>Number</th>
-           <th>Opportunity Name</th>
-           <th>Due Date</th>
-           <th>Status</th>
+           <th class="col-md-2">Opportunity ID</th>
+           <th class="col-md-6">Opportunity Name</th>
+           <th class="col-md-2">Due Date</th>
+           <th class="col-md-2">Status</th>
         </tr>
      </thead>
 
@@ -94,12 +98,11 @@
      <tbody>
 
         <div id='thirtyDays' style='visibility: hidden'>
-          <% i=1 %>
           <% unless @within30days == nil %>
             <% @within30days.each do |o| %>
               <% if @to_do.include?(o) %>
                 <tr class="success">
-                  <td><%= i %></td>
+                  <td><%= o.opptyId %></td>
                   <td>
                     <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
                       <div class="little-text"><%= o.slComments %></div>
@@ -110,7 +113,7 @@
 
               <% elsif @doing.include?(o) %>
                 <tr class="warning">
-                  <td><%= i %></td>
+                  <td><%= o.opptyId %></td>
                   <td>
                     <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
                     <div class="little-text"><%= o.slComments %></div>
@@ -121,7 +124,7 @@
 
               <% elsif @none.include?(o) %>
                 <tr class="active">
-                  <td><%= i %></td>
+                  <td><%= o.opptyId %></td>
                   <td>
                     <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
                     <div class="little-text"><%= o.slComments %></div>
@@ -132,7 +135,7 @@
                     
               <% else %>
                 <tr class="media">
-                  <td><%= i %></td>
+                  <td><%= o.opptyId %></td>
                   <td>
                     <div class="regular-text"><%= link_to o.opptyName, o %></div>
                     <div class="little-text"><%= o.slComments %></div>
@@ -141,18 +144,16 @@
                   <td>THIS BLOCK NEEDS TO BE DELETED WHEN THE CODE IS WORKING(view/browse/index.html.erb)</td>
                 </tr>
               <% end %>
-              <% i=i+1 %>
             <% end %>
           <% end %>
         </div>
 
         <div id='sixtyDays' style='visibility: hidden'>
-          <% i=1 %>
           <% unless @within60days == nil %>
             <% @within60days.each do |o| %>
               <% if @to_do.include?(o) %>
                 <tr class="success">
-                  <td><%= i %></td>
+                  <td><%= o.opptyId %></td>
                   <td>
                     <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
                       <div class="little-text"><%= o.slComments %></div>
@@ -163,7 +164,7 @@
 
               <% elsif @doing.include?(o) %>
                 <tr class="warning">
-                  <td><%= i %></td>
+                  <td><%= o.opptyId %></td>
                   <td>
                     <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
                     <div class="little-text"><%= o.slComments %></div>
@@ -174,7 +175,7 @@
 
               <% elsif @none.include?(o) %>
                 <tr class="active">
-                  <td><%= i %></td>
+                  <td><%= o.opptyId %></td>
                   <td>
                     <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
                     <div class="little-text"><%= o.slComments %></div>
@@ -185,7 +186,7 @@
                     
               <% else %>
                 <tr class="media">
-                  <td><%= i %></td>
+                  <td><%= o.opptyId %></td>
                   <td>
                     <div class="regular-text"><%= link_to o.opptyName, o %></div>
                     <div class="little-text"><%= o.slComments %></div>
@@ -194,19 +195,17 @@
                   <td>THIS BLOCK NEEDS TO BE DELETED WHEN THE CODE IS WORKING(view/browse/index.html.erb)</td>
                 </tr>
               <% end %>
-              <% i=i+1 %>
             <% end %>
           <% end %>
         </div>
 
 
         <div id='ninetyDays' style='visibility: hidden'>
-          <% i=1 %>
           <% unless @within90days == nil %>
             <% @within90days.each do |o| %>
               <% if @to_do.include?(o) %>
                 <tr class="success">
-                  <td><%= i %></td>
+                  <td><%= o.opptyId %></td>
                   <td>
                     <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
                       <div class="little-text"><%= o.slComments %></div>
@@ -217,7 +216,7 @@
 
               <% elsif @doing.include?(o) %>
                 <tr class="warning">
-                  <td><%= i %></td>
+                  <td><%= o.opptyId %></td>
                   <td>
                     <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
                     <div class="little-text"><%= o.slComments %></div>
@@ -228,7 +227,7 @@
 
               <% elsif @none.include?(o) %>
                 <tr class="active">
-                  <td><%= i %></td>
+                  <td><%= o.opptyId %></td>
                   <td>
                     <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
                     <div class="little-text"><%= o.slComments %></div>
@@ -239,7 +238,7 @@
                     
               <% else %>
                 <tr class="media">
-                  <td><%= i %></td>
+                  <td><%= o.opptyId %></td>
                   <td>
                     <div class="regular-text"><%= link_to o.opptyName, o %></div>
                     <div class="little-text"><%= o.slComments %></div>
@@ -248,17 +247,15 @@
                   <td>THIS BLOCK NEEDS TO BE DELETED WHEN THE CODE IS WORKING(view/browse/index.html.erb)</td>
                 </tr>
               <% end %>
-              <% i=i+1 %>
             <% end %>
           <% end %>
         </div>
 
         <div id='allDays' style='visibility: visible'>
-          <% i=1 %>
           <% @oppties.each do |o| %>
             <% if @to_do.include?(o) %>
               <tr class="success">
-                <td><%= i %></td>
+                <td><%= o.opptyId %></td>
                 <td>
                   <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
                     <div class="little-text"><%= o.slComments %></div>
@@ -269,7 +266,7 @@
 
             <% elsif @doing.include?(o) %>
               <tr class="warning">
-                <td><%= i %></td>
+                <td><%= o.opptyId %></td>
                 <td>
                   <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
                   <div class="little-text"><%= o.slComments %></div>
@@ -280,7 +277,7 @@
 
             <% elsif @none.include?(o) %>
               <tr class="active">
-                <td><%= i %></td>
+                <td><%= o.opptyId %></td>
                 <td>
                   <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
                   <div class="little-text"><%= o.slComments %></div>
@@ -291,7 +288,7 @@
                   
             <% else %>
               <tr class="media">
-                <td><%= i %></td>
+                <td><%= o.opptyId %></td>
                 <td>
                   <div class="regular-text"><%= link_to o.opptyName, o %></div>
                   <div class="little-text"><%= o.slComments %></div>
@@ -300,12 +297,16 @@
                 <td>THIS BLOCK NEEDS TO BE DELETED WHEN THE CODE IS WORKING(view/browse/index.html.erb)</td>
               </tr>
             <% end %>
-            <% i=i+1 %>
           <% end %>
         </div>
 
      </tbody>
   </table>
+
+  <div style="float: right !important">
+    <%= will_paginate @oppties %>
+  </div>
+
   </div>
 
 
