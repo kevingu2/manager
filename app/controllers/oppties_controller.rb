@@ -54,27 +54,18 @@ class OpptiesController < ApplicationController
       puts excelFileName
       if excelFileName
         puts oppty_params.to_json
-        key=true
-        arg=[]
-        change=[]
+        arg="["
         JSON.parse(oppty_params.to_json).each do |item|
-          puts item
-          if key
-            change<<'\''+@oppty.opptyId+'\''
-            item.each do |i|
-              change<<'\''+i+'\''
-            end
-            key=false
-          else
-            item.each do |i|
-              change<<'\''+i+'\''
-            end
-            arg<<change
-            key=true
-          end
+          arg << '[\'' + @oppty.opptyId + '\', \'' + item[0] + '\', \'' + item[1] + '\'], '
+
         end
+        arg = arg[0..-3]
+        arg <<"]"
       end
       puts arg
+      puts "starting python"
+      puts `python bin/cellEditor.py "public/uploads/#{excelFileName}" "#{arg}"`
+      puts "done"
       if @oppty.update(oppty_params)
         format.html { redirect_to @oppty, notice: 'Oppty was successfully updated.' }
         format.json { render :show, status: :ok, location: @oppty }

@@ -13,15 +13,19 @@ def findRows(fileName, ids):
     ws = wb['PipelineView']
     count = 1
     rows = []
-    for row in ws.rows: # search through all rows for the unique ID
-        if row[0].value in ids:
-            rows.append(count) # keep count of the row number that matches
-        count += 1
+    print fileName, ids
+    for i in ids:
+        count = 1
+        for row in ws.rows: # search through all rows for the unique ID
+            if row[0].value == i:
+                rows.append(count) # keep count of the row number that matches
+                break
+            count += 1
     return rows
 
 def findCols(cols):
     # can only edit certain columns. if more are needed, add to this dictionary
-    column_hash = {'slDir': 'CZ', 'slArch': 'DA', 'leadEstim': 'DB', 'engaged': 'DL', 'solution r/y/g': 'DM', 'estimate': 'DN', 'slComments': 'DO'}
+    column_hash = {'slDir': 'CZ', 'slArch': 'DA', 'leadEstim': 'DB', 'engaged': 'DL', 'solution': 'DM', 'estimate': 'DN', 'slComments': 'DO'}
     columns = []
     for c in cols:
         columns.append(column_hash[c])
@@ -32,8 +36,6 @@ wb = Workbook()
 fileName = args[1]
 strs = args[2]
 data = [[i for i in x.strip(" []").split(", ")] for x in strs.strip('[]').split("],")] # magic
-<<<<<<< HEAD
-=======
 wb.open(fileName)
 ws = wb.get_sheet_by_name('PipelineView')
 #####get the rows/cols/valuesToChange#########
@@ -46,9 +48,8 @@ for d in data:
     changes.append(d[2].strip('\''))
 rows = findRows(fileName, ids)
 cols = findCols(cols)
-
+#print len(cols), len(rows)
 for c in range(len(changes)): # make the changes
     ws.cell(str(cols[c]) + str(rows[c])).value = changes[c]
 wb.save(fileName)
 #wb.close()
->>>>>>> f3f52c401a974d67b7a4f6359d62e10629151fad
