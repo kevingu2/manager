@@ -61,10 +61,14 @@ class OpptiesController < ApplicationController
           puts item
           if key
             change<<'\''+@oppty.opptyId+'\''
-            change<<'\''+item+'\''
+            item.each do |i|
+              change<<'\''+i+'\''
+            end
             key=false
           else
-            change<<'\''+item+'\''
+            item.each do |i|
+              change<<'\''+i+'\''
+            end
             arg<<change
             key=true
           end
