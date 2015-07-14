@@ -61,12 +61,12 @@
   $(document).on("click","a[name='notificationIcon']", function (e) {
     $.notify({
       icon: 'glyphicon glyphicon-exclamation-sign',
-      title: ' Current Opportunities: ',
-      message: ' 8, View on Tasks Page',
+      title: '3 Tasks have been accepted',
+      message: 'Click notification to visit the Tasks Page',
       url: '<%= allocated_tasks_index_path%>',
       target: '_self'
     },{
-      delay: '70000',
+      delay: '0',
       type: 'info',
     });
   });
