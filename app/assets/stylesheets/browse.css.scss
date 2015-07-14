@@ -74,10 +74,13 @@ td {
 	border-color: #005DA0 !important;
 }
 
-.control-label {
-	padding-right: 30px !important;
+.control-label-button {
+	float: left !important;
 }
 
+.field-label {
+	padding-right: 30px !important;
+}
 input#search{
 	border:1px solid;
 	border-color: black;

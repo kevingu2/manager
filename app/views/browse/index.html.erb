@@ -1,4 +1,4 @@
-
+<html lang="en">
 <body>
   <div class="jumbotron">
   <div class="upper-search-box">
@@ -21,25 +21,30 @@
               	<tr>
               	<div class="col-md-9">
               		<td class="col-md-1">
-                  		<label class="control-label black-text">
+                  		<label class="black-text field-label">
                       		Within:
                   		</label>
               		</td>
 
               		<td class="col-md-1">
-                  		<label onclick="" class="toggle-btn noscript radio black-text">
-                      		<input name="group2" type="radio">30 Days
-                  		</label>
-                  		<label class="toggle-btn noscript radio black-text">
-                      		<input name="group2" type="radio">60 Days
-                  		</label>
-                  		<label class="toggle-btn noscript radio black-text">
-                      		<input name="group2" type="radio">90 Days
-                  		</label>
+                    <label class="toggle-btn radio black-text">
+                          <input id="thirty_days_left" name="group2" type="radio" value="30">30 Days
+                      </label> 
+                      <label class="toggle-btn radio black-text">
+                          <input id="sixty_days_left" name="group2" type="radio" value="60">60 Days
+                      </label>
+                      <label class="toggle-btn radio black-text">
+                          <input id="ninety_days_left" name="group2" type="radio" value="90">90 Days
+                      </label> 
+                      <td>
+                        <a href="#" name="radio-style-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
+                      </td> 
                   </td>
-                  </div>
+                </div>
 
-                  <td class="col-md-5">
+                  <!-- this is the space between the radio buttons and the drop down menu for sorting.
+                      it prevents the ratio of clicking not to be a random place on the screen -->
+                  <td class="col-md-6">
                   </td>
 
                   <!-- drop down menu in Browse Page to sort the opportunities by a specific field -->
@@ -56,7 +61,7 @@
                 					<option value="2015">Writer's Names</option>
                 					<option value="2014">Manager's Names</option>
               				  </select>
-              				  <a href="#" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
+              				  <a href="#" name="sort-btn" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
             				  </div>  
                   	</td>
                   </div>
@@ -85,57 +90,263 @@
      </thead>
 
 
+
      <tbody>
-     		<% i=1 %>
-  		<% @oppties.each do |o, count| %>
-     			<% if @to_do.include?(o) %>
-     				<tr class="success">
-     					<td><%= i %></td>
-      	     		<td>
-      	     			<div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
-      	     			<div class="little-text"><%= o.slComments %></div>
-      	     		</td>
-          		 	<td><%= o.proposalDueDate.to_s %></td>
-           			<td>Assigned</td>
-      	  		</tr>
 
-        		<% elsif @doing.include?(o) %>
-        			<tr class="warning">
-        				<td><%= i %></td>
-      	     		<td>
-      	     			<div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
-      	     			<div class="little-text"><%= o.slComments %></div>
-      	     		</td>
-          		 	<td><%= o.proposalDueDate.to_s %></td>
-           			<td>In Progress</td>
-      	  		</tr>
+        <div id='thirtyDays' style='visibility: hidden'>
+          <% i=1 %>
+          <% unless @within30days == nil %>
+            <% @within30days.each do |o| %>
+              <% if @to_do.include?(o) %>
+                <tr class="success">
+                  <td><%= i %></td>
+                  <td>
+                    <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
+                      <div class="little-text"><%= o.slComments %></div>
+                  </td>
+                  <td><%= o.proposalDueDate.to_s %></td>
+                  <td>Assigned</td>
+                </tr>
 
-        		<% elsif @none.include?(o) %>
-        			<tr class="active">
-          			<td><%= i %></td>
-          	 		<td>
-          	 			<div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
-      	     			<div class="little-text"><%= o.slComments %></div>
-          	 		</td>
-          		 	<td><%= o.proposalDueDate.to_s %></td>
-           			<td>None</td>
-        			</tr>
-        		
-        		<% else %>
-        			<tr class="media">
-        				<td><%= i %></td>
-      	     		<td>
-      	     			<div class="regular-text"><%= link_to o.opptyName, o %></div>
-      	     			<div class="little-text"><%= o.slComments %></div>
-      	     		</td>
-          		 	<td><%= o.proposalDueDate.to_s %></td>
-           			<td>THIS BLOCK NEEDS TO BE DELETED WHEN THE CODE IS WORKING(view/browse/index.html.erb)</td>
-      	  		</tr>
-        		<% end %>
-        		<% i=i+1 %>
-        	<% end %>
+              <% elsif @doing.include?(o) %>
+                <tr class="warning">
+                  <td><%= i %></td>
+                  <td>
+                    <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
+                    <div class="little-text"><%= o.slComments %></div>
+                  </td>
+                  <td><%= o.proposalDueDate.to_s %></td>
+                  <td>In Progress</td>
+                </tr>
+
+              <% elsif @none.include?(o) %>
+                <tr class="active">
+                  <td><%= i %></td>
+                  <td>
+                    <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
+                    <div class="little-text"><%= o.slComments %></div>
+                  </td>
+                  <td><%= o.proposalDueDate.to_s %></td>
+                  <td>None</td>
+                </tr>
+                    
+              <% else %>
+                <tr class="media">
+                  <td><%= i %></td>
+                  <td>
+                    <div class="regular-text"><%= link_to o.opptyName, o %></div>
+                    <div class="little-text"><%= o.slComments %></div>
+                  </td>
+                  <td><%= o.proposalDueDate.to_s %></td>
+                  <td>THIS BLOCK NEEDS TO BE DELETED WHEN THE CODE IS WORKING(view/browse/index.html.erb)</td>
+                </tr>
+              <% end %>
+              <% i=i+1 %>
+            <% end %>
+          <% end %>
+        </div>
+
+        <div id='sixtyDays' style='visibility: hidden'>
+          <% i=1 %>
+          <% unless @within60days == nil %>
+            <% @within60days.each do |o| %>
+              <% if @to_do.include?(o) %>
+                <tr class="success">
+                  <td><%= i %></td>
+                  <td>
+                    <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
+                      <div class="little-text"><%= o.slComments %></div>
+                  </td>
+                  <td><%= o.proposalDueDate.to_s %></td>
+                  <td>Assigned</td>
+                </tr>
+
+              <% elsif @doing.include?(o) %>
+                <tr class="warning">
+                  <td><%= i %></td>
+                  <td>
+                    <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
+                    <div class="little-text"><%= o.slComments %></div>
+                  </td>
+                  <td><%= o.proposalDueDate.to_s %></td>
+                  <td>In Progress</td>
+                </tr>
+
+              <% elsif @none.include?(o) %>
+                <tr class="active">
+                  <td><%= i %></td>
+                  <td>
+                    <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
+                    <div class="little-text"><%= o.slComments %></div>
+                  </td>
+                  <td><%= o.proposalDueDate.to_s %></td>
+                  <td>None</td>
+                </tr>
+                    
+              <% else %>
+                <tr class="media">
+                  <td><%= i %></td>
+                  <td>
+                    <div class="regular-text"><%= link_to o.opptyName, o %></div>
+                    <div class="little-text"><%= o.slComments %></div>
+                  </td>
+                  <td><%= o.proposalDueDate.to_s %></td>
+                  <td>THIS BLOCK NEEDS TO BE DELETED WHEN THE CODE IS WORKING(view/browse/index.html.erb)</td>
+                </tr>
+              <% end %>
+              <% i=i+1 %>
+            <% end %>
+          <% end %>
+        </div>
+
+
+        <div id='ninetyDays' style='visibility: hidden'>
+          <% i=1 %>
+          <% unless @within90days == nil %>
+            <% @within90days.each do |o| %>
+              <% if @to_do.include?(o) %>
+                <tr class="success">
+                  <td><%= i %></td>
+                  <td>
+                    <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
+                      <div class="little-text"><%= o.slComments %></div>
+                  </td>
+                  <td><%= o.proposalDueDate.to_s %></td>
+                  <td>Assigned</td>
+                </tr>
+
+              <% elsif @doing.include?(o) %>
+                <tr class="warning">
+                  <td><%= i %></td>
+                  <td>
+                    <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
+                    <div class="little-text"><%= o.slComments %></div>
+                  </td>
+                  <td><%= o.proposalDueDate.to_s %></td>
+                  <td>In Progress</td>
+                </tr>
+
+              <% elsif @none.include?(o) %>
+                <tr class="active">
+                  <td><%= i %></td>
+                  <td>
+                    <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
+                    <div class="little-text"><%= o.slComments %></div>
+                  </td>
+                  <td><%= o.proposalDueDate.to_s %></td>
+                  <td>None</td>
+                </tr>
+                    
+              <% else %>
+                <tr class="media">
+                  <td><%= i %></td>
+                  <td>
+                    <div class="regular-text"><%= link_to o.opptyName, o %></div>
+                    <div class="little-text"><%= o.slComments %></div>
+                  </td>
+                  <td><%= o.proposalDueDate.to_s %></td>
+                  <td>THIS BLOCK NEEDS TO BE DELETED WHEN THE CODE IS WORKING(view/browse/index.html.erb)</td>
+                </tr>
+              <% end %>
+              <% i=i+1 %>
+            <% end %>
+          <% end %>
+        </div>
+
+        <div id='allDays' style='visibility: visible'>
+          <% i=1 %>
+          <% @oppties.each do |o| %>
+            <% if @to_do.include?(o) %>
+              <tr class="success">
+                <td><%= i %></td>
+                <td>
+                  <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
+                    <div class="little-text"><%= o.slComments %></div>
+                </td>
+                <td><%= o.proposalDueDate.to_s %></td>
+                <td>Assigned</td>
+              </tr>
+
+            <% elsif @doing.include?(o) %>
+              <tr class="warning">
+                <td><%= i %></td>
+                <td>
+                  <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
+                  <div class="little-text"><%= o.slComments %></div>
+                </td>
+                <td><%= o.proposalDueDate.to_s %></td>
+                <td>In Progress</td>
+              </tr>
+
+            <% elsif @none.include?(o) %>
+              <tr class="active">
+                <td><%= i %></td>
+                <td>
+                  <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
+                  <div class="little-text"><%= o.slComments %></div>
+                </td>
+                <td><%= o.proposalDueDate.to_s %></td>
+                <td>None</td>
+              </tr>
+                  
+            <% else %>
+              <tr class="media">
+                <td><%= i %></td>
+                <td>
+                  <div class="regular-text"><%= link_to o.opptyName, o %></div>
+                  <div class="little-text"><%= o.slComments %></div>
+                </td>
+                <td><%= o.proposalDueDate.to_s %></td>
+                <td>THIS BLOCK NEEDS TO BE DELETED WHEN THE CODE IS WORKING(view/browse/index.html.erb)</td>
+              </tr>
+            <% end %>
+            <% i=i+1 %>
+          <% end %>
+        </div>
 
      </tbody>
   </table>
   </div>
+
+
+  <script>
+
+    $(document).on("click","a[name='radio-style-btn']", function (e) {
+      alert("aaaaaaaaa");
+      if(document.getElementById('thirty_days_left').checked == true) {
+        document.getElementById('thirtyDays').style.visibility = "visible";
+        document.getElementById('sixtyDays').style.visibility = "hidden";
+        document.getElementById('ninetyDays').style.visibility = "hidden";
+        document.getElementById('allDays').style.visibility= "hidden";
+        alert (30);
+      }
+      else if(document.getElementById('sixty_days_left').checked) {
+        document.getElementById('sixtyDays').style.visibility = "visible";
+        document.getElementById('thirtyDays').style.visibility = "hidden";
+        document.getElementById('ninetyDays').style.visibility = "hidden";
+        document.getElementById('allDays').style.visibility= "hidden";
+        alert (60);
+      }
+      else if (document.getElementById('ninety_days_left').checked){
+        document.getElementById('ninetyDays').style.visibility = "visible";
+        document.getElementById('thirtyDays').style.visibility = "hidden";
+        document.getElementById('sixtyDays').style.visibility = "hidden";
+        document.getElementById('allDays').style.visibility= "hidden";
+        alert (90);
+      }
+      else {
+        document.getElementById('allDays').style.visibility= "visible";
+        document.getElementById('ninetyDays').style.visibility = "hidden";
+        document.getElementById('thirtyDays').style.visibility = "hidden";
+        document.getElementById('sixtyDays').style.visibility = "hidden";
+        alert("ELSE");
+      }
+
+    });
+
+  </script>
 </body>
+</html>
+
+
+
