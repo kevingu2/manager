@@ -1,13 +1,30 @@
-<h1>History</h1>
+<html lang="en">
+<body>
+  <div class="jumbotron">
+	<table class="table">
+		<caption><h2 class="black-text">History</h2></caption>
+     	<thead>
+        	<tr>
+        		<th class="col-md-2"> Opportunity ID </th>
+            	<th class="col-md-8"> Opportunity Name </th>
+            	<th class="col-md-2"> Due Date </th>
+        	</tr>
+     	</thead>
 
-<table>
+	 	<tbody>
+		    <% @histories.each do |history| %>
+		      <tr>
+		        <td></td><%= link_to history.oppty.opptyName, history.oppty %></td>
+		        <br>
+		      </tr>
+		    <% end %>
+	  	</tbody>
+	</table>
 
-  <tbody>
-    <% @histories.each do |history| %>
-      <tr>
-        <td></td><%= link_to history.oppty.opptyName, history.oppty %></td>
-        <br>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+	<div style="float: right !important">
+    	<%= will_paginate @histories %>
+  	</div>
+
+  </div>
+</body>
+</html>

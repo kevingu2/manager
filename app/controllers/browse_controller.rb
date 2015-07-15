@@ -32,7 +32,7 @@ class BrowseController < ApplicationController
     @today = Time.new
     @oppties.each do |o|
       @rfpDate = o.proposalDueDate
-      puts @rfpDate
+      #puts @rfpDate
       @dayDiff = distance_of_time_in_words(@today, @rfpDate).to_i
       if @dayDiff <= 30
         @within30days=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)

@@ -1,3 +1,4 @@
+<div class="jumbotron">
 <div class="textColor">
 	<div class="textCenter">
 		<h1>Allocated Tasks</h1>
@@ -59,13 +60,37 @@
   						<hr />
 					<% end %>
     			</div>
+
+
+
+
+
+
+          <%# This block of code needs to be deleted %>
+          <div class="col-md-4 op-body-bg-right">
+              <% @oppties.each do |oppty|  %>
+            <h2 class="regular-text a:visited"><%= link_to oppty.opptyName, oppty %></h2>
+              <p class="little-text"><%= oppty.slComments %></p>
+              <p>
+                <tr>
+                  <td class="regular-text a:visited"><%= link_to "Edit", edit_oppty_path(oppty) %></td>
+                  <td class="regular-text a:visited"><%= link_to "Delete", oppty, :data => {:confirm => "Are you sure?"}, :method => :delete %></td>
+                </tr>
+              </p>
+              <hr class="textColor"/>
+          <% end %>
+          </div>
+
     		</div>
 		</div>
 	</div>
 </div>
 
-
+  <div style="float: right !important">
+    <%= will_paginate @oppties %>
+  </div>
 
 </body>
 </html>
+</div>
 

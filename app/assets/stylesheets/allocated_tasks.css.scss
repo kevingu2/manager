@@ -3,9 +3,29 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .textColor {
-	color: white;
+	color: black;
 }
 
 .textCenter {
 	text-align: center;
+}
+
+.op-body-bg-left {
+	background-color: white;
+	border-color: black !important;
+}
+
+.regular-text a:link {
+	font-size: 120%;
+	color: #0000FF;
+	background-color: transparent !important;
+}
+
+/* visited link */
+.regular-text a:visited {
+    color: #663366 !important;
+}
+
+.little-text {
+	font-size: 60%;
 }
