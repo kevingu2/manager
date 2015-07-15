@@ -349,8 +349,6 @@
     });
 
     $(document).on("click", "a[name='sort-btn']", function (e) {
-
-      localStorage.setItem('sorting',$('#sorting').val() );
       select = document.getElementById('sorting').value;
 
       if (select == "none")
