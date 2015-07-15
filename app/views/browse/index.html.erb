@@ -56,14 +56,16 @@
               		  </td>
                   	<td class="col-md-3">
   						        <div>
-              				  <select class="selector col-md-9">
+              				  <select class="selector col-md-9" id="sorting">
                 					<option value="none">none</option>
+                          <option value="optName">Opportunity Name</option>
+                          <option value="optId">Opportunity ID</option>
                           <option value="days">Days Left</option>
                           <option value="cmanager">Capture Managers</option>
                           <option value="progmanager">Program Managers</option>
                           <option value="pmanager">Proposal Managers</option>
-                          <option value="valuehl">Value(High to Low)</option>
-                          <option value="valuelh">Value(Low to High)</option>
+                          <option value="valuehl" class="desc">Value (High to Low)</option>
+                          <option value="valuelh" class="asc">Value (Low to High)</option>
               				  </select>
               				  <a href="#" name="sort-btn" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
             				  </div>  
@@ -86,10 +88,10 @@
      <caption><h2 class="black-text">Opportunities</h2></caption>
      <thead>
         <tr>
-        	 <th class="col-md-2">Opportunity ID</th>
-           <th class="col-md-6">Opportunity Name</th>
-           <th class="col-md-2">Due Date</th>
-           <th class="col-md-2">Status</th>
+        	 <th class="col-md-2"> Opportunity ID </th>
+           <th class="col-md-6"> Opportunity Name </th>
+           <th class="col-md-2"> Due Date </th>
+           <th class="col-md-2"> Status </th>
         </tr>
      </thead>
 
@@ -346,9 +348,30 @@
       }
     });
 
+    $(document).on("click", "a[name='sort-btn']", function (e) {
+      select = document.getElementById('sorting').value;
+
+      if (select == "days")
+        window.location.assign("<%= browse_index_path %>" + "?sort=proposalDueDate");
+      else if (select == "optName")
+        window.location.assign("<%= browse_index_path %>" + "?sort=opptyName");
+      else if (select == "optId")
+        window.location.assign("<%= browse_index_path %>" + "?sort=opptyId");
+      else if (select == "cmanager")
+        window.location.assign("<%= browse_index_path %>" + "?sort=captureMgr");
+      else if (select == "progmanager")
+        window.location.assign("<%= browse_index_path %>" + "?sort=programMgr");
+      else if (select == "pmanager")
+        window.location.assign("<%= browse_index_path %>" + "?sort=proposalMgr");
+      else if (select == "valuehl")
+        window.location.assign("<%= browse_index_path %>" + "?sort=value");
+      else if (select == "valuelh")
+        window.location.assign("<%= browse_index_path %>" + "?sort=value");
+
+    });
+
   </script>
 </body>
 </html>
-
 
 
