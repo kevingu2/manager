@@ -2,16 +2,31 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.textColor {
-	color: black;
-}
-
 .textCenter {
 	text-align: center;
+	background-color: #A9A9A9 !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+	color: black;
+	display: block !important;
+}
+
+.title-banner {
+	padding: 10px !important;
 }
 
 .op-body-bg-left {
-	background-color: white;
+	background-color: #F8F8F8 !important;
+	border-color: black !important;
+}
+
+.op-body-bg-middle {
+	background-color: #F8F8F8 !important;
+	border-color: black !important;
+}
+
+.op-body-bg-right {
+	background-color: #F8F8F8 !important;
 	border-color: black !important;
 }
 
@@ -19,6 +34,7 @@
 	font-size: 120%;
 	color: #0000FF;
 	background-color: transparent !important;
+	padding-top: 10px;
 }
 
 /* visited link */
@@ -26,6 +42,21 @@
     color: #663366 !important;
 }
 
-.little-text {
-	font-size: 60%;
+.medium-text a:link{
+	font-size: 100%;
+	background-color: transparent !important;
+	padding-left: 15px;
+	float: right;
 }
+
+.little-text {
+	font-size: 80%;
+	padding-right: 10px;
+	padding-left: 10px;
+	padding-bottom: 10px;
+}
+
+.allocated-task-bg {
+	background-color: transparent !important;
+}
+

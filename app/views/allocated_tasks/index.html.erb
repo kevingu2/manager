@@ -1,14 +1,9 @@
-<div class="jumbotron">
-<div class="textColor">
-	<div class="textCenter">
-		<h1>Allocated Tasks</h1>
-	</div>
-</div>
-
 <html lang="en">
-<head>
-  <title>Tasks</title>
-</head>
+<div class="jumbotron allocated-task-bg">
+	<div class="textCenter">
+		<h1 class="title-banner">Allocated Tasks</h1>
+
+</div>
 
 <body>
 
@@ -69,14 +64,14 @@
           <%# This block of code needs to be deleted %>
           <div class="col-md-4 op-body-bg-right">
               <% @oppties.each do |oppty|  %>
-            <h2 class="regular-text a:visited"><%= link_to oppty.opptyName, oppty %></h2>
-              <p class="little-text"><%= oppty.slComments %></p>
-              <p>
+            <div class="regular-text a:visited"><%= link_to oppty.opptyName, oppty %></div>
+            <div class="little-text"><%= oppty.slComments %></div>
+              <div class="medium-text a:visited">
                 <tr>
-                  <td class="regular-text a:visited"><%= link_to "Edit", edit_oppty_path(oppty) %></td>
-                  <td class="regular-text a:visited"><%= link_to "Delete", oppty, :data => {:confirm => "Are you sure?"}, :method => :delete %></td>
+                  <td><%= link_to "Delete", oppty, :data => {:confirm => "Are you sure?"}, :method => :delete %></td>
+                  <td><%= link_to "Edit", edit_oppty_path(oppty) %></td>
                 </tr>
-              </p>
+              </div>
               <hr class="textColor"/>
           <% end %>
           </div>
@@ -91,6 +86,6 @@
   </div>
 
 </body>
-</html>
-</div>
 
+</div>
+</html>
