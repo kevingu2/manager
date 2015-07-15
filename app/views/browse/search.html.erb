@@ -10,7 +10,7 @@
               <input id="search" name="search" type="text" class="col-md-12" value="">
             </td>
             <td class="col-md-1">
-                 <input id="search-button" class="btn-search" type="image" src="/assets/search.png" alt="Submit_tag"> 
+                 <input id="search-button" name="searchButton" class="btn-search" type="image" src="/assets/search.png" alt="Submit_tag"> 
             </td>
           </tr>  
         </table>
@@ -317,7 +317,7 @@
 
 
     $(document).on("click","a[name='radio-style-btn']", function (e) {
-      alert("aaaaaaaaa");
+      alert("Inside of radio button onClick function");
       if(document.getElementById('thirty_days_left').checked == true) {
         document.getElementById('thirtyDays').style.visibility = "visible";
         document.getElementById('sixtyDays').style.visibility = "hidden";
@@ -390,6 +390,10 @@
     function delete_cookie( name ) {
       document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
+
+    $(document).on("click", "input[name='searchButton']", function (e) {
+      delete_cookie('mycookie');
+    });
   </script> 
 </body>
 </html>
