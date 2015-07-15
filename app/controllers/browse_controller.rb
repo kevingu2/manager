@@ -34,12 +34,14 @@ class BrowseController < ApplicationController
       @rfpDate = o.proposalDueDate
       #puts @rfpDate
       @dayDiff = distance_of_time_in_words(@today, @rfpDate).to_i
-      if @dayDiff <= 30
-        @within30days=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
-      elsif @dayDiff <= 60
-       @within60days=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
-      elsif @dayDiff <= 90 
-        @within90days=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
+      if @dayDiff >= 0
+        if @dayDiff <= 30
+          @within30days=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
+        elsif @dayDiff <= 60
+         @within60days=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
+        elsif @dayDiff <= 90 
+          @within90days=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
+        end
       end
     end
   end
