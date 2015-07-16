@@ -99,7 +99,7 @@
 
      <tbody>
 
-        <div id='thirtyDays' style='visibility: hidden'>
+        <div id="thirtyDays" style="display: none;">
           <% unless @within30days == nil %>
             <% @within30days.each do |o| %>
               <% if @to_do.include?(o) %>
@@ -150,7 +150,7 @@
           <% end %>
         </div>
 
-        <div id='sixtyDays' style='visibility: hidden'>
+        <div id="sixtyDays" style="display:none;">
           <% unless @within60days == nil %>
             <% @within60days.each do |o| %>
               <% if @to_do.include?(o) %>
@@ -202,7 +202,7 @@
         </div>
 
 
-        <div id='ninetyDays' style='visibility: hidden'>
+        <div id="ninetyDays" style="display: none;">
           <% unless @within90days == nil %>
             <% @within90days.each do |o| %>
               <% if @to_do.include?(o) %>
@@ -253,7 +253,7 @@
           <% end %>
         </div>
 
-        <div id='allDays' style='visibility: visible'>
+        <div id='allDays' style='display: none;'>
           <% @oppties.each do |o| %>
             <% if @to_do.include?(o) %>
               <tr class="success">
@@ -319,31 +319,31 @@
     $(document).on("click","a[name='radio-style-btn']", function (e) {
       alert("Inside of radio button onClick function");
       if(document.getElementById('thirty_days_left').checked == true) {
-        document.getElementById('thirtyDays').style.visibility = "visible";
-        document.getElementById('sixtyDays').style.visibility = "hidden";
-        document.getElementById('ninetyDays').style.visibility = "hidden";
-        document.getElementById('allDays').style.visibility= "hidden";
+        document.getElementById('thirtyDays').style.display = "block";
+        document.getElementById('sixtyDays').style.display = "none";
+        document.getElementById('ninetyDays').style.display = "none";
+        document.getElementById('allDays').style.display= "none";
         alert (30);
       }
       else if(document.getElementById('sixty_days_left').checked) {
-        document.getElementById('sixtyDays').style.visibility = "visible";
-        document.getElementById('thirtyDays').style.visibility = "hidden";
-        document.getElementById('ninetyDays').style.visibility = "hidden";
-        document.getElementById('allDays').style.visibility= "hidden";
+        document.getElementById('sixtyDays').style.display = "block";
+        document.getElementById('thirtyDays').style.display = "none";
+        document.getElementById('ninetyDays').style.display = "none";
+        document.getElementById('allDays').style.display= "none";
         alert (60);
       }
       else if (document.getElementById('ninety_days_left').checked){
-        document.getElementById('ninetyDays').style.visibility = "visible";
-        document.getElementById('thirtyDays').style.visibility = "hidden";
-        document.getElementById('sixtyDays').style.visibility = "hidden";
-        document.getElementById('allDays').style.visibility= "hidden";
+        document.getElementById('ninetyDays').style.display = "block";
+        document.getElementById('thirtyDays').style.display = "none";
+        document.getElementById('sixtyDays').style.display = "none";
+        document.getElementById('allDays').style.display= "none";
         alert (90);
       }
       else {
-        document.getElementById('allDays').style.visibility = "visible";
-        document.getElementById('ninetyDays').style.visibility = "hidden";
-        document.getElementById('thirtyDays').style.visibility = "hidden";
-        document.getElementById('sixtyDays').style.visibility = "hidden";
+        document.getElementById('allDays').style.display = "block";
+        document.getElementById('ninetyDays').style.display = "none";
+        document.getElementById('thirtyDays').style.display = "none";
+        document.getElementById('sixtyDays').style.display = "none";
         alert("ELSE");
       }
     });
