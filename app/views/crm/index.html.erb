@@ -2,12 +2,12 @@
   <!--div class="page-wrapper"-->	
 	<div class="col-md-6 column-wrapper">
 	  <div class="inner-column">
-		<h2 class="upload-title">Upload</h2>
+		<h2 class="column-title">Upload</h2>
 		<form id="upload" method="post" action="upload" enctype="multipart/form-data">
 		  <div id="drop" class="drop-zone">
 		    <p class="drop-zone-text"><b>Browse</b> or <b>Drop Anywhere Inside of this Box</b> </p>
 		    <br>
-		    <input type="file" id="upl" name="upl" class="file-input" multiple />
+		    <input type="file" id="upl" name="upl" class="file-input"/>
 		    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
 		  </div>
 
@@ -21,7 +21,7 @@
 
 	<div class="col-md-6 column-wrapper">
 	  <div class="inner-column">
-		<h2>Download</h2>
+		<h2 class="column-title">Download</h2>
 		<%= link_to "Download New CRM Data", "download" %>
 	  </div>
 	</div>
