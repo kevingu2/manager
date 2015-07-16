@@ -1,23 +1,36 @@
-<form id="upload" method="post" action="upload" enctype="multipart/form-data">
-  <div id="drop">
-    Drop Here
+<body>
+  <!--div class="page-wrapper"-->	
+	<div class="col-md-6 column-wrapper">
+	  <div class="inner-column">
+		<h2 class="upload-title">Upload</h2>
+		<form id="upload" method="post" action="upload" enctype="multipart/form-data">
+		  <div id="drop" class="drop-zone">
+		    <p class="drop-zone-text"><b>Browse</b> or <b>Drop Anywhere Inside of this Box</b> </p>
+		    <br>
+		    <input type="file" id="upl" name="upl" class="file-input" multiple />
+		    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+		  </div>
 
-    <a>Browse</a>
-    <input type="file" id="upl" name="upl" multiple />
-    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-  </div>
+		  <ul class="upload-list">
+		    <!-- The file uploads will be shown here -->
+		  </ul>
 
-  <ul>
-    <!-- The file uploads will be shown here -->
-  </ul>
+		</form>
+	  </div>	
+	</div>
 
-</form>
+	<div class="col-md-6 column-wrapper">
+	  <div class="inner-column">
+		<h2>Download</h2>
+		<%= link_to "Download New CRM Data", "download" %>
+	  </div>
+	</div>
+  <!--/div-->
 
-<%= link_to "Download New CRM Data", "download" %>
-
-<!-- JavaScript Includes -->
-<%= javascript_include_tag('jquery.knob.js') %>
-<%= javascript_include_tag('jquery.ui.widget.js') %>
-<%= javascript_include_tag('jquery.iframe-transport.js') %>
-<%= javascript_include_tag('jquery.fileupload.js') %>
-<%= javascript_include_tag('upload.js') %>
+  <!-- JavaScript Includes -->
+  <%= javascript_include_tag('jquery.knob.js') %>
+  <%= javascript_include_tag('jquery.ui.widget.js') %>
+  <%= javascript_include_tag('jquery.iframe-transport.js') %>
+  <%= javascript_include_tag('jquery.fileupload.js') %>
+  <%= javascript_include_tag('upload.js') %>
+<body>

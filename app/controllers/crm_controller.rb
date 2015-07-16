@@ -139,12 +139,11 @@ class CrmController < ApplicationController
         if value             != data.value
           diff["value"]            = value
           change = true end
-        #########Commented out values are due to being stored as floats########
-        #########yay for floating point inaccuracies###########
-        #  if pWin             != data.pWin
-        #    diff["pWin"]            = pWin
-        #    old["pWin"] = data.pWin
-        #    change = true end
+        #########Potential loating point inaccuracies, however per we believe this is inconsequential ###########
+        if pWin             != data.pWin
+          diff["pWin"]            = pWin
+          old["pWin"] = data.pWin
+          change = true end
         if captureMgr        != data.captureMgr
           diff["captureMgr"]       = captureMgr
           change = true end

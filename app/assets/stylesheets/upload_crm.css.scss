@@ -1,3 +1,55 @@
 // Place all the styles related to the UploadCRM controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.drop-zone {
+	background-color: #E7E7E7;
+	border: dotted 1px #A9A9A9;
+	min-height: 167px;
+	margin-bottom: 10px
+}
+
+.inner-column {
+	margin: 1%;
+}
+
+.first-column-right-border {
+	width: 2% !important;
+}
+
+.second-column-right-border {
+	width: 2% !important;
+}
+
+.column-wrapper {
+	width: 48% !important;
+	background-color: #F8F8F8 !important;
+	padding-right: 0px !important;
+	padding-left: 0px !important;
+	margin-left: 1% !important;
+	margin-right: 1% !important;
+	border-radius: 5px !important;
+	min-height: 400px !important;
+}
+
+
+.page-wrapper {
+	width: 100% !important;
+	min-height: 1px;
+}
+
+.drop-zone-text {
+	font-size: 19px !important;
+	margin: 5px !important;
+}
+
+.file-input {
+	margin: 5px !important;
+}
+
+.upload-list {
+	list-style-type: none;
+}
+
+.upload-title {
+	margin-bottom: 20px !important;
+}

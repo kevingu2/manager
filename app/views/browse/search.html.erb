@@ -379,7 +379,7 @@
         document.cookie = 'mycookie=1';
       }
       else {
-      	console.log("This is a Refresh and "+ document.cookie.indexOf('mycookie'));
+      	console.log("This is a Refresh and " + document.cookie.indexOf('mycookie'));
       	// reset cookie
         delete_cookie('mycookie');
         // not first visit, so alert
@@ -387,7 +387,7 @@
       }
     }
 
-    function delete_cookie( name ) {
+    function delete_cookie(name) {
       document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
 
