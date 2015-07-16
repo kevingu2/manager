@@ -53,4 +53,5 @@ def openFile(path):
 args = sys.argv # command line arguments
 data = []
 data = openFile(args[1])
+data = data[1:]
 print json.dumps(data, ensure_ascii=True)
