@@ -21,26 +21,36 @@ class BrowseController < ApplicationController
     
     @original = browse_index_path
 
+    @within30days = []
+    @within60days = []
+    @within90days = []
 
+    @current = Time.new
+    @currentDay = @current.day
+    @currentMonth = @current.month
+    @currentYear = @current.year
+    @beginDate = Date.new(@currentYear, @currentMonth, @currentDay)
 
-
-
-
-
-    # UserOppty must change to Oppty
-
-    @today = Time.new
     @oppties.each do |o|
-      @rfpDate = o.proposalDueDate
-      #puts @rfpDate
-      @dayDiff = distance_of_time_in_words(@today, @rfpDate).to_i
+
+      @pDate = o.proposalDueDate
+      @pDateDay = @pDate.day 
+      @pDateMonth = @pDate.month 
+      @pDateYear = @pDate.year 
+      @endDate = Date.new(@pDateYear, @pDateMonth, @pDateDay)
+    
+      @dayDiff = @endDate - @beginDate 
+      @dayDiff = @dayDiff.to_i
+
       if @dayDiff >= 0
         if @dayDiff <= 30
-          @within30days=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
-        elsif @dayDiff <= 60
-         @within60days=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
-        elsif @dayDiff <= 90 
-          @within90days=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
+          if o != nil then @within30days.push(o) end
+        end
+        if @dayDiff <= 60
+          if o != nil then @within60days.push(o) end
+        end
+        if @dayDiff <= 90 
+          if o != nil then @within90days.push(o) end
         end
       end
     end
@@ -60,21 +70,41 @@ class BrowseController < ApplicationController
       end
     end
 
+    @within30days = []
+    @within60days = []
+    @within90days = []
 
+    @current = Time.new
+    @currentDay = @current.day
+    @currentMonth = @current.month
+    @currentYear = @current.year
+    @beginDate = Date.new(@currentYear, @currentMonth, @currentDay)
 
-
-
-    # UserOppty must change to Oppty
-    
-    @today = Time.new
     @oppties.each do |o|
-      @rfpDate = o.proposalDueDate
-      @dayDiff = distance_of_time_in_words(@today, @rfpDate).to_i
-      if @dayDiff <= 30 then @within30days=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
-      elsif @dayDiff <= 60 then @within60days=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
-      elsif @dayDiff <= 90 then @within90days=USerOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
+
+      @pDate = o.proposalDueDate
+      @pDateDay = @pDate.day 
+      @pDateMonth = @pDate.month 
+      @pDateYear = @pDate.year 
+      @endDate = Date.new(@pDateYear, @pDateMonth, @pDateDay)
+    
+      @dayDiff = @endDate - @beginDate 
+      @dayDiff = @dayDiff.to_i
+
+      if @dayDiff >= 0
+        if @dayDiff <= 30
+          if o != nil then @within30days.push(o) end
+        end
+        if @dayDiff <= 60
+          if o != nil then @within60days.push(o) end
+        end
+        if @dayDiff <= 90 
+          if o != nil then @within90days.push(o) end
+        end
       end
     end
+    
+    
   end
 
 end
