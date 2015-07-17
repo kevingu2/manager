@@ -452,6 +452,7 @@ class CrmController < ApplicationController
         @oppty=Oppty.new
         #fields
         @oppty.opptyId                = id
+        @oppty.numWriters             = 0
         @oppty.opptyName              = name
         @oppty.idiqCA                 = idiqCA
         @oppty.status2                = status2
