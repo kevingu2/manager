@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 20150710154524) do
     t.string   "estimate"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "numWriters"
     t.string   "codeName"
     t.string   "descriptionOfWork"
     t.string   "category"
