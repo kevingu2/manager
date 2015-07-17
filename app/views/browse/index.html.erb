@@ -96,10 +96,7 @@
      </thead>
 
 
-
-     <tbody>
-
-        <div id="thirtyDays" style="display: none;">
+    <tbody id="thirtyDays" style="display: none;">
           <% unless @within30days == nil %>
             <% @within30days.each do |o| %>
               <% if @to_do.include?(o) %>
@@ -148,9 +145,9 @@
               <% end %>
             <% end %>
           <% end %>
-        </div>
+    </tbody>
 
-        <div id="sixtyDays" style="display:none;">
+    <tbody id="sixtyDays" style="display:none;">
           <% unless @within60days == nil %>
             <% @within60days.each do |o| %>
               <% if @to_do.include?(o) %>
@@ -199,10 +196,9 @@
               <% end %>
             <% end %>
           <% end %>
-        </div>
+    </tbody>
 
-
-        <div id="ninetyDays" style="display: none;">
+    <tbody id="ninetyDays" style="display: none;">
           <% unless @within90days == nil %>
             <% @within90days.each do |o| %>
               <% if @to_do.include?(o) %>
@@ -251,9 +247,10 @@
               <% end %>
             <% end %>
           <% end %>
-        </div>
+    </tbody>
 
-        <div id='allDays' style='display: none;'>
+
+    <tbody id="allDays" style="display: block;" class="col-md-12">
           <% @oppties.each do |o| %>
             <% if @to_do.include?(o) %>
               <tr class="success">
@@ -300,9 +297,9 @@
               </tr>
             <% end %>
           <% end %>
-        </div>
 
      </tbody>
+
   </table>
 
   <div style="float: right !important">
