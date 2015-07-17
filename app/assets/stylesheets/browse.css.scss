@@ -81,6 +81,7 @@ td {
 .field-label {
 	padding-right: 30px !important;
 }
+
 input#search{
 	border:1px solid;
 	border-color: black;
@@ -89,17 +90,3 @@ input#search{
 	position:relative;
 	font-size: 20px;
 }
-
-.pretty th .current {
-	padding-right: 12px;
-	background-repeat: no-repeat;
-	background-position: right center;
-}
-
-.pretty th .asc {
-	background-image: url(/images/up_arrow.gif)
-}
-
-.pretty th .des {
-	background-image: url(/images/down_arrow.gif)
-} 

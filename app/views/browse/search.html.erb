@@ -95,8 +95,8 @@
         </tr>
      </thead>
 
-
-    <tbody id="thirtyDays" style="display: none;">
+    <tbody>
+    <div id="thirtyDays" style="display: none;">
           <% unless @within30days == nil %>
             <% @within30days.each do |o| %>
               <% if @to_do.include?(o) %>
@@ -145,9 +145,9 @@
               <% end %>
             <% end %>
           <% end %>
-    </tbody>
+    </div>
 
-    <tbody id="sixtyDays" style="display:none;">
+    <div id="sixtyDays" style="display:none;">
           <% unless @within60days == nil %>
             <% @within60days.each do |o| %>
               <% if @to_do.include?(o) %>
@@ -196,9 +196,9 @@
               <% end %>
             <% end %>
           <% end %>
-    </tbody>
+    </div>
 
-    <tbody id="ninetyDays" style="display: none;">
+    <div id="ninetyDays" style="display: none;">
           <% unless @within90days == nil %>
             <% @within90days.each do |o| %>
               <% if @to_do.include?(o) %>
@@ -247,10 +247,10 @@
               <% end %>
             <% end %>
           <% end %>
-    </tbody>
+    </div>
 
 
-    <tbody id="allDays" style="display: block;" class="col-md-12">
+    <div id="allDays" style="display: block;" class="col-md-12">
           <% @oppties.each do |o| %>
             <% if @to_do.include?(o) %>
               <tr class="success">
@@ -298,8 +298,8 @@
             <% end %>
           <% end %>
 
-     </tbody>
-
+     </div>
+   </tbody>
   </table>
 
   <div style="float: right !important">
@@ -365,7 +365,7 @@
 
     window.onload = function() {
       console.log("Inside function");
-      if (document.cookie.indexOf('mycookie')==-1) {
+      if (document.cookie.indexOf('mycookie')==-1||document.cookie.indexOf('mycookie')==0) {
       	console.log("This is NOT a Refresh");
         // cookie doesn't exist, create it now
         document.cookie = 'mycookie=1';
@@ -380,7 +380,7 @@
     }
 
     function delete_cookie(name) {
-      document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+      document.cookie = name + '=-1; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     }
 
     $(document).on("click", "input[name='searchButton']", function (e) {
