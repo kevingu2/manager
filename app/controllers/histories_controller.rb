@@ -9,31 +9,7 @@ class HistoriesController < ApplicationController
   # GET /histories
   # GET /histories.json
   def index
-    
-    @oppties = Oppty.all
-    @hist = []
-
-    @current = Time.new
-    @currentDay = @current.day
-    @currentMonth = @current.month
-    @currentYear = @current.year
-    @beginDate = Date.new(@currentYear, @currentMonth, @currentDay)
-
-    @oppties.each do |o|
-
-      @pDate = o.proposalDueDate
-      @pDateDay = @pDate.day 
-      @pDateMonth = @pDate.month 
-      @pDateYear = @pDate.year 
-      @endDate = Date.new(@pDateYear, @pDateMonth, @pDateDay)
-    
-      @dayDiff = @endDate - @beginDate 
-      @dayDiff = @dayDiff.to_i
-
-      if @dayDiff < 0
-        @hist.push(o)
-      end
-    end
+    @hist = Oppty.where("proposalDueDate<?", Date.today.to_s)
 
     @histories = History.where(user_id: @user.id).paginate(:per_page => 20, :page => params[:page])
   end
