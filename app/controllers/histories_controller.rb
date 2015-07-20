@@ -9,19 +9,29 @@ class HistoriesController < ApplicationController
   # GET /histories
   # GET /histories.json
   def index
+    
+    @oppties = Oppty.all
+    @hist = []
 
+    @current = Time.new
+    @currentDay = @current.day
+    @currentMonth = @current.month
+    @currentYear = @current.year
+    @beginDate = Date.new(@currentYear, @currentMonth, @currentDay)
 
-    # I dont know if we need hists ot hostories is enough
-    @today = Time.new
-    unless @oppties == nil then
-      @oppties.each do |o|
-        @rfpDate = o.proposalDueDate
-        #puts @rfpDate
-        @dayDiff = distance_of_time_in_words(@today, @rfpDate).to_i
-        #puts @dayDiff
-        if @dayDiff < 0
-          @hists=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
-        end
+    @oppties.each do |o|
+
+      @pDate = o.proposalDueDate
+      @pDateDay = @pDate.day 
+      @pDateMonth = @pDate.month 
+      @pDateYear = @pDate.year 
+      @endDate = Date.new(@pDateYear, @pDateMonth, @pDateDay)
+    
+      @dayDiff = @endDate - @beginDate 
+      @dayDiff = @dayDiff.to_i
+
+      if @dayDiff < 0
+        @hist.push(o)
       end
     end
 
