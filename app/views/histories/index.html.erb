@@ -69,13 +69,11 @@
   <script>
 
     $(document).on("click","a[name='radio-style-btn']", function (e) {
-    	alert ("BLAH")
       if(document.getElementById('myHistory').checked) {
         document.getElementById('showMine').style.display = "block";
         document.getElementById('showAll').style.display = "none";
       }
       else if(document.getElementById('allHistory').checked) {
-      	alert("2")
         document.getElementById('showAll').style.display = "block";
         document.getElementById('showMine').style.display = "none";
       }
