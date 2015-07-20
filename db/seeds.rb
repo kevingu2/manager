@@ -9,6 +9,7 @@
 Oppty.delete_all
 History.delete_all
 UserOppty.delete_all
+UserHistory.delete_all
 Oppty.create(opptyId: "1", opptyName:"test", idiqCA:"test", status2:"test", value:1, pWin:80,
   captureMgr:"test", programMgr:"test",  proposalMgr:"test", technicalLead:"test",sslOrg:"test", slArch:"test",
   ed:"test", on:"test", ate:"test", slComments:"test", rfpDate:"2015-07-01", awardDate:"2015-07-01",
@@ -24,3 +25,4 @@ Oppty.create(opptyId: "1", opptyName:"test2", idiqCA:"test2", status2:"test2", v
              slArch:"test2",ed:"test2", on:"test2", ate:"test2", slComments:"test2", rfpDate:"2015-07-01", awardDate:"2015-07-01",
              submitDate:"2015-07-01", proposalDueDate:"2015-07-08", slDir:"testDir2", leadEstim:"testLeadEst2",
              engaged:"testEngaged2", solution:"testSolution2", estimate:"testEstimate2" )
+

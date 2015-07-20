@@ -12,9 +12,9 @@
      	</thead>
 
 	 	<tbody>
-		    <% @histories.each do |history| %>
+		    <% @histories.each do |h| %>
 		      <tr>
-		        <td></td><%= link_to history.oppty.opptyName, history.oppty %></td>
+		        <td></td><%= link_to h.history.opptyName, h.history %></td>
 		        <br>
 		      </tr>
 		    <% end %>
