@@ -22,5 +22,5 @@
   <p><b>Engaged:</b> <%= @history.engaged%></p>
   <p><b>Solution:</b> <%= @history.solution%></p>
   <p><b>Estimate:</b> <%= @history.estimate%></p>
-  <%= link_to 'Back', histories_path %>
+  <a class="btn btn-lg btn-primary btn-left" href=<%=url_for(:back)%> role="button" style="color:white">Cancel</a>
 </div>

@@ -1,30 +1,64 @@
 <html lang="en">
 <body>
   <div class="jumbotron">
-	<table class="table">
-		<caption><h2 class="black-text">History</h2></caption>
-     	<thead>
-        	<tr>
-        		<th class="col-md-2"> Opportunity ID </th>
-            	<th class="col-md-8"> Opportunity Name </th>
-            	<th class="col-md-2"> Due Date </th>
-        	</tr>
-     	</thead>
-
-	 	<tbody>
-		    <% @histories.each do |h| %>
-		      <tr>
-		        <td></td><%= link_to h.history.opptyName, h.history %></td>
-		        <br>
-		      </tr>
-		    <% end %>
-	  	</tbody>
-	</table>
-
-	<div style="float: right !important">
-    	<%= will_paginate @histories %>
+  	<div class="radio-bar">
+  		<div class="col-md-6">
+  			<label class="toggle-btn radio black-text col-md-3" style="margin-top: 10px;">
+		      	<input id="myHistory" type="radio" value="mine">My History
+		    </label>
+			<label class="toggle-btn radio black-text col-md-3" style="margin-top: 10px;">
+	      		<input id="allHistory" type="radio" value="all">All History
+	    	</label>
+		  	<a href="#" name="radio-style-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button" style="margin-top: 10px;">&#xe092;</a>
+		</div>
   	</div>
 
+	<caption><h2 class="black-text" style="text-align: center;">History</h2></caption>
+
+    <div class="row" style="font-weight: bold;">
+      <div class="col-md-3" style="text-align: center;"> Opportunity ID </div>
+      <div class="col-md-6"> Opportunity Name </div>
+      <div class="col-md-3"> Due Date </div>
+    </div>
+
+    <hr />
+
+
+
+    <div id="showMine" style="display: block;">
+
+      									<!-- ATTENTION -->
+      <!-- This part of code needs to be written and show only a specific person's history -->
+    
+    </div>
+
+    <% @histories.each do |o| %>
+        <div class="success row">
+          <div class="col-md-3" style="text-align: center;"><%= o.history.opptyId %></div>
+          <div class="col-md-6">
+            <div class="regular-text a:visited"><%= link_to o.history.opptyName, o.history %></div>
+            <div class="little-text"><%= o.history.slComments %></div>
+          </div>
+          <div class="col-md-3"><%= o.history.proposalDueDate.to_s %></div>
+        </div>
+    <% end %>
   </div>
+
+  <script>
+
+    $(document).on("click","a[name='radio-style-btn']", function (e) {
+      if(document.getElementById('myHistory').checked) {
+        document.getElementById('showMine').style.display = "block";
+        document.getElementById('showAll').style.display = "none";
+      }
+      else if(document.getElementById('allHistory').checked) {
+        document.getElementById('showAll').style.display = "block";
+        document.getElementById('showMine').style.display = "none";
+      }
+    });
+
+
+  </script>
+
 </body>
 </html>
