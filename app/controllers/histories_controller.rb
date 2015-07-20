@@ -9,23 +9,7 @@ class HistoriesController < ApplicationController
   # GET /histories
   # GET /histories.json
   def index
-
-
-    # I dont know if we need hists ot hostories is enough
-    @today = Time.new
-    unless @oppties == nil then
-      @oppties.each do |o|
-        @rfpDate = o.proposalDueDate
-        #puts @rfpDate
-        @dayDiff = distance_of_time_in_words(@today, @rfpDate).to_i
-        #puts @dayDiff
-        if @dayDiff < 0
-          @hists=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
-        end
-      end
-    end
-
-    @histories = History.where(user_id: @user.id).paginate(:per_page => 20, :page => params[:page])
+    @histories = UserHistory.where(user_id: @user.id).includes(:history).paginate(:per_page => 20, :page => params[:page])
   end
 
   # GET /histories/1
