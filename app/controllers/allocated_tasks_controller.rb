@@ -1,9 +1,26 @@
 class AllocatedTasksController < ApplicationController
 	def index
-    	@oppties = Oppty.all.paginate(:per_page => 10, :page => params[:page])
-    	@done=UserOppty.where(user_id:session[:user_id]).where(status:0).joins(:oppty).includes(:oppty)
-    	@doing=UserOppty.where(user_id:session[:user_id]).where(status:1).joins(:oppty).includes(:oppty)
-    	@to_do=UserOppty.where(user_id:session[:user_id]).where(status:2).joins(:oppty).includes(:oppty)
-  	end
+    @not_accepted=[]
+    @todo=[]
+    @doing=[]
+    @done=[]
+    Oppty.all.each do |o|
+      puts "Count: "+o.user_oppties.count.to_s
+      o.user_oppties.each do|uo|
+        if uo.status==1
+          @doing.put(o)
+          break
+        end
+        if uo.status==2
+          @todo.put(o)
+          break
+        end
+        if uo.status==3
+
+        end
+      end
+    end
+
+  end
 
 end

@@ -1,9 +1,10 @@
 class TasksController < ApplicationController
-  #status, 0 is done, 1 is doing, 2 is to do
+  #status, 0 is done, 1 is doing, 2 is to do, 3 is assigned by an manager but not accepted
   def index
     @done=UserOppty.where(user_id:session[:user_id]).where(status:0).joins(:oppty).includes(:oppty)
     @doing=UserOppty.where(user_id:session[:user_id]).where(status:1).joins(:oppty).includes(:oppty)
     @to_do=UserOppty.where(user_id:session[:user_id]).where(status:2).joins(:oppty).includes(:oppty)
+    @assigned=UserOppty.where(user_id:session[:user_id]).where(status:3).joins(:oppty).includes(:oppty)
   end
 
   def updateStatus
