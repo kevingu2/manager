@@ -12,12 +12,12 @@ class BrowseController < ApplicationController
     @doing=UserOppty.where(user_id:session[:user_id]).where(status:1).joins(:oppty).includes(:oppty)
     @to_do=UserOppty.where(user_id:session[:user_id]).where(status:2).joins(:oppty).includes(:oppty)
     
-
-    @oppties.each do |o|
-    	unless @done.include?(o) or @doing.include?(o) or @to_do.include?(o)
-    		@none=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
-   		end
-    end
+    
+    #@oppties.each do |o|
+    #	unless @done.include?(o) or @doing.include?(o) or @to_do.include?(o)
+    #		@none=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
+   	#	end
+    #end 
     
     @original = browse_index_path
 
@@ -43,6 +43,10 @@ class BrowseController < ApplicationController
       @dayDiff = @dayDiff.to_i
 
       if @dayDiff >= 0
+        unless @done.include?(o) or @doing.include?(o) or @to_do.include?(o)
+          @none=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
+        end
+
         if @dayDiff <= 30
           if o != nil then @within30days.push(o) end
         end
@@ -64,11 +68,11 @@ class BrowseController < ApplicationController
     @to_do=UserOppty.where(user_id:session[:user_id]).where(status:2).joins(:oppty).includes(:oppty)
     
 
-    @oppties.each do |o|
-      unless @done.include?(o) or @doing.include?(o) or @to_do.include?(o)
-        @none=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
-      end
-    end
+    #@oppties.each do |o|
+    #  unless @done.include?(o) or @doing.include?(o) or @to_do.include?(o)
+    #    @none=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
+    #  end
+    #end
 
     @within30days = []
     @within60days = []
@@ -92,6 +96,10 @@ class BrowseController < ApplicationController
       @dayDiff = @dayDiff.to_i
 
       if @dayDiff >= 0
+        unless @done.include?(o) or @doing.include?(o) or @to_do.include?(o)
+          @none=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
+        end
+
         if @dayDiff <= 30
           if o != nil then @within30days.push(o) end
         end

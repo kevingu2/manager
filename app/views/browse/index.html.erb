@@ -315,7 +315,7 @@
   <script>
 
     $(document).on("click","a[name='radio-style-btn']", function (e) {
-      if(document.getElementById('thirty_days_left').checked == true) {
+      if(document.getElementById('thirty_days_left').checked) {
         document.getElementById('thirtyDays').style.display = "block";
         document.getElementById('sixtyDays').style.display = "none";
         document.getElementById('ninetyDays').style.display = "none";

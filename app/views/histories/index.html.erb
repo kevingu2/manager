@@ -1,30 +1,55 @@
 <html lang="en">
 <body>
   <div class="jumbotron">
-		<caption><h2 class="black-text" style="text-align: center;">History</h2></caption>
+  	<div class="radio-bar">
+  		<div class="col-md-6">
+  			<label class="toggle-btn radio black-text col-md-3" style="margin-top: 10px;">
+		      	<input id="myHistory" type="radio" value="mine">My History
+		    </label>
+			<label class="toggle-btn radio black-text col-md-3" style="margin-top: 10px;">
+	      		<input id="allHistory" type="radio" value="all">All History
+	    	</label>
+		  	<a href="#" name="radio-style-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button" style="margin-top: 10px;">&#xe092;</a>
+		</div>
+  	</div>
 
-	    <div class="row" style="font-weight: bold;">
-	      <div class="col-md-3" style="text-align: center;"> Opportunity ID </div>
-	      <div class="col-md-6"> Opportunity Name </div>
-	      <div class="col-md-3"> Due Date </div>
-	    </div>
+	<caption><h2 class="black-text" style="text-align: center;">History</h2></caption>
 
-	    <hr />
+    <div class="row" style="font-weight: bold;">
+      <div class="col-md-3" style="text-align: center;"> Opportunity ID </div>
+      <div class="col-md-6"> Opportunity Name </div>
+      <div class="col-md-3"> Due Date </div>
+    </div>
 
-	    <div>
-	      <% unless @hist == nil %>
-	        <% @hist.each do |o| %>
-	            <div class="success row">
-	              <div class="col-md-3" style="text-align: center;"><%= o.opptyId %></div>
-	              <div class="col-md-6">
-	                <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
-	                <div class="little-text"><%= o.slComments %></div>
-	              </div>
-	              <div class="col-md-3"><%= o.proposalDueDate.to_s %></div>
-	            </div>
-	        <% end %>
-	      <% end %>
-	    </div>
+    <hr />
+
+
+
+    <div id="showMine" style="display: block;">
+
+      									<!-- ATTENTION -->
+      <!-- This part of code needs to be written and show only a specific person's history -->
+    
+    </div>
+
+
+
+    <div id="showAll" style="display: none;">
+      <% unless @hist == nil %>
+        <% @hist.each do |o| %>
+            <div class="success row">
+              <div class="col-md-3" style="text-align: center;"><%= o.opptyId %></div>
+              <div class="col-md-6">
+                <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
+                <div class="little-text"><%= o.slComments %></div>
+              </div>
+              <div class="col-md-3"><%= o.proposalDueDate.to_s %></div>
+            </div>
+        <% end %>
+      <% end %>
+    </div>
+
+
 
 
 
@@ -40,5 +65,24 @@
 	  	</tbody>
 -->
   </div>
+
+  <script>
+
+    $(document).on("click","a[name='radio-style-btn']", function (e) {
+    	alert ("BLAH")
+      if(document.getElementById('myHistory').checked) {
+        document.getElementById('showMine').style.display = "block";
+        document.getElementById('showAll').style.display = "none";
+      }
+      else if(document.getElementById('allHistory').checked) {
+      	alert("2")
+        document.getElementById('showAll').style.display = "block";
+        document.getElementById('showMine').style.display = "none";
+      }
+    });
+
+
+  </script>
+
 </body>
 </html>
