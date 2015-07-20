@@ -1,4 +1,4 @@
-class CrmController < ApplicationController
+:class CrmController < ApplicationController
   CRM_PATH = File.join(Rails.root, "public", "uploads")
   def index
     @oppty = Oppty.all
