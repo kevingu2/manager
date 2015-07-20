@@ -9,9 +9,7 @@ class HistoriesController < ApplicationController
   # GET /histories
   # GET /histories.json
   def index
-    @hist = Oppty.where("proposalDueDate<?", Date.today.to_s)
-
-    @histories = History.where(user_id: @user.id).paginate(:per_page => 20, :page => params[:page])
+    @histories = UserHistory.where(user_id: @user.id).includes(:history).paginate(:per_page => 20, :page => params[:page])
   end
 
   # GET /histories/1

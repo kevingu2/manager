@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :user_histories
+
   get 'assign/index'
 
   get 'invalid_entry/index'
