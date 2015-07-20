@@ -60,7 +60,6 @@ ActiveRecord::Schema.define(version: 20150710154524) do
     t.string   "estimate"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "numWriters"
     t.string   "codeName"
     t.string   "descriptionOfWork"
     t.string   "category"
@@ -149,7 +148,7 @@ ActiveRecord::Schema.define(version: 20150710154524) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "status",     default: 2
+    t.integer  "status"
   end
 
   add_index "user_oppties", ["oppty_id"], name: "index_user_oppties_on_oppty_id"
@@ -161,7 +160,6 @@ ActiveRecord::Schema.define(version: 20150710154524) do
     t.string   "role"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "remember_digest"
   end
 
 end
