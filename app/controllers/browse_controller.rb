@@ -13,51 +13,22 @@ class BrowseController < ApplicationController
     @to_do=UserOppty.where(user_id:session[:user_id]).where(status:2).joins(:oppty).includes(:oppty)
     
     
-    #@oppties.each do |o|
-    #	unless @done.include?(o) or @doing.include?(o) or @to_do.include?(o)
-    #		@none=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
-   	#	end
-    #end 
-    
-    @original = browse_index_path
-
-    @within30days = []
-    @within60days = []
-    @within90days = []
-
-    @current = Time.new
-    @currentDay = @current.day
-    @currentMonth = @current.month
-    @currentYear = @current.year
-    @beginDate = Date.new(@currentYear, @currentMonth, @currentDay)
-
     @oppties.each do |o|
-
-      @pDate = o.proposalDueDate
-      @pDateDay = @pDate.day 
-      @pDateMonth = @pDate.month 
-      @pDateYear = @pDate.year 
-      @endDate = Date.new(@pDateYear, @pDateMonth, @pDateDay)
-    
-      @dayDiff = @endDate - @beginDate 
-      @dayDiff = @dayDiff.to_i
-
-      if @dayDiff >= 0
-        unless @done.include?(o) or @doing.include?(o) or @to_do.include?(o)
-          @none=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
-        end
-
-        if @dayDiff <= 30
-          if o != nil then @within30days.push(o) end
-        end
-        if @dayDiff <= 60
-          if o != nil then @within60days.push(o) end
-        end
-        if @dayDiff <= 90 
-          if o != nil then @within90days.push(o) end
-        end
-      end
+    	unless @done.include?(o) or @doing.include?(o) or @to_do.include?(o)
+    		@none=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
+   		end
     end
+
+
+    thirty = Date.today()+30
+    sixty = Date.today()+60
+    ninety = Date.today()+90
+
+    @within30days = Oppty.where("proposalDueDate >= ? and proposalDueDate <= ?", Date.today.to_s, thirty.to_s)
+    @within60days = Oppty.where("proposalDueDate >= ? and proposalDueDate <= ?", Date.today.to_s, sixty.to_s)
+    @within90days = Oppty.where("proposalDueDate >= ? and proposalDueDate <= ?", Date.today.to_s, ninety.to_s)
+
+
   end
 
   def search
@@ -68,50 +39,19 @@ class BrowseController < ApplicationController
     @to_do=UserOppty.where(user_id:session[:user_id]).where(status:2).joins(:oppty).includes(:oppty)
     
 
-    #@oppties.each do |o|
-    #  unless @done.include?(o) or @doing.include?(o) or @to_do.include?(o)
-    #    @none=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
-    #  end
-    #end
-
-    @within30days = []
-    @within60days = []
-    @within90days = []
-
-    @current = Time.new
-    @currentDay = @current.day
-    @currentMonth = @current.month
-    @currentYear = @current.year
-    @beginDate = Date.new(@currentYear, @currentMonth, @currentDay)
-
     @oppties.each do |o|
-
-      @pDate = o.proposalDueDate
-      @pDateDay = @pDate.day 
-      @pDateMonth = @pDate.month 
-      @pDateYear = @pDate.year 
-      @endDate = Date.new(@pDateYear, @pDateMonth, @pDateDay)
-    
-      @dayDiff = @endDate - @beginDate 
-      @dayDiff = @dayDiff.to_i
-
-      if @dayDiff >= 0
-        unless @done.include?(o) or @doing.include?(o) or @to_do.include?(o)
-          @none=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
-        end
-
-        if @dayDiff <= 30
-          if o != nil then @within30days.push(o) end
-        end
-        if @dayDiff <= 60
-          if o != nil then @within60days.push(o) end
-        end
-        if @dayDiff <= 90 
-          if o != nil then @within90days.push(o) end
-        end
+      unless @done.include?(o) or @doing.include?(o) or @to_do.include?(o)
+        @none=UserOppty.where(user_id:session[:user_id]).joins(:oppty).includes(:oppty)
       end
     end
-    
+
+    thirty = Date.today()+30
+    sixty = Date.today()+60
+    ninety = Date.today()+90
+
+    @within30days = Oppty.where("proposalDueDate >= ? and proposalDueDate <= ?", Date.today.to_s, thirty.to_s)
+    @within60days = Oppty.where("proposalDueDate >= ? and proposalDueDate <= ?", Date.today.to_s, sixty.to_s)
+    @within90days = Oppty.where("proposalDueDate >= ? and proposalDueDate <= ?", Date.today.to_s, ninety.to_s)
     
   end
 
