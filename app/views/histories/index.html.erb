@@ -32,16 +32,38 @@
     
     <!--</div>-->
 
-    <% @histories.each do |o| %>
-        <div class="success row">
-          <div class="col-md-3" style="text-align: center;"><%= o.history.opptyId %></div>
-          <div class="col-md-6">
-            <div class="regular-text a:visited"><%= link_to o.history.opptyName, o.history %></div>
-            <div class="little-text"><%= o.history.slComments %></div>
-          </div>
-          <div class="col-md-3"><%= o.history.proposalDueDate.to_s %></div>
-        </div>
-    <% end %>
+
+
+    <div id="showAll" style="display: none;">
+      <% unless @hist == nil %>
+        <% @hist.each do |o| %>
+            <div class="success row">
+              <div class="col-md-3" style="text-align: center;"><%= o.opptyId %></div>
+              <div class="col-md-6">
+                <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
+                <div class="little-text"><%= o.slComments %></div>
+              </div>
+              <div class="col-md-3"><%= o.proposalDueDate.to_s %></div>
+            </div>
+        <% end %>
+      <% end %>
+    </div>
+
+
+
+
+
+
+<!--
+	 	<tbody>
+		    < @history.each do |history| %>
+		      <tr>
+		      	<td>
+		        <td> < link_to history.oppty.opptyName, history.oppty %> </td>
+		      </tr>
+		    < end %>
+	  	</tbody>
+-->
   </div>
 
   <script>
