@@ -32,11 +32,24 @@
     
     <!--</div>-->
 
-
+    <div id="userHist" style="display: block;">
+      <% unless @user_histories == nil %>
+          <% @user_histories.each do |o| %>
+              <div class="success row">
+                <div class="col-md-3" style="text-align: center;"><%= o.history.opptyId %></div>
+                <div class="col-md-6">
+                  <div class="regular-text a:visited"><%= link_to o.history.opptyName, o %></div>
+                  <div class="little-text"><%= o.history.slComments %></div>
+                </div>
+                <div class="col-md-3"><%= o.history.proposalDueDate.to_s %></div>
+              </div>
+          <% end %>
+      <% end %>
+    </div>
 
     <div id="showAll" style="display: none;">
-      <% unless @hist == nil %>
-        <% @hist.each do |o| %>
+      <% unless @all_histories == nil %>
+        <% @all_histories.each do |o| %>
             <div class="success row">
               <div class="col-md-3" style="text-align: center;"><%= o.opptyId %></div>
               <div class="col-md-6">
@@ -70,12 +83,12 @@
 
     $(document).on("click","a[name='radio-style-btn']", function (e) {
       if(document.getElementById('myHistory').checked) {
-        document.getElementById('showMine').style.display = "block";
+        document.getElementById('userHist').style.display = "block";
         document.getElementById('showAll').style.display = "none";
       }
       else if(document.getElementById('allHistory').checked) {
         document.getElementById('showAll').style.display = "block";
-        document.getElementById('showMine').style.display = "none";
+        document.getElementById('userHist').style.display = "none";
       }
     });
 
