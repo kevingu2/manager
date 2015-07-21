@@ -142,7 +142,7 @@ class CrmController < ApplicationController
         #########Potential loating point inaccuracies, however per we believe this is inconsequential ###########
         if pWin             != data.pWin
           diff["pWin"]            = pWin
-          old["pWin"] = data.pWin
+          change["pWin"] = data.pWin
           change = true end
         if captureMgr        != data.captureMgr
           diff["captureMgr"]       = captureMgr
