@@ -3,7 +3,7 @@
 <body>
 <div class="container">
   <!-- Main component for a primary marketing message or call to action -->
-  <div class="jumbotron">
+  <div class="jumbotron oppty-bg">
     <h1 class="op-title"><%= @oppty.opptyName%></h1>
     <p><b>IDIQ CA:</b> <%= @oppty.idiqCA%></p>
     <p><b>Status:</b> <%= @oppty.status2%></p>
@@ -27,9 +27,14 @@
     <p><b>Engaged:</b> <%= @oppty.engaged%></p>
     <p><b>Solution:</b> <%= @oppty.solution%></p>
     <p><b>Estimate:</b> <%= @oppty.estimate%></p>
-    <p>
-    <div class="btn-container" style="margin:20px">
+    
+    <div class="btn-container">
+      <div <%if session[:role]=="manager" %>class="col-md-4 manager-col-button"
+           <%else%>class="col-md-6 manager-col-button"
+           <%end%> 
+      >
       <a class="btn btn-lg btn-primary btn-left" href=<%=url_for(:back)%> role="button" style="color:white">Cancel</a>
+      </div class="col-md-6 writer-col-button">
       <%if session[:role]=="writer" %>
         <form method="post" action= <%=user_oppties_path(oppty_id: @oppty.id)%> >
             <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
@@ -37,16 +42,19 @@
         </form>
       <%end%>
       <%if session[:role]=="manager" %>
+        <div class="col-md-4 manager-col-button">
           <a class="btn btn-lg btn-primary btn-center" href=<%= edit_oppty_path(@oppty)%>  role="button" style="color:white">Edit</a>
-          <form action =<%= assign_index_path%> method="get">
+        </div>
+        <div class="col-md-4 manager-col-button">
+          <form action =<%= assign_index_path%> method="get" style="min-height:1px">
+            <a class="btn btn-lg btn-primary btn-right" type="submit" href=<%= assign_index_path%> role="button" style="color:white">Assign</a>
             <input hidden=true type="hidden" name="opptyId" value=<%= @oppty.id%>>
             <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-            <a class="btn btn-lg btn-primary btn-right" type="submit" href=<%= assign_index_path%> role="button"
-               style="color:white">Assign</a>
           </form>
+        </div>  
       <%end%>
     </div>
-    </p>
+    
   </div>
 </div> <!-- /container -->
 <!-- Bootstrap core JavaScript
