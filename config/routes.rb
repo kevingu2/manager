@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   
   post 'crm/upload'
 
+  post 'crm/updateCRM'
+
   get 'crm/download'
 
   put 'tasks/updateStatus'
