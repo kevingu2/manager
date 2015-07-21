@@ -24,9 +24,9 @@ class BrowseController < ApplicationController
     sixty = Date.today()+60
     ninety = Date.today()+90
 
-    @within30days = Oppty.where("proposalDueDate >= ? and proposalDueDate <= ?", Date.today.to_s, thirty.to_s).page(params[:page]).per_page(15)
-    @within60days = Oppty.where("proposalDueDate >= ? and proposalDueDate <= ?", Date.today.to_s, sixty.to_s).page(params[:page]).per_page(15)
-    @within90days = Oppty.where("proposalDueDate >= ? and proposalDueDate <= ?", Date.today.to_s, ninety.to_s).page(params[:page]).per_page(15)
+    @within30days = Oppty.where("proposalDueDate >= ? and proposalDueDate <= ?", Date.today.to_s, thirty.to_s).order(params[:sort]).page(params[:page]).per_page(15)
+    @within60days = Oppty.where("proposalDueDate >= ? and proposalDueDate <= ?", Date.today.to_s, sixty.to_s).order(params[:sort]).page(params[:page]).per_page(15)
+    @within90days = Oppty.where("proposalDueDate >= ? and proposalDueDate <= ?", Date.today.to_s, ninety.to_s).order(params[:sort]).page(params[:page]).per_page(15)
 
 
   end
@@ -49,9 +49,9 @@ class BrowseController < ApplicationController
     sixty = Date.today()+60
     ninety = Date.today()+90
 
-    @within30days = Oppty.where("proposalDueDate >= ? and proposalDueDate <= ?", Date.today.to_s, thirty.to_s).page(params[:page]).per_page(15)
-    @within60days = Oppty.where("proposalDueDate >= ? and proposalDueDate <= ?", Date.today.to_s, sixty.to_s).page(params[:page]).per_page(15)
-    @within90days = Oppty.where("proposalDueDate >= ? and proposalDueDate <= ?", Date.today.to_s, ninety.to_s).page(params[:page]).per_page(15)
+    @within30days = Oppty.where("proposalDueDate >= ? and proposalDueDate <= ?", Date.today.to_s, thirty.to_s).order(params[:sort]).page(params[:page]).per_page(15)
+    @within60days = Oppty.where("proposalDueDate >= ? and proposalDueDate <= ?", Date.today.to_s, sixty.to_s).order(params[:sort]).page(params[:page]).per_page(15)
+    @within90days = Oppty.where("proposalDueDate >= ? and proposalDueDate <= ?", Date.today.to_s, ninety.to_s).order(params[:sort]).page(params[:page]).per_page(15)
     
   end
 

@@ -7,7 +7,7 @@
           <table cellpadding="0px" cellspacing="0px" class="col-md-12">
             <tr style="font-size:24px;">
               <td class="col-md-12">
-                <input id="search" name="search" type="text" class="col-md-12" value="">
+                <input id="search" name="search" type="text" placeholder="Search" class="col-md-12" value="">
               </td>
               <td class="col-md-1">
                    <input id="search-button" class="btn-search" type="image" src="/assets/search.png" alt="Submit_tag"> 
@@ -28,13 +28,16 @@
 
                 	<td class="col-md-1">
                     <label class="toggle-btn radio black-text">
-                      <input id="thirty_days_left" name="group2" type="radio" value="30">30 Days
+                      <input id="thirty_days_left" name="group2" type="radio" value="30" checked="false">30 Days
                     </label> 
                     <label class="toggle-btn radio black-text">
-                      <input id="sixty_days_left" name="group2" type="radio" value="60">60 Days
+                      <input id="sixty_days_left" name="group2" type="radio" value="60" checked="false">60 Days
                     </label>
                     <label class="toggle-btn radio black-text">
-                      <input id="ninety_days_left" name="group2" type="radio" value="90">90 Days
+                      <input id="ninety_days_left" name="group2" type="radio" value="90" checked="false">90 Days
+                    </label> 
+                    <label class="toggle-btn radio black-text">
+                      <input id="all-days" name="group2" type="radio" value="90+" checked="false">90+ Days
                     </label> 
                     <td>
                       <a href="#" name="radio-style-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
@@ -94,7 +97,10 @@
 
     <hr />
 
-    <div id="thirtyDays" style="display: none;">
+onload="this.width=screenWidth;"
+
+
+    <div id="thirtyDays" style="display: none;" onload="this.radBtn=radioBtn;">
       <% unless @within30days == nil %>
         <% @within30days.each do |o| %>
           <% if @to_do.include?(o) %>
@@ -144,7 +150,7 @@
         <% end %>
       <% end %>
       <div style="float: right !important;">
-        <%= will_paginate @within30days, previous_label: h("<"), next_label: h(">") %>
+        <div name="paginate-div"><%= will_paginate @within30days, previous_label: h("<"), next_label: h(">") %></div>
       </div>
     </div>
 
@@ -198,7 +204,7 @@
         <% end %>
       <% end %>
       <div style="float: right !important;">
-        <%= will_paginate @within60days, previous_label: h("<"), next_label: h(">") %>
+        <div name="paginate-div"><%= will_paginate @within60days, previous_label: h("<"), next_label: h(">") %></div>
       </div>
     </div>
 
@@ -253,12 +259,12 @@
         <% end %>
       <% end %>
       <div style="float: right !important;">
-        <%= will_paginate @within90days, previous_label: h("<"), next_label: h(">") %>
+        <div name="paginate-div"><%= will_paginate @within90days, previous_label: h("<"), next_label: h(">") %></div>
       </div>
     </div>
 
 
-    <div id="allDays" style="display: block;">
+    <div id="allDays">
       <% unless @oppties == nil %>
         <% @oppties.each do |o| %>
           <% if @to_do.include?(o) %>
@@ -307,8 +313,9 @@
           <% end %>
         <% end %>
       <% end %> 
+
       <div style="float: right !important;">
-        <%= will_paginate @oppties, previous_label: h("<"), next_label: h(">") %>
+        <div name="paginate-div"><%= will_paginate @oppties, previous_label: h("<"), next_label: h(">") %></div>
       </div>
     </div>
 
@@ -319,30 +326,48 @@
 
   <script>
 
+
     $(document).on("click","a[name='radio-style-btn']", function (e) {
+      
       if(document.getElementById('thirty_days_left').checked) {
         document.getElementById('thirtyDays').style.display = "block";
         document.getElementById('sixtyDays').style.display = "none";
-        document.getElementById('ninetyDays').style.display = "none";
-        document.getElementById('allDays').style.display= "none";
+        document.getElementById('ninetyDays').style.display = "none";   
+        document.getElementById('allDays').style.display= "none"; 
+        document.getElementById("thirty_days_left").checked = true;
+        document.getElementById("sixty_days_left").checked = false;
+        document.getElementById("ninety_days_left").checked = false;
+        document.getElementById("all-days").checked = false;
       }
       else if(document.getElementById('sixty_days_left').checked) {
         document.getElementById('sixtyDays').style.display = "block";
         document.getElementById('thirtyDays').style.display = "none";
         document.getElementById('ninetyDays').style.display = "none";
         document.getElementById('allDays').style.display= "none";
+        document.getElementById("sixty_days_left").checked = true;
+        document.getElementById("thirty_days_left").checked = false;
+        document.getElementById("ninety_days_left").checked = false;
+        document.getElementById("all-days").checked = false;
       }
       else if (document.getElementById('ninety_days_left').checked) {
         document.getElementById('ninetyDays').style.display = "block";
         document.getElementById('thirtyDays').style.display = "none";
         document.getElementById('sixtyDays').style.display = "none";
         document.getElementById('allDays').style.display= "none";
+        document.getElementById("ninety_days_left").checked = true;
+        document.getElementById("sixty_days_left").checked = false;
+        document.getElementById("thirty_days_left").checked = false;
+        document.getElementById("all-days").checked = false;
       }
-      else {
+      else if (document.getElementById("all-days").checked) {
         document.getElementById('allDays').style.display = "block";
         document.getElementById('ninetyDays').style.display = "none";
         document.getElementById('thirtyDays').style.display = "none";
         document.getElementById('sixtyDays').style.display = "none";
+        document.getElementById("all-days").checked = true;
+        document.getElementById("ninety_days_left").checked = false;
+        document.getElementById("sixty_days_left").checked = false;
+        document.getElementById("thirty_days_left").checked = false;
       }
     });
 
