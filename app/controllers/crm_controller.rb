@@ -5,44 +5,98 @@ class CrmController < ApplicationController
     @oppty = Oppty.all
   end
 
-  # after submit is pushed
-  # need to add the the deleted ones to histories
-    def updateCRM
-
+# after submit is pushed
+  def updateCRM
+    # oldFileName
+    # newFileName
+    puts "*"*30
+    puts params[:oldFileName]
+    puts params[:newFileName]
+    puts "*"*30
+    `rm CRM_PATH + "/" + #{params[:oldFileName]}`
+    opptyIds = [] # holds ids in the database
+    Oppty.find_each do |o|
+      opptyIds.push(o.opptyId)
     end
-
-    def delete(fileName)
-      puts `mv #{fileName} ../#{CRM_PATH}`
-      puts `rm -rf #{CRM_PATH}`
-      puts `mv ../#{CRM_PATH}/#{fileName} #{CRM_PATH}`
+    data = `python bin/excelReader.py "public/uploads/#{params[:newFileName]}"`
+    data = JSON.parse(data)
+    uploadedIds = [] # holds uploaded ids
+    data.each do |d|
+      uploadedIds.push(data["OpptyID"])
     end
+    ids = opptyIds - uploadedIds
+    newIds = uploadedIds - opptyIds
+    ids.each do |i|
+      moveToHistory(i)
+    end
+    addNewOppty(data, newIds)
+    redirect_to crm_index_path
+  end
+
+  def addNewOppty(data, newIds)
+    data.each do |d|
+      if newIds.include? d["OpptyID"]
+        Oppty.create(d)
+      end
+    end
+  end
+
+  def moveToHistory(oppty_id)
+    oppty=Oppty.find_by(["opptyId=?", oppty_id])
+    if oppty.present?
+      puts "Add to History"
+      oppty_dict=oppty.attributes
+      oppty_dict.delete('id')
+      #puts oppty_dict
+      history=History.create(oppty_dict)
+      oppty.delete
+      # if !UserHistory.where(["user_id=? and history_id=?", user_id, history.id]).present?
+      #   user=user_history.build(history_id: history.id)
+      # end
+    else
+      puts "oppty not present"
+    end
+  end
+
+  def delete(fileName)
+    puts `mv #{fileName} ../#{CRM_PATH}`
+    puts `rm -rf #{CRM_PATH}`
+    puts `mv ../#{CRM_PATH}/#{fileName} #{CRM_PATH}`
+  end
 
   #uploading an excel file from user's computer
   def upload
     uploaded_io = params[:upl]
 
     # get existing file in public/uploads
-    excelFileName=nil
+    @oldFileName=nil
     if Dir[CRM_PATH+'/*.xlsm'][0]
-      excelFileName=File.basename(Dir[CRM_PATH+'/*.xlsm'][0])
+      @oldFileName=File.basename(Dir[CRM_PATH+'/*.xlsm'][0])
     end
     # get original file's date
     # check if older or newer
     File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
       file.write(uploaded_io.read)
     end
-    fileName = uploaded_io.original_filename.to_s
-    oldOrNew = "old"
-    oldOrNew =  `python bin/dateExtract.py "public/uploads/#{fileName}" "public/uploads/#{excelFileName}"`
+    @newFileName = uploaded_io.original_filename.to_s
 
+    oldOrNew = "old"
+    oldOrNew =  `python bin/dateExtract.py "public/uploads/#{@newFileName}" "public/uploads/#{@oldFileName}"`
+
+    uploadedIds = []
+    opptyIds = []
+    Oppty.find_each do |o|
+      opptyIds.push(o.opptyId)
+    end
     ###############TODO######################
     # oldOrNew can be "old" or "new", check the value and do stuff afterwards
     ########################################
-    data = `python bin/excelReader.py "public/uploads/#{fileName}"`
+    data = `python bin/excelReader.py "public/uploads/#{@newFileName}"`
     data = JSON.parse(data)
     @changes = [] # holds list of hashes that contain what is changed
     newCount = 0
     data.each do |o|
+      uploadedIds.push(o["OpptyID"])
       #if there is some magical ruby way to do this better, please do it. I don't know ruby :(
       #quite possibly the hackiest code in this project
       #######################get values from json##########################
@@ -474,116 +528,132 @@ class CrmController < ApplicationController
         end
       else
         newCount += 1
-        @oppty=Oppty.new
-        #fields
-        @oppty.opptyId                = id
-        @oppty.opptyName              = name
-        @oppty.idiqCA                 = idiqCA
-        @oppty.status2                = status2
-        @oppty.value                  = value
-        @oppty.pWin                   = pWin
-        @oppty.captureMgr             = captureMgr
-        @oppty.programMgr             = programMgr
-        @oppty.proposalMgr            = proposalMgr
-        @oppty.technicalLead          = technicalLead
-        @oppty.slArch                 = slArch
-        @oppty.slComments             = slComments
-        @oppty.rfpDate                = rfpDate
-        @oppty.awardDate              = awardDate
-        @oppty.slDir                  = slDir
-        @oppty.leadEstim              = leadEstim
-        @oppty.engaged                = engaged
-        @oppty.solution               = solution
-        @oppty.estimate               = estimate
-        @oppty.proposalDueDate        = proposalDueDate
-        @oppty.codeName               = codeName
-        @oppty.descriptionOfWork      = descriptionOfWork
-        @oppty.category               = category
-        @oppty.pwald                  = pwald
-        @oppty.pBid                   = pBid
-        @oppty.awardFV                = awardFV
-        @oppty.saicvaPercent          = saicvaPercent
-        @oppty.saicva                 = saicva
-        @oppty.mat                    = mat
-        @oppty.materialsTV            = materialsTV
-        @oppty.subc                   = subc
-        @oppty.subTV                  = subTV
-        @oppty.cg_va                  = cg_va
-        @oppty.sss_va                 = sss_va
-        @oppty.nwi_va                 = nwi_va
-        @oppty.hwi_va                 = hwi_va
-        @oppty.itms_va                = itms_va
-        @oppty.tss_va                 = tss_va
-        @oppty.ccds_va                = ccds_va
-        @oppty.mss_va                 = mss_va
-        @oppty.swi_va                 = swi_va
-        @oppty.lsc_va                 = lsc_va
-        @oppty.zzOth_va               = zzOth_va
-        @oppty.pri                    = pri
-        @oppty.aop                    = aop
-        @oppty.peg                    = peg
-        @oppty.mustWin                = mustWin
-        @oppty.feeIndic               = feeIndic
-        @oppty.slutil                 = slutil
-        @oppty.recompete              = recompete
-        @oppty.competitive            = competitive
-        @oppty.international          = international
-        @oppty.strategic              = strategic
-        @oppty.bundle                 = bundle
-        @oppty.bidReviewStream        = bidReviewStream
-        @oppty.definedDelivPgm        = definedDelivPgm
-        @oppty.evaluationCriteria     = evaluationCriteria
-        @oppty.perfWorkLoc            = perfWorkLoc
-        @oppty.classIfReqmt           = classIfReqmt
-        @oppty.grouping               = grouping
-        @oppty.reasonForWinLoss       = reasonForWinLoss
-        @oppty.egr                    = egr
-        @oppty.slCat                  = slCat
-        @oppty.slPri                  = slPri
-        @oppty.slNote                 = slNote
-        @oppty.crmRunDate             = crmRunDate
-        @oppty.contractStartDate      = contractStartDate
-        @oppty.rfpFYPer               = rfpFYPer
-        @oppty.submitFYPer            = submitFYPer
-        @oppty.awardFYPer             = awardFYPer
-        @oppty.preBPprojID            = preBPprojID
-        @oppty.fy16PreBP              = fy16PreBP
-        @oppty.fy16PreBPSpent         = fy16PreBPSpent
-        @oppty.fy16PreBPSpentPercent  = fy16PreBPSpentPercent
-        @oppty.bpProjID               = bpProjID
-        @oppty.fy16BDTot              = fy16BDTot
-        @oppty.fy16BDTotSpent         = fy16BDTotSpent
-        @oppty.fy16BDTotSpentPercent  = fy16BDTotSpentPercent
-        @oppty.financeDate            = financeDate
-        @oppty.cgSecOrg               = cgSecOrg
-        @oppty.cgSecMgr               = cgSecMgr
-        @oppty.cgOrg                  = cgOrg
-        @oppty.cgMgr                  = cgMgr
-        @oppty.opOrg                  = opOrg
-        @oppty.cgOpMgr                = cgOpMgr
-        @oppty.cgPgmDir               = cgPgmDir
-        @oppty.bdMgr                  = bdMgr
-        @oppty.crmRecOwner            = crmRecOwner
-        @oppty.sslMgr                 = sslMgr
-        @oppty.divNum                 = divNum
-        @oppty.customer               = customer
-        @oppty.endCustomer            = endCustomer
-        @oppty.crn                    = crn
-        @oppty.contractType           = contractType
-        @oppty.opptyClass             = opptyClass
-        @oppty.numberOfAwards         = numberOfAwards
-        @oppty.totalPOP               = totalPOP
-        @oppty.primeSub               = primeSub
-        @oppty.fy16BP                 = fy16BP
-        @oppty.fy16BPSpent            = fy16BPSpent
-        @oppty.fy16BPSpentPercent     = fy16BPSpentPercent
-        @oppty.save
+        # @oppty=Oppty.new
+        # #fields
+        # @oppty.opptyId                = id
+        # @oppty.opptyName              = name
+        # @oppty.idiqCA                 = idiqCA
+        # @oppty.status2                = status2
+        # @oppty.value                  = value
+        # @oppty.pWin                   = pWin
+        # @oppty.captureMgr             = captureMgr
+        # @oppty.programMgr             = programMgr
+        # @oppty.proposalMgr            = proposalMgr
+        # @oppty.technicalLead          = technicalLead
+        # @oppty.slArch                 = slArch
+        # @oppty.slComments             = slComments
+        # @oppty.rfpDate                = rfpDate
+        # @oppty.awardDate              = awardDate
+        # @oppty.slDir                  = slDir
+        # @oppty.leadEstim              = leadEstim
+        # @oppty.engaged                = engaged
+        # @oppty.solution               = solution
+        # @oppty.estimate               = estimate
+        # @oppty.proposalDueDate        = proposalDueDate
+        # @oppty.codeName               = codeName
+        # @oppty.descriptionOfWork      = descriptionOfWork
+        # @oppty.category               = category
+        # @oppty.pwald                  = pwald
+        # @oppty.pBid                   = pBid
+        # @oppty.awardFV                = awardFV
+        # @oppty.saicvaPercent          = saicvaPercent
+        # @oppty.saicva                 = saicva
+        # @oppty.mat                    = mat
+        # @oppty.materialsTV            = materialsTV
+        # @oppty.subc                   = subc
+        # @oppty.subTV                  = subTV
+        # @oppty.cg_va                  = cg_va
+        # @oppty.sss_va                 = sss_va
+        # @oppty.nwi_va                 = nwi_va
+        # @oppty.hwi_va                 = hwi_va
+        # @oppty.itms_va                = itms_va
+        # @oppty.tss_va                 = tss_va
+        # @oppty.ccds_va                = ccds_va
+        # @oppty.mss_va                 = mss_va
+        # @oppty.swi_va                 = swi_va
+        # @oppty.lsc_va                 = lsc_va
+        # @oppty.zzOth_va               = zzOth_va
+        # @oppty.pri                    = pri
+        # @oppty.aop                    = aop
+        # @oppty.peg                    = peg
+        # @oppty.mustWin                = mustWin
+        # @oppty.feeIndic               = feeIndic
+        # @oppty.slutil                 = slutil
+        # @oppty.recompete              = recompete
+        # @oppty.competitive            = competitive
+        # @oppty.international          = international
+        # @oppty.strategic              = strategic
+        # @oppty.bundle                 = bundle
+        # @oppty.bidReviewStream        = bidReviewStream
+        # @oppty.definedDelivPgm        = definedDelivPgm
+        # @oppty.evaluationCriteria     = evaluationCriteria
+        # @oppty.perfWorkLoc            = perfWorkLoc
+        # @oppty.classIfReqmt           = classIfReqmt
+        # @oppty.grouping               = grouping
+        # @oppty.reasonForWinLoss       = reasonForWinLoss
+        # @oppty.egr                    = egr
+        # @oppty.slCat                  = slCat
+        # @oppty.slPri                  = slPri
+        # @oppty.slNote                 = slNote
+        # @oppty.crmRunDate             = crmRunDate
+        # @oppty.contractStartDate      = contractStartDate
+        # @oppty.rfpFYPer               = rfpFYPer
+        # @oppty.submitFYPer            = submitFYPer
+        # @oppty.awardFYPer             = awardFYPer
+        # @oppty.preBPprojID            = preBPprojID
+        # @oppty.fy16PreBP              = fy16PreBP
+        # @oppty.fy16PreBPSpent         = fy16PreBPSpent
+        # @oppty.fy16PreBPSpentPercent  = fy16PreBPSpentPercent
+        # @oppty.bpProjID               = bpProjID
+        # @oppty.fy16BDTot              = fy16BDTot
+        # @oppty.fy16BDTotSpent         = fy16BDTotSpent
+        # @oppty.fy16BDTotSpentPercent  = fy16BDTotSpentPercent
+        # @oppty.financeDate            = financeDate
+        # @oppty.cgSecOrg               = cgSecOrg
+        # @oppty.cgSecMgr               = cgSecMgr
+        # @oppty.cgOrg                  = cgOrg
+        # @oppty.cgMgr                  = cgMgr
+        # @oppty.opOrg                  = opOrg
+        # @oppty.cgOpMgr                = cgOpMgr
+        # @oppty.cgPgmDir               = cgPgmDir
+        # @oppty.bdMgr                  = bdMgr
+        # @oppty.crmRecOwner            = crmRecOwner
+        # @oppty.sslMgr                 = sslMgr
+        # @oppty.divNum                 = divNum
+        # @oppty.customer               = customer
+        # @oppty.endCustomer            = endCustomer
+        # @oppty.crn                    = crn
+        # @oppty.contractType           = contractType
+        # @oppty.opptyClass             = opptyClass
+        # @oppty.numberOfAwards         = numberOfAwards
+        # @oppty.totalPOP               = totalPOP
+        # @oppty.primeSub               = primeSub
+        # @oppty.fy16BP                 = fy16BP
+        # @oppty.fy16BPSpent            = fy16BPSpent
+        # @oppty.fy16BPSpentPercent     = fy16BPSpentPercent
+        # @oppty.save
       end
     end
     puts @oppty.inspect
     puts "changes: " + @changes.length.to_s
     puts @changes[0]
     puts "newCount: " + newCount.to_s
+    puts "deletedCount: " + (opptyIds - uploadedIds).length.to_s
+    puts "O"*30
+    puts @oldFileName
+    puts @newFileName
+    puts "O"*30
+    #puts opptyIds
+    uploadedIds.each do |u|
+      opptyIds.delete(u)
+    end
+    puts opptyIds
+    puts "*"*30
+    opptyIds.each do |i|
+      #puts i
+      moveToHistory(i)
+    end
+    puts "*"*30
     #redirect_to crm_upload_path(:changes => @changes)
     #redirect_to invalid_entry_index_path, notice: "File uploaded"
     #redirect_to crm_upload_path(@changes)
@@ -593,6 +663,8 @@ class CrmController < ApplicationController
 
   #downloading the modified excel file from the browser
   def download
+    #pull the database data into an excel
+    #pulls and downloads the first .xlsm file from the /uploads folder
     if Dir[CRM_PATH+'/*.xlsm'][0]
         @download_path=File.join(Dir[CRM_PATH+'/*.xlsm'][0])
         send_file @download_path, :type=>"application/txt", :x_sendfile=>true
@@ -600,5 +672,4 @@ class CrmController < ApplicationController
         redirect_to crm_index_path
     end
   end
-
 end

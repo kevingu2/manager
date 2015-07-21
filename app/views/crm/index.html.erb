@@ -1,5 +1,5 @@
 <body>
-  <!--div class="page-wrapper"-->	
+  <!--div class="page-wrapper"-->
 	<div class="col-md-6 column-wrapper">
 	  <div class="inner-column">
 		<h2 class="column-title">Upload</h2>
@@ -9,10 +9,6 @@
 		    <br>
 		    <input type="file" id="upl" name="upl" class="file-input"/>
 		    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-            <form id="upload" method="post" action="updateCRM" enctype="multipart/form-data">
-               <input type="submit">
-              <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-            </form>
 		  </div>
 
 		  <ul class="upload-list">
@@ -20,7 +16,13 @@
 		  </ul>
 
 		</form>
-	  </div>	
+		<form id="upload" method="post" action="updateCRM">
+			<input type="submit">
+			<input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+			<input name="oldFileName" type="hidden" value=<%= @oldFileName%>>
+			<input name="newFileName" type="hidden" value=<%= @newFileName%>>
+		</form>
+	  </div>
 	</div>
 
 	<div class="col-md-6 column-wrapper">
@@ -40,6 +42,7 @@
   <%= javascript_include_tag('jquery.iframe-transport.js') %>
   <%= javascript_include_tag('jquery.fileupload.js') %>
   <%= javascript_include_tag('upload.js') %>
+<<<<<<< HEAD
 
   <script>
   	/* creates style rule programmatically after AmCharts logo exists */
@@ -47,7 +50,7 @@
         var style = document.createElement('style');
         style.type = 'text/css';
         document.getElementsByTagName('head')[0].appendChild(style);
-        if(!(style.sheet||{}).insertRule) 
+        if(!(style.sheet||{}).insertRule)
             (style.styleSheet || style.sheet).addRule(name, rules);
         else
             style.sheet.insertRule(name+"{"+rules+"}",0);
@@ -55,5 +58,6 @@
 
     // ('html body div div #upload #drop input#upl.file-input #shadow-root input',"visibility: hidden !important;");
   </script>
+=======
+>>>>>>> 2e1e0449d6465dfd699e6abfe710513d94baff9c
 <body>
-
