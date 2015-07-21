@@ -663,6 +663,8 @@ class CrmController < ApplicationController
 
   #downloading the modified excel file from the browser
   def download
+    #pull the database data into an excel
+    #pulls and downloads the first .xlsm file from the /uploads folder
     if Dir[CRM_PATH+'/*.xlsm'][0]
         @download_path=File.join(Dir[CRM_PATH+'/*.xlsm'][0])
         send_file @download_path, :type=>"application/txt", :x_sendfile=>true
@@ -670,5 +672,4 @@ class CrmController < ApplicationController
         redirect_to crm_index_path
     end
   end
-
 end
