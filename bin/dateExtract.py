@@ -3,6 +3,7 @@ import xlrd
 import sys
 from datetime import datetime
 
+#file1 is new, file2 is old
 args = sys.argv
 file1 = args[1]
 file2 = args[2]
@@ -20,4 +21,5 @@ date = sheet.cell_value(1,12)
 datetime_value = datetime(*xlrd.xldate_as_tuple(date, 0))
 date2 = datetime_value.date()
 
-print (date2 - date1).days
+if (date2 - date1).days > 0: print "old"
+else: print "new"
