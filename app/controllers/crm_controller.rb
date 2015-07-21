@@ -142,7 +142,6 @@
         #########Potential loating point inaccuracies, however per we believe this is inconsequential ###########
         if pWin             != data.pWin
           diff["pWin"]            = pWin
-          old["pWin"] = data.pWin
           change = true end
         if captureMgr        != data.captureMgr
           diff["captureMgr"]       = captureMgr
@@ -437,7 +436,6 @@
             if value == "" #nil != ""
               diff.delete(key)
             else
-              puts key, value
               to_push = true
               #break
             end
@@ -555,6 +553,7 @@
         @oppty.save
       end
     end
+    puts @oppty.inspect
     puts "changes: " + @changes.length.to_s
     puts @changes[0]
     puts "newCount: " + newCount.to_s
