@@ -1,16 +1,43 @@
 class CrmController < ApplicationController
   CRM_PATH = File.join(Rails.root, "public", "uploads")
+  DOWNLOAD_PATH =""
   def index
     @oppty = Oppty.all
   end
 
+  # after submit is pushed
+  # need to add the the deleted ones to histories
+    def updateCRM
+
+    end
+
+    def delete(fileName)
+      puts `mv #{fileName} ../#{CRM_PATH}`
+      puts `rm -rf #{CRM_PATH}`
+      puts `mv ../#{CRM_PATH}/#{fileName} #{CRM_PATH}`
+    end
+
   #uploading an excel file from user's computer
   def upload
     uploaded_io = params[:upl]
+
+    # get existing file in public/uploads
+    excelFileName=nil
+    if Dir[CRM_PATH+'/*.xlsm'][0]
+      excelFileName=File.basename(Dir[CRM_PATH+'/*.xlsm'][0])
+    end
+    # get original file's date
+    # check if older or newer
     File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
       file.write(uploaded_io.read)
     end
     fileName = uploaded_io.original_filename.to_s
+    oldOrNew = "old"
+    oldOrNew =  `python bin/dateExtract.py "public/uploads/#{fileName}" "public/uploads/#{excelFileName}"`
+
+    ###############TODO######################
+    # oldOrNew can be "old" or "new", check the value and do stuff afterwards
+    ########################################
     data = `python bin/excelReader.py "public/uploads/#{fileName}"`
     data = JSON.parse(data)
     @changes = [] # holds list of hashes that contain what is changed
@@ -142,7 +169,6 @@ class CrmController < ApplicationController
         #########Potential loating point inaccuracies, however per we believe this is inconsequential ###########
         if pWin             != data.pWin
           diff["pWin"]            = pWin
-          change["pWin"] = data.pWin
           change = true end
         if captureMgr        != data.captureMgr
           diff["captureMgr"]       = captureMgr
@@ -437,7 +463,6 @@ class CrmController < ApplicationController
             if value == "" #nil != ""
               diff.delete(key)
             else
-              puts key, value
               to_push = true
               #break
             end
@@ -555,6 +580,7 @@ class CrmController < ApplicationController
         @oppty.save
       end
     end
+    puts @oppty.inspect
     puts "changes: " + @changes.length.to_s
     puts @changes[0]
     puts "newCount: " + newCount.to_s
@@ -567,7 +593,12 @@ class CrmController < ApplicationController
 
   #downloading the modified excel file from the browser
   def download
-    send_file CRM_PATH, :type=>"application/txt", :x_sendfile=>true
+    if Dir[CRM_PATH+'/*.xlsm'][0]
+        @download_path=File.join(Dir[CRM_PATH+'/*.xlsm'][0])
+        send_file @download_path, :type=>"application/txt", :x_sendfile=>true
+    else
+        redirect_to crm_index_path
+    end
   end
 
 end
