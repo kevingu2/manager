@@ -9,6 +9,10 @@
 		    <br>
 		    <input type="file" id="upl" name="upl" class="file-input"/>
 		    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+            <form id="upload" method="post" action="updateCRM" enctype="multipart/form-data">
+               <input type="submit">
+              <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+            </form>
 		  </div>
 
 		  <ul class="upload-list">

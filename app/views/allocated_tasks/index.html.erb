@@ -23,7 +23,7 @@
     	<div class="textColor">
     		<div class="row-2">
     			<div class="col-md-4 op-body-bg-left">
-         			<% @to_do.each do |oppty|  %>
+         			<% @todo.each do |oppty|  %>
 						<h2><%= link_to oppty.opptyName, oppty %></h2>
   						<p><%= oppty.slComments %></p>
   						<p>
@@ -55,35 +55,10 @@
   						<hr />
 					<% end %>
     			</div>
-
-
-
-
-
-
-          <%# This block of code needs to be deleted %>
-          <div class="col-md-4 op-body-bg-right">
-              <% @oppties.each do |oppty|  %>
-            <div class="regular-text a:visited"><%= link_to oppty.opptyName, oppty %></div>
-            <div class="little-text"><%= oppty.slComments %></div>
-              <div class="medium-text a:visited">
-                <tr>
-                  <td><%= link_to "Delete", oppty, :data => {:confirm => "Are you sure?"}, :method => :delete %></td>
-                  <td><%= link_to "Edit", edit_oppty_path(oppty) %></td>
-                </tr>
-              </div>
-              <hr class="textColor"/>
-          <% end %>
-          </div>
-
     		</div>
 		</div>
 	</div>
 </div>
-
-  <div style="float: right !important">
-    <%= will_paginate @oppties %>
-  </div>
 
 </body>
 

@@ -6,12 +6,14 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
+    raise ActionController::RoutingError.new('Not Found')
     @users = User.all
   end
 
   # GET /users/1
   # GET /users/1.json
   def show
+    raise ActionController::RoutingError.new('Not Found')
   end
 
   # GET /users/new

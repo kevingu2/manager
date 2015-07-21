@@ -5,18 +5,65 @@ class CrmController < ApplicationController
     @oppty = Oppty.all
   end
 
+# after submit is pushed
+  def updateCRM
+  end
+
+  def moveToHistory(oppty_id)
+    oppty=Oppty.find_by(["opptyId=?", oppty_id])
+    if oppty.present?
+      puts "Add to History"
+      oppty_dict=oppty.attributes
+      oppty_dict.delete('id')
+      puts oppty_dict
+      history=History.create(oppty_dict)
+      oppty.delete
+      # if !UserHistory.where(["user_id=? and history_id=?", user_id, history.id]).present?
+      #   user=user_history.build(history_id: history.id)
+      # end
+    else
+      puts "oppty not present"
+    end
+  end
+
+  def delete(fileName)
+    puts `mv #{fileName} ../#{CRM_PATH}`
+    puts `rm -rf #{CRM_PATH}`
+    puts `mv ../#{CRM_PATH}/#{fileName} #{CRM_PATH}`
+  end
+
   #uploading an excel file from user's computer
   def upload
     uploaded_io = params[:upl]
+
+    # get existing file in public/uploads
+    excelFileName=nil
+    if Dir[CRM_PATH+'/*.xlsm'][0]
+      excelFileName=File.basename(Dir[CRM_PATH+'/*.xlsm'][0])
+    end
+    # get original file's date
+    # check if older or newer
     File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
       file.write(uploaded_io.read)
     end
     fileName = uploaded_io.original_filename.to_s
+    oldOrNew = "old"
+    oldOrNew =  `python bin/dateExtract.py "public/uploads/#{fileName}" "public/uploads/#{excelFileName}"`
+
+    uploadedIds = []
+    opptyIds = []
+    Oppty.find_each do |o|
+      opptyIds.push(o.opptyId)
+    end
+    ###############TODO######################
+    # oldOrNew can be "old" or "new", check the value and do stuff afterwards
+    ########################################
     data = `python bin/excelReader.py "public/uploads/#{fileName}"`
     data = JSON.parse(data)
     @changes = [] # holds list of hashes that contain what is changed
     newCount = 0
     data.each do |o|
+      uploadedIds.push(o["OpptyID"])
       #if there is some magical ruby way to do this better, please do it. I don't know ruby :(
       #quite possibly the hackiest code in this project
       #######################get values from json##########################
@@ -558,6 +605,17 @@ class CrmController < ApplicationController
     puts "changes: " + @changes.length.to_s
     puts @changes[0]
     puts "newCount: " + newCount.to_s
+    puts opptyIds
+    uploadedIds.each do |u|
+      opptyIds.delete(u)
+    end
+    puts opptyIds
+    puts "*"*30
+    opptyIds.each do |i|
+      puts i
+      moveToHistory(i)
+    end
+    puts "*"*30
     #redirect_to crm_upload_path(:changes => @changes)
     #redirect_to invalid_entry_index_path, notice: "File uploaded"
     #redirect_to crm_upload_path(@changes)
@@ -572,7 +630,7 @@ class CrmController < ApplicationController
     if Dir[CRM_PATH+'/*.xlsm'][0]
         @download_path=File.join(Dir[CRM_PATH+'/*.xlsm'][0])
         send_file @download_path, :type=>"application/txt", :x_sendfile=>true
-    else 
+    else
         redirect_to crm_index_path
     end
   end
