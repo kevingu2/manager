@@ -36,20 +36,5 @@
   <%= javascript_include_tag('jquery.iframe-transport.js') %>
   <%= javascript_include_tag('jquery.fileupload.js') %>
   <%= javascript_include_tag('upload.js') %>
-
-  <script>
-  	/* creates style rule programmatically after AmCharts logo exists */
-    function createClass(name,rules){
-        var style = document.createElement('style');
-        style.type = 'text/css';
-        document.getElementsByTagName('head')[0].appendChild(style);
-        if(!(style.sheet||{}).insertRule) 
-            (style.styleSheet || style.sheet).addRule(name, rules);
-        else
-            style.sheet.insertRule(name+"{"+rules+"}",0);
-    }
-
-    //createClass('html body div div #upload #drop input#upl.file-input #shadow-root input',"visibility: hidden !important;");
-  </script>
 <body>
 

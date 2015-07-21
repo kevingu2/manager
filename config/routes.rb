@@ -37,6 +37,8 @@ Rails.application.routes.draw do
 
   get 'sessions/destroy'
 
+  post 'users/new'
+
 
   resources :histories
 
@@ -44,7 +46,7 @@ Rails.application.routes.draw do
 
   resources :oppties
 
-  resources :users
+  resources :users, :only => [:new, :create] 
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
