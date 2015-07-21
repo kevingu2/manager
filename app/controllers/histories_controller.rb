@@ -9,7 +9,8 @@ class HistoriesController < ApplicationController
   # GET /histories
   # GET /histories.json
   def index
-    @histories = UserHistory.where(user_id: @user.id).includes(:history).paginate(:per_page => 20, :page => params[:page])
+    @all_histories=History.all
+    @user_histories = UserHistory.where(user_id: @user.id).includes(:history).paginate(:per_page => 20, :page => params[:page])
   end
 
   # GET /histories/1
