@@ -9,6 +9,10 @@
 		    <br>
 		    <input type="file" id="upl" name="upl" class="file-input"/>
 		    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+            <form id="upload" method="post" action="updateCRM" enctype="multipart/form-data">
+               <input type="submit">
+              <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+            </form>
 		  </div>
 
 		  <ul class="upload-list">
@@ -22,7 +26,10 @@
 	<div class="col-md-6 column-wrapper">
 	  <div class="inner-column">
 		<h2 class="column-title">Download</h2>
-		<%= link_to "Download New CRM Data", "download" %>
+		<form id="download" method="get" action="download" enctype="multipart/form-data">
+		  <button class="btn btn-lg btn-primary btn-left" type="submit">Download
+		  	<span class="glyphicon glyphicon-download"></span></button>
+		</form>
 	  </div>
 	</div>
   <!--/div-->
@@ -33,20 +40,5 @@
   <%= javascript_include_tag('jquery.iframe-transport.js') %>
   <%= javascript_include_tag('jquery.fileupload.js') %>
   <%= javascript_include_tag('upload.js') %>
-
-  <script>
-  	/* creates style rule programmatically after AmCharts logo exists */
-    function createClass(name,rules){
-        var style = document.createElement('style');
-        style.type = 'text/css';
-        document.getElementsByTagName('head')[0].appendChild(style);
-        if(!(style.sheet||{}).insertRule) 
-            (style.styleSheet || style.sheet).addRule(name, rules);
-        else
-            style.sheet.insertRule(name+"{"+rules+"}",0);
-    }
-
-    //createClass('html body div div #upload #drop input#upl.file-input #shadow-root input',"visibility: hidden !important;");
-  </script>
 <body>
 
