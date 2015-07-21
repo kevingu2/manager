@@ -1,5 +1,6 @@
-:class CrmController < ApplicationController
+class CrmController < ApplicationController
   CRM_PATH = File.join(Rails.root, "public", "uploads")
+  DOWNLOAD_PATH =""
   def index
     @oppty = Oppty.all
   end
@@ -566,7 +567,12 @@
 
   #downloading the modified excel file from the browser
   def download
-    send_file CRM_PATH, :type=>"application/txt", :x_sendfile=>true
+    if Dir[CRM_PATH+'/*.xlsm'][0]
+        @download_path=File.join(Dir[CRM_PATH+'/*.xlsm'][0])
+        send_file @download_path, :type=>"application/txt", :x_sendfile=>true
+    else 
+        redirect_to crm_index_path
+    end
   end
 
 end
