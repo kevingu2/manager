@@ -278,7 +278,6 @@ class CrmController < ApplicationController
   def moveToHistory(oppty_id)
     oppty=Oppty.find_by(["opptyId=?", oppty_id])
     if oppty.present?
-      puts "Add to History"
       oppty_dict=oppty.attributes
       oppty_dict.delete('id')
       #puts oppty_dict
@@ -748,7 +747,6 @@ class CrmController < ApplicationController
       end
     end
     Oppty.find_each do |o|
-      puts opptyIds.length
       opptyIds.push(o.opptyId)
     end
     puts "changes: " + @changes.length.to_s
