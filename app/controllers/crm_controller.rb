@@ -42,7 +42,7 @@ class CrmController < ApplicationController
     data = JSON.parse(data)
     uploadedIds = [] # holds uploaded ids
     data.each do |d|
-      uploadedIds.push(data["OpptyID"])
+      uploadedIds.push(d["OpptyID"])
     end
     ids = opptyIds - uploadedIds
     newIds = uploadedIds - opptyIds
@@ -55,6 +55,7 @@ class CrmController < ApplicationController
 
   def addNewOppty(data, newIds)
     data.each do |d|
+      puts d
       if newIds.include? d["OpptyID"]
         Oppty.create(d)
       end
@@ -90,7 +91,9 @@ class CrmController < ApplicationController
   def upload
     puts params[:newFileName]
     puts params[:oldFileName]
-    data = `python bin/excelReader.py "public/uploads/#{params[:newFileName]}"`
+    @newFileName=params[:newFileName]
+    @oldFileName=params[:oldFileName]
+    data = `python bin/excelReader.py "public/uploads/#{@newFileName}"`
     data = JSON.parse(data)
     @changes = [] # holds list of hashes that contain what is changed
     @added = 0
@@ -529,110 +532,6 @@ class CrmController < ApplicationController
         end
       else
         @added += 1
-        # @oppty=Oppty.new
-        # #fields
-        # @oppty.opptyId                = id
-        # @oppty.opptyName              = name
-        # @oppty.idiqCA                 = idiqCA
-        # @oppty.status2                = status2
-        # @oppty.value                  = value
-        # @oppty.pWin                   = pWin
-        # @oppty.captureMgr             = captureMgr
-        # @oppty.programMgr             = programMgr
-        # @oppty.proposalMgr            = proposalMgr
-        # @oppty.technicalLead          = technicalLead
-        # @oppty.slArch                 = slArch
-        # @oppty.slComments             = slComments
-        # @oppty.rfpDate                = rfpDate
-        # @oppty.awardDate              = awardDate
-        # @oppty.slDir                  = slDir
-        # @oppty.leadEstim              = leadEstim
-        # @oppty.engaged                = engaged
-        # @oppty.solution               = solution
-        # @oppty.estimate               = estimate
-        # @oppty.proposalDueDate        = proposalDueDate
-        # @oppty.codeName               = codeName
-        # @oppty.descriptionOfWork      = descriptionOfWork
-        # @oppty.category               = category
-        # @oppty.pwald                  = pwald
-        # @oppty.pBid                   = pBid
-        # @oppty.awardFV                = awardFV
-        # @oppty.saicvaPercent          = saicvaPercent
-        # @oppty.saicva                 = saicva
-        # @oppty.mat                    = mat
-        # @oppty.materialsTV            = materialsTV
-        # @oppty.subc                   = subc
-        # @oppty.subTV                  = subTV
-        # @oppty.cg_va                  = cg_va
-        # @oppty.sss_va                 = sss_va
-        # @oppty.nwi_va                 = nwi_va
-        # @oppty.hwi_va                 = hwi_va
-        # @oppty.itms_va                = itms_va
-        # @oppty.tss_va                 = tss_va
-        # @oppty.ccds_va                = ccds_va
-        # @oppty.mss_va                 = mss_va
-        # @oppty.swi_va                 = swi_va
-        # @oppty.lsc_va                 = lsc_va
-        # @oppty.zzOth_va               = zzOth_va
-        # @oppty.pri                    = pri
-        # @oppty.aop                    = aop
-        # @oppty.peg                    = peg
-        # @oppty.mustWin                = mustWin
-        # @oppty.feeIndic               = feeIndic
-        # @oppty.slutil                 = slutil
-        # @oppty.recompete              = recompete
-        # @oppty.competitive            = competitive
-        # @oppty.international          = international
-        # @oppty.strategic              = strategic
-        # @oppty.bundle                 = bundle
-        # @oppty.bidReviewStream        = bidReviewStream
-        # @oppty.definedDelivPgm        = definedDelivPgm
-        # @oppty.evaluationCriteria     = evaluationCriteria
-        # @oppty.perfWorkLoc            = perfWorkLoc
-        # @oppty.classIfReqmt           = classIfReqmt
-        # @oppty.grouping               = grouping
-        # @oppty.reasonForWinLoss       = reasonForWinLoss
-        # @oppty.egr                    = egr
-        # @oppty.slCat                  = slCat
-        # @oppty.slPri                  = slPri
-        # @oppty.slNote                 = slNote
-        # @oppty.crmRunDate             = crmRunDate
-        # @oppty.contractStartDate      = contractStartDate
-        # @oppty.rfpFYPer               = rfpFYPer
-        # @oppty.submitFYPer            = submitFYPer
-        # @oppty.awardFYPer             = awardFYPer
-        # @oppty.preBPprojID            = preBPprojID
-        # @oppty.fy16PreBP              = fy16PreBP
-        # @oppty.fy16PreBPSpent         = fy16PreBPSpent
-        # @oppty.fy16PreBPSpentPercent  = fy16PreBPSpentPercent
-        # @oppty.bpProjID               = bpProjID
-        # @oppty.fy16BDTot              = fy16BDTot
-        # @oppty.fy16BDTotSpent         = fy16BDTotSpent
-        # @oppty.fy16BDTotSpentPercent  = fy16BDTotSpentPercent
-        # @oppty.financeDate            = financeDate
-        # @oppty.cgSecOrg               = cgSecOrg
-        # @oppty.cgSecMgr               = cgSecMgr
-        # @oppty.cgOrg                  = cgOrg
-        # @oppty.cgMgr                  = cgMgr
-        # @oppty.opOrg                  = opOrg
-        # @oppty.cgOpMgr                = cgOpMgr
-        # @oppty.cgPgmDir               = cgPgmDir
-        # @oppty.bdMgr                  = bdMgr
-        # @oppty.crmRecOwner            = crmRecOwner
-        # @oppty.sslMgr                 = sslMgr
-        # @oppty.divNum                 = divNum
-        # @oppty.customer               = customer
-        # @oppty.endCustomer            = endCustomer
-        # @oppty.crn                    = crn
-        # @oppty.contractType           = contractType
-        # @oppty.opptyClass             = opptyClass
-        # @oppty.numberOfAwards         = numberOfAwards
-        # @oppty.totalPOP               = totalPOP
-        # @oppty.primeSub               = primeSub
-        # @oppty.fy16BP                 = fy16BP
-        # @oppty.fy16BPSpent            = fy16BPSpent
-        # @oppty.fy16BPSpentPercent     = fy16BPSpentPercent
-        # @oppty.save
       end
     end
     puts @oppty.inspect

@@ -44,4 +44,4 @@ gem 'coffee-script-source', '1.8.0'
 
 gem 'will_paginate'
 
-gem 'therubyracer', :platforms => :ruby
+#gem 'therubyracer', :platforms => :ruby
