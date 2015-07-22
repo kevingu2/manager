@@ -59,9 +59,11 @@ class CrmController < ApplicationController
   end
 
   def delete(fileName)
-    puts `mv #{fileName} ../#{CRM_PATH}`
-    puts `rm -rf #{CRM_PATH}`
-    puts `mv ../#{CRM_PATH}/#{fileName} #{CRM_PATH}`
+    if Dir[CRM_PATH + '/*.xlsm'].length > 1 #if there is more than one file, delete the old one. else the new overwrote the old, don't delete
+      puts `mv #{fileName} ../#{CRM_PATH}`
+      puts `rm -rf #{CRM_PATH}`
+      puts `mv ../#{CRM_PATH}/#{fileName} #{CRM_PATH}`
+    end
   end
 
   #uploading an excel file from user's computer
@@ -75,7 +77,7 @@ class CrmController < ApplicationController
     end
     # get original file's date
     # check if older or newer
-    File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
+    File.open(Rails.root.join('public', 'uploads', "new_"+uploaded_io.original_filename), 'wb') do |file|
       file.write(uploaded_io.read)
     end
     @newFileName = uploaded_io.original_filename.to_s
