@@ -20,7 +20,11 @@ class CrmController < ApplicationController
     @newFileName = "new_"+uploaded_io.original_filename.to_s
 
     @oldOrNew = "old"
-    @oldOrNew =  `python bin/dateExtract.py "public/uploads/#{@newFileName}" "public/uploads/#{@oldFileName}"`
+    if Dir[CRM_PATH+ '/*.xlsm'].length > 1
+      @oldOrNew =  `python bin/dateExtract.py "public/uploads/#{@newFileName}" "public/uploads/#{@oldFileName}"`
+    else
+      @oldOrNew = "new"
+    end
     render :index
   end
 # after submit is pushed
