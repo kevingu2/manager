@@ -26,6 +26,7 @@ class CrmController < ApplicationController
       @oldOrNew = "new"
     end
     render :index
+
   end
 # after submit is pushed
   def updateCRM
@@ -53,11 +54,11 @@ class CrmController < ApplicationController
     ids.each do |i|
       moveToHistory(i)
     end
-    addNewOppty(data, newIds)
+    addNewOppty(data, newIds, uploadedIds)
     redirect_to crm_index_path
   end
 
-  def addNewOppty(data, newIds)
+  def addNewOppty(data, newIds, uploadedIds)
     data.each do |o|
       uploadedIds.push(o["OpptyID"])
       #if there is some magical ruby way to do this better, please do it. I don't know ruby :(
