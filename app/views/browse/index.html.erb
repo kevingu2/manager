@@ -61,12 +61,12 @@
     				        <div>
                 			<select class="selector col-md-9" id="sorting" name="sorting">
                   			<option id="opt1" value="none">none</option>
-                        <option id="opt2" value="optName">Opportunity Name</option>
-                        <option id="opt3" value="optId">Opportunity ID</option>
-                        <option id="opt4" value="days">Days Left</option>
-                        <option id="opt5" value="cmanager">Capture Managers</option>
-                        <option id="opt6" value="progmanager">Program Managers</option>
-                        <option id="opt7" value="pmanager">Proposal Managers</option>
+                        <option id="opt2" value="opptyName">Opportunity Name</option>
+                        <option id="opt3" value="opptyId">Opportunity ID</option>
+                        <option id="opt4" value="proposalDueDate">Days Left</option>
+                        <option id="opt5" value="captureMgr">Capture Managers</option>
+                        <option id="opt6" value="programMgr">Program Managers</option>
+                        <option id="opt7" value="proposalMgr">Proposal Managers</option>
                         <option id="opt8" value="value">Value</option>
             				  </select>
                           
@@ -355,23 +355,43 @@
 
     $(document).on("click", "a[name='sort-btn']", function (e) {
       select = document.getElementById('sorting').value;
-
-      if (select == "none")
-        window.location.assign("<%= browse_index_path %>");
-      else if (select == "days") 
-        window.location.assign("<%= browse_index_path %>" + "?sort=proposalDueDate");
-      else if (select == "optName") 
-        window.location.assign("<%= browse_index_path %>" + "?sort=opptyName");
-      else if (select == "optId") 
-        window.location.assign("<%= browse_index_path %>" + "?sort=opptyId");
-      else if (select == "cmanager") 
-        window.location.assign("<%= browse_index_path %>" + "?sort=captureMgr");
-      else if (select == "progmanager") 
-        window.location.assign("<%= browse_index_path %>" + "?sort=programMgr");
-      else if (select == "pmanager") 
-        window.location.assign("<%= browse_index_path %>" + "?sort=proposalMgr");
-      else if (select == "value") 
-        window.location.assign("<%= browse_index_path %>" + "?sort=value");
+      if (window.location.href.indexOf("sort") > -1 && select != 'none') {
+        var url = window.location.toString();
+        if (window.location.href.indexOf("none") > -1)
+          window.location = url.replace(/sorting=none/, 'sort='+select);
+        else if (window.location.href.indexOf("proposalDueDate") > -1)
+          window.location = url.replace(/sort=proposalDueDate/, 'sort='+select);
+        else if (window.location.href.indexOf("opptyName") > -1)
+          window.location = url.replace(/sort=opptyName/, 'sort='+select);
+        else if (window.location.href.indexOf("opptyId") > -1)
+          window.location = url.replace(/sort=opptyId/, 'sort='+select);
+        else if (window.location.href.indexOf("captureMgr") > -1)
+          window.location = url.replace(/sort=captureMgr/, 'sort='+select);
+        else if (window.location.href.indexOf("programMgr") > -1)
+          window.location = url.replace(/sort=programMgr/, 'sort='+select);
+        else if (window.location.href.indexOf("proposalMgr") > -1)
+          window.location = url.replace(/sort=proposalMgr/, 'sort='+select);
+        else if (window.location.href.indexOf("value") > -1)
+          window.location = url.replace(/sort=value/, 'sort='+select);
+      }
+      else if (window.location.href.indexOf("sort") > -1 && select == 'none') 
+        window.location.assign(window.location.href.substring (0, window.location.href.indexOf("sort")));
+      else if (select == "none")
+        window.location.assign( window.location.href );
+      else if (select == "proposalDueDate")
+        window.location.assign( window.location.href + "?sort=proposalDueDate" );
+      else if (select == "opptyName")
+        window.location.assign(window.location.href + "?sort=opptyName");
+      else if (select == "opptyId")
+        window.location.assign(window.location.href + "?sort=opptyId");
+      else if (select == "captureMgr")
+        window.location.assign(window.location.href + "?sort=captureMgr");
+      else if (select == "programMgr")
+        window.location.assign(window.location.href + "?sort=programMgr");
+      else if (select == "proposalMgr")
+        window.location.assign(window.location.href + "?sort=proposalMgr");
+      else if (select == "value")
+        window.location.assign(window.location.href + "?sort=value");
     });
 
   </script>

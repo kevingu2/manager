@@ -60,14 +60,14 @@
                   <td class="col-md-3">
                     <div>
                       <select class="selector col-md-9" id="sorting">
-                        <option value="none" selected="true">none</option>
-                        <option value="optName">Opportunity Name</option>
-                        <option value="optId">Opportunity ID</option>
-                        <option value="days">Days Left</option>
-                        <option value="cmanager">Capture Managers</option>
-                        <option value="progmanager">Program Managers</option>
-                        <option value="pmanager">Proposal Managers</option>
-                        <option value="value">Value</option>
+                        <option id="opt1" value="none">none</option>
+                        <option id="opt2" value="opptyName">Opportunity Name</option>
+                        <option id="opt3" value="opptyId">Opportunity ID</option>
+                        <option id="opt4" value="proposalDueDate">Days Left</option>
+                        <option id="opt5" value="captureMgr">Capture Managers</option>
+                        <option id="opt6" value="programMgr">Program Managers</option>
+                        <option id="opt7" value="proposalMgr">Proposal Managers</option>
+                        <option id="opt8" value="value">Value</option>
                       </select>
                           
                       <a href="#" name="sort-btn" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
@@ -98,10 +98,10 @@
     <hr />
 
 
-    <div id="thirtyDays" style="display: none;" onload="this.radBtn=radioBtn;">
-      <% unless @within30days == nil %>
+    <div id="thirtyDays" style="display: none;">
+      <% unless @within30days == nil%>
         <% @within30days.each do |o| %>
-          <% if @to_do.include?(o) %>
+          <% if @to_do != nil and @to_do.include?(o) %>
             <div class="success row">
               <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
               <div class="col-md-6">
@@ -112,7 +112,7 @@
               <div class="col-md-2">Assigned</div>
             </div>
 
-          <% elsif @doing.include?(o) %>
+          <% elsif @doing != nil and @doing.include?(o) %>
             <div class="warning row">
               <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
               <div class="col-md-6">
@@ -123,7 +123,7 @@
               <div class="col-md-2">In Progress</div>
             </div>
 
-          <% elsif @none.include?(o) %>
+          <% elsif @none != nil and @none.include?(o) %>
             <div class="active row">
               <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
               <div class="col-md-6">
@@ -155,7 +155,7 @@
     <div id="sixtyDays" style="display:none;">
       <% unless @within60days == nil %>
         <% @within60days.each do |o| %>
-          <% if @to_do.include?(o) %>
+          <% if @to_do != nil and @to_do.include?(o) %>
             <div class="success row">
               <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
               <div class="col-md-6">
@@ -166,7 +166,7 @@
               <div class="col-md-2">Assigned</div>
             </div>
 
-          <% elsif @doing.include?(o) %>
+          <% elsif @doing != nil and @doing.include?(o) %>
             <div class="warning row">
               <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
               <div class="col-md-6">
@@ -177,7 +177,7 @@
               <div class="col-md-2">In Progress</div>
             </div>
 
-          <% elsif @none.include?(o) %>
+          <% elsif @none != nil and @none.include?(o) %>
             <div class="active row">
               <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
               <div class="col-md-6">
@@ -209,7 +209,7 @@
     <div id="ninetyDays" style="display: none;">
       <% unless @within90days == nil %>
         <% @within90days.each do |o| %>
-          <% if @to_do.include?(o) %>
+          <% if @to_do != nil and @to_do.include?(o) %>
             <div class="success row">
               <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
               <div class="col-md-6">
@@ -220,7 +220,7 @@
               <div class="col-md-2">Assigned</div>
             </div>
 
-          <% elsif @doing.include?(o) %>
+          <% elsif @doing != nil and @doing.include?(o) %>
             <div class="warning row">
               <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
               <div class="col-md-6">
@@ -231,7 +231,7 @@
               <div class="col-md-2">In Progress</div>
             </div>
 
-          <% elsif @none.include?(o) %>
+          <% elsif @none != nil and @none.include?(o) %>
             <div class="active row">
               <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
               <div class="col-md-6">
@@ -265,7 +265,7 @@
     <div id="allDays">
       <% unless @oppties == nil %>
         <% @oppties.each do |o| %>
-          <% if @to_do.include?(o) %>
+          <% if @to_do != nil and @to_do.include?(o) %>
             <div class="success row">
               <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
               <div class="col-md-6">
@@ -276,7 +276,7 @@
               <div class="col-md-2">Assigned</div>
             </div>
 
-          <% elsif @doing.include?(o) %>
+          <% elsif @doing != nil and @doing.include?(o) %>
             <div class="warning row">
               <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
               <div class="col-md-6">
@@ -287,7 +287,7 @@
               <div class="col-md-2">In Progress</div>
             </div>
 
-          <% elsif @none.include?(o) %>
+          <% elsif @none != nil and @none.include?(o) %>
             <div class="active row">
               <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
               <div class="col-md-6">
@@ -357,23 +357,40 @@
 
     $(document).on("click", "a[name='sort-btn']", function (e) {
       select = document.getElementById('sorting').value;
-      if (window.location.href.indexOf("sort") > -1) {
-        //window.location.href = window.location.href.substring (0, indexOf("sort"));
-        //if 
-        //get rid of sort query and we need to handle 2 cases if its the only query, its the first of many, on not-first of many
+      if (window.location.href.indexOf("sort") > -1 && select != 'none') {
+        var url = window.location.toString();
+        if (window.location.href.indexOf("none") > -1)
+          window.location = url.replace(/sorting=none/, 'sort='+select);
+        else if (window.location.href.indexOf("proposalDueDate") > -1)
+          window.location = url.replace(/sort=proposalDueDate/, 'sort='+select);
+        else if (window.location.href.indexOf("opptyName") > -1)
+          window.location = url.replace(/sort=opptyName/, 'sort='+select);
+        else if (window.location.href.indexOf("opptyId") > -1)
+          window.location = url.replace(/sort=opptyId/, 'sort='+select);
+        else if (window.location.href.indexOf("captureMgr") > -1)
+          window.location = url.replace(/sort=captureMgr/, 'sort='+select);
+        else if (window.location.href.indexOf("programMgr") > -1)
+          window.location = url.replace(/sort=programMgr/, 'sort='+select);
+        else if (window.location.href.indexOf("proposalMgr") > -1)
+          window.location = url.replace(/sort=proposalMgr/, 'sort='+select);
+        else if (window.location.href.indexOf("value") > -1)
+          window.location = url.replace(/sort=value/, 'sort='+select);
       }
-      //none case
-      if (select == "days")
+      else if (window.location.href.indexOf("sort") > -1 && select == 'none') 
+        window.location.assign(window.location.href.substring (0, window.location.href.indexOf("sort")));
+      else if (select == "none")
+        window.location.assign( window.location.href );
+      else if (select == "proposalDueDate")
         window.location.assign( window.location.href + "&sort=proposalDueDate" );
-      else if (select == "optName")
+      else if (select == "opptyName")
         window.location.assign(window.location.href + "&sort=opptyName");
-      else if (select == "optId")
+      else if (select == "opptyId")
         window.location.assign(window.location.href + "&sort=opptyId");
-      else if (select == "cmanager")
+      else if (select == "captureMgr")
         window.location.assign(window.location.href + "&sort=captureMgr");
-      else if (select == "progmanager")
+      else if (select == "programMgr")
         window.location.assign(window.location.href + "&sort=programMgr");
-      else if (select == "pmanager")
+      else if (select == "proposalMgr")
         window.location.assign(window.location.href + "&sort=proposalMgr");
       else if (select == "value")
         window.location.assign(window.location.href + "&sort=value");
