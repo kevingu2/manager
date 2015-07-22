@@ -96,7 +96,7 @@
     </div>
 
     <hr />
-    
+
 
     <div id="thirtyDays" style="display: none;" onload="this.radBtn=radioBtn;">
       <% unless @within30days == nil %>
@@ -334,60 +334,49 @@
         document.getElementById('sixtyDays').style.display = "none";
         document.getElementById('ninetyDays').style.display = "none";   
         document.getElementById('allDays').style.display= "none"; 
-        document.getElementById("thirty_days_left").checked = true;
-        document.getElementById("sixty_days_left").checked = false;
-        document.getElementById("ninety_days_left").checked = false;
-        document.getElementById("all-days").checked = false;
       }
       else if(document.getElementById('sixty_days_left').checked) {
         document.getElementById('sixtyDays').style.display = "block";
         document.getElementById('thirtyDays').style.display = "none";
         document.getElementById('ninetyDays').style.display = "none";
         document.getElementById('allDays').style.display= "none";
-        document.getElementById("sixty_days_left").checked = true;
-        document.getElementById("thirty_days_left").checked = false;
-        document.getElementById("ninety_days_left").checked = false;
-        document.getElementById("all-days").checked = false;
       }
       else if (document.getElementById('ninety_days_left').checked) {
         document.getElementById('ninetyDays').style.display = "block";
         document.getElementById('thirtyDays').style.display = "none";
         document.getElementById('sixtyDays').style.display = "none";
         document.getElementById('allDays').style.display= "none";
-        document.getElementById("ninety_days_left").checked = true;
-        document.getElementById("sixty_days_left").checked = false;
-        document.getElementById("thirty_days_left").checked = false;
-        document.getElementById("all-days").checked = false;
       }
       else if (document.getElementById("all-days").checked) {
         document.getElementById('allDays').style.display = "block";
         document.getElementById('ninetyDays').style.display = "none";
         document.getElementById('thirtyDays').style.display = "none";
         document.getElementById('sixtyDays').style.display = "none";
-        document.getElementById("all-days").checked = true;
-        document.getElementById("ninety_days_left").checked = false;
-        document.getElementById("sixty_days_left").checked = false;
-        document.getElementById("thirty_days_left").checked = false;
       }
     });
 
     $(document).on("click", "a[name='sort-btn']", function (e) {
       select = document.getElementById('sorting').value;
-
+      if (window.location.href.indexOf("sort") > -1) {
+        //window.location.href = window.location.href.substring (0, indexOf("sort"));
+        //if 
+        //get rid of sort query and we need to handle 2 cases if its the only query, its the first of many, on not-first of many
+      }
+      //none case
       if (select == "days")
-        window.location.assign("<%= browse_index_path %>" + "?sort=proposalDueDate");
+        window.location.assign( window.location.href + "&sort=proposalDueDate" );
       else if (select == "optName")
-        window.location.assign("<%= browse_index_path %>" + "?sort=opptyName");
+        window.location.assign(window.location.href + "&sort=opptyName");
       else if (select == "optId")
-        window.location.assign("<%= browse_index_path %>" + "?sort=opptyId");
+        window.location.assign(window.location.href + "&sort=opptyId");
       else if (select == "cmanager")
-        window.location.assign("<%= browse_index_path %>" + "?sort=captureMgr");
+        window.location.assign(window.location.href + "&sort=captureMgr");
       else if (select == "progmanager")
-        window.location.assign("<%= browse_index_path %>" + "?sort=programMgr");
+        window.location.assign(window.location.href + "&sort=programMgr");
       else if (select == "pmanager")
-        window.location.assign("<%= browse_index_path %>" + "?sort=proposalMgr");
+        window.location.assign(window.location.href + "&sort=proposalMgr");
       else if (select == "value")
-        window.location.assign("<%= browse_index_path %>" + "?sort=value");
+        window.location.assign(window.location.href + "&sort=value");
     });
 
 

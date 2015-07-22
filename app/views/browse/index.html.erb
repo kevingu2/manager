@@ -59,15 +59,15 @@
                   </td>
                 	<td class="col-md-3">
     				        <div>
-                			<select class="selector col-md-9" id="sorting">
-                  			<option value="none" selected="true">none</option>
-                        <option value="optName">Opportunity Name</option>
-                        <option value="optId">Opportunity ID</option>
-                        <option value="days">Days Left</option>
-                        <option value="cmanager">Capture Managers</option>
-                        <option value="progmanager">Program Managers</option>
-                        <option value="pmanager">Proposal Managers</option>
-                        <option value="value">Value</option>
+                			<select class="selector col-md-9" id="sorting" name="sorting">
+                  			<option id="opt1" value="none">none</option>
+                        <option id="opt2" value="optName">Opportunity Name</option>
+                        <option id="opt3" value="optId">Opportunity ID</option>
+                        <option id="opt4" value="days">Days Left</option>
+                        <option id="opt5" value="cmanager">Capture Managers</option>
+                        <option id="opt6" value="progmanager">Program Managers</option>
+                        <option id="opt7" value="pmanager">Proposal Managers</option>
+                        <option id="opt8" value="value">Value</option>
             				  </select>
                           
                 			<a href="#" name="sort-btn" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
@@ -332,40 +332,24 @@
         document.getElementById('sixtyDays').style.display = "none";
         document.getElementById('ninetyDays').style.display = "none";   
         document.getElementById('allDays').style.display= "none"; 
-        document.getElementById("thirty_days_left").checked = true;
-        document.getElementById("sixty_days_left").checked = false;
-        document.getElementById("ninety_days_left").checked = false;
-        document.getElementById("all-days").checked = false;
       }
       else if(document.getElementById('sixty_days_left').checked) {
         document.getElementById('sixtyDays').style.display = "block";
         document.getElementById('thirtyDays').style.display = "none";
         document.getElementById('ninetyDays').style.display = "none";
         document.getElementById('allDays').style.display= "none";
-        document.getElementById("sixty_days_left").checked = true;
-        document.getElementById("thirty_days_left").checked = false;
-        document.getElementById("ninety_days_left").checked = false;
-        document.getElementById("all-days").checked = false;
       }
       else if (document.getElementById('ninety_days_left').checked) {
         document.getElementById('ninetyDays').style.display = "block";
         document.getElementById('thirtyDays').style.display = "none";
         document.getElementById('sixtyDays').style.display = "none";
         document.getElementById('allDays').style.display= "none";
-        document.getElementById("ninety_days_left").checked = true;
-        document.getElementById("sixty_days_left").checked = false;
-        document.getElementById("thirty_days_left").checked = false;
-        document.getElementById("all-days").checked = false;
       }
       else if (document.getElementById("all-days").checked) {
         document.getElementById('allDays').style.display = "block";
         document.getElementById('ninetyDays').style.display = "none";
         document.getElementById('thirtyDays').style.display = "none";
         document.getElementById('sixtyDays').style.display = "none";
-        document.getElementById("all-days").checked = true;
-        document.getElementById("ninety_days_left").checked = false;
-        document.getElementById("sixty_days_left").checked = false;
-        document.getElementById("thirty_days_left").checked = false;
       }
     });
 
@@ -374,19 +358,19 @@
 
       if (select == "none")
         window.location.assign("<%= browse_index_path %>");
-      else if (select == "days")
+      else if (select == "days") 
         window.location.assign("<%= browse_index_path %>" + "?sort=proposalDueDate");
-      else if (select == "optName")
+      else if (select == "optName") 
         window.location.assign("<%= browse_index_path %>" + "?sort=opptyName");
-      else if (select == "optId")
+      else if (select == "optId") 
         window.location.assign("<%= browse_index_path %>" + "?sort=opptyId");
-      else if (select == "cmanager")
+      else if (select == "cmanager") 
         window.location.assign("<%= browse_index_path %>" + "?sort=captureMgr");
-      else if (select == "progmanager")
+      else if (select == "progmanager") 
         window.location.assign("<%= browse_index_path %>" + "?sort=programMgr");
-      else if (select == "pmanager")
+      else if (select == "pmanager") 
         window.location.assign("<%= browse_index_path %>" + "?sort=proposalMgr");
-      else if (select == "value")
+      else if (select == "value") 
         window.location.assign("<%= browse_index_path %>" + "?sort=value");
     });
 

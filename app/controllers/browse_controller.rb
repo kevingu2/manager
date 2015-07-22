@@ -6,7 +6,7 @@ include ActionView::Helpers::DateHelper
 class BrowseController < ApplicationController
   def index
     #get all Oppty objects from database into the @oppties collection
-    @oppties = Oppty.where("proposalDueDate >= ?", Date.today.to_s).order(params[:sort]).page(params[:page]).per_page(15)
+    @oppties = Oppty.where("proposalDueDate >= ?", Date.today.to_s).page(params[:page]).per_page(15).order(params[:sort])
     
     @done=UserOppty.where(user_id:session[:user_id]).where(status:0).joins(:oppty).includes(:oppty)
     @doing=UserOppty.where(user_id:session[:user_id]).where(status:1).joins(:oppty).includes(:oppty)
