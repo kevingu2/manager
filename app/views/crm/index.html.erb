@@ -9,20 +9,20 @@
 		    <br>
 		    <input type="file" id="upl" name="upl" class="file-input"/>
 		    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+            <button class="btn btn-lg btn-primary btn-right" type="submit">Submit</button>
 		  </div>
 
 		  <ul class="upload-list">
 		    <!-- The file uploads will be shown here -->
 		  </ul>
-
-		</form>
-		<form id="upload" method="post" action="updateCRM">
-			<input type="submit">
-			<input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-			<input name="oldFileName" type="hidden" value=<%= @oldFileName%>>
-			<input name="newFileName" type="hidden" value=<%= @newFileName%>>
 		</form>
 	  </div>
+      <%puts "CRM Index VIEW PAGE"
+        puts "|"*30
+        puts @oldFileName
+        puts @newFileName
+        puts "|"*30
+      %>
 	</div>
 
 	<div class="col-md-6 column-wrapper">
@@ -42,7 +42,6 @@
   <%= javascript_include_tag('jquery.iframe-transport.js') %>
   <%= javascript_include_tag('jquery.fileupload.js') %>
   <%= javascript_include_tag('upload.js') %>
-<<<<<<< HEAD
 
   <script>
   	/* creates style rule programmatically after AmCharts logo exists */
@@ -58,6 +57,4 @@
 
     // ('html body div div #upload #drop input#upl.file-input #shadow-root input',"visibility: hidden !important;");
   </script>
-=======
->>>>>>> 2e1e0449d6465dfd699e6abfe710513d94baff9c
 <body>

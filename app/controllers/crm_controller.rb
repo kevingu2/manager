@@ -2,23 +2,25 @@ class CrmController < ApplicationController
   CRM_PATH = File.join(Rails.root, "public", "uploads")
   DOWNLOAD_PATH =""
   def index
-    @oppty = Oppty.all
+    @uploaded=false
   end
+  def checkDate
 
+  end
 # after submit is pushed
   def updateCRM
     # oldFileName
     # newFileName
     puts "*"*30
-    puts params[:oldFileName]
-    puts params[:newFileName]
+    puts params[:old]
+    puts params[:new]
     puts "*"*30
-    `rm CRM_PATH + "/" + #{params[:oldFileName]}`
+    `rm CRM_PATH + "/" + #{params[:old]}`
     opptyIds = [] # holds ids in the database
     Oppty.find_each do |o|
       opptyIds.push(o.opptyId)
     end
-    data = `python bin/excelReader.py "public/uploads/#{params[:newFileName]}"`
+    data = `python bin/excelReader.py "public/uploads/#{params[:new]}"`
     data = JSON.parse(data)
     uploadedIds = [] # holds uploaded ids
     data.each do |d|
@@ -654,11 +656,8 @@ class CrmController < ApplicationController
       moveToHistory(i)
     end
     puts "*"*30
-    #redirect_to crm_upload_path(:changes => @changes)
-    #redirect_to invalid_entry_index_path, notice: "File uploaded"
-    #redirect_to crm_upload_path(@changes)
-    #redirect_to crm_upload_path
-    redirect_to crm_index_path
+    @uploaded=true
+    render :index
   end
 
   #downloading the modified excel file from the browser
