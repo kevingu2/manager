@@ -75,7 +75,7 @@ class CrmController < ApplicationController
     end
     # get original file's date
     # check if older or newer
-    File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
+    File.open(Rails.root.join('public', 'uploads', "new_"+uploaded_io.original_filename), 'wb') do |file|
       file.write(uploaded_io.read)
     end
     @newFileName = uploaded_io.original_filename.to_s
@@ -667,7 +667,7 @@ class CrmController < ApplicationController
     #pulls and downloads the first .xlsm file from the /uploads folder
     if Dir[CRM_PATH+'/*.xlsm'][0]
         @download_path=File.join(Dir[CRM_PATH+'/*.xlsm'][0])
-        send_file @download_path, :type=>"application/txt", :x_sendfile=>true
+        send_file @download_path.sub('new_', ''), :type=>"application/txt", :x_sendfile=>true
     else
         redirect_to crm_index_path
     end
