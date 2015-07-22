@@ -54,13 +54,6 @@ class CrmController < ApplicationController
   end
 
   def addNewOppty(data, newIds)
-<<<<<<< HEAD
-    data.each do |d|
-      puts d
-      if newIds.include? d["OpptyID"]
-        Oppty.create(d)
-      end
-=======
     data.each do |o|
       uploadedIds.push(o["OpptyID"])
       #if there is some magical ruby way to do this better, please do it. I don't know ruby :(
@@ -271,7 +264,6 @@ class CrmController < ApplicationController
       @oppty.fy16BPSpent            = fy16BPSpent
       @oppty.fy16BPSpentPercent     = fy16BPSpentPercent
       @oppty.save
->>>>>>> ac75a522e22b96561d332728db051fdc50b7695d
     end
   end
 
@@ -745,10 +737,6 @@ class CrmController < ApplicationController
         end
       else
         @added += 1
-<<<<<<< HEAD
-=======
-
->>>>>>> ac75a522e22b96561d332728db051fdc50b7695d
       end
     end
     puts @oppty.inspect
