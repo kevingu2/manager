@@ -3,27 +3,33 @@
 	<div class="col-md-6 column-wrapper">
 	  <div class="inner-column">
 		<h2 class="column-title">Upload</h2>
-		<form id="upload" method="post" action="upload" enctype="multipart/form-data">
-		  <div id="drop" class="drop-zone">
-		    <p class="drop-zone-text"><b>Browse</b> or <b>Drop Anywhere Inside of this Box</b> </p>
-		    <br>
+		<form id="upload" method="post" action="checkDate" enctype="multipart/form-data">
 		    <input type="file" id="upl" name="upl" class="file-input"/>
 		    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-            <button class="btn btn-lg btn-primary btn-right" type="submit">Submit</button>
-		  </div>
-
-		  <ul class="upload-list">
-		    <!-- The file uploads will be shown here -->
-		  </ul>
+            <button class="btn btn-lg btn-primary btn-right" type="submit">Upload</button>
 		</form>
 	  </div>
-      <%puts "CRM Index VIEW PAGE"
-        puts "|"*30
-        puts @oldFileName
-        puts @newFileName
-        puts "|"*30
-      %>
-	</div>
+      <%if @oldOrNew.present?%>
+          <h4>Your File is <%=@oldOrNew%><h4/>
+            <form action ="upload" method="post">
+              <input hidden=true type="string" name="oldFileName" value=<%= @oldFileName%>>
+              <input hidden=true type="string" name="newFileName" value=<%= @newFileName%>>
+              <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+              <button style= "z-index:3" type="submit">Calculate Changes</button>
+            </form>
+      <% end%>
+      <%if @uploaded%>
+          <h4>Number of Added: <%=@added%><h4/>
+          <h4>Number of Deleted: <%=@deleted%><h4/>
+          <h4>Number of Updates:<%=@changes.length.to_s%><h4/>
+            <form action ="updateCRM" method="post">
+              <input hidden=true type="string" name="old" value=<%= @oldFileName%>>
+              <input hidden=true type="string" name="new" value=<%= @newFileName%>>
+              <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+              <button style= "z-index:3" type="submit">Submit</button>
+            </form>
+      <%end%>
+    </div>
 
 	<div class="col-md-6 column-wrapper">
 	  <div class="inner-column">
@@ -44,6 +50,10 @@
   <%= javascript_include_tag('upload.js') %>
 
   <script>
+      function isOld(status) {
+          if(status=='old')
+            alert("Are you sure you want to overwrite with an older file?");
+      }
   	/* creates style rule programmatically after AmCharts logo exists */
     function createClass(name,rules){
         var style = document.createElement('style');

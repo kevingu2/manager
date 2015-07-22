@@ -5,22 +5,40 @@ class CrmController < ApplicationController
     @uploaded=false
   end
   def checkDate
+    uploaded_io = params[:upl]
 
+    # get existing file in public/uploads
+    @oldFileName=nil
+    if Dir[CRM_PATH+'/*.xlsm'][0]
+      @oldFileName=File.basename(Dir[CRM_PATH+'/*.xlsm'][0])
+    end
+    # get original file's date
+    # check if older or newer
+    File.open(Rails.root.join('public', 'uploads', "new_"+uploaded_io.original_filename), 'wb') do |file|
+      file.write(uploaded_io.read)
+    end
+    @newFileName = "new_"+uploaded_io.original_filename.to_s
+
+    @oldOrNew = "old"
+    @oldOrNew =  `python bin/dateExtract.py "public/uploads/#{@newFileName}" "public/uploads/#{@oldFileName}"`
+    render :index
   end
 # after submit is pushed
   def updateCRM
     # oldFileName
     # newFileName
     puts "*"*30
-    puts params[:old]
-    puts params[:new]
+    oldFileName=params[:old]
+    newFileName=params[:new]
+    puts oldFileName
+    puts newFileName
     puts "*"*30
-    `rm CRM_PATH + "/" + #{params[:old]}`
+    `rm CRM_PATH + "/" + #{oldFileName}`
     opptyIds = [] # holds ids in the database
     Oppty.find_each do |o|
       opptyIds.push(o.opptyId)
     end
-    data = `python bin/excelReader.py "public/uploads/#{params[:new]}"`
+    data = `python bin/excelReader.py "public/uploads/#{newFileName}"`
     data = JSON.parse(data)
     uploadedIds = [] # holds uploaded ids
     data.each do |d|
@@ -70,35 +88,14 @@ class CrmController < ApplicationController
 
   #uploading an excel file from user's computer
   def upload
-    uploaded_io = params[:upl]
-
-    # get existing file in public/uploads
-    @oldFileName=nil
-    if Dir[CRM_PATH+'/*.xlsm'][0]
-      @oldFileName=File.basename(Dir[CRM_PATH+'/*.xlsm'][0])
-    end
-    # get original file's date
-    # check if older or newer
-    File.open(Rails.root.join('public', 'uploads', "new_"+uploaded_io.original_filename), 'wb') do |file|
-      file.write(uploaded_io.read)
-    end
-    @newFileName = uploaded_io.original_filename.to_s
-
-    oldOrNew = "old"
-    oldOrNew =  `python bin/dateExtract.py "public/uploads/#{@newFileName}" "public/uploads/#{@oldFileName}"`
-
-    uploadedIds = []
-    opptyIds = []
-    Oppty.find_each do |o|
-      opptyIds.push(o.opptyId)
-    end
-    ###############TODO######################
-    # oldOrNew can be "old" or "new", check the value and do stuff afterwards
-    ########################################
-    data = `python bin/excelReader.py "public/uploads/#{@newFileName}"`
+    puts params[:newFileName]
+    puts params[:oldFileName]
+    data = `python bin/excelReader.py "public/uploads/#{params[:newFileName]}"`
     data = JSON.parse(data)
     @changes = [] # holds list of hashes that contain what is changed
-    newCount = 0
+    @added = 0
+    uploadedIds=[]
+    opptyIds=[]
     data.each do |o|
       uploadedIds.push(o["OpptyID"])
       #if there is some magical ruby way to do this better, please do it. I don't know ruby :(
@@ -531,7 +528,7 @@ class CrmController < ApplicationController
           end
         end
       else
-        newCount += 1
+        @added += 1
         # @oppty=Oppty.new
         # #fields
         # @oppty.opptyId                = id
@@ -640,14 +637,14 @@ class CrmController < ApplicationController
     end
     puts @oppty.inspect
     puts "changes: " + @changes.length.to_s
-    puts @changes[0]
-    puts "newCount: " + newCount.to_s
+    puts "newCount: " + @added.to_s
     puts "deletedCount: " + (opptyIds - uploadedIds).length.to_s
     puts "O"*30
-    puts @oldFileName
     puts @newFileName
     puts "O"*30
     #puts opptyIds
+    @deleted=0
+    @added
     uploadedIds.each do |u|
       opptyIds.delete(u)
     end
@@ -655,6 +652,7 @@ class CrmController < ApplicationController
     puts "*"*30
     opptyIds.each do |i|
       #puts i
+      @deleted+=1
       moveToHistory(i)
     end
     puts "*"*30
