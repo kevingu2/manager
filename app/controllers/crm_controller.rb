@@ -38,7 +38,9 @@ class CrmController < ApplicationController
     puts oldFileName
     puts newFileName
     puts "*"*30
-    `rm CRM_PATH + "/" + #{oldFileName}`
+    if Dir[CRM_PATH+ '/*.xlsm'].length > 1
+      `rm #{CRM_PATH}/#{oldFileName}`
+    end
     opptyIds = [] # holds ids in the database
     Oppty.find_each do |o|
       opptyIds.push(o.opptyId)
@@ -60,6 +62,7 @@ class CrmController < ApplicationController
 
   def addNewOppty(data, newIds, uploadedIds)
     data.each do |o|
+      if !newIds.include? o["OpptyID"] then next end # if id not supposed to be added, skip
       uploadedIds.push(o["OpptyID"])
       #if there is some magical ruby way to do this better, please do it. I don't know ruby :(
       #quite possibly the hackiest code in this project
@@ -744,20 +747,21 @@ class CrmController < ApplicationController
         @added += 1
       end
     end
-    puts @oppty.inspect
+    Oppty.find_each do |o|
+      puts opptyIds.length
+      opptyIds.push(o.opptyId)
+    end
     puts "changes: " + @changes.length.to_s
     puts "newCount: " + @added.to_s
+    puts "opptyLength: " + opptyIds.length.to_s
+    puts "uploadedLength: " + uploadedIds.length.to_s
     puts "deletedCount: " + (opptyIds - uploadedIds).length.to_s
-    puts "O"*30
-    puts @newFileName
-    puts "O"*30
     #puts opptyIds
     @deleted=0
     @added
     uploadedIds.each do |u|
       opptyIds.delete(u)
     end
-    puts opptyIds
     puts "*"*30
     opptyIds.each do |i|
       #puts i
@@ -765,6 +769,7 @@ class CrmController < ApplicationController
       moveToHistory(i)
     end
     puts "*"*30
+    @deleted = (opptyIds - uploadedIds).length.to_s
     @uploaded=true
     render :index
   end
@@ -775,7 +780,14 @@ class CrmController < ApplicationController
     #pulls and downloads the first .xlsm file from the /uploads folder
     if Dir[CRM_PATH+'/*.xlsm'][0]
         @download_path=File.join(Dir[CRM_PATH+'/*.xlsm'][0])
-        send_file @download_path, :type=>"application/txt", :x_sendfile=>true
+        name = @download_path.gsub("new_", "")
+        puts "*"*30
+        puts name
+        puts @download_path
+        puts "*"*30
+        `mv "#{@download_path}" "#{name}"`
+        send_file name, :type=>"application/txt", :x_sendfile=>true
+        `mv "#{name}" #{@download_path}`
     else
         redirect_to crm_index_path
     end
