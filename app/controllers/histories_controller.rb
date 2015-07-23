@@ -10,6 +10,9 @@ class HistoriesController < ApplicationController
   # GET /histories.json
   def index
     @all_histories=History.all
+    puts "*"*30
+    puts "History count: "+@all_histories.count.to_s
+    puts "*"*30
     @user_histories = UserHistory.where(user_id: @user.id).includes(:history).paginate(:per_page => 20, :page => params[:page])
   end
 

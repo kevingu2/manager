@@ -32,8 +32,7 @@
     
     <!--</div>-->
 
-    <div id="userHist" style="display: block;">
-      <% unless @user_histories == nil %>
+    <div id="userHist">
           <% @user_histories.each do |o| %>
               <div class="success row">
                 <div class="col-md-3" style="text-align: center;"><%= o.history.opptyId %></div>
@@ -44,11 +43,10 @@
                 <div class="col-md-3"><%= o.history.proposalDueDate.to_s %></div>
               </div>
           <% end %>
-      <% end %>
     </div>
 
     <div id="showAll" style="display: none;">
-      <% unless @all_histories == nil %>
+        <%i=0%>
         <% @all_histories.each do |o| %>
             <div class="success row">
               <div class="col-md-3" style="text-align: center;"><%= o.opptyId %></div>
@@ -58,8 +56,8 @@
               </div>
               <div class="col-md-3"><%= o.proposalDueDate.to_s %></div>
             </div>
+            <% i+=1 %>
         <% end %>
-      <% end %>
     </div>
 
 
