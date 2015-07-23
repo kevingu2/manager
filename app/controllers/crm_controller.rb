@@ -683,22 +683,12 @@ class CrmController < ApplicationController
         puts @name
         puts @download_path
         puts "*"*30
-<<<<<<< HEAD
         File.rename @download_path, @name
         file = File.open(@name, "rb")
         contents = file.read
         file.close
         File.rename @name, @download_path
         send_data(contents, :filename =>File.basename( @name))
-=======
-        puts `ls /home/server/crm-manager-server/public/uploads`
-        puts "*"*30
-        `mv "#{@download_path}" "#{name}"`
-        send_file name, :type=>"application/txt", :x_sendfile=>true
-        `mv "#{name}" "#{@download_path}"`
-        puts "z"*30
-        puts `ls /home/server/crm-manager-server/public/uploads`
->>>>>>> 7c03b3e9ff16cf9de390598b62436f353be51389
     else
         redirect_to crm_index_path
     end

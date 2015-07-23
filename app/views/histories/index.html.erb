@@ -32,7 +32,7 @@
     
     <!--</div>-->
 
-    <div id="userHist" style="display: block;">
+    <div id="userHist">
           <% @user_histories.each do |o| %>
               <div class="success row">
                 <div class="col-md-3" style="text-align: center;"><%= o.history.opptyId %></div>
@@ -45,7 +45,7 @@
           <% end %>
     </div>
 
-    <div id="showAll">
+    <div id="showAll" style="display: none;">
         <%i=0%>
         <% @all_histories.each do |o| %>
             <div class="success row">
