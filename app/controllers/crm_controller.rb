@@ -67,210 +67,110 @@ class CrmController < ApplicationController
       #if there is some magical ruby way to do this better, please do it. I don't know ruby :(
       #quite possibly the hackiest code in this project
       #######################get values from json##########################
-      id                    = o["OpptyID"]
-      name                  = o["OpptyName"]
-      idiqCA                = o["IDIQ_CA"]
-      status2               = o["Status2"]
-      value                 = o["Total Value $M"]
-      pWin                  = o["pWin"]
-      captureMgr            = o["Capturemgr"]
-      programMgr            = o["ProgramMgr"]
-      proposalMgr           = o["ProposalMgr"]
-      technicalLead         = o["TechnicalLead"]
-      slArch                = o["SLArch"]
-      slComments            = o["SL Comments"]
-      rfpDate               = Date.new(1899,12,30) + o["RFPDate"].to_f
-      awardDate             = Date.new(1899,12,30) + o["AwardDate"].to_f
-      slDir                 = o["SLDir"]
-      leadEstim             = o["LeadEstim"]
-      engaged               = o["Engaged r/y/g"]
-      solution              = o["Solution r/y/g"]
-      estimate              = o["Estimate r/y/g"]
-      proposalDueDate       = Date.new(1899,12,30) + o["ProposalDueDate"].to_f
-      codeName              = o["CodeName"]
-      descriptionOfWork     = o["DescriptionOfWork"]
-      category              = o["Category"]
-      pwald                 = o["PWALD"]
-      pBid                  = o["pBid"]
-      awardFV               = o["AwardFV"]
-      saicvaPercent         = o["SAICVA%"]
-      saicva                = o["SAIC VA $M"]
-      mat                   = o["Mat%"]
-      materialsTV           = o["Mat TV $M"]
-      subc                  = o["Subc%"]
-      subTV                 = o["Subc TV $M"]
-      cg_va                 = o["CG_VA"]
-      sss_va                = o["SSS-3621"] # i have no idea why
-      nwi_va                = o["NWI-3933"]
-      hwi_va                = o["HWI-3648"]
-      itms_va               = o["ITMS-3896"]
-      tss_va                = o["TSS-3676"]
-      ccds_va               = o["CCDS-3932"]
-      mss_va                = o["MSS-3690"]
-      swi_va                = o["SWI-3934"]
-      lsc_va                = o["LSC-3640"]
-      zzOth_va              = o["zzOth_VA"]
-      pri                   = o["Pri"]
-      aop                   = o["AOP"]
-      peg                   = o["PEG"]
-      mustWin               = o["MustWin"]
-      feeIndic              = o["FeeIndic"]
-      slutil                = o["Slutil"]
-      recompete             = o["Recompete"]
-      competitive           = o["Competitive"]
-      international         = o["International"]
-      strategic             = o["Strategic"]
-      bundle                = o["Bundle"]
-      bidReviewStream       = o["BidReviewStream"]
-      definedDelivPgm       = o["DefinedDelivPgm"]
-      evaluationCriteria    = o["EvaluationCriteria"]
-      perfWorkLoc           = o["PerfWorkLoc"]
-      classIfReqmt          = o["ClassifReqmt"]
-      grouping              = o["Grouping"]
-      reasonForWinLoss      = o["ReasonforWinLoss"]
-      egr                   = o["EGR"]
-      slCat                 = o["SLcat"]
-      slPri                 = o["Slpri"]
-      slNote                = o["Slnote"]
-      crmRunDate            = o["CRMRunDate"]
-      contractStartDate     = o["ContractStartDate"]
-      rfpFYPer              = o["RFPFYPer"]
-      submitFYPer           = o["SubmitFYPer"]
-      awardFYPer            = o["AwardFYPer"]
-      preBPprojID           = o["PreBPprojID"]
-      fy16PreBP             = o["FY16 PreB&P$"]
-      fy16PreBPSpent        = o["FY16 PreB&P $Spent"]
-      fy16PreBPSpentPercent = o["FY16 PreB&P %Spent"]
-      bpProjID              = o["BPprojID"]
-      fy16BDTot             = o["FY16 BDTot$"]
-      fy16BDTotSpent        = o["FY16 BDTot $Spent"]
-      fy16BDTotSpentPercent = o["FY16 BDTot %Spent"]
-      financeDate           = o["FinDate"]
-      cgSecOrg              = o["SecOrg"]
-      cgSecMgr              = o["SecMgr"]
-      cgOrg                 = o["CGOrg"]
-      cgMgr                 = o["CGMgr"]
-      opOrg                 = o["OpOrg"]
-      cgOpMgr               = o["OpMgr"]
-      cgPgmDir              = o["PgmDir"]
-      bdMgr                 = o["BDMgr"]
-      crmRecOwner           = o["CRMRecOwner"]
-      sslMgr                = o["SSLeadMgr"]
-      divNum                = o["DivNum"]
-      customer              = o["Customer"]
-      endCustomer           = o["EndCustomer"]
-      crn                   = o["CRN"]
-      contractType          = o["ContractType"]
-      opptyClass            = o["OpptyClass"]
-      numberOfAwards        = o["NumberOfAwards"]
-      totalPOP              = o["TotalPOP"]
-      primeSub              = o["PrimeSub"]
-      fy16BP                = o["FY16 B&P$"]
-      fy16BPSpent           = o["FY16 B&P $Spent"]
-      fy16BPSpentPercent    = o["FY16 B&P %Spent"]
+
       @oppty=Oppty.new
       #fields
-      @oppty.opptyId                = id
-      @oppty.opptyName              = name
-      @oppty.idiqCA                 = idiqCA
-      @oppty.status2                = status2
-      @oppty.value                  = value
-      @oppty.pWin                   = pWin
-      @oppty.captureMgr             = captureMgr
-      @oppty.programMgr             = programMgr
-      @oppty.proposalMgr            = proposalMgr
-      @oppty.technicalLead          = technicalLead
-      @oppty.slArch                 = slArch
-      @oppty.slComments             = slComments
-      @oppty.rfpDate                = rfpDate
-      @oppty.awardDate              = awardDate
-      @oppty.slDir                  = slDir
-      @oppty.leadEstim              = leadEstim
-      @oppty.engaged                = engaged
-      @oppty.solution               = solution
-      @oppty.estimate               = estimate
-      @oppty.proposalDueDate        = proposalDueDate
-      @oppty.codeName               = codeName
-      @oppty.descriptionOfWork      = descriptionOfWork
-      @oppty.category               = category
-      @oppty.pwald                  = pwald
-      @oppty.pBid                   = pBid
-      @oppty.awardFV                = awardFV
-      @oppty.saicvaPercent          = saicvaPercent
-      @oppty.saicva                 = saicva
-      @oppty.mat                    = mat
-      @oppty.materialsTV            = materialsTV
-      @oppty.subc                   = subc
-      @oppty.subTV                  = subTV
-      @oppty.cg_va                  = cg_va
-      @oppty.sss_va                 = sss_va
-      @oppty.nwi_va                 = nwi_va
-      @oppty.hwi_va                 = hwi_va
-      @oppty.itms_va                = itms_va
-      @oppty.tss_va                 = tss_va
-      @oppty.ccds_va                = ccds_va
-      @oppty.mss_va                 = mss_va
-      @oppty.swi_va                 = swi_va
-      @oppty.lsc_va                 = lsc_va
-      @oppty.zzOth_va               = zzOth_va
-      @oppty.pri                    = pri
-      @oppty.aop                    = aop
-      @oppty.peg                    = peg
-      @oppty.mustWin                = mustWin
-      @oppty.feeIndic               = feeIndic
-      @oppty.slutil                 = slutil
-      @oppty.recompete              = recompete
-      @oppty.competitive            = competitive
-      @oppty.international          = international
-      @oppty.strategic              = strategic
-      @oppty.bundle                 = bundle
-      @oppty.bidReviewStream        = bidReviewStream
-      @oppty.definedDelivPgm        = definedDelivPgm
-      @oppty.evaluationCriteria     = evaluationCriteria
-      @oppty.perfWorkLoc            = perfWorkLoc
-      @oppty.classIfReqmt           = classIfReqmt
-      @oppty.grouping               = grouping
-      @oppty.reasonForWinLoss       = reasonForWinLoss
-      @oppty.egr                    = egr
-      @oppty.slCat                  = slCat
-      @oppty.slPri                  = slPri
-      @oppty.slNote                 = slNote
-      @oppty.crmRunDate             = crmRunDate
-      @oppty.contractStartDate      = contractStartDate
-      @oppty.rfpFYPer               = rfpFYPer
-      @oppty.submitFYPer            = submitFYPer
-      @oppty.awardFYPer             = awardFYPer
-      @oppty.preBPprojID            = preBPprojID
-      @oppty.fy16PreBP              = fy16PreBP
-      @oppty.fy16PreBPSpent         = fy16PreBPSpent
-      @oppty.fy16PreBPSpentPercent  = fy16PreBPSpentPercent
-      @oppty.bpProjID               = bpProjID
-      @oppty.fy16BDTot              = fy16BDTot
-      @oppty.fy16BDTotSpent         = fy16BDTotSpent
-      @oppty.fy16BDTotSpentPercent  = fy16BDTotSpentPercent
-      @oppty.financeDate            = financeDate
-      @oppty.cgSecOrg               = cgSecOrg
-      @oppty.cgSecMgr               = cgSecMgr
-      @oppty.cgOrg                  = cgOrg
-      @oppty.cgMgr                  = cgMgr
-      @oppty.opOrg                  = opOrg
-      @oppty.cgOpMgr                = cgOpMgr
-      @oppty.cgPgmDir               = cgPgmDir
-      @oppty.bdMgr                  = bdMgr
-      @oppty.crmRecOwner            = crmRecOwner
-      @oppty.sslMgr                 = sslMgr
-      @oppty.divNum                 = divNum
-      @oppty.customer               = customer
-      @oppty.endCustomer            = endCustomer
-      @oppty.crn                    = crn
-      @oppty.contractType           = contractType
-      @oppty.opptyClass             = opptyClass
-      @oppty.numberOfAwards         = numberOfAwards
-      @oppty.totalPOP               = totalPOP
-      @oppty.primeSub               = primeSub
-      @oppty.fy16BP                 = fy16BP
-      @oppty.fy16BPSpent            = fy16BPSpent
-      @oppty.fy16BPSpentPercent     = fy16BPSpentPercent
+      @oppty.opptyId               = o["OpptyID"]
+      @oppty.opptyName             = o["OpptyName"]
+      @oppty.idiqCA                = o["IDIQ_CA"]
+      @oppty.status2               = o["Status2"]
+      @oppty.value                 = o["Total Value $M"]
+      @oppty.pWin                  = o["pWin"]
+      @oppty.captureMgr            = o["Capturemgr"]
+      @oppty.programMgr            = o["ProgramMgr"]
+      @oppty.proposalMgr           = o["ProposalMgr"]
+      @oppty.technicalLead         = o["TechnicalLead"]
+      @oppty.slArch                = o["SLArch"]
+      @oppty.slComments            = o["SL Comments"]
+      @oppty.rfpDate               = Date.new(1899,12,30) + o["RFPDate"].to_f
+      @oppty.awardDate             = Date.new(1899,12,30) + o["AwardDate"].to_f
+      @oppty.slDir                 = o["SLDir"]
+      @oppty.leadEstim             = o["LeadEstim"]
+      @oppty.engaged               = o["Engaged r/y/g"]
+      @oppty.solution              = o["Solution r/y/g"]
+      @oppty.estimate              = o["Estimate r/y/g"]
+      @oppty.proposalDueDate       = Date.new(1899,12,30) + o["ProposalDueDate"].to_f
+      @oppty.codeName              = o["CodeName"]
+      @oppty.descriptionOfWork     = o["DescriptionOfWork"]
+      @oppty.category              = o["Category"]
+      @oppty.pwald                 = o["PWALD"]
+      @oppty.pBid                  = o["pBid"]
+      @oppty.awardFV               = o["AwardFV"]
+      @oppty.saicvaPercent         = o["SAICVA%"]
+      @oppty.saicva                = o["SAIC VA $M"]
+      @oppty.mat                   = o["Mat%"]
+      @oppty.materialsTV           = o["Mat TV $M"]
+      @oppty.subc                  = o["Subc%"]
+      @oppty.subTV                 = o["Subc TV $M"]
+      @oppty.cg_va                 = o["CG_VA"]
+      @oppty.sss_va                = o["SSS-3621"] # i have no idea why
+      @oppty.nwi_va                = o["NWI-3933"]
+      @oppty.hwi_va                = o["HWI-3648"]
+      @oppty.itms_va               = o["ITMS-3896"]
+      @oppty.tss_va                = o["TSS-3676"]
+      @oppty.ccds_va               = o["CCDS-3932"]
+      @oppty.mss_va                = o["MSS-3690"]
+      @oppty.swi_va                = o["SWI-3934"]
+      @oppty.lsc_va                = o["LSC-3640"]
+      @oppty.zzOth_va              = o["zzOth_VA"]
+      @oppty.pri                   = o["Pri"]
+      @oppty.aop                   = o["AOP"]
+      @oppty.peg                   = o["PEG"]
+      @oppty.mustWin               = o["MustWin"]
+      @oppty.feeIndic              = o["FeeIndic"]
+      @oppty.slutil                = o["Slutil"]
+      @oppty.recompete             = o["Recompete"]
+      @oppty.competitive           = o["Competitive"]
+      @oppty.international         = o["International"]
+      @oppty.strategic             = o["Strategic"]
+      @oppty.bundle                = o["Bundle"]
+      @oppty.bidReviewStream       = o["BidReviewStream"]
+      @oppty.definedDelivPgm       = o["DefinedDelivPgm"]
+      @oppty.evaluationCriteria    = o["EvaluationCriteria"]
+      @oppty.perfWorkLoc           = o["PerfWorkLoc"]
+      @oppty.classIfReqmt          = o["ClassifReqmt"]
+      @oppty.grouping              = o["Grouping"]
+      @oppty.reasonForWinLoss      = o["ReasonforWinLoss"]
+      @oppty.egr                   = o["EGR"]
+      @oppty.slCat                 = o["SLcat"]
+      @oppty.slPri                 = o["Slpri"]
+      @oppty.slNote                = o["Slnote"]
+      @oppty.crmRunDate            = o["CRMRunDate"]
+      @oppty.contractStartDate     = o["ContractStartDate"]
+      @oppty.rfpFYPer              = o["RFPFYPer"]
+      @oppty.submitFYPer           = o["SubmitFYPer"]
+      @oppty.awardFYPer            = o["AwardFYPer"]
+      @oppty.preBPprojID           = o["PreBPprojID"]
+      @oppty.fy16PreBP             = o["FY16 PreB&P$"]
+      @oppty.fy16PreBPSpent        = o["FY16 PreB&P $Spent"]
+      @oppty.fy16PreBPSpentPercent = o["FY16 PreB&P %Spent"]
+      @oppty.bpProjID              = o["BPprojID"]
+      @oppty.fy16BDTot             = o["FY16 BDTot$"]
+      @oppty.fy16BDTotSpent        = o["FY16 BDTot $Spent"]
+      @oppty.fy16BDTotSpentPercent = o["FY16 BDTot %Spent"]
+      @oppty.financeDate           = o["FinDate"]
+      @oppty.cgSecOrg              = o["SecOrg"]
+      @oppty.cgSecMgr              = o["SecMgr"]
+      @oppty.cgOrg                 = o["CGOrg"]
+      @oppty.cgMgr                 = o["CGMgr"]
+      @oppty.opOrg                 = o["OpOrg"]
+      @oppty.cgOpMgr               = o["OpMgr"]
+      @oppty.cgPgmDir              = o["PgmDir"]
+      @oppty.bdMgr                 = o["BDMgr"]
+      @oppty.crmRecOwner           = o["CRMRecOwner"]
+      @oppty.sslMgr                = o["SSLeadMgr"]
+      @oppty.divNum                = o["DivNum"]
+      @oppty.customer              = o["Customer"]
+      @oppty.endCustomer           = o["EndCustomer"]
+      @oppty.crn                   = o["CRN"]
+      @oppty.contractType          = o["ContractType"]
+      @oppty.opptyClass            = o["OpptyClass"]
+      @oppty.numberOfAwards        = o["NumberOfAwards"]
+      @oppty.totalPOP              = o["TotalPOP"]
+      @oppty.primeSub              = o["PrimeSub"]
+      @oppty.fy16BP                = o["FY16 B&P$"]
+      @oppty.fy16BPSpent           = o["FY16 B&P $Spent"]
+      @oppty.fy16BPSpentPercent    = o["FY16 B&P %Spent"]
       @oppty.save
     end
   end
@@ -756,16 +656,16 @@ class CrmController < ApplicationController
     puts "deletedCount: " + (opptyIds - uploadedIds).length.to_s
     #puts opptyIds
     @deleted=0
-    @added
+    # @added
     uploadedIds.each do |u|
       opptyIds.delete(u)
     end
-    puts "*"*30
-    opptyIds.each do |i|
-      #puts i
-      @deleted+=1
-      moveToHistory(i)
-    end
+    # puts "*"*30
+    # opptyIds.each do |i|
+    #   #puts i
+    #   @deleted+=1
+    #   moveToHistory(i)
+    # end
     puts "*"*30
     @deleted = (opptyIds - uploadedIds).length.to_s
     @uploaded=true
@@ -783,9 +683,13 @@ class CrmController < ApplicationController
         puts name
         puts @download_path
         puts "*"*30
+        puts `ls /home/server/crm-manager-server/public/uploads`
+        puts "*"*30
         `mv "#{@download_path}" "#{name}"`
         send_file name, :type=>"application/txt", :x_sendfile=>true
-        `mv "#{name}" #{@download_path}`
+        `mv "#{name}" "#{@download_path}"`
+        puts "z"*30
+        puts `ls /home/server/crm-manager-server/public/uploads`
     else
         redirect_to crm_index_path
     end
