@@ -57,17 +57,22 @@ class CrmController < ApplicationController
     ids = opptyIds - uploadedIds
     newIds = uploadedIds - opptyIds
     if changes.any?
-      puts changes
-      puts changes.length
       changes.each do |c|
-        Oppty.find_by(opptyId:c).delete
-        newIds.push(c)
+        if History.find_by(opptyId:c) # if in history delete from history, add new one, move to history
+          History.find_by(opptyId:c).delete
+          newIds.push(c)
+          ids.push(c) # because hax
+        else
+          Oppty.find_by(opptyId:c).delete
+          newIds.push(c)
+        end
       end
     end
+
+    addNewOppty(data, newIds, uploadedIds)
     ids.each do |i|
       moveToHistory(i)
     end
-    addNewOppty(data, newIds, uploadedIds)
     redirect_to crm_index_path
   end
 
@@ -190,7 +195,6 @@ class CrmController < ApplicationController
   def moveToHistory(oppty_id)
     oppty=Oppty.find_by(["opptyId=?", oppty_id])
     if oppty.present?
-      puts "moving to history: " + oppty_id
       oppty_dict=oppty.attributes
       oppty_dict.delete('id')
       #puts oppty_dict
