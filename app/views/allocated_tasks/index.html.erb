@@ -23,37 +23,13 @@
     	<div class="textColor">
     		<div class="row-2">
     			<div class="col-md-4 op-body-bg-left">
-         			<% @todo.each do |oppty|  %>
-						<h2><%= link_to oppty.opptyName, oppty %></h2>
-  						<p><%= oppty.slComments %></p>
-  						<p>
-    						<%= link_to "Edit", edit_oppty_path(oppty) %>
-   							<%= link_to "Delete", oppty, :data => {:confirm => "Are you sure?"}, :method => :delete %>
-   						</p>
-  						<hr />
-					<% end %>
+
     			</div>
      			<div class="col-md-4 op-body-bg-middle">
-        			<% @doing.each do |oppty|  %>
-						<h2><%= link_to oppty.opptyName, oppty %></h2>
-  						<p><%= oppty.slComments %></p>
-  						<p>
-    						<%= link_to "Edit", edit_oppty_path(oppty) %>
-   							<%= link_to "Delete", oppty, :data => {:confirm => "Are you sure?"}, :method => :delete %>
-   						</p>
-  						<hr />
-					<% end %>
+
      			</div>
     			<div class="col-md-4 op-body-bg-right">
-        			<% @done.each do |oppty|  %>
-						<h2><%= link_to oppty.opptyName, oppty %></h2>
-  						<p><%= oppty.slComments %></p>
-  						<p>
-    						<%= link_to "Edit", edit_oppty_path(oppty) %>
-   							<%= link_to "Delete", oppty, :data => {:confirm => "Are you sure?"}, :method => :delete %>
-   						</p>
-  						<hr />
-					<% end %>
+
     			</div>
     		</div>
 		</div>
