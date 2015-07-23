@@ -36,6 +36,7 @@ class CrmController < ApplicationController
     oldFileName=params[:old]
     newFileName=params[:new]
     changes=params[:changes]
+    changes = JSON.parse(changes)
     puts oldFileName
     puts newFileName
     puts changes
@@ -55,6 +56,14 @@ class CrmController < ApplicationController
     end
     ids = opptyIds - uploadedIds
     newIds = uploadedIds - opptyIds
+    if changes.any?
+      puts changes
+      puts changes.length
+      changes.each do |c|
+        Oppty.find_by(opptyId:c).delete
+        newIds.push(c)
+      end
+    end
     ids.each do |i|
       moveToHistory(i)
     end
