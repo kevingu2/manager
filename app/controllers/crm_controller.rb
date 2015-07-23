@@ -74,6 +74,7 @@ class CrmController < ApplicationController
   def addNewOppty(data, newIds, uploadedIds)
     data.each do |opportunity|
       if !newIds.include? opportunity["OpptyID"] then next end # if id not supposed to be added, skip
+      if History.find_by(opptyId:opportunity["OpptyID"]) then next end
       uploadedIds.push(opportunity["OpptyID"])
       #if there is some magical ruby way to do this better, please do it. I don't know ruby :(
       #quite possibly the hackiest code in this project
@@ -189,6 +190,7 @@ class CrmController < ApplicationController
   def moveToHistory(oppty_id)
     oppty=Oppty.find_by(["opptyId=?", oppty_id])
     if oppty.present?
+      puts "moving to history: " + oppty_id
       oppty_dict=oppty.attributes
       oppty_dict.delete('id')
       #puts oppty_dict
