@@ -22,6 +22,7 @@
           <h4>Number of Added: <%=@added%><h4/>
           <h4>Number of Deleted: <%=@deleted%><h4/>
           <h4>Number of Updates:<%=@changes.length.to_s%><h4/>
+					<h4>Number of Equal: <%=@equal%><h4/>
             <form action ="updateCRM" method="post">
               <input hidden=true type="string" name="old" value=<%= @oldFileName%>>
               <input hidden=true type="string" name="new" value=<%= @newFileName%>>

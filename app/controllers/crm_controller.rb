@@ -230,6 +230,7 @@ class CrmController < ApplicationController
     opptyIds=[]
     change = false
     id = 0
+    @equal = 0
     data.each do |opportunity| # for all the opportunities
       change = false
       id = opportunity["OpptyID"] # get the id
@@ -446,20 +447,25 @@ class CrmController < ApplicationController
         #   diff["fy16BPSpentPercent"]  = fy16BPSpentPercent
         #   change = true end
         if diff.length > 0
+          puts diff.length.to_s
+          puts diff
           # because if we input "" into the database, it goes in as nil
           # instead of "", so check if that's what happened, and if true, ignore
           to_push = false
           diff.each do |key, value|
             if value == "" #nil != ""
-              diff.delete(key)
+              next
+              #diff.delete(key)
             else
-              print value
+              #puts value
               to_push = true
               #break
             end
           end
           if to_push == true
             @changes.push(id) # add hash to list
+          else
+            @equal += 1
           end
         end
       else # else not in database, add it
@@ -474,6 +480,7 @@ class CrmController < ApplicationController
     puts "opptyLength: " + opptyIds.length.to_s
     puts "uploadedLength: " + uploadedIds.length.to_s
     puts "deletedCount: " + (opptyIds - uploadedIds).length.to_s
+    puts "equalCount: " + @equal.to_s
     #puts opptyIds
     @deleted=0
     # @added
