@@ -695,19 +695,14 @@ class CrmController < ApplicationController
     #pull the database data into an excel
     #pulls and downloads the first .xlsm file from the /uploads folder
     if Dir[CRM_PATH+'/*.xlsm'][0]
-        @download_path=File.join(Dir[CRM_PATH+'/*.xlsm'][0])
-        name = @download_path.gsub("new_", "")
-        puts "*"*30
-        puts name
-        puts @download_path
-        puts "*"*30
-        puts `ls /home/server/crm-manager-server/public/uploads`
-        puts "*"*30
-        `mv "#{@download_path}" "#{name}"`
-        send_file name, :type=>"application/txt", :x_sendfile=>true
-        `mv "#{name}" "#{@download_path}"`
-        puts "z"*30
-        puts `ls /home/server/crm-manager-server/public/uploads`
+      @download_path=File.join(Dir[CRM_PATH+'/*.xlsm'][0])
+      @name = @download_path.gsub("new_", "")
+      File.rename @download_path, @name
+      file = File.open(@name, "rb")
+      contents = file.read
+      file.close
+      File.rename @name, @download_path
+      send_data(contents, :filename =>File.basename( @name))
     else
         redirect_to crm_index_path
     end
