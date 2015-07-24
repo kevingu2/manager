@@ -6,7 +6,39 @@
 </div>
 
 <body>
-
+<h2>TODO</h2>
+<%@name_dict.each do |id, name|%>
+    <h4><%= name+': '%></h4>
+    <%if @todo_writer_dict[id].present?%>
+        <% @todo_writer_dict[id].each do |o|%>
+            <br>
+            <%= o.oppty.opptyName%>
+        <%end%>
+     <%end%>
+    <br>
+<%end%>
+<h2>Doing</h2>
+<%@name_dict.each do |id, name|%>
+    <h4><%= name+': '%></h4>
+    <%if @doing_writer_dict[id].present?%>
+        <% @doing_writer_dict[id].each do |o|%>
+            <br>
+            <%= o.oppty.opptyName%>
+        <%end%>
+    <%end%>
+    <br>
+<%end%>
+<h2>Done</h2>
+<%@name_dict.each do |id, name|%>
+    <h4><%= name+': '%></h4>
+    <%if @done_writer_dict[id].present?%>
+        <% @done_writer_dict[id].each do |o|%>
+            <br>
+            <%= o.oppty.opptyName%>
+        <%end%>
+    <%end%>
+    <br>
+<%end%>
 <div class="container tasks-queue">
   <!-- Example row of columns -->
 	<div class="row">
