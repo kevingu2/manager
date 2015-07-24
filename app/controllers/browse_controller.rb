@@ -30,10 +30,6 @@ class BrowseController < ApplicationController
 
   end
 
-  def create
-
-  end
-
   def search
     
     if params[:within].to_i == 30 or params[:within].to_i == 60 or params[:within].to_i == 90
