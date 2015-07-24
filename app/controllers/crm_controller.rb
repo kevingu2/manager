@@ -35,8 +35,11 @@ class CrmController < ApplicationController
     puts "*"*30
     oldFileName=params[:old]
     newFileName=params[:new]
+    changes=params[:changes]
+    changes = JSON.parse(changes)
     puts oldFileName
     puts newFileName
+    puts changes
     puts "*"*30
     if Dir[CRM_PATH+ '/*.xlsm'].length > 1
       `rm #{CRM_PATH}/#{oldFileName}`
@@ -53,224 +56,138 @@ class CrmController < ApplicationController
     end
     ids = opptyIds - uploadedIds
     newIds = uploadedIds - opptyIds
+    if changes.any?
+      changes.each do |c|
+        if History.find_by(opptyId:c) # if in history delete from history, add new one, move to history
+          History.find_by(opptyId:c).delete
+          newIds.push(c)
+          ids.push(c) # because hax
+        else
+          Oppty.find_by(opptyId:c).delete
+          newIds.push(c)
+        end
+      end
+    end
+
+    addNewOppty(data, newIds, uploadedIds)
     ids.each do |i|
       moveToHistory(i)
     end
-    addNewOppty(data, newIds, uploadedIds)
     redirect_to crm_index_path
   end
 
   def addNewOppty(data, newIds, uploadedIds)
-    data.each do |o|
-      if !newIds.include? o["OpptyID"] then next end # if id not supposed to be added, skip
-      uploadedIds.push(o["OpptyID"])
+    data.each do |opportunity|
+      if !newIds.include? opportunity["OpptyID"] then next end # if id not supposed to be added, skip
+      if History.find_by(opptyId:opportunity["OpptyID"]) then next end
+      uploadedIds.push(opportunity["OpptyID"])
       #if there is some magical ruby way to do this better, please do it. I don't know ruby :(
       #quite possibly the hackiest code in this project
       #######################get values from json##########################
-      id                    = o["OpptyID"]
-      name                  = o["OpptyName"]
-      idiqCA                = o["IDIQ_CA"]
-      status2               = o["Status2"]
-      value                 = o["Total Value $M"]
-      pWin                  = o["pWin"]
-      captureMgr            = o["Capturemgr"]
-      programMgr            = o["ProgramMgr"]
-      proposalMgr           = o["ProposalMgr"]
-      technicalLead         = o["TechnicalLead"]
-      slArch                = o["SLArch"]
-      slComments            = o["SL Comments"]
-      rfpDate               = Date.new(1899,12,30) + o["RFPDate"].to_f
-      awardDate             = Date.new(1899,12,30) + o["AwardDate"].to_f
-      slDir                 = o["SLDir"]
-      leadEstim             = o["LeadEstim"]
-      engaged               = o["Engaged r/y/g"]
-      solution              = o["Solution r/y/g"]
-      estimate              = o["Estimate r/y/g"]
-      proposalDueDate       = Date.new(1899,12,30) + o["ProposalDueDate"].to_f
-      codeName              = o["CodeName"]
-      descriptionOfWork     = o["DescriptionOfWork"]
-      category              = o["Category"]
-      pwald                 = o["PWALD"]
-      pBid                  = o["pBid"]
-      awardFV               = o["AwardFV"]
-      saicvaPercent         = o["SAICVA%"]
-      saicva                = o["SAIC VA $M"]
-      mat                   = o["Mat%"]
-      materialsTV           = o["Mat TV $M"]
-      subc                  = o["Subc%"]
-      subTV                 = o["Subc TV $M"]
-      cg_va                 = o["CG_VA"]
-      sss_va                = o["SSS-3621"] # i have no idea why
-      nwi_va                = o["NWI-3933"]
-      hwi_va                = o["HWI-3648"]
-      itms_va               = o["ITMS-3896"]
-      tss_va                = o["TSS-3676"]
-      ccds_va               = o["CCDS-3932"]
-      mss_va                = o["MSS-3690"]
-      swi_va                = o["SWI-3934"]
-      lsc_va                = o["LSC-3640"]
-      zzOth_va              = o["zzOth_VA"]
-      pri                   = o["Pri"]
-      aop                   = o["AOP"]
-      peg                   = o["PEG"]
-      mustWin               = o["MustWin"]
-      feeIndic              = o["FeeIndic"]
-      slutil                = o["Slutil"]
-      recompete             = o["Recompete"]
-      competitive           = o["Competitive"]
-      international         = o["International"]
-      strategic             = o["Strategic"]
-      bundle                = o["Bundle"]
-      bidReviewStream       = o["BidReviewStream"]
-      definedDelivPgm       = o["DefinedDelivPgm"]
-      evaluationCriteria    = o["EvaluationCriteria"]
-      perfWorkLoc           = o["PerfWorkLoc"]
-      classIfReqmt          = o["ClassifReqmt"]
-      grouping              = o["Grouping"]
-      reasonForWinLoss      = o["ReasonforWinLoss"]
-      egr                   = o["EGR"]
-      slCat                 = o["SLcat"]
-      slPri                 = o["Slpri"]
-      slNote                = o["Slnote"]
-      crmRunDate            = o["CRMRunDate"]
-      contractStartDate     = o["ContractStartDate"]
-      rfpFYPer              = o["RFPFYPer"]
-      submitFYPer           = o["SubmitFYPer"]
-      awardFYPer            = o["AwardFYPer"]
-      preBPprojID           = o["PreBPprojID"]
-      fy16PreBP             = o["FY16 PreB&P$"]
-      fy16PreBPSpent        = o["FY16 PreB&P $Spent"]
-      fy16PreBPSpentPercent = o["FY16 PreB&P %Spent"]
-      bpProjID              = o["BPprojID"]
-      fy16BDTot             = o["FY16 BDTot$"]
-      fy16BDTotSpent        = o["FY16 BDTot $Spent"]
-      fy16BDTotSpentPercent = o["FY16 BDTot %Spent"]
-      financeDate           = o["FinDate"]
-      cgSecOrg              = o["SecOrg"]
-      cgSecMgr              = o["SecMgr"]
-      cgOrg                 = o["CGOrg"]
-      cgMgr                 = o["CGMgr"]
-      opOrg                 = o["OpOrg"]
-      cgOpMgr               = o["OpMgr"]
-      cgPgmDir              = o["PgmDir"]
-      bdMgr                 = o["BDMgr"]
-      crmRecOwner           = o["CRMRecOwner"]
-      sslMgr                = o["SSLeadMgr"]
-      divNum                = o["DivNum"]
-      customer              = o["Customer"]
-      endCustomer           = o["EndCustomer"]
-      crn                   = o["CRN"]
-      contractType          = o["ContractType"]
-      opptyClass            = o["OpptyClass"]
-      numberOfAwards        = o["NumberOfAwards"]
-      totalPOP              = o["TotalPOP"]
-      primeSub              = o["PrimeSub"]
-      fy16BP                = o["FY16 B&P$"]
-      fy16BPSpent           = o["FY16 B&P $Spent"]
-      fy16BPSpentPercent    = o["FY16 B&P %Spent"]
+
       @oppty=Oppty.new
       #fields
-      @oppty.opptyId                = id
-      @oppty.opptyName              = name
-      @oppty.idiqCA                 = idiqCA
-      @oppty.status2                = status2
-      @oppty.value                  = value
-      @oppty.pWin                   = pWin
-      @oppty.captureMgr             = captureMgr
-      @oppty.programMgr             = programMgr
-      @oppty.proposalMgr            = proposalMgr
-      @oppty.technicalLead          = technicalLead
-      @oppty.slArch                 = slArch
-      @oppty.slComments             = slComments
-      @oppty.rfpDate                = rfpDate
-      @oppty.awardDate              = awardDate
-      @oppty.slDir                  = slDir
-      @oppty.leadEstim              = leadEstim
-      @oppty.engaged                = engaged
-      @oppty.solution               = solution
-      @oppty.estimate               = estimate
-      @oppty.proposalDueDate        = proposalDueDate
-      @oppty.codeName               = codeName
-      @oppty.descriptionOfWork      = descriptionOfWork
-      @oppty.category               = category
-      @oppty.pwald                  = pwald
-      @oppty.pBid                   = pBid
-      @oppty.awardFV                = awardFV
-      @oppty.saicvaPercent          = saicvaPercent
-      @oppty.saicva                 = saicva
-      @oppty.mat                    = mat
-      @oppty.materialsTV            = materialsTV
-      @oppty.subc                   = subc
-      @oppty.subTV                  = subTV
-      @oppty.cg_va                  = cg_va
-      @oppty.sss_va                 = sss_va
-      @oppty.nwi_va                 = nwi_va
-      @oppty.hwi_va                 = hwi_va
-      @oppty.itms_va                = itms_va
-      @oppty.tss_va                 = tss_va
-      @oppty.ccds_va                = ccds_va
-      @oppty.mss_va                 = mss_va
-      @oppty.swi_va                 = swi_va
-      @oppty.lsc_va                 = lsc_va
-      @oppty.zzOth_va               = zzOth_va
-      @oppty.pri                    = pri
-      @oppty.aop                    = aop
-      @oppty.peg                    = peg
-      @oppty.mustWin                = mustWin
-      @oppty.feeIndic               = feeIndic
-      @oppty.slutil                 = slutil
-      @oppty.recompete              = recompete
-      @oppty.competitive            = competitive
-      @oppty.international          = international
-      @oppty.strategic              = strategic
-      @oppty.bundle                 = bundle
-      @oppty.bidReviewStream        = bidReviewStream
-      @oppty.definedDelivPgm        = definedDelivPgm
-      @oppty.evaluationCriteria     = evaluationCriteria
-      @oppty.perfWorkLoc            = perfWorkLoc
-      @oppty.classIfReqmt           = classIfReqmt
-      @oppty.grouping               = grouping
-      @oppty.reasonForWinLoss       = reasonForWinLoss
-      @oppty.egr                    = egr
-      @oppty.slCat                  = slCat
-      @oppty.slPri                  = slPri
-      @oppty.slNote                 = slNote
-      @oppty.crmRunDate             = crmRunDate
-      @oppty.contractStartDate      = contractStartDate
-      @oppty.rfpFYPer               = rfpFYPer
-      @oppty.submitFYPer            = submitFYPer
-      @oppty.awardFYPer             = awardFYPer
-      @oppty.preBPprojID            = preBPprojID
-      @oppty.fy16PreBP              = fy16PreBP
-      @oppty.fy16PreBPSpent         = fy16PreBPSpent
-      @oppty.fy16PreBPSpentPercent  = fy16PreBPSpentPercent
-      @oppty.bpProjID               = bpProjID
-      @oppty.fy16BDTot              = fy16BDTot
-      @oppty.fy16BDTotSpent         = fy16BDTotSpent
-      @oppty.fy16BDTotSpentPercent  = fy16BDTotSpentPercent
-      @oppty.financeDate            = financeDate
-      @oppty.cgSecOrg               = cgSecOrg
-      @oppty.cgSecMgr               = cgSecMgr
-      @oppty.cgOrg                  = cgOrg
-      @oppty.cgMgr                  = cgMgr
-      @oppty.opOrg                  = opOrg
-      @oppty.cgOpMgr                = cgOpMgr
-      @oppty.cgPgmDir               = cgPgmDir
-      @oppty.bdMgr                  = bdMgr
-      @oppty.crmRecOwner            = crmRecOwner
-      @oppty.sslMgr                 = sslMgr
-      @oppty.divNum                 = divNum
-      @oppty.customer               = customer
-      @oppty.endCustomer            = endCustomer
-      @oppty.crn                    = crn
-      @oppty.contractType           = contractType
-      @oppty.opptyClass             = opptyClass
-      @oppty.numberOfAwards         = numberOfAwards
-      @oppty.totalPOP               = totalPOP
-      @oppty.primeSub               = primeSub
-      @oppty.fy16BP                 = fy16BP
-      @oppty.fy16BPSpent            = fy16BPSpent
-      @oppty.fy16BPSpentPercent     = fy16BPSpentPercent
+      @oppty.opptyId               = opportunity["OpptyID"]
+      @oppty.opptyName             = opportunity["OpptyName"]
+      @oppty.idiqCA                = opportunity["IDIQ_CA"]
+      @oppty.status2               = opportunity["Status2"]
+      @oppty.value                 = opportunity["Total Value $M"]
+      @oppty.pWin                  = opportunity["pWin"]
+      @oppty.captureMgr            = opportunity["Capturemgr"]
+      @oppty.programMgr            = opportunity["ProgramMgr"]
+      @oppty.proposalMgr           = opportunity["ProposalMgr"]
+      @oppty.technicalLead         = opportunity["TechnicalLead"]
+      @oppty.slArch                = opportunity["SLArch"]
+      @oppty.slComments            = opportunity["SL Comments"]
+      @oppty.rfpDate               = Date.new(1899,12,30) + opportunity["RFPDate"].to_f
+      @oppty.awardDate             = Date.new(1899,12,30) + opportunity["AwardDate"].to_f
+      @oppty.slDir                 = opportunity["SLDir"]
+      @oppty.leadEstim             = opportunity["LeadEstim"]
+      @oppty.engaged               = opportunity["Engaged r/y/g"]
+      @oppty.solution              = opportunity["Solution r/y/g"]
+      @oppty.estimate              = opportunity["Estimate r/y/g"]
+      @oppty.proposalDueDate       = Date.new(1899,12,30) + opportunity["ProposalDueDate"].to_f
+      @oppty.codeName              = opportunity["CodeName"]
+      @oppty.descriptionOfWork     = opportunity["DescriptionOfWork"]
+      @oppty.category              = opportunity["Category"]
+      @oppty.pwald                 = opportunity["PWALD"]
+      @oppty.pBid                  = opportunity["pBid"]
+      @oppty.awardFV               = opportunity["AwardFV"]
+      @oppty.saicvaPercent         = opportunity["SAICVA%"]
+      @oppty.saicva                = opportunity["SAIC VA $M"]
+      @oppty.mat                   = opportunity["Mat%"]
+      @oppty.materialsTV           = opportunity["Mat TV $M"]
+      @oppty.subc                  = opportunity["Subc%"]
+      @oppty.subTV                 = opportunity["Subc TV $M"]
+      @oppty.cg_va                 = opportunity["CG_VA"]
+      @oppty.sss_va                = opportunity["SSS-3621"] # i have no idea why
+      @oppty.nwi_va                = opportunity["NWI-3933"]
+      @oppty.hwi_va                = opportunity["HWI-3648"]
+      @oppty.itms_va               = opportunity["ITMS-3896"]
+      @oppty.tss_va                = opportunity["TSS-3676"]
+      @oppty.ccds_va               = opportunity["CCDS-3932"]
+      @oppty.mss_va                = opportunity["MSS-3690"]
+      @oppty.swi_va                = opportunity["SWI-3934"]
+      @oppty.lsc_va                = opportunity["LSC-3640"]
+      @oppty.zzOth_va              = opportunity["zzOth_VA"]
+      @oppty.pri                   = opportunity["Pri"]
+      @oppty.aop                   = opportunity["AOP"]
+      @oppty.peg                   = opportunity["PEG"]
+      @oppty.mustWin               = opportunity["MustWin"]
+      @oppty.feeIndic              = opportunity["FeeIndic"]
+      @oppty.slutil                = opportunity["Slutil"]
+      @oppty.recompete             = opportunity["Recompete"]
+      @oppty.competitive           = opportunity["Competitive"]
+      @oppty.international         = opportunity["International"]
+      @oppty.strategic             = opportunity["Strategic"]
+      @oppty.bundle                = opportunity["Bundle"]
+      @oppty.bidReviewStream       = opportunity["BidReviewStream"]
+      @oppty.definedDelivPgm       = opportunity["DefinedDelivPgm"]
+      @oppty.evaluationCriteria    = opportunity["EvaluationCriteria"]
+      @oppty.perfWorkLoc           = opportunity["PerfWorkLoc"]
+      @oppty.classIfReqmt          = opportunity["ClassifReqmt"]
+      @oppty.grouping              = opportunity["Grouping"]
+      @oppty.reasonForWinLoss      = opportunity["ReasonforWinLoss"]
+      @oppty.egr                   = opportunity["EGR"]
+      @oppty.slCat                 = opportunity["SLcat"]
+      @oppty.slPri                 = opportunity["Slpri"]
+      @oppty.slNote                = opportunity["Slnote"]
+      @oppty.crmRunDate            = Date.new(1899,12,30) + opportunity["CRMRunDate"].to_f
+      @oppty.contractStartDate     = Date.new(1899,12,30) + opportunity["ContractStartDate"].to_f
+      @oppty.rfpFYPer              = opportunity["RFPFYPer"]
+      @oppty.submitFYPer           = opportunity["SubmitFYPer"]
+      @oppty.awardFYPer            = opportunity["AwardFYPer"]
+      @oppty.preBPprojID           = opportunity["PreBPprojID"]
+      @oppty.fy16PreBP             = opportunity["FY16 PreB&P$"]
+      @oppty.fy16PreBPSpent        = opportunity["FY16 PreB&P $Spent"]
+      @oppty.fy16PreBPSpentPercent = opportunity["FY16 PreB&P %Spent"]
+      @oppty.bpProjID              = opportunity["BPprojID"]
+      @oppty.fy16BDTot             = opportunity["FY16 BDTot$"]
+      @oppty.fy16BDTotSpent        = opportunity["FY16 BDTot $Spent"]
+      @oppty.fy16BDTotSpentPercent = opportunity["FY16 BDTot %Spent"]
+      @oppty.financeDate           = Date.new(1899,12,30) + opportunity["FinDate"].to_f
+      @oppty.cgSecOrg              = opportunity["SecOrg"]
+      @oppty.cgSecMgr              = opportunity["SecMgr"]
+      @oppty.cgOrg                 = opportunity["CGOrg"]
+      @oppty.cgMgr                 = opportunity["CGMgr"]
+      @oppty.opOrg                 = opportunity["OpOrg"]
+      @oppty.cgOpMgr               = opportunity["OpMgr"]
+      @oppty.cgPgmDir              = opportunity["PgmDir"]
+      @oppty.bdMgr                 = opportunity["BDMgr"]
+      @oppty.crmRecOwner           = opportunity["CRMRecOwner"]
+      @oppty.sslMgr                = opportunity["SSLeadMgr"]
+      @oppty.divNum                = opportunity["DivNum"]
+      @oppty.customer              = opportunity["Customer"]
+      @oppty.endCustomer           = opportunity["EndCustomer"]
+      @oppty.crn                   = opportunity["CRN"]
+      @oppty.contractType          = opportunity["ContractType"]
+      @oppty.opptyClass            = opportunity["OpptyClass"]
+      @oppty.numberOfAwards        = opportunity["NumberOfAwards"]
+      @oppty.totalPOP              = opportunity["TotalPOP"]
+      @oppty.primeSub              = opportunity["PrimeSub"]
+      @oppty.fy16BP                = opportunity["FY16 B&P$"]
+      @oppty.fy16BPSpent           = opportunity["FY16 B&P $Spent"]
+      @oppty.fy16BPSpentPercent    = opportunity["FY16 B&P %Spent"]
       @oppty.save
     end
   end
@@ -311,421 +228,224 @@ class CrmController < ApplicationController
     @added = 0
     uploadedIds=[]
     opptyIds=[]
-    data.each do |o|
-      uploadedIds.push(o["OpptyID"])
-      #if there is some magical ruby way to do this better, please do it. I don't know ruby :(
-      #quite possibly the hackiest code in this project
-      #######################get values from json##########################
-      id                    = o["OpptyID"]
-      name                  = o["OpptyName"]
-      idiqCA                = o["IDIQ_CA"]
-      status2               = o["Status2"]
-      value                 = o["Total Value $M"]
-      pWin                  = o["pWin"]
-      captureMgr            = o["Capturemgr"]
-      programMgr            = o["ProgramMgr"]
-      proposalMgr           = o["ProposalMgr"]
-      technicalLead         = o["TechnicalLead"]
-      slArch                = o["SLArch"]
-      slComments            = o["SL Comments"]
-      rfpDate               = Date.new(1899,12,30) + o["RFPDate"].to_f
-      awardDate             = Date.new(1899,12,30) + o["AwardDate"].to_f
-      slDir                 = o["SLDir"]
-      leadEstim             = o["LeadEstim"]
-      engaged               = o["Engaged r/y/g"]
-      solution              = o["Solution r/y/g"]
-      estimate              = o["Estimate r/y/g"]
-      proposalDueDate       = Date.new(1899,12,30) + o["ProposalDueDate"].to_f
-      codeName              = o["CodeName"]
-      descriptionOfWork     = o["DescriptionOfWork"]
-      category              = o["Category"]
-      pwald                 = o["PWALD"]
-      pBid                  = o["pBid"]
-      awardFV               = o["AwardFV"]
-      saicvaPercent         = o["SAICVA%"]
-      saicva                = o["SAIC VA $M"]
-      mat                   = o["Mat%"]
-      materialsTV           = o["Mat TV $M"]
-      subc                  = o["Subc%"]
-      subTV                 = o["Subc TV $M"]
-      cg_va                 = o["CG_VA"]
-      sss_va                = o["SSS-3621"] # i have no idea why
-      nwi_va                = o["NWI-3933"]
-      hwi_va                = o["HWI-3648"]
-      itms_va               = o["ITMS-3896"]
-      tss_va                = o["TSS-3676"]
-      ccds_va               = o["CCDS-3932"]
-      mss_va                = o["MSS-3690"]
-      swi_va                = o["SWI-3934"]
-      lsc_va                = o["LSC-3640"]
-      zzOth_va              = o["zzOth_VA"]
-      pri                   = o["Pri"]
-      aop                   = o["AOP"]
-      peg                   = o["PEG"]
-      mustWin               = o["MustWin"]
-      feeIndic              = o["FeeIndic"]
-      slutil                = o["Slutil"]
-      recompete             = o["Recompete"]
-      competitive           = o["Competitive"]
-      international         = o["International"]
-      strategic             = o["Strategic"]
-      bundle                = o["Bundle"]
-      bidReviewStream       = o["BidReviewStream"]
-      definedDelivPgm       = o["DefinedDelivPgm"]
-      evaluationCriteria    = o["EvaluationCriteria"]
-      perfWorkLoc           = o["PerfWorkLoc"]
-      classIfReqmt          = o["ClassifReqmt"]
-      grouping              = o["Grouping"]
-      reasonForWinLoss      = o["ReasonforWinLoss"]
-      egr                   = o["EGR"]
-      slCat                 = o["SLcat"]
-      slPri                 = o["Slpri"]
-      slNote                = o["Slnote"]
-      crmRunDate            = o["CRMRunDate"]
-      contractStartDate     = o["ContractStartDate"]
-      rfpFYPer              = o["RFPFYPer"]
-      submitFYPer           = o["SubmitFYPer"]
-      awardFYPer            = o["AwardFYPer"]
-      preBPprojID           = o["PreBPprojID"]
-      fy16PreBP             = o["FY16 PreB&P$"]
-      fy16PreBPSpent        = o["FY16 PreB&P $Spent"]
-      fy16PreBPSpentPercent = o["FY16 PreB&P %Spent"]
-      bpProjID              = o["BPprojID"]
-      fy16BDTot             = o["FY16 BDTot$"]
-      fy16BDTotSpent        = o["FY16 BDTot $Spent"]
-      fy16BDTotSpentPercent = o["FY16 BDTot %Spent"]
-      financeDate           = o["FinDate"]
-      cgSecOrg              = o["SecOrg"]
-      cgSecMgr              = o["SecMgr"]
-      cgOrg                 = o["CGOrg"]
-      cgMgr                 = o["CGMgr"]
-      opOrg                 = o["OpOrg"]
-      cgOpMgr               = o["OpMgr"]
-      cgPgmDir              = o["PgmDir"]
-      bdMgr                 = o["BDMgr"]
-      crmRecOwner           = o["CRMRecOwner"]
-      sslMgr                = o["SSLeadMgr"]
-      divNum                = o["DivNum"]
-      customer              = o["Customer"]
-      endCustomer           = o["EndCustomer"]
-      crn                   = o["CRN"]
-      contractType          = o["ContractType"]
-      opptyClass            = o["OpptyClass"]
-      numberOfAwards        = o["NumberOfAwards"]
-      totalPOP              = o["TotalPOP"]
-      primeSub              = o["PrimeSub"]
-      fy16BP                = o["FY16 B&P$"]
-      fy16BPSpent           = o["FY16 B&P $Spent"]
-      fy16BPSpentPercent    = o["FY16 B&P %Spent"]
-      ####################################################################
-      if data = Oppty.find_by(opptyId:id)
+    change = false
+    id = 0
+    data.each do |opportunity| # for all the opportunities
+      change = false
+      id = opportunity["OpptyID"] # get the id
+      uploadedIds.push(id)
+      oppty = Oppty.find_by(opptyId:id)
+      if oppty != nil && id == oppty.opptyId # check if the oppty is in the database
+        # if the cell changed, hashtable contains the new value and ID
         diff = Hash.new
         diff.default = 0
         change = false
+        id                    = opportunity["OpptyID"]
+        name                  = opportunity["OpptyName"]
+        idiqCA                = opportunity["IDIQ_CA"]
+        status2               = opportunity["Status2"]
+        value                 = opportunity["Total Value $M"]
+        pWin                  = opportunity["pWin"]
+        captureMgr            = opportunity["Capturemgr"]
+        programMgr            = opportunity["ProgramMgr"]
+        proposalMgr           = opportunity["ProposalMgr"]
+        technicalLead         = opportunity["TechnicalLead"]
+        slArch                = opportunity["SLArch"]
+        slComments            = opportunity["SL Comments"]
+        rfpDate               = Date.new(1899,12,30) + opportunity["RFPDate"].to_f
+        awardDate             = Date.new(1899,12,30) + opportunity["AwardDate"].to_f
+        slDir                 = opportunity["SLDir"]
+        leadEstim             = opportunity["LeadEstim"]
+        engaged               = opportunity["Engaged r/y/g"]
+        solution              = opportunity["Solution r/y/g"]
+        estimate              = opportunity["Estimate r/y/g"]
+        proposalDueDate       = Date.new(1899,12,30) + opportunity["ProposalDueDate"].to_f
+        codeName              = opportunity["CodeName"]
+        descriptionOfWork     = opportunity["DescriptionOfWork"]
+        category              = opportunity["Category"]
+        pwald                 = opportunity["PWALD"]
+        pBid                  = opportunity["pBid"]
+        awardFV               = opportunity["AwardFV"]
+        saicvaPercent         = opportunity["SAICVA%"]
+        saicva                = opportunity["SAIC VA $M"]
+        mat                   = opportunity["Mat%"]
+        materialsTV           = opportunity["Mat TV $M"]
+        subc                  = opportunity["Subc%"]
+        subTV                 = opportunity["Subc TV $M"]
+        cg_va                 = opportunity["CG_VA"]
+        sss_va                = opportunity["SSS-3621"] # i have no idea why
+        nwi_va                = opportunity["NWI-3933"]
+        hwi_va                = opportunity["HWI-3648"]
+        itms_va               = opportunity["ITMS-3896"]
+        tss_va                = opportunity["TSS-3676"]
+        ccds_va               = opportunity["CCDS-3932"]
+        mss_va                = opportunity["MSS-3690"]
+        swi_va                = opportunity["SWI-3934"]
+        lsc_va                = opportunity["LSC-3640"]
+        zzOth_va              = opportunity["zzOth_VA"]
+        pri                   = opportunity["Pri"]
+        aop                   = opportunity["AOP"]
+        peg                   = opportunity["PEG"]
+        mustWin               = opportunity["MustWin"]
+        feeIndic              = opportunity["FeeIndic"]
+        slutil                = opportunity["Slutil"]
+        recompete             = opportunity["Recompete"]
+        competitive           = opportunity["Competitive"]
+        international         = opportunity["International"]
+        strategic             = opportunity["Strategic"]
+        bundle                = opportunity["Bundle"]
+        bidReviewStream       = opportunity["BidReviewStream"]
+        definedDelivPgm       = opportunity["DefinedDelivPgm"]
+        evaluationCriteria    = opportunity["EvaluationCriteria"]
+        perfWorkLoc           = opportunity["PerfWorkLoc"]
+        classIfReqmt          = opportunity["ClassifReqmt"]
+        grouping              = opportunity["Grouping"]
+        reasonForWinLoss      = opportunity["ReasonforWinLoss"]
+        egr                   = opportunity["EGR"]
+        slCat                 = opportunity["SLcat"]
+        slPri                 = opportunity["Slpri"]
+        slNote                = opportunity["Slnote"]
+        crmRunDate            = Date.new(1899,12,30) + opportunity["CRMRunDate"].to_f
+        contractStartDate     = Date.new(1899,12,30) + opportunity["ContractStartDate"].to_f
+        rfpFYPer              = opportunity["RFPFYPer"]
+        submitFYPer           = opportunity["SubmitFYPer"]
+        awardFYPer            = opportunity["AwardFYPer"]
+        preBPprojID           = opportunity["PreBPprojID"]
+        fy16PreBP             = opportunity["FY16 PreB&P$"]
+        fy16PreBPSpent        = opportunity["FY16 PreB&P $Spent"]
+        fy16PreBPSpentPercent = opportunity["FY16 PreB&P %Spent"]
+        bpProjID              = opportunity["BPprojID"]
+        fy16BDTot             = opportunity["FY16 BDTot$"]
+        fy16BDTotSpent        = opportunity["FY16 BDTot $Spent"]
+        fy16BDTotSpentPercent = opportunity["FY16 BDTot %Spent"]
+        financeDate           = Date.new(1899,12,30) + opportunity["FinDate"].to_f
+        cgSecOrg              = opportunity["SecOrg"]
+        cgSecMgr              = opportunity["SecMgr"]
+        cgOrg                 = opportunity["CGOrg"]
+        cgMgr                 = opportunity["CGMgr"]
+        opOrg                 = opportunity["OpOrg"]
+        cgOpMgr               = opportunity["OpMgr"]
+        cgPgmDir              = opportunity["PgmDir"]
+        bdMgr                 = opportunity["BDMgr"]
+        crmRecOwner           = opportunity["CRMRecOwner"]
+        sslMgr                = opportunity["SSLeadMgr"]
+        divNum                = opportunity["DivNum"]
+        customer              = opportunity["Customer"]
+        endCustomer           = opportunity["EndCustomer"]
+        crn                   = opportunity["CRN"]
+        contractType          = opportunity["ContractType"]
+        opptyClass            = opportunity["OpptyClass"]
+        numberOfAwards        = opportunity["NumberOfAwards"]
+        totalPOP              = opportunity["TotalPOP"]
+        primeSub              = opportunity["PrimeSub"]
+        fy16BP                = opportunity["FY16 B&P$"]
+        fy16BPSpent           = opportunity["FY16 B&P $Spent"]
+        fy16BPSpentPercent    = opportunity["FY16 B&P %Spent"]
+      # if the cell changed, hashtable contains the new value a     nd ID
 
-      # if the cell changed, hashtable contains the new value and ID
-        if name              != data.opptyName
-          diff["opptyName"]        = name
-          change = true end
-        if idiqCA            != data.idiqCA
-          diff["idiqCA"]           = idiqCA
-          change = true end
-        if status2           != data.status2
-          diff["status2"]          = status2
-          change = true end
-        if value             != data.value
-          diff["value"]            = value
-          change = true end
-        #########Potential loating point inaccuracies, however per we believe this is inconsequential ###########
-        if pWin             != data.pWin
-          diff["pWin"]            = pWin
-          change = true end
-        if captureMgr        != data.captureMgr
-          diff["captureMgr"]       = captureMgr
-          change = true end
-        if programMgr        != data.programMgr
-          diff["programMgr"]       = programMgr
-          change = true end
-        if proposalMgr       != data.proposalMgr
-          diff["proposalMgr"]      = proposalMgr
-          change = true end
-        if technicalLead     != data.technicalLead
-          diff["technicalLead"]    = technicalLead
-          change = true end
-        if slArch            != data.slArch
-          diff["slArch"]           = slArch
-          change = true end
-        if slComments        != data.slComments
-          diff["slComments"]       = slComments
-          change = true end
-        if rfpDate           != data.rfpDate
-          diff["rfpDate"]          = rfpDate
-          change = true end
-        if awardDate         != data.awardDate
-          diff["awardDate"]        = awardDate
-          change = true end
-        if slDir             != data.slDir
-          diff["slDir"]            = slDir
-          change = true end
-        if leadEstim         != data.leadEstim
-          diff["leadEstim"]        = leadEstim
-          change = true end
-        if engaged           != data.engaged
-          diff["engaged"]          = engaged
-          change = true end
-        if solution          != data.solution
-          diff["solution"]         = solution
-          change = true end
-        if estimate          != data.estimate
-          diff["estimate"]         = estimate
-          change = true end
-        if proposalDueDate   != data.proposalDueDate
-          diff["proposalDueDate"]  = proposalDueDate
-          change = true end
-        if codeName   != data.codeName
-          diff["codeName"]  = codeName
-          change = true end
-        if descriptionOfWork   != data.descriptionOfWork
-          diff["descriptionOfWork"]  = descriptionOfWork
-          change = true end
-        if category   != data.category
-          diff["category"]  = category
-          change = true end
-        if pwald   != data.pwald
-          diff["pwald"]  = pwald
-          change = true end
-        if pBid   != data.pBid
-          diff["pBid"]  = pBid
-          change = true end
-        if awardFV   != data.awardFV
-          diff["awardFV"]  = awardFV
-          change = true end
-        if saicvaPercent   != data.saicvaPercent
-          diff["saicvaPercent"]  = saicvaPercent
-          change = true end
-        if mat   != data.mat
-          diff["mat"]  = mat
-          change = true end
-        if materialsTV   != data.materialsTV
-          diff["materialsTV"]  = materialsTV
-          change = true end
-        if subc   != data.subc
-          diff["subc"]  = subc
-          change = true end
-        if subTV   != data.subTV
-          diff["subTV"]  = subTV
-          change = true end
-        if cg_va   != data.cg_va
-          diff["cg_va"]  = cg_va
-          change = true end
-        if sss_va   != data.sss_va
-          diff["sss_va"]  = sss_va
-          change = true end
-        if nwi_va   != data.nwi_va
-          diff["nwi_va"]  = nwi_va
-          change = true end
-        if hwi_va   != data.hwi_va
-          diff["hwi_va"]  = hwi_va
-          change = true end
-        if itms_va   != data.itms_va
-          diff["itms_va"]  = itms_va
-          change = true end
-        if tss_va   != data.tss_va
-          diff["tss_va"]  = tss_va
-          change = true end
-        if ccds_va   != data.ccds_va
-          diff["ccds_va"]  = ccds_va
-          change = true end
-        if mss_va   != data.mss_va
-          diff["mss_va"]  = mss_va
-          change = true end
-        if swi_va   != data.swi_va
-          diff["swi_va"]  = swi_va
-          change = true end
-        if lsc_va   != data.lsc_va
-          diff["lsc_va"]  = lsc_va
-          change = true end
-        if zzOth_va   != data.zzOth_va
-          diff["zzOth_va"]  = zzOth_va
-          change = true end
-        if pri   != data.pri
-          diff["pri"]  = pri
-          change = true end
-        if aop   != data.aop
-          diff["aop"]  = aop
-          change = true end
-        if peg   != data.peg
-          diff["peg"]  = peg
-          change = true end
-        if mustWin   != data.mustWin
-          diff["mustWin"]  = mustWin
-          change = true end
-        if feeIndic   != data.feeIndic
-          diff["feeIndic"]  = feeIndic
-          change = true end
-        if slutil   != data.slutil
-          diff["slutil"]  = slutil
-          change = true end
-        if recompete   != data.recompete
-          diff["recompete"]  = recompete
-          change = true end
-        if competitive   != data.competitive
-          diff["competitive"]  = competitive
-          change = true end
-        if international   != data.international
-          diff["international"]  = international
-          change = true end
-        if strategic   != data.strategic
-          diff["strategic"]  = strategic
-          change = true end
-        if bundle   != data.bundle
-          diff["bundle"]  = bundle
-          change = true end
-        if bidReviewStream   != data.bidReviewStream
-          diff["bidReviewStream"]  = bidReviewStream
-          change = true end
-        if definedDelivPgm   != data.definedDelivPgm
-          diff["definedDelivPgm"]  = definedDelivPgm
-          change = true end
-        if evaluationCriteria   != data.evaluationCriteria
-          diff["evaluationCriteria"]  = evaluationCriteria
-          change = true end
-        if perfWorkLoc   != data.perfWorkLoc
-          diff["perfWorkLoc"]  = perfWorkLoc
-          change = true end
-        if classIfReqmt   != data.classIfReqmt
-          diff["classIfReqmt"]  = classIfReqmt
-          change = true end
-        if grouping   != data.grouping
-          diff["grouping"]  = grouping
-          change = true end
-        if reasonForWinLoss   != data.reasonForWinLoss
-          diff["reasonForWinLoss"]  = reasonForWinLoss
-          change = true end
-        if egr   != data.egr
-          diff["egr"]  = egr
-          change = true end
-        if slCat   != data.slCat
-          diff["slCat"]  = slCat
-          change = true end
-        if slPri   != data.slPri
-          diff["slPri"]  = slPri
-          change = true end
-        if slNote   != data.slNote
-          diff["slNote"]  = slNote
-          change = true end
-        if crmRunDate   != data.crmRunDate
-          diff["crmRunDate"]  = crmRunDate
-          change = true end
-        if contractStartDate   != data.contractStartDate
-          diff["contractStartDate"]  = contractStartDate
-          change = true end
-        if rfpFYPer   != data.rfpFYPer
-          diff["rfpFYPer"]  = rfpFYPer
-          change = true end
-        if submitFYPer   != data.submitFYPer
-          diff["submitFYPer"]  = submitFYPer
-          change = true end
-        if awardFYPer   != data.awardFYPer
-          diff["awardFYPer"]  = awardFYPer
-          change = true end
-        if preBPprojID   != data.preBPprojID
-          diff["preBPprojID"]  = preBPprojID
-          change = true end
-        if fy16PreBP   != data.fy16PreBP
-          diff["fy16PreBP"]  = fy16PreBP
-          change = true end
-        if fy16PreBPSpent   != data.fy16PreBPSpent
-          diff["fy16PreBPSpent"]  = fy16PreBPSpent
-          change = true end
-        # for some reason this sometimes has the value "0Budget" which can be seen in the excelsheet
-        # if fy16PreBPSpentPercent   != data.fy16PreBPSpentPercent
-        #   diff["fy16PreBPSpentPercent"]  = fy16PreBPSpentPercent
-        #   change = true end
-        if bpProjID   != data.bpProjID
-          diff["bpProjID"]  = bpProjID
-          change = true end
-        if fy16BDTot   != data.fy16BDTot
-          diff["fy16BDTot"]  = fy16BDTot
-          change = true end
-        if fy16BDTotSpent   != data.fy16BDTotSpent
-          diff["fy16BDTotSpent"]  = fy16BDTotSpent
-          change = true end
-        # "0Budget" issue
-        # if fy16BDTotSpentPercent   != data.fy16BDTotSpentPercent
-        #   diff["fy16BDTotSpentPercent"]  = fy16BDTotSpentPercent
-        #   change = true end
-        if financeDate   != data.financeDate
-          diff["financeDate"]  = financeDate
-          change = true end
-        if cgSecOrg   != data.cgSecOrg
-          diff["cgSecOrg"]  = cgSecOrg
-          change = true end
-        if cgSecMgr   != data.cgSecMgr
-          diff["cgSecMgr"]  = cgSecMgr
-          change = true end
-        if cgOrg   != data.cgOrg
-          diff["cgOrg"]  = cgOrg
-          change = true end
-        if cgMgr   != data.cgMgr
-          diff["cgMgr"]  = cgMgr
-          change = true end
-        if opOrg   != data.opOrg
-          diff["opOrg"]  = opOrg
-          change = true end
-        if cgOpMgr   != data.cgOpMgr
-          diff["cgOpMgr"]  = cgOpMgr
-          change = true end
-        if cgPgmDir   != data.cgPgmDir
-          diff["cgPgmDir"]  = cgPgmDir
-          change = true end
-        if bdMgr   != data.bdMgr
-          diff["bdMgr"]  = bdMgr
-          change = true end
-        if crmRecOwner   != data.crmRecOwner
-          diff["crmRecOwner"]  = crmRecOwner
-          change = true end
-        if sslMgr   != data.sslMgr
-          diff["sslMgr"]  = sslMgr
-          change = true end
-        if divNum   != data.divNum
-          diff["divNum"]  = divNum
-          change = true end
-        if customer   != data.customer
-          diff["customer"]  = customer
-          change = true end
-        if endCustomer   != data.endCustomer
-          diff["endCustomer"]  = endCustomer
-          change = true end
-        if crn   != data.crn
-          diff["crn"]  = crn
-          change = true end
-        if contractType   != data.contractType
-          diff["contractType"]  = contractType
-          change = true end
-        if opptyClass   != data.opptyClass
-          diff["opptyClass"]  = opptyClass
-          change = true end
-        if numberOfAwards   != data.numberOfAwards
-          diff["numberOfAwards"]  = numberOfAwards
-          change = true end
-        if totalPOP   != data.totalPOP
-          diff["totalPOP"]  = totalPOP
-          change = true end
-        if primeSub   != data.primeSub
-          diff["primeSub"]  = primeSub
-          change = true end
-        if fy16BP   != data.fy16BP
-          diff["fy16BP"]  = fy16BP
-          change = true end
-        if fy16BPSpent   != data.fy16BPSpent
-          diff["fy16BPSpent"]  = fy16BPSpent
-          change = true end
+				if name                     != oppty.opptyName                then diff ["opptyName"]               = name end
+				if idiqCA                   != oppty.idiqCA                   then diff ["idiqCA"]                  = idiqCA end
+				if status2                  != oppty.status2                  then diff ["status2"]                 = status2 end
+				if value                    != oppty.value                    then diff ["value"]                   = value end
+				if pWin                     != oppty.pWin                     then diff ["pWin"]                    = pWin end
+				if captureMgr               != oppty.captureMgr               then diff ["captureMgr"]              = captureMgr end
+				if programMgr               != oppty.programMgr               then diff ["programMgr"]              = programMgr end
+				if proposalMgr              != oppty.proposalMgr              then diff ["proposalMgr"]             = proposalMgr end
+				if technicalLead            != oppty.technicalLead            then diff ["technicalLead"]           = technicalLead end
+				if slArch                   != oppty.slArch                   then diff ["slArch"]                  = slArch end
+				if slComments               != oppty.slComments               then diff ["slComments"]              = slComments end
+				if rfpDate                  != oppty.rfpDate                  then diff ["rfpDate"]                 = rfpDate end
+				if awardDate                != oppty.awardDate                then diff ["awardDate"]               = awardDate end
+				if slDir                    != oppty.slDir                    then diff ["slDir"]                   = slDir end
+				if leadEstim                != oppty.leadEstim                then diff ["leadEstim"]               = leadEstim end
+				if engaged                  != oppty.engaged                  then diff ["engaged"]                 = engaged end
+				if solution                 != oppty.solution                 then diff ["solution"]                = solution end
+				if estimate                 != oppty.estimate                 then diff ["estimate"]                = estimate end
+				if proposalDueDate          != oppty.proposalDueDate          then diff ["proposalDueDate"]         = proposalDueDate end
+				if codeName                 != oppty.codeName                 then diff ["codeName"]                = codeName end
+				if descriptionOfWork        != oppty.descriptionOfWork        then diff ["descriptionOfWork"]       = descriptionOfWork end
+				if category                 != oppty.category                 then diff ["category"]                = category end
+				if pwald                    != oppty.pwald                    then diff ["pwald"]                   = pwald end
+				if pBid                     != oppty.pBid                     then diff ["pBid"]                    = pBid end
+				if awardFV                  != oppty.awardFV                  then diff ["awardFV"]                 = awardFV end
+				if saicvaPercent            != oppty.saicvaPercent            then diff ["saicvaPercent"]           = saicvaPercent end
+				if mat                      != oppty.mat                      then diff ["mat"]                     = mat end
+				if materialsTV              != oppty.materialsTV              then diff ["materialsTV"]             = materialsTV end
+				if subc                     != oppty.subc                     then diff ["subc"]                    = subc end
+				if subTV                    != oppty.subTV                    then diff ["subTV"]                   = subTV end
+				if cg_va                    != oppty.cg_va                    then diff ["cg_va"]                   = cg_va end
+				if sss_va                   != oppty.sss_va                   then diff ["sss_va"]                  = sss_va end
+				if nwi_va                   != oppty.nwi_va                   then diff ["nwi_va"]                  = nwi_va end
+				if hwi_va                   != oppty.hwi_va                   then diff ["hwi_va"]                  = hwi_va end
+				if itms_va                  != oppty.itms_va                  then diff ["itms_va"]                 = itms_va end
+				if tss_va                   != oppty.tss_va                   then diff ["tss_va"]                  = tss_va end
+				if ccds_va                  != oppty.ccds_va                  then diff ["ccds_va"]                 = ccds_va end
+				if mss_va                   != oppty.mss_va                   then diff ["mss_va"]                  = mss_va end
+				if swi_va                   != oppty.swi_va                   then diff ["swi_va"]                  = swi_va end
+				if lsc_va                   != oppty.lsc_va                   then diff ["lsc_va"]                  = lsc_va end
+				if zzOth_va                 != oppty.zzOth_va                 then diff ["zzOth_va"]                = zzOth_va end
+				if pri                      != oppty.pri                      then diff ["pri"]                     = pri end
+				if aop                      != oppty.aop                      then diff ["aop"]                     = aop end
+				if peg                      != oppty.peg                      then diff ["peg"]                     = peg end
+				if mustWin                  != oppty.mustWin                  then diff ["mustWin"]                 = mustWin end
+				if feeIndic                 != oppty.feeIndic                 then diff ["feeIndic"]                = feeIndic end
+				if slutil                   != oppty.slutil                   then diff ["slutil"]                  = slutil end
+				if recompete                != oppty.recompete                then diff ["recompete"]               = recompete end
+				if competitive              != oppty.competitive              then diff ["competitive"]             = competitive end
+				if international            != oppty.international            then diff ["international"]           = international end
+				if strategic                != oppty.strategic                then diff ["strategic"]               = strategic end
+				if bundle                   != oppty.bundle                   then diff ["bundle"]                  = bundle end
+				if bidReviewStream          != oppty.bidReviewStream          then diff ["bidReviewStream"]         = bidReviewStream end
+				if definedDelivPgm          != oppty.definedDelivPgm          then diff ["definedDelivPgm"]         = definedDelivPgm end
+				if evaluationCriteria       != oppty.evaluationCriteria       then diff ["evaluationCriteria"]      = evaluationCriteria end
+				if perfWorkLoc              != oppty.perfWorkLoc              then diff ["perfWorkLoc"]             = perfWorkLoc end
+				if classIfReqmt             != oppty.classIfReqmt             then diff ["classIfReqmt"]            = classIfReqmt end
+				if grouping                 != oppty.grouping                 then diff ["grouping"]                = grouping end
+				if reasonForWinLoss         != oppty.reasonForWinLoss         then diff ["reasonForWinLoss"]        = reasonForWinLoss end
+				if egr                      != oppty.egr                      then diff ["egr"]                     = egr end
+				if slCat                    != oppty.slCat                    then diff ["slCat"]                   = slCat end
+				if slPri                    != oppty.slPri                    then diff ["slPri"]                   = slPri end
+				if slNote                   != oppty.slNote                   then diff ["slNote"]                  = slNote end
+				if crmRunDate               != oppty.crmRunDate               then diff ["crmRunDate"]              = crmRunDate end
+				if contractStartDate        != oppty.contractStartDate        then diff ["contractStartDate"]       = contractStartDate end
+				if rfpFYPer                 != oppty.rfpFYPer                 then diff ["rfpFYPer"]                = rfpFYPer end
+				if submitFYPer              != oppty.submitFYPer              then diff ["submitFYPer"]             = submitFYPer end
+				if awardFYPer               != oppty.awardFYPer               then diff ["awardFYPer"]              = awardFYPer end
+				if preBPprojID              != oppty.preBPprojID              then diff ["preBPprojID"]             = preBPprojID end
+				if fy16PreBP                != oppty.fy16PreBP                then diff ["fy16PreBP"]               = fy16PreBP end
+				if fy16PreBPSpent           != oppty.fy16PreBPSpent           then diff ["fy16PreBPSpent"]          = fy16PreBPSpent end
+				#if fy16PreBPSpentPercent    != oppty.fy16PreBPSpentPercent    then diff ["fy16PreBPSpentPercent"]   = fy16PreBPSpentPercent   end
+				if bpProjID                 != oppty.bpProjID                 then diff ["bpProjID"]                = bpProjID end
+				if fy16BDTot                != oppty.fy16BDTot                then diff ["fy16BDTot"]               = fy16BDTot end
+				if fy16BDTotSpent           != oppty.fy16BDTotSpent           then diff ["fy16BDTotSpent"]          = fy16BDTotSpent end
+				#if fy16BDTotSpentPercent    != oppty.fy16BDTotSpentPercent    then diff ["fy16BDTotSpentPercent"]   = fy16BDTotSpentPercent   end
+				if financeDate              != oppty.financeDate              then diff ["financeDate"]             = financeDate end
+				if cgSecOrg                 != oppty.cgSecOrg                 then diff ["cgSecOrg"]                = cgSecOrg end
+				if cgSecMgr                 != oppty.cgSecMgr                 then diff ["cgSecMgr"]                = cgSecMgr end
+				if cgOrg                    != oppty.cgOrg                    then diff ["cgOrg"]                   = cgOrg end
+				if cgMgr                    != oppty.cgMgr                    then diff ["cgMgr"]                   = cgMgr end
+				if opOrg                    != oppty.opOrg                    then diff ["opOrg"]                   = opOrg end
+				if cgOpMgr                  != oppty.cgOpMgr                  then diff ["cgOpMgr"]                 = cgOpMgr end
+				if cgPgmDir                 != oppty.cgPgmDir                 then diff ["cgPgmDir"]                = cgPgmDir end
+				if bdMgr                    != oppty.bdMgr                    then diff ["bdMgr"]                   = bdMgr end
+				if crmRecOwner              != oppty.crmRecOwner              then diff ["crmRecOwner"]             = crmRecOwner end
+				if sslMgr                   != oppty.sslMgr                   then diff ["sslMgr"]                  = sslMgr end
+				if divNum                   != oppty.divNum                   then diff ["divNum"]                  = divNum end
+				if customer                 != oppty.customer                 then diff ["customer"]                = customer end
+				if endCustomer              != oppty.endCustomer              then diff ["endCustomer"]             = endCustomer end
+				if crn                      != oppty.crn                      then diff ["crn"]                     = crn end
+				if contractType             != oppty.contractType             then diff ["contractType"]            = contractType end
+				if opptyClass               != oppty.opptyClass               then diff ["opptyClass"]              = opptyClass end
+				if numberOfAwards           != oppty.numberOfAwards           then diff ["numberOfAwards"]          = numberOfAwards end
+				if totalPOP                 != oppty.totalPOP                 then diff ["totalPOP"]                = totalPOP end
+				if primeSub                 != oppty.primeSub                 then diff ["primeSub"]                = primeSub end
+				if fy16BP                   != oppty.fy16BP                   then diff ["fy16BP"]                  = fy16BP end
+				if fy16BPSpent              != oppty.fy16BPSpent              then diff ["fy16BPSpent"]             = fy16BPSpent end
         # "0Budget"
         # if fy16BPSpentPercent   != data.fy16BPSpentPercent
         #   diff["fy16BPSpentPercent"]  = fy16BPSpentPercent
         #   change = true end
-        if change == true
+        if diff.length > 0
           # because if we input "" into the database, it goes in as nil
           # instead of "", so check if that's what happened, and if true, ignore
           to_push = false
@@ -733,16 +453,16 @@ class CrmController < ApplicationController
             if value == "" #nil != ""
               diff.delete(key)
             else
+              print value
               to_push = true
               #break
             end
           end
           if to_push == true
-            diff["opptyId"] = id
-            @changes.push(diff) # add hash to list
+            @changes.push(id) # add hash to list
           end
         end
-      else
+      else # else not in database, add it
         @added += 1
       end
     end
@@ -756,16 +476,16 @@ class CrmController < ApplicationController
     puts "deletedCount: " + (opptyIds - uploadedIds).length.to_s
     #puts opptyIds
     @deleted=0
-    @added
+    # @added
     uploadedIds.each do |u|
       opptyIds.delete(u)
     end
-    puts "*"*30
-    opptyIds.each do |i|
-      #puts i
-      @deleted+=1
-      moveToHistory(i)
-    end
+    # puts "*"*30
+    # opptyIds.each do |i|
+    #   #puts i
+    #   @deleted+=1
+    #   moveToHistory(i)
+    # end
     puts "*"*30
     @deleted = (opptyIds - uploadedIds).length.to_s
     @uploaded=true
@@ -777,15 +497,14 @@ class CrmController < ApplicationController
     #pull the database data into an excel
     #pulls and downloads the first .xlsm file from the /uploads folder
     if Dir[CRM_PATH+'/*.xlsm'][0]
-        @download_path=File.join(Dir[CRM_PATH+'/*.xlsm'][0])
-        name = @download_path.gsub("new_", "")
-        puts "*"*30
-        puts name
-        puts @download_path
-        puts "*"*30
-        `mv "#{@download_path}" "#{name}"`
-        send_file name, :type=>"application/txt", :x_sendfile=>true
-        `mv "#{name}" #{@download_path}`
+      @download_path=File.join(Dir[CRM_PATH+'/*.xlsm'][0])
+      @name = @download_path.gsub("new_", "")
+      File.rename @download_path, @name
+      file = File.open(@name, "rb")
+      contents = file.read
+      file.close
+      File.rename @name, @download_path
+      send_data(contents, :filename =>File.basename( @name))
     else
         redirect_to crm_index_path
     end

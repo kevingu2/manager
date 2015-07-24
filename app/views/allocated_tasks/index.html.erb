@@ -6,12 +6,12 @@
 </div>
 
 <body>
-
 <div class="container tasks-queue">
   <!-- Example row of columns -->
 	<div class="row">
     	<div class="col-md-4 op-title-bg-left">
-    		<h2 class="op-title-col">Assigned</h2>
+    		<h2 class="op-title-col">TODO</h2>
+
     	</div>
     
 	    <div class="col-md-4 op-title-bg-middle">
@@ -23,40 +23,52 @@
     	<div class="textColor">
     		<div class="row-2">
     			<div class="col-md-4 op-body-bg-left">
-         			<% @todo.each do |oppty|  %>
-						<h2><%= link_to oppty.opptyName, oppty %></h2>
-  						<p><%= oppty.slComments %></p>
-  						<p>
-    						<%= link_to "Edit", edit_oppty_path(oppty) %>
-   							<%= link_to "Delete", oppty, :data => {:confirm => "Are you sure?"}, :method => :delete %>
-   						</p>
-  						<hr />
-					<% end %>
+
     			</div>
      			<div class="col-md-4 op-body-bg-middle">
-        			<% @doing.each do |oppty|  %>
-						<h2><%= link_to oppty.opptyName, oppty %></h2>
-  						<p><%= oppty.slComments %></p>
-  						<p>
-    						<%= link_to "Edit", edit_oppty_path(oppty) %>
-   							<%= link_to "Delete", oppty, :data => {:confirm => "Are you sure?"}, :method => :delete %>
-   						</p>
-  						<hr />
-					<% end %>
+
      			</div>
     			<div class="col-md-4 op-body-bg-right">
-        			<% @done.each do |oppty|  %>
-						<h2><%= link_to oppty.opptyName, oppty %></h2>
-  						<p><%= oppty.slComments %></p>
-  						<p>
-    						<%= link_to "Edit", edit_oppty_path(oppty) %>
-   							<%= link_to "Delete", oppty, :data => {:confirm => "Are you sure?"}, :method => :delete %>
-   						</p>
-  						<hr />
-					<% end %>
+
     			</div>
     		</div>
 		</div>
+      <div class="col-md-4 op-body-bg-left">
+        <%@name_dict.each do |id, name|%>
+            <h4><%= name+': '%></h4>
+            <%if @todo_writer_dict[id].present?%>
+                <% @todo_writer_dict[id].each do |o|%>
+                    <br>
+                    <%= o.oppty.opptyName%>
+                <%end%>
+            <%end%>
+            <br>
+        <%end%>
+      </div>
+      <div class="col-md-4 op-body-bg-middle">
+        <%@name_dict.each do |id, name|%>
+            <h4><%= name+': '%></h4>
+            <%if @doing_writer_dict[id].present?%>
+                <% @doing_writer_dict[id].each do |o|%>
+                    <br>
+                    <%= o.oppty.opptyName%>
+                <%end%>
+            <%end%>
+            <br>
+        <%end%>
+      </div>
+      <div class="col-md-4 op-body-bg-right">
+        <%@name_dict.each do |id, name|%>
+            <h4><%= name+': '%></h4>
+            <%if @done_writer_dict[id].present?%>
+                <% @done_writer_dict[id].each do |o|%>
+                    <br>
+                    <%= o.oppty.opptyName%>
+                <%end%>
+            <%end%>
+            <br>
+        <%end%>
+      </div>
 	</div>
 </div>
 
