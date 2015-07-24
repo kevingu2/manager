@@ -14,7 +14,7 @@
               </td>
             </tr>  
           </table>
-
+        </form>
     			<!-- Radio Buttons in Browse page to limit the search to opportunities within 30, 60, or 90 days -->
           <div class="form">
             <table>
@@ -27,22 +27,26 @@
               		</td>
 
                 	<td class="col-md-1">
-                    <label class="toggle-btn radio black-text">
-                      <input id="thirty_days_left" name="group2" type="radio" value="30" checked="false">30 Days
-                    </label> 
-                    <label class="toggle-btn radio black-text">
-                      <input id="sixty_days_left" name="group2" type="radio" value="60" checked="false">60 Days
-                    </label>
-                    <label class="toggle-btn radio black-text">
-                      <input id="ninety_days_left" name="group2" type="radio" value="90" checked="false">90 Days
-                    </label> 
-                    <label class="toggle-btn radio black-text">
-                      <input id="all-days" name="group2" type="radio" value="90+" checked="false">90+ Days
-                    </label> 
-                    <td>
-                      <a href="#" name="radio-style-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
-                    </td>
+                    <form action="limit" method="get">
+                      <label class="toggle-btn radio black-text">
+                        <input id="thirty_days_left" name="within" type="radio" value=30 checked="false">30 Days
+                      </label> 
+                      <label class="toggle-btn radio black-text">
+                        <input id="sixty_days_left" name="within" type="radio" value=60 checked="false">60 Days
+                      </label>
+                      <label class="toggle-btn radio black-text">
+                        <input id="ninety_days_left" name="within" type="radio" value=90 checked="false">90 Days
+                      </label> 
+                      <label class="toggle-btn radio black-text">
+                        <input id="all-days" name="within" type="radio" value=999999 checked="true">90+ Days
+                      </label> 
+                      <td>
+                        <button name="radio-style-btn" type="submit" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</button>
+                      </td>
+                    </form>
                   </td>
+
+
                 </div>
 
                 <!-- this is the space between the radio buttons and the drop down menu for sorting.
@@ -75,16 +79,11 @@
                   </td>
                 </div>
               </tr>
-
-
             </table>
           </div>
-
-    		</form>		
     	</div>		
       <br>
     </div>
-
 
     <caption><h2 class="black-text" style="text-align: center;">Opportunities</h2></caption>
 
@@ -96,171 +95,6 @@
     </div>
 
     <hr />
-
-
-    <div id="thirtyDays" style="display: none;" onload="this.radBtn=radioBtn;">
-      <% unless @within30days == nil %>
-        <% @within30days.each do |o| %>
-          <% if @to_do.include?(o) %>
-            <div class="success row">
-              <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
-              <div class="col-md-6">
-                <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
-                <div class="little-text"><%= o.slComments %></div>
-              </div>
-              <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
-              <div class="col-md-2">Assigned</div>
-            </div>
-
-          <% elsif @doing.include?(o) %>
-            <div class="warning row">
-              <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
-              <div class="col-md-6">
-                <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
-                <div class="little-text"><%= o.slComments %></div>
-              </div>
-              <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
-              <div class="col-md-2">In Progress</div>
-            </div>
-
-          <% elsif @none.include?(o) %>
-            <div class="active row">
-              <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
-              <div class="col-md-6">
-                <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
-                <div class="little-text"><%= o.slComments %></div>
-              </div>
-              <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
-              <div class="col-md-2">None</div>
-            </div>
-                
-          <% else %>
-            <div class="media row">
-              <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
-              <div class="col-md-6">
-                <div class="regular-text"><%= link_to o.opptyName, o %></div>
-                <div class="little-text"><%= o.slComments %></div>
-              </div>
-              <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
-              <div class="col-md-2">This block must be deleted</div>
-            </div>
-          <% end %>
-        <% end %>
-      <% end %>
-      <div style="float: right !important;">
-        <div name="paginate-div"><%= will_paginate @within30days, previous_label: h("<"), next_label: h(">") %></div>
-      </div>
-    </div>
-
-    <div id="sixtyDays" style="display:none;">
-      <% unless @within60days == nil %>
-        <% @within60days.each do |o| %>
-          <% if @to_do.include?(o) %>
-            <div class="success row">
-              <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
-              <div class="col-md-6">
-                <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
-                <div class="little-text"><%= o.slComments %></div>
-              </div>
-              <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
-              <div class="col-md-2">Assigned</div>
-            </div>
-
-          <% elsif @doing.include?(o) %>
-            <div class="warning row">
-              <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
-              <div class="col-md-6">
-                <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
-                <div class="little-text"><%= o.slComments %></div>
-              </div>
-              <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
-              <div class="col-md-2">In Progress</div>
-            </div>
-
-          <% elsif @none.include?(o) %>
-            <div class="active row">
-              <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
-              <div class="col-md-6">
-                <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
-                <div class="little-text"><%= o.slComments %></div>
-              </div>
-              <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
-              <div class="col-md-2">None</div>
-            </div>
-                
-          <% else %>
-            <div class="media row">
-              <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
-              <div class="col-md-6">
-                <div class="regular-text"><%= link_to o.opptyName, o %></div>
-                <div class="little-text"><%= o.slComments %></div>
-              </div>
-              <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
-              <div class="col-md-2">This block must be deleted</div>
-            </div>
-          <% end %>
-        <% end %>
-      <% end %>
-      <div style="float: right !important;">
-        <div name="paginate-div"><%= will_paginate @within60days, previous_label: h("<"), next_label: h(">") %></div>
-      </div>
-    </div>
-
-    <div id="ninetyDays" style="display: none;">
-      <% unless @within90days == nil %>
-        <% @within90days.each do |o| %>
-          <% if @to_do.include?(o) %>
-            <div class="success row">
-              <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
-              <div class="col-md-6">
-                <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
-                <div class="little-text"><%= o.slComments %></div>
-              </div>
-              <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
-              <div class="col-md-2">Assigned</div>
-            </div>
-
-          <% elsif @doing.include?(o) %>
-            <div class="warning row">
-              <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
-              <div class="col-md-6">
-                <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
-                <div class="little-text"><%= o.slComments %></div>
-              </div>
-              <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
-              <div class="col-md-2">In Progress</div>
-            </div>
-
-          <% elsif @none.include?(o) %>
-            <div class="active row">
-              <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
-              <div class="col-md-6">
-                <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
-                <div class="little-text"><%= o.slComments %></div>
-              </div>
-              <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
-              <div class="col-md-2">None</div>
-            </div>
-                
-          <% else %>
-            <div class="media row">
-              <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
-              <div class="col-md-6">
-                <div class="regular-text"><%= link_to o.opptyName, o %></div>
-                <div class="little-text"><%= o.slComments %></div>
-              </div>
-              <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
-              <div class="col-md-2">This block must be deleted</div>
-            </div>
-
-          <% end %>
-        <% end %>
-      <% end %>
-      <div style="float: right !important;">
-        <div name="paginate-div"><%= will_paginate @within90days, previous_label: h("<"), next_label: h(">") %></div>
-      </div>
-    </div>
-
 
     <div id="allDays">
       <% unless @oppties == nil %>
@@ -316,42 +150,11 @@
         <div name="paginate-div"><%= will_paginate @oppties, previous_label: h("<"), next_label: h(">") %></div>
       </div>
     </div>
-
-
-
   </div>
 
 
+
   <script>
-
-
-    $(document).on("click","a[name='radio-style-btn']", function (e) {
-      
-      if(document.getElementById('thirty_days_left').checked) {
-        document.getElementById('thirtyDays').style.display = "block";
-        document.getElementById('sixtyDays').style.display = "none";
-        document.getElementById('ninetyDays').style.display = "none";   
-        document.getElementById('allDays').style.display= "none"; 
-      }
-      else if(document.getElementById('sixty_days_left').checked) {
-        document.getElementById('sixtyDays').style.display = "block";
-        document.getElementById('thirtyDays').style.display = "none";
-        document.getElementById('ninetyDays').style.display = "none";
-        document.getElementById('allDays').style.display= "none";
-      }
-      else if (document.getElementById('ninety_days_left').checked) {
-        document.getElementById('ninetyDays').style.display = "block";
-        document.getElementById('thirtyDays').style.display = "none";
-        document.getElementById('sixtyDays').style.display = "none";
-        document.getElementById('allDays').style.display= "none";
-      }
-      else if (document.getElementById("all-days").checked) {
-        document.getElementById('allDays').style.display = "block";
-        document.getElementById('ninetyDays').style.display = "none";
-        document.getElementById('thirtyDays').style.display = "none";
-        document.getElementById('sixtyDays').style.display = "none";
-      }
-    });
 
     $(document).on("click", "a[name='sort-btn']", function (e) {
       select = document.getElementById('sorting').value;
@@ -392,6 +195,29 @@
         window.location.assign(window.location.href + "?sort=proposalMgr");
       else if (select == "value")
         window.location.assign(window.location.href + "?sort=value");
+    });
+
+    $(document).on("click", "a[name='radio-style-btn']", function (e) {
+      select = document.getElementById('limiting').value;
+      if (window.location.href.indexOf("within") > -1) {
+        var url = window.location.toString();
+        if (window.location.href.indexOf(999999) > -1)
+          window.location = url.replace(/within=999999/, 'within='+select);
+        else if (window.location.href.indexOf(30) > -1)
+          window.location = url.replace(/within=30/, 'within='+select);
+        else if (window.location.href.indexOf(60) > -1)
+          window.location = url.replace(/within=60/, 'within='+select);
+        else if (window.location.href.indexOf(90) > -1)
+          window.location = url.replace(/within=90/, 'within='+select);
+      }
+      else if (select == 999999)
+        window.location.assign( window.location.href );
+      else if (select == 30)
+        window.location.assign( window.location.href + "?within=30" );
+      else if (select == 60)
+        window.location.assign(window.location.href + "?within=60");
+      else if (select == 90)
+        window.location.assign(window.location.href + "?within=90");
     });
 
   </script>

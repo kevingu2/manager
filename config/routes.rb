@@ -33,6 +33,8 @@ Rails.application.routes.draw do
 
   get 'browse/search'
 
+  get 'browse/limit'
+
   get 'tasks/index'
 
   get 'sessions/new'
@@ -42,7 +44,6 @@ Rails.application.routes.draw do
   get 'sessions/destroy'
 
   post 'users/new'
-
 
   resources :histories
 
