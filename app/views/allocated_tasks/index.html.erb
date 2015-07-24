@@ -6,44 +6,12 @@
 </div>
 
 <body>
-<h2>TODO</h2>
-<%@name_dict.each do |id, name|%>
-    <h4><%= name+': '%></h4>
-    <%if @todo_writer_dict[id].present?%>
-        <% @todo_writer_dict[id].each do |o|%>
-            <br>
-            <%= o.oppty.opptyName%>
-        <%end%>
-     <%end%>
-    <br>
-<%end%>
-<h2>Doing</h2>
-<%@name_dict.each do |id, name|%>
-    <h4><%= name+': '%></h4>
-    <%if @doing_writer_dict[id].present?%>
-        <% @doing_writer_dict[id].each do |o|%>
-            <br>
-            <%= o.oppty.opptyName%>
-        <%end%>
-    <%end%>
-    <br>
-<%end%>
-<h2>Done</h2>
-<%@name_dict.each do |id, name|%>
-    <h4><%= name+': '%></h4>
-    <%if @done_writer_dict[id].present?%>
-        <% @done_writer_dict[id].each do |o|%>
-            <br>
-            <%= o.oppty.opptyName%>
-        <%end%>
-    <%end%>
-    <br>
-<%end%>
 <div class="container tasks-queue">
   <!-- Example row of columns -->
 	<div class="row">
     	<div class="col-md-4 op-title-bg-left">
-    		<h2 class="op-title-col">Assigned</h2>
+    		<h2 class="op-title-col">TODO</h2>
+
     	</div>
     
 	    <div class="col-md-4 op-title-bg-middle">
@@ -65,6 +33,42 @@
     			</div>
     		</div>
 		</div>
+      <div class="col-md-4 op-body-bg-left">
+        <%@name_dict.each do |id, name|%>
+            <h4><%= name+': '%></h4>
+            <%if @todo_writer_dict[id].present?%>
+                <% @todo_writer_dict[id].each do |o|%>
+                    <br>
+                    <%= o.oppty.opptyName%>
+                <%end%>
+            <%end%>
+            <br>
+        <%end%>
+      </div>
+      <div class="col-md-4 op-body-bg-middle">
+        <%@name_dict.each do |id, name|%>
+            <h4><%= name+': '%></h4>
+            <%if @doing_writer_dict[id].present?%>
+                <% @doing_writer_dict[id].each do |o|%>
+                    <br>
+                    <%= o.oppty.opptyName%>
+                <%end%>
+            <%end%>
+            <br>
+        <%end%>
+      </div>
+      <div class="col-md-4 op-body-bg-right">
+        <%@name_dict.each do |id, name|%>
+            <h4><%= name+': '%></h4>
+            <%if @done_writer_dict[id].present?%>
+                <% @done_writer_dict[id].each do |o|%>
+                    <br>
+                    <%= o.oppty.opptyName%>
+                <%end%>
+            <%end%>
+            <br>
+        <%end%>
+      </div>
 	</div>
 </div>
 
