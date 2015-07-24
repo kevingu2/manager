@@ -47,9 +47,9 @@
         </div>
         <div class="col-md-4 manager-col-button">
           <form action =<%= assign_index_path%> method="get" style="min-height:1px">
-            <a class="btn btn-lg btn-primary btn-right" type="submit" href=<%= assign_index_path%> role="button" style="color:white">Assign</a>
             <input hidden=true type="hidden" name="opptyId" value=<%= @oppty.id%>>
             <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+            <button class="btn btn-lg btn-primary btn-right" type="submit" role="button" style="color:white">Assign</button>
           </form>
         </div>  
       <%end%>
