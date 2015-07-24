@@ -4,7 +4,7 @@ class AllocatedTasksController < ApplicationController
                                       on user_oppties.user_id=u.id').includes(:user, :oppty)
     doing_writer=UserOppty.where(status: 1).joins('join (select * from users where role="writer")u
                                       on user_oppties.user_id=u.id').includes(:user, :oppty)
-    done_writer=UserOppty.where(status: 1).joins('join (select * from users where role="writer")u
+    done_writer=UserOppty.where(status: 0).joins('join (select * from users where role="writer")u
                                       on user_oppties.user_id=u.id').includes(:user, :oppty)
     @todo_writer_dict={}
     @doing_writer_dict={}
