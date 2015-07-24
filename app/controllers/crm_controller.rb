@@ -341,309 +341,111 @@ class CrmController < ApplicationController
         fy16BP                = opportunity["FY16 B&P$"]
         fy16BPSpent           = opportunity["FY16 B&P $Spent"]
         fy16BPSpentPercent    = opportunity["FY16 B&P %Spent"]
-      # if the cell changed, hashtable contains the new value and ID
-        if name              != oppty.opptyName
-          diff["opptyName"]        = name
-          change = true end
-        if idiqCA            != oppty.idiqCA
-          diff["idiqCA"]           = idiqCA
-          change = true end
-        if status2           != oppty.status2
-          diff["status2"]          = status2
-          change = true end
-        if value             != oppty.value
-          diff["value"]            = value
-          change = true end
-        #########Potential loating point inaccuracies, however per we believe this is inconsequential ###########
-        if pWin             != oppty.pWin
-          diff["pWin"]            = pWin
-          change = true end
-        if captureMgr        != oppty.captureMgr
-          diff["captureMgr"]       = captureMgr
-          change = true end
-        if programMgr        != oppty.programMgr
-          diff["programMgr"]       = programMgr
-          change = true end
-        if proposalMgr       != oppty.proposalMgr
-          diff["proposalMgr"]      = proposalMgr
-          change = true end
-        if technicalLead     != oppty.technicalLead
-          diff["technicalLead"]    = technicalLead
-          change = true end
-        if slArch            != oppty.slArch
-          diff["slArch"]           = slArch
-          change = true end
-        if slComments        != oppty.slComments
-          diff["slComments"]       = slComments
-          change = true end
-        if rfpDate           != oppty.rfpDate
-          diff["rfpDate"]          = rfpDate
-          change = true end
-        if awardDate         != oppty.awardDate
-          diff["awardDate"]        = awardDate
-          change = true end
-        if slDir             != oppty.slDir
-          diff["slDir"]            = slDir
-          change = true end
-        if leadEstim         != oppty.leadEstim
-          diff["leadEstim"]        = leadEstim
-          change = true end
-        if engaged           != oppty.engaged
-          diff["engaged"]          = engaged
-          change = true end
-        if solution          != oppty.solution
-          diff["solution"]         = solution
-          change = true end
-        if estimate          != oppty.estimate
-          diff["estimate"]         = estimate
-          change = true end
-        if proposalDueDate   != oppty.proposalDueDate
-          diff["proposalDueDate"]  = proposalDueDate
-          change = true end
-        if codeName   != oppty.codeName
-          diff["codeName"]  = codeName
-          change = true end
-        if descriptionOfWork   != oppty.descriptionOfWork
-          diff["descriptionOfWork"]  = descriptionOfWork
-          change = true end
-        if category   != oppty.category
-          diff["category"]  = category
-          change = true end
-        if pwald   != oppty.pwald
-          diff["pwald"]  = pwald
-          change = true end
-        if pBid   != oppty.pBid
-          diff["pBid"]  = pBid
-          change = true end
-        if awardFV   != oppty.awardFV
-          diff["awardFV"]  = awardFV
-          change = true end
-        if saicvaPercent   != oppty.saicvaPercent
-          diff["saicvaPercent"]  = saicvaPercent
-          change = true end
-        if mat   != oppty.mat
-          diff["mat"]  = mat
-          change = true end
-        if materialsTV   != oppty.materialsTV
-          diff["materialsTV"]  = materialsTV
-          change = true end
-        if subc   != oppty.subc
-          diff["subc"]  = subc
-          change = true end
-        if subTV   != oppty.subTV
-          diff["subTV"]  = subTV
-          change = true end
-        if cg_va   != oppty.cg_va
-          diff["cg_va"]  = cg_va
-          change = true end
-        if sss_va   != oppty.sss_va
-          diff["sss_va"]  = sss_va
-          change = true end
-        if nwi_va   != oppty.nwi_va
-          diff["nwi_va"]  = nwi_va
-          change = true end
-        if hwi_va   != oppty.hwi_va
-          diff["hwi_va"]  = hwi_va
-          change = true end
-        if itms_va   != oppty.itms_va
-          diff["itms_va"]  = itms_va
-          change = true end
-        if tss_va   != oppty.tss_va
-          diff["tss_va"]  = tss_va
-          change = true end
-        if ccds_va   != oppty.ccds_va
-          diff["ccds_va"]  = ccds_va
-          change = true end
-        if mss_va   != oppty.mss_va
-          diff["mss_va"]  = mss_va
-          change = true end
-        if swi_va   != oppty.swi_va
-          diff["swi_va"]  = swi_va
-          change = true end
-        if lsc_va   != oppty.lsc_va
-          diff["lsc_va"]  = lsc_va
-          change = true end
-        if zzOth_va   != oppty.zzOth_va
-          diff["zzOth_va"]  = zzOth_va
-          change = true end
-        if pri   != oppty.pri
-          diff["pri"]  = pri
-          change = true end
-        if aop   != oppty.aop
-          diff["aop"]  = aop
-          change = true end
-        if peg   != oppty.peg
-          diff["peg"]  = peg
-          change = true end
-        if mustWin   != oppty.mustWin
-          diff["mustWin"]  = mustWin
-          change = true end
-        if feeIndic   != oppty.feeIndic
-          diff["feeIndic"]  = feeIndic
-          change = true end
-        if slutil   != oppty.slutil
-          diff["slutil"]  = slutil
-          change = true end
-        if recompete   != oppty.recompete
-          diff["recompete"]  = recompete
-          change = true end
-        if competitive   != oppty.competitive
-          diff["competitive"]  = competitive
-          change = true end
-        if international   != oppty.international
-          diff["international"]  = international
-          change = true end
-        if strategic   != oppty.strategic
-          diff["strategic"]  = strategic
-          change = true end
-        if bundle   != oppty.bundle
-          diff["bundle"]  = bundle
-          change = true end
-        if bidReviewStream   != oppty.bidReviewStream
-          diff["bidReviewStream"]  = bidReviewStream
-          change = true end
-        if definedDelivPgm   != oppty.definedDelivPgm
-          diff["definedDelivPgm"]  = definedDelivPgm
-          change = true end
-        if evaluationCriteria   != oppty.evaluationCriteria
-          diff["evaluationCriteria"]  = evaluationCriteria
-          change = true end
-        if perfWorkLoc   != oppty.perfWorkLoc
-          diff["perfWorkLoc"]  = perfWorkLoc
-          change = true end
-        if classIfReqmt   != oppty.classIfReqmt
-          diff["classIfReqmt"]  = classIfReqmt
-          change = true end
-        if grouping   != oppty.grouping
-          diff["grouping"]  = grouping
-          change = true end
-        if reasonForWinLoss   != oppty.reasonForWinLoss
-          diff["reasonForWinLoss"]  = reasonForWinLoss
-          change = true end
-        if egr   != oppty.egr
-          diff["egr"]  = egr
-          change = true end
-        if slCat   != oppty.slCat
-          diff["slCat"]  = slCat
-          change = true end
-        if slPri   != oppty.slPri
-          diff["slPri"]  = slPri
-          change = true end
-        if slNote   != oppty.slNote
-          diff["slNote"]  = slNote
-          change = true end
-        if crmRunDate   != oppty.crmRunDate
-          diff["crmRunDate"]  = crmRunDate
-          change = true end
-        if contractStartDate   != oppty.contractStartDate
-          diff["contractStartDate"]  = contractStartDate
-          change = true end
-        if rfpFYPer   != oppty.rfpFYPer
-          diff["rfpFYPer"]  = rfpFYPer
-          change = true end
-        if submitFYPer   != oppty.submitFYPer
-          diff["submitFYPer"]  = submitFYPer
-          change = true end
-        if awardFYPer   != oppty.awardFYPer
-          diff["awardFYPer"]  = awardFYPer
-          change = true end
-        if preBPprojID   != oppty.preBPprojID
-          diff["preBPprojID"]  = preBPprojID
-          change = true end
-        if fy16PreBP   != oppty.fy16PreBP
-          diff["fy16PreBP"]  = fy16PreBP
-          change = true end
-        if fy16PreBPSpent   != oppty.fy16PreBPSpent
-          diff["fy16PreBPSpent"]  = fy16PreBPSpent
-          change = true end
-        # for some reason this sometimes has the value "0Budget" which can be seen in the excelsheet
-        # if fy16PreBPSpentPercent   != oppty.fy16PreBPSpentPercent
-        #   diff["fy16PreBPSpentPercent"]  = fy16PreBPSpentPercent
-        #   change = true end
-        if bpProjID   != oppty.bpProjID
-          diff["bpProjID"]  = bpProjID
-          change = true end
-        if fy16BDTot   != oppty.fy16BDTot
-          diff["fy16BDTot"]  = fy16BDTot
-          change = true end
-        if fy16BDTotSpent   != oppty.fy16BDTotSpent
-          diff["fy16BDTotSpent"]  = fy16BDTotSpent
-          change = true end
-        # "0Budget" issue
-        # if fy16BDTotSpentPercent   != oppty.fy16BDTotSpentPercent
-        #   diff["fy16BDTotSpentPercent"]  = fy16BDTotSpentPercent
-        #   change = true end
-        if financeDate   != oppty.financeDate
-          diff["financeDate"]  = financeDate
-          change = true end
-        if cgSecOrg   != oppty.cgSecOrg
-          diff["cgSecOrg"]  = cgSecOrg
-          change = true end
-        if cgSecMgr   != oppty.cgSecMgr
-          diff["cgSecMgr"]  = cgSecMgr
-          change = true end
-        if cgOrg   != oppty.cgOrg
-          diff["cgOrg"]  = cgOrg
-          change = true end
-        if cgMgr   != oppty.cgMgr
-          diff["cgMgr"]  = cgMgr
-          change = true end
-        if opOrg   != oppty.opOrg
-          diff["opOrg"]  = opOrg
-          change = true end
-        if cgOpMgr   != oppty.cgOpMgr
-          diff["cgOpMgr"]  = cgOpMgr
-          change = true end
-        if cgPgmDir   != oppty.cgPgmDir
-          diff["cgPgmDir"]  = cgPgmDir
-          change = true end
-        if bdMgr   != oppty.bdMgr
-          diff["bdMgr"]  = bdMgr
-          change = true end
-        if crmRecOwner   != oppty.crmRecOwner
-          diff["crmRecOwner"]  = crmRecOwner
-          change = true end
-        if sslMgr   != oppty.sslMgr
-          diff["sslMgr"]  = sslMgr
-          change = true end
-        if divNum   != oppty.divNum
-          diff["divNum"]  = divNum
-          change = true end
-        if customer   != oppty.customer
-          diff["customer"]  = customer
-          change = true end
-        if endCustomer   != oppty.endCustomer
-          diff["endCustomer"]  = endCustomer
-          change = true end
-        if crn   != oppty.crn
-          diff["crn"]  = crn
-          change = true end
-        if contractType   != oppty.contractType
-          diff["contractType"]  = contractType
-          change = true end
-        if opptyClass   != oppty.opptyClass
-          diff["opptyClass"]  = opptyClass
-          change = true end
-        if numberOfAwards   != oppty.numberOfAwards
-          diff["numberOfAwards"]  = numberOfAwards
-          change = true end
-        if totalPOP   != oppty.totalPOP
-          diff["totalPOP"]  = totalPOP
-          change = true end
-        if primeSub   != oppty.primeSub
-          diff["primeSub"]  = primeSub
-          change = true end
-        if fy16BP   != oppty.fy16BP
-          diff["fy16BP"]  = fy16BP
-          change = true end
-        if fy16BPSpent   != oppty.fy16BPSpent
-          diff["fy16BPSpent"]  = fy16BPSpent
-          change = true end
+      # if the cell changed, hashtable contains the new value a     nd ID
+
+				if name                     != oppty.opptyName                then diff ["opptyName"]               = name end
+				if idiqCA                   != oppty.idiqCA                   then diff ["idiqCA"]                  = idiqCA end
+				if status2                  != oppty.status2                  then diff ["status2"]                 = status2 end
+				if value                    != oppty.value                    then diff ["value"]                   = value end
+				if pWin                     != oppty.pWin                     then diff ["pWin"]                    = pWin end
+				if captureMgr               != oppty.captureMgr               then diff ["captureMgr"]              = captureMgr end
+				if programMgr               != oppty.programMgr               then diff ["programMgr"]              = programMgr end
+				if proposalMgr              != oppty.proposalMgr              then diff ["proposalMgr"]             = proposalMgr end
+				if technicalLead            != oppty.technicalLead            then diff ["technicalLead"]           = technicalLead end
+				if slArch                   != oppty.slArch                   then diff ["slArch"]                  = slArch end
+				if slComments               != oppty.slComments               then diff ["slComments"]              = slComments end
+				if rfpDate                  != oppty.rfpDate                  then diff ["rfpDate"]                 = rfpDate end
+				if awardDate                != oppty.awardDate                then diff ["awardDate"]               = awardDate end
+				if slDir                    != oppty.slDir                    then diff ["slDir"]                   = slDir end
+				if leadEstim                != oppty.leadEstim                then diff ["leadEstim"]               = leadEstim end
+				if engaged                  != oppty.engaged                  then diff ["engaged"]                 = engaged end
+				if solution                 != oppty.solution                 then diff ["solution"]                = solution end
+				if estimate                 != oppty.estimate                 then diff ["estimate"]                = estimate end
+				if proposalDueDate          != oppty.proposalDueDate          then diff ["proposalDueDate"]         = proposalDueDate end
+				if codeName                 != oppty.codeName                 then diff ["codeName"]                = codeName end
+				if descriptionOfWork        != oppty.descriptionOfWork        then diff ["descriptionOfWork"]       = descriptionOfWork end
+				if category                 != oppty.category                 then diff ["category"]                = category end
+				if pwald                    != oppty.pwald                    then diff ["pwald"]                   = pwald end
+				if pBid                     != oppty.pBid                     then diff ["pBid"]                    = pBid end
+				if awardFV                  != oppty.awardFV                  then diff ["awardFV"]                 = awardFV end
+				if saicvaPercent            != oppty.saicvaPercent            then diff ["saicvaPercent"]           = saicvaPercent end
+				if mat                      != oppty.mat                      then diff ["mat"]                     = mat end
+				if materialsTV              != oppty.materialsTV              then diff ["materialsTV"]             = materialsTV end
+				if subc                     != oppty.subc                     then diff ["subc"]                    = subc end
+				if subTV                    != oppty.subTV                    then diff ["subTV"]                   = subTV end
+				if cg_va                    != oppty.cg_va                    then diff ["cg_va"]                   = cg_va end
+				if sss_va                   != oppty.sss_va                   then diff ["sss_va"]                  = sss_va end
+				if nwi_va                   != oppty.nwi_va                   then diff ["nwi_va"]                  = nwi_va end
+				if hwi_va                   != oppty.hwi_va                   then diff ["hwi_va"]                  = hwi_va end
+				if itms_va                  != oppty.itms_va                  then diff ["itms_va"]                 = itms_va end
+				if tss_va                   != oppty.tss_va                   then diff ["tss_va"]                  = tss_va end
+				if ccds_va                  != oppty.ccds_va                  then diff ["ccds_va"]                 = ccds_va end
+				if mss_va                   != oppty.mss_va                   then diff ["mss_va"]                  = mss_va end
+				if swi_va                   != oppty.swi_va                   then diff ["swi_va"]                  = swi_va end
+				if lsc_va                   != oppty.lsc_va                   then diff ["lsc_va"]                  = lsc_va end
+				if zzOth_va                 != oppty.zzOth_va                 then diff ["zzOth_va"]                = zzOth_va end
+				if pri                      != oppty.pri                      then diff ["pri"]                     = pri end
+				if aop                      != oppty.aop                      then diff ["aop"]                     = aop end
+				if peg                      != oppty.peg                      then diff ["peg"]                     = peg end
+				if mustWin                  != oppty.mustWin                  then diff ["mustWin"]                 = mustWin end
+				if feeIndic                 != oppty.feeIndic                 then diff ["feeIndic"]                = feeIndic end
+				if slutil                   != oppty.slutil                   then diff ["slutil"]                  = slutil end
+				if recompete                != oppty.recompete                then diff ["recompete"]               = recompete end
+				if competitive              != oppty.competitive              then diff ["competitive"]             = competitive end
+				if international            != oppty.international            then diff ["international"]           = international end
+				if strategic                != oppty.strategic                then diff ["strategic"]               = strategic end
+				if bundle                   != oppty.bundle                   then diff ["bundle"]                  = bundle end
+				if bidReviewStream          != oppty.bidReviewStream          then diff ["bidReviewStream"]         = bidReviewStream end
+				if definedDelivPgm          != oppty.definedDelivPgm          then diff ["definedDelivPgm"]         = definedDelivPgm end
+				if evaluationCriteria       != oppty.evaluationCriteria       then diff ["evaluationCriteria"]      = evaluationCriteria end
+				if perfWorkLoc              != oppty.perfWorkLoc              then diff ["perfWorkLoc"]             = perfWorkLoc end
+				if classIfReqmt             != oppty.classIfReqmt             then diff ["classIfReqmt"]            = classIfReqmt end
+				if grouping                 != oppty.grouping                 then diff ["grouping"]                = grouping end
+				if reasonForWinLoss         != oppty.reasonForWinLoss         then diff ["reasonForWinLoss"]        = reasonForWinLoss end
+				if egr                      != oppty.egr                      then diff ["egr"]                     = egr end
+				if slCat                    != oppty.slCat                    then diff ["slCat"]                   = slCat end
+				if slPri                    != oppty.slPri                    then diff ["slPri"]                   = slPri end
+				if slNote                   != oppty.slNote                   then diff ["slNote"]                  = slNote end
+				if crmRunDate               != oppty.crmRunDate               then diff ["crmRunDate"]              = crmRunDate end
+				if contractStartDate        != oppty.contractStartDate        then diff ["contractStartDate"]       = contractStartDate end
+				if rfpFYPer                 != oppty.rfpFYPer                 then diff ["rfpFYPer"]                = rfpFYPer end
+				if submitFYPer              != oppty.submitFYPer              then diff ["submitFYPer"]             = submitFYPer end
+				if awardFYPer               != oppty.awardFYPer               then diff ["awardFYPer"]              = awardFYPer end
+				if preBPprojID              != oppty.preBPprojID              then diff ["preBPprojID"]             = preBPprojID end
+				if fy16PreBP                != oppty.fy16PreBP                then diff ["fy16PreBP"]               = fy16PreBP end
+				if fy16PreBPSpent           != oppty.fy16PreBPSpent           then diff ["fy16PreBPSpent"]          = fy16PreBPSpent end
+				#if fy16PreBPSpentPercent    != oppty.fy16PreBPSpentPercent    then diff ["fy16PreBPSpentPercent"]   = fy16PreBPSpentPercent   end
+				if bpProjID                 != oppty.bpProjID                 then diff ["bpProjID"]                = bpProjID end
+				if fy16BDTot                != oppty.fy16BDTot                then diff ["fy16BDTot"]               = fy16BDTot end
+				if fy16BDTotSpent           != oppty.fy16BDTotSpent           then diff ["fy16BDTotSpent"]          = fy16BDTotSpent end
+				#if fy16BDTotSpentPercent    != oppty.fy16BDTotSpentPercent    then diff ["fy16BDTotSpentPercent"]   = fy16BDTotSpentPercent   end
+				if financeDate              != oppty.financeDate              then diff ["financeDate"]             = financeDate end
+				if cgSecOrg                 != oppty.cgSecOrg                 then diff ["cgSecOrg"]                = cgSecOrg end
+				if cgSecMgr                 != oppty.cgSecMgr                 then diff ["cgSecMgr"]                = cgSecMgr end
+				if cgOrg                    != oppty.cgOrg                    then diff ["cgOrg"]                   = cgOrg end
+				if cgMgr                    != oppty.cgMgr                    then diff ["cgMgr"]                   = cgMgr end
+				if opOrg                    != oppty.opOrg                    then diff ["opOrg"]                   = opOrg end
+				if cgOpMgr                  != oppty.cgOpMgr                  then diff ["cgOpMgr"]                 = cgOpMgr end
+				if cgPgmDir                 != oppty.cgPgmDir                 then diff ["cgPgmDir"]                = cgPgmDir end
+				if bdMgr                    != oppty.bdMgr                    then diff ["bdMgr"]                   = bdMgr end
+				if crmRecOwner              != oppty.crmRecOwner              then diff ["crmRecOwner"]             = crmRecOwner end
+				if sslMgr                   != oppty.sslMgr                   then diff ["sslMgr"]                  = sslMgr end
+				if divNum                   != oppty.divNum                   then diff ["divNum"]                  = divNum end
+				if customer                 != oppty.customer                 then diff ["customer"]                = customer end
+				if endCustomer              != oppty.endCustomer              then diff ["endCustomer"]             = endCustomer end
+				if crn                      != oppty.crn                      then diff ["crn"]                     = crn end
+				if contractType             != oppty.contractType             then diff ["contractType"]            = contractType end
+				if opptyClass               != oppty.opptyClass               then diff ["opptyClass"]              = opptyClass end
+				if numberOfAwards           != oppty.numberOfAwards           then diff ["numberOfAwards"]          = numberOfAwards end
+				if totalPOP                 != oppty.totalPOP                 then diff ["totalPOP"]                = totalPOP end
+				if primeSub                 != oppty.primeSub                 then diff ["primeSub"]                = primeSub end
+				if fy16BP                   != oppty.fy16BP                   then diff ["fy16BP"]                  = fy16BP end
+				if fy16BPSpent              != oppty.fy16BPSpent              then diff ["fy16BPSpent"]             = fy16BPSpent end
         # "0Budget"
         # if fy16BPSpentPercent   != data.fy16BPSpentPercent
         #   diff["fy16BPSpentPercent"]  = fy16BPSpentPercent
         #   change = true end
-        if change == true
+        if diff.length > 0
           # because if we input "" into the database, it goes in as nil
           # instead of "", so check if that's what happened, and if true, ignore
           to_push = false
