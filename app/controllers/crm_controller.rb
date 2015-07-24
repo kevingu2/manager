@@ -17,8 +17,13 @@ class CrmController < ApplicationController
     File.open(Rails.root.join('public', 'uploads', "new_"+uploaded_io.original_filename), 'wb') do |file|
       file.write(uploaded_io.read)
     end
-    @newFileName = "new_"+uploaded_io.original_filename.to_s
 
+    @newFileName = "new_"+uploaded_io.original_filename.to_s
+    `mv public/uploads/#{@newFileName} public/`
+    `mv public/uploads/#{@oldFileName} public/`
+    `rm public/uploads/*`
+    `mv public/#{@newFileName} public/uploads/#{@newFileName}`
+    `mv public/#{@oldFileName} public/uploads/#{@oldFileName}`
     @oldOrNew = "old"
     if Dir[CRM_PATH+ '/*.xlsm'].length > 1
       @oldOrNew =  `python bin/dateExtract.py "public/uploads/#{@newFileName}" "public/uploads/#{@oldFileName}"`
