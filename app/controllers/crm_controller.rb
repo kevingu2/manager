@@ -1,12 +1,15 @@
 class CrmController < ApplicationController
   CRM_PATH = File.join(Rails.root, "public", "uploads")
-  DOWNLOAD_PATH =""
   def index
-    #delete
+    delete
     @uploaded=false
   end
   def checkDate
     uploaded_io = params[:upl]
+    if !uploaded_io.present?
+      redirect_to crm_index_path, notice: "Please upload a file"
+      return
+    end
     # get existing file in public/uploads
     @oldFileName=nil
     if Dir[CRM_PATH+'/*.xlsm'][0]
@@ -220,19 +223,25 @@ class CrmController < ApplicationController
     if Dir[CRM_PATH + '/*.xlsm'].length > 1 #if there is more than one file, delete the old one. else the new overwrote the old, don't delete
       earliest_file_name=""
       earliest_date=Time.new
-      Dir.foreach(CRM_PATH) do |item|
+      Dir[CRM_PATH + '/*.xlsm'].each do |item|
+        next if item == '.' or item == '..'
+        puts "*"*30
         puts item
-        puts "creation Time: "+File.ctime(CRM_PATH+'/'+item).to_s
-        if (File.ctime(CRM_PATH+'/'+item)<earliest_date)
+        puts "*"*30
+        puts "creation Time: "+File.ctime(item).to_s
+        puts "Earliest_time: "+earliest_date.to_s
+        if (File.ctime(item)<earliest_date)
           earliest_file_name=item
-          earliest_date=File.ctime(CRM_PATH+'/'+item)
+          earliest_date=File.ctime(item)
         end
       end
+      puts "*"*30
       puts earliest_file_name
       puts earliest_date
-      FileUtils.mv(CRM_PATH + '/'+earliest_file_name,   File.join(Rails.root, "public", earliest_file_name))
+      puts "*"*30
+      FileUtils.mv(earliest_file_name,   File.join(Rails.root, "public", File.basename(earliest_file_name)))
       FileUtils.rm_rf(Dir.glob(CRM_PATH+'/*'))
-      FileUtils.mv(File.join(Rails.root, "public", earliest_file_name),CRM_PATH + '/'+earliest_file_name)
+      FileUtils.mv(File.join(Rails.root, "public", File.basename(earliest_file_name)),earliest_file_name)
     end
   end
 
@@ -520,17 +529,38 @@ class CrmController < ApplicationController
   def download
     #pull the database data into an excel
     #pulls and downloads the first .xlsm file from the /uploads folder
-    if Dir[CRM_PATH+'/*.xlsm'][0]
-      @download_path=File.join(Dir[CRM_PATH+'/*.xlsm'][0])
-      @name = @download_path.gsub("new_", "")
-      File.rename @download_path, @name
-      file = File.open(@name, "rb")
-      contents = file.read
-      file.close
-      File.rename @name, @download_path
-      send_data(contents, :filename =>File.basename( @name))
+    download_path=""
+    if Dir[CRM_PATH + '/*.xlsm'].length > 1 #if there is more than one file, delete the old one. else the new overwrote the old, don't delete
+      earliest_file_name=""
+      earliest_date=Time.new
+      Dir[CRM_PATH + '/*.xlsm'].each do |item|
+        next if item == '.' or item == '..'
+        puts "*"*30
+        puts item
+        puts "*"*30
+        puts "creation Time: "+File.ctime(item).to_s
+        puts "Earliest_time: "+earliest_date.to_s
+        if (File.ctime(item)<earliest_date)
+          earliest_file_name=item
+          earliest_date=File.ctime(item)
+        end
+      end
+      download_path= earliest_file_name
+    else if Dir[CRM_PATH+'/*.xlsm'].length==1
+      download_path=File.join(Dir[CRM_PATH+'/*.xlsm'][0])
     else
         redirect_to crm_index_path
+    end
+
+    end
+    if download_path!=""
+      name = download_path.gsub("new_", "")
+      File.rename download_path, name
+      file = File.open(name, "rb")
+      contents = file.read
+      file.close
+      File.rename name, download_path
+      send_data(contents, :filename =>File.basename( name))
     end
   end
 end
