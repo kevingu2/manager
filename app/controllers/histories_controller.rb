@@ -10,9 +10,6 @@ class HistoriesController < ApplicationController
   # GET /histories.json
   def index
     @all_histories=History.all
-    puts "*"*30
-    puts "History count: "+@all_histories.count.to_s
-    puts "*"*30
     @user_histories = UserHistory.where(user_id: @user.id).includes(:history).paginate(:per_page => 20, :page => params[:page])
   end
 
@@ -34,22 +31,30 @@ class HistoriesController < ApplicationController
   # POST /histories.json
   def create
     oppty=Oppty.find(params[:oppty_id])
-    @history=@user.add_history(@user.id, oppty.id)
-    if !@history
-      redirect_to invalid_entry_index_path, notice: "Already Added History"
-      return
+    puts "Add to History"
+    puts "*"*30
+    UserOppty.where(oppty_id:oppty.id).each do|uo|
+      puts "Add User "+uo.user_id.to_s
+      user=User.find(uo.user_id)
+      history=user.add_history(uo.user_id, oppty.id)
+        if history.save
+          puts "history saved: "+history.user_id.to_s
+          #format.html { redirect_to histories_path, notice: 'History was successfully created.' }
+          #format.json { render :show, status: :created, location: @history }
+        else
+          puts "history not saved"
+          #format.html { render :new }
+          #format.json { render json: @history.errors, status: :unprocessable_entity }
+        end
     end
-    respond_to do |format|
-      if @history.save
-        format.html { redirect_to histories_path, notice: 'History was successfully created.' }
-        format.json { render :show, status: :created, location: @history }
-      else
-        format.html { render :new }
-        format.json { render json: @history.errors, status: :unprocessable_entity }
-      end
-    end
+    puts "*"*30
+    redirect_to histories_path, notice: 'History was successfully created.'
+    deleteOppty(oppty.id)
   end
-
+  def deleteOppty(oppty_id)
+    puts "Delete Oppty: "+oppty_id.to_s
+    oppty=Oppty.destroy(oppty_id)
+  end
   # PATCH/PUT /histories/1
   # PATCH/PUT /histories/1.json
   def update

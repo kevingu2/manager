@@ -25,7 +25,6 @@ class UserHistoriesController < ApplicationController
   # POST /user_histories.json
   def create
     @user_history = UserHistory.new(user_history_params)
-
     respond_to do |format|
       if @user_history.save
         format.html { redirect_to @user_history, notice: 'User history was successfully created.' }
@@ -35,8 +34,8 @@ class UserHistoriesController < ApplicationController
         format.json { render json: @user_history.errors, status: :unprocessable_entity }
       end
     end
-  end
 
+  end
   # PATCH/PUT /user_histories/1
   # PATCH/PUT /user_histories/1.json
   def update
