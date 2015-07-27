@@ -6,7 +6,6 @@ class CrmController < ApplicationController
   end
   def checkDate
     uploaded_io = params[:upl]
-
     # get existing file in public/uploads
     @oldFileName=nil
     if Dir[CRM_PATH+'/*.xlsm'][0]
@@ -19,16 +18,18 @@ class CrmController < ApplicationController
     end
 
     @newFileName = "new_"+uploaded_io.original_filename.to_s
+    # hacks to clear uploads folder
+    # move files we care about up one directory
     `mv public/uploads/#{@newFileName} public/`
     `mv public/uploads/#{@oldFileName} public/`
-    `rm public/uploads/*`
-    `mv public/#{@newFileName} public/uploads/#{@newFileName}`
+    `rm public/uploads/*` # delete everything in uploads
+    `mv public/#{@newFileName} public/uploads/#{@newFileName}` # move files back from upper directory
     `mv public/#{@oldFileName} public/uploads/#{@oldFileName}`
     @oldOrNew = "old"
-    if Dir[CRM_PATH+ '/*.xlsm'].length > 1
+    if Dir[CRM_PATH+ '/*.xlsm'].length > 1 # if there is more than one file, check if older/newer
       @oldOrNew =  `python bin/dateExtract.py "public/uploads/#{@newFileName}" "public/uploads/#{@oldFileName}"`
     else
-      @oldOrNew = "new"
+      @oldOrNew = "new" # else just say it's new
     end
     render :index
 
@@ -37,30 +38,25 @@ class CrmController < ApplicationController
   def updateCRM
     # oldFileName
     # newFileName
-    puts "*"*30
     oldFileName=params[:old]
     newFileName=params[:new]
     changes=params[:changes]
     changes = JSON.parse(changes)
-    puts oldFileName
-    puts newFileName
-    puts changes
-    puts "*"*30
     if Dir[CRM_PATH+ '/*.xlsm'].length > 1
       `rm #{CRM_PATH}/#{oldFileName}`
     end
     opptyIds = [] # holds ids in the database
     Oppty.find_each do |o|
-      opptyIds.push(o.opptyId)
+      opptyIds.push(o.opptyId) # get all ids in database
     end
-    data = `python bin/excelReader.py "public/uploads/#{newFileName}"`
+    data = `python bin/excelReader.py "public/uploads/#{newFileName}"` # get parsed excel data
     data = JSON.parse(data)
     uploadedIds = [] # holds uploaded ids
     data.each do |d|
-      uploadedIds.push(d["OpptyID"])
+      uploadedIds.push(d["OpptyID"]) # holds all ids in the excel
     end
-    ids = opptyIds - uploadedIds
-    newIds = uploadedIds - opptyIds
+    ids = opptyIds - uploadedIds # ids = everything in opptyIds and NOT in uploadedIds, the ones to be moved to history
+    newIds = uploadedIds - opptyIds # new - old = new ones to add
     if changes.any?
       changes.each do |c|
         if History.find_by(opptyId:c) # if in history delete from history, add new one, move to history
@@ -451,9 +447,7 @@ class CrmController < ApplicationController
         # if fy16BPSpentPercent   != data.fy16BPSpentPercent
         #   diff["fy16BPSpentPercent"]  = fy16BPSpentPercent
         #   change = true end
-        if diff.length > 0
-          puts diff.length.to_s
-          puts diff
+        if diff.length > 0 # if there are any changes
           # because if we input "" into the database, it goes in as nil
           # instead of "", so check if that's what happened, and if true, ignore
           to_push = false
@@ -498,7 +492,6 @@ class CrmController < ApplicationController
     #   @deleted+=1
     #   moveToHistory(i)
     # end
-    puts "*"*30
     @deleted = (opptyIds - uploadedIds).length.to_s
     @uploaded=true
     render :index
