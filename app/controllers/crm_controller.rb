@@ -2,6 +2,7 @@ class CrmController < ApplicationController
   CRM_PATH = File.join(Rails.root, "public", "uploads")
   DOWNLOAD_PATH =""
   def index
+    #delete
     @uploaded=false
   end
   def checkDate
@@ -215,11 +216,23 @@ class CrmController < ApplicationController
     end
   end
 
-  def delete(fileName)
+  def delete
     if Dir[CRM_PATH + '/*.xlsm'].length > 1 #if there is more than one file, delete the old one. else the new overwrote the old, don't delete
-      puts `mv #{fileName} ../#{CRM_PATH}`
-      puts `rm -rf #{CRM_PATH}`
-      puts `mv ../#{CRM_PATH}/#{fileName} #{CRM_PATH}`
+      earliest_file_name=""
+      earliest_date=Time.new
+      Dir.foreach(CRM_PATH) do |item|
+        puts item
+        puts "creation Time: "+File.ctime(CRM_PATH+'/'+item).to_s
+        if (File.ctime(CRM_PATH+'/'+item)<earliest_date)
+          earliest_file_name=item
+          earliest_date=File.ctime(CRM_PATH+'/'+item)
+        end
+      end
+      puts earliest_file_name
+      puts earliest_date
+      FileUtils.mv(CRM_PATH + '/'+earliest_file_name,   File.join(Rails.root, "public", earliest_file_name))
+      FileUtils.rm_rf(Dir.glob(CRM_PATH+'/*'))
+      FileUtils.mv(File.join(Rails.root, "public", earliest_file_name),CRM_PATH + '/'+earliest_file_name)
     end
   end
 

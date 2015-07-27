@@ -5,7 +5,7 @@
 #login page
 
 class SessionsController < ApplicationController
-  
+
   skip_before_action :authorize , only: [:destroy,:new, :create]
   def new
     session[:user_id] = nil

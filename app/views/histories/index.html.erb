@@ -37,7 +37,7 @@
               <div class="success row">
                 <div class="col-md-3" style="text-align: center;"><%= o.history.opptyId %></div>
                 <div class="col-md-6">
-                  <div class="regular-text a:visited"><%= link_to o.history.opptyName, o %></div>
+                  <div class="regular-text a:visited"><%= link_to o.history.opptyName, o.history %></div>
                   <div class="little-text"><%= o.history.slComments %></div>
                 </div>
                 <div class="col-md-3"><%= o.history.proposalDueDate.to_s %></div>
