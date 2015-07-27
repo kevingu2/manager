@@ -8,10 +8,10 @@ class User < ActiveRecord::Base
   has_many :oppty, through: :user_oppty
   has_many :oppty, through: :user_history
 
-  def add_oppty(user_id, oppty_id)
+  def add_oppty(user_id, oppty_id, status)
     uo=nil
     if !UserOppty.where(["user_id=? and oppty_id=?", user_id, oppty_id]).present?
-      uo=user_oppty.build(oppty_id: oppty_id, status:2)
+      uo=user_oppty.build(oppty_id: oppty_id, status: status)
     end
     uo
   end
