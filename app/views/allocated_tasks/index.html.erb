@@ -9,59 +9,71 @@
 <div class="container tasks-queue">
   <!-- Example row of columns -->
 	<div class="row">
-    	<div class="col-md-4 op-title-bg-left">
+        <div class="col-md-3 op-title-bg-left">
+            <h2 class="op-title-col">Assigned</h2>
+        </div>
+    	<div class="col-md-3 op-title-bg-left">
     		<h2 class="op-title-col">TODO</h2>
-
     	</div>
-    
-	    <div class="col-md-4 op-title-bg-middle">
+	    <div class="col-md-3 op-title-bg-middle">
     		<h2 class="op-title-col">In Progress</h2>
     	</div> 
-    	<div class="col-md-4 op-title-bg-right">
+    	<div class="col-md-3 op-title-bg-right">
     		<h2 class="op-title-col">Done</h2>
     	</div>
     	<div class="textColor">
     		<div class="row-2">
-    			<div class="col-md-4 op-body-bg-left">
-
+                <div class="col-md-3 op-body-bg-left">
+                </div>
+    			<div class="col-md-3 op-body-bg-left">
     			</div>
-     			<div class="col-md-4 op-body-bg-middle">
-
+     			<div class="col-md-3 op-body-bg-middle">
      			</div>
-    			<div class="col-md-4 op-body-bg-right">
-
+    			<div class="col-md-3 op-body-bg-right">
     			</div>
     		</div>
 		</div>
-      <div class="col-md-4 op-body-bg-left">
+      <div class="col-md-3 op-body-bg-left regular-text">
+        <%@name_dict.each do |id, name|%>
+            <h4><%= name+': '%></h4>
+            <%if @assigned_writer_dict[id].present?%>
+                <% @assigned_writer_dict[id].each do |o|%>
+                    <h3><%= link_to o.oppty.opptyName, o.oppty%></h3>
+                    <br>
+                <%end%>
+            <%end%>
+        <%end%>
+      </div>
+      <div class="col-md-3 op-body-bg-left regular-text">
         <%@name_dict.each do |id, name|%>
             <h4><%= name+': '%></h4>
             <%if @todo_writer_dict[id].present?%>
                 <% @todo_writer_dict[id].each do |o|%>
-                    <%= link_to o.oppty.opptyName, o.oppty%>
-                    <br>
+                    <% if o.oppty.present?%>
+                        <h3><%= link_to o.oppty.opptyName, o.oppty%></h3>
+                        <br>
+                    <%end%>
                 <%end%>
             <%end%>
-
         <%end%>
       </div>
-      <div class="col-md-4 op-body-bg-middle">
+      <div class="col-md-3 op-body-bg-middle regular-text">
         <%@name_dict.each do |id, name|%>
             <h4><%= name+': '%></h4>
             <%if @doing_writer_dict[id].present?%>
                 <% @doing_writer_dict[id].each do |o|%>
-                    <%= link_to o.oppty.opptyName, o.oppty%>
+                    <h3><%= link_to o.oppty.opptyName, o.oppty%></h3>
                     <br>
                 <%end%>
             <%end%>
         <%end%>
       </div>
-      <div class="col-md-4 op-body-bg-right">
+      <div class="col-md-3 op-body-bg-right regular-text">
         <%@name_dict.each do |id, name|%>
             <h4><%= name+': '%></h4>
             <%if @done_writer_dict[id].present?%>
                 <% @done_writer_dict[id].each do |o|%>
-                    <%= link_to o.oppty.opptyName, o.oppty%>
+                    <h3><%= link_to o.oppty.opptyName, o.oppty%></h3>
                     <br>
                 <%end%>
             <%end%>

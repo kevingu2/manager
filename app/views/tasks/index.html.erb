@@ -7,29 +7,38 @@
     <div class="container tasks-queue">
       <!-- Example row of columns -->
       <div class="row">
-        <div class="col-md-4 op-title-bg-left">
+        <div class="col-md-3 op-title-bg-left">
+          <h2 class="op-title">Assigned</h2>
+        </div>
+        <div class="col-md-3 op-title-bg-left">
           <h2 class="op-title">To-Do</h2>
         </div>
-        <div class="col-md-4 op-title-bg-middle">
+        <div class="col-md-3 op-title-bg-middle">
           <h2 class="op-title">In Progress</h2>
         </div>
-        <div class="col-md-4 op-title-bg-right">
+        <div class="col-md-3 op-title-bg-right">
           <h2 class="op-title">Done</h2>
         </div>
         <div class="row-2">
-          <div class="col-md-4 op-body-bg-left">
+          <div class="col-md-3 op-body-bg-left">
+              <% @assigned.each do |o|%>
+                <% @current_task=o %>
+                <%= render partial: "writer_task" %>
+              <% end%>
+         </div>
+          <div class="col-md-3 op-body-bg-left">
               <% @to_do.each do |o|%>
                 <% @current_task=o %>
                 <%= render partial: "writer_task" %>
               <% end%>
          </div>
-         <div class="col-md-4 op-body-bg-middle">
+         <div class="col-md-3 op-body-bg-middle">
              <% @doing.each do |o|%>
                <% @current_task=o %>
                <%= render partial: "writer_task" %>
              <% end%>
          </div>
-         <div class="col-md-4 op-body-bg-right">
+         <div class="col-md-3 op-body-bg-right">
              <% @done.each do |o|%>
                <% @current_task=o %>
                <%= render partial: "writer_task" %>
