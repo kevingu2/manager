@@ -18,12 +18,13 @@ class CrmController < ApplicationController
     end
 
     @newFileName = "new_"+uploaded_io.original_filename.to_s
+    puts "newFileName: " + @newFileName
     # hacks to clear uploads folder
     # move files we care about up one directory
-    `mv public/uploads/#{@newFileName} public/`
+    `mv public/uploads/"#{@newFileName}" public/`
     `mv public/uploads/#{@oldFileName} public/`
     `rm public/uploads/*` # delete everything in uploads
-    `mv public/#{@newFileName} public/uploads/#{@newFileName}` # move files back from upper directory
+    `mv public/"#{@newFileName}" public/uploads/"#{@newFileName}"` # move files back from upper directory
     `mv public/#{@oldFileName} public/uploads/#{@oldFileName}`
     @oldOrNew = "old"
     if Dir[CRM_PATH+ '/*.xlsm'].length > 1 # if there is more than one file, check if older/newer
@@ -31,6 +32,10 @@ class CrmController < ApplicationController
     else
       @oldOrNew = "new" # else just say it's new
     end
+    nonSpaceName = CRM_PATH + "/" + @newFileName
+    @newFileName = @newFileName.gsub(" ", "%20")
+    File.rename(nonSpaceName, CRM_PATH + "/" + @newFileName)
+    puts "*"*30, @newFileName, "*"*30
     render :index
 
   end
@@ -38,6 +43,7 @@ class CrmController < ApplicationController
   def updateCRM
     # oldFileName
     # newFileName
+    puts "z"*100
     oldFileName=params[:old]
     newFileName=params[:new]
     changes=params[:changes]
@@ -219,7 +225,7 @@ class CrmController < ApplicationController
 
   #uploading an excel file from user's computer
   def upload
-    puts params[:newFileName]
+    puts "*"*30, params[:newFileName], "*"*30
     puts params[:oldFileName]
     @newFileName=params[:newFileName]
     @oldFileName=params[:oldFileName]
