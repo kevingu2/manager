@@ -20,25 +20,33 @@
           <h2 class="op-title">Done</h2>
         </div>
         <div class="row-2">
-          <div class="col-md-3 op-body-bg-left" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <div class="col-md-3" style="visibility:hidden;"></div>
+          <div class="col-md-3 op-body-bg-left" id="div1" ondrop="drop(event, this)" ondragover="allowDrop(event)"><h4 class="op-title">Drop Task Here to Accept</h4></div>
+          <div class="col-md-3 op-body-bg-middle" id="div2" ondrop="drop(event, this)" ondragover="allowDrop(event)"><h4 class="op-title">Drop Task Here While in Progress</h4></div>
+          <div class="col-md-3 op-body-bg-right" id="div3" ondrop="drop(event, this)" ondragover="allowDrop(event)"><h4 class="op-title">Drop Task Here When Done</h4></div>
+        </div>
+        <div class="row-2">
+          <div class="col-md-3 op-body-bg-left">
               <% @assigned.each do |o|%>
                 <% @current_task=o %>
                 <%= render partial: "writer_task" %>
               <% end%>
          </div>
-          <div class="col-md-3 op-body-bg-left" id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+          <div class="col-md-3">
               <% @to_do.each do |o|%>
                 <% @current_task=o %>
                 <%= render partial: "writer_task" %>
               <% end%>
          </div>
-         <div class="col-md-3 op-body-bg-middle" id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+         <div class="col-md-3">
              <% @doing.each do |o|%>
                <% @current_task=o %>
                <%= render partial: "writer_task" %>
              <% end%>
          </div>
-         <div class="col-md-3 op-body-bg-right" id="div4" ondrop="drop(event)" ondragover="allowDrop(event)">
+         <div class="col-md-3">
              <% @done.each do |o|%>
                <% @current_task=o %>
                <%= render partial: "writer_task" %>
@@ -49,7 +57,7 @@
     </div>
 
 <style>
-  #div1 {backgorund:transparent !important;border:2px solid black;height:292px;width:292px;}
+  #div1, #div2, #div3 {backgorund:transparent;border:2px dashed black;height:75px;width:292px;}
 </style>
 
 
@@ -63,12 +71,27 @@ function drag(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
 }
 
-function drop(ev) {
+function drop(ev, target) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(data));
-
+    var status;
+    if(target.id == "div1") {
+        status=2;
+    }
+    else if (target.id == "div2") {
+        status=1;
+    }
+    else if (target.id == "div3") {
+        status=0;
+    }
+    <%puts "DROPPED"%>
+    var xmlHttp = new XMLHttpRequest();
+    var params = "id="+data + "&status="+status+"&authenticity_token="+"<%= form_authenticity_token.to_s %>";
+    xmlHttp.open( "Get", '<%=tasks_updateStatus_url%>?'+params  , false );
+    xmlHttp.send( params );
 }
+
 </script>
 
 
