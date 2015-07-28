@@ -20,25 +20,31 @@
           <h2 class="op-title">Done</h2>
         </div>
         <div class="row-2">
-          <div class="col-md-3 op-body-bg-left" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <div class="col-md-3" style="visibility:hidden;"></div>
+          <div class="col-md-3 op-body-bg-left" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"><h4 class="op-title">Drop Task Here to Accept</h4></div>
+          <div class="col-md-3 op-body-bg-middle" id="div2" ondrop="drop(event)" ondragover="allowDrop(event)"><h4 class="op-title">Drop Task Here While in Progress</h4></div>
+          <div class="col-md-3 op-body-bg-right" id="div3" ondrop="drop(event)" ondragover="allowDrop(event)"><h4 class="op-title">Drop Task Here When Done</h4></div>
+        </div>
+        <div class="row-2">
+          <div class="col-md-3 op-body-bg-left">
               <% @assigned.each do |o|%>
                 <% @current_task=o %>
                 <%= render partial: "writer_task" %>
               <% end%>
          </div>
-          <div class="col-md-3 op-body-bg-left" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <div class="col-md-3">
               <% @to_do.each do |o|%>
                 <% @current_task=o %>
                 <%= render partial: "writer_task" %>
               <% end%>
          </div>
-         <div class="col-md-3 op-body-bg-middle" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+         <div class="col-md-3">
              <% @doing.each do |o|%>
                <% @current_task=o %>
                <%= render partial: "writer_task" %>
              <% end%>
          </div>
-         <div class="col-md-3 op-body-bg-right" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+         <div class="col-md-3">
              <% @done.each do |o|%>
                <% @current_task=o %>
                <%= render partial: "writer_task" %>
@@ -49,7 +55,7 @@
     </div>
 
 <style>
-  #div1 {backgorund:transparent !important;border:2px solid black;height:292px;width:292px;}
+  #div1, #div2, #div3 {backgorund:transparent;border:2px dashed black;height:75px;width:292px;}
 </style>
 
 
@@ -66,8 +72,21 @@ function drag(ev) {
 function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
+    alert(data);
+    alert(ev.target.id);
     ev.target.appendChild(document.getElementById(data));
+    
+    if(ev.target.id == "div1") {
+      
+    }
+    else if (ev.target.id == "div2") {
+
+    }
+    else if (ev.target.id == "div3") {
+
+    }
 }
+
 </script>
 
 
