@@ -10,6 +10,9 @@ class CrmController < ApplicationController
       redirect_to crm_index_path, notice: "Please upload a file"
       return
     end
+
+    FileUtils.mkdir_p(CRM_PATH) unless File.directory?(CRM_PATH)
+
     # get existing file in public/uploads
     @oldFileName=nil
     if Dir[CRM_PATH+'/*.xlsm'][0]
@@ -549,7 +552,7 @@ class CrmController < ApplicationController
     else if Dir[CRM_PATH+'/*.xlsm'].length==1
       download_path=File.join(Dir[CRM_PATH+'/*.xlsm'][0])
     else
-        redirect_to crm_index_path
+      redirect_to crm_index_path, notice: "Please upload a file"
     end
 
     end

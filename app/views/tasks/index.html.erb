@@ -26,19 +26,19 @@
                 <%= render partial: "writer_task" %>
               <% end%>
          </div>
-          <div class="col-md-3 op-body-bg-left" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+          <div class="col-md-3 op-body-bg-left" id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
               <% @to_do.each do |o|%>
                 <% @current_task=o %>
                 <%= render partial: "writer_task" %>
               <% end%>
          </div>
-         <div class="col-md-3 op-body-bg-middle" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+         <div class="col-md-3 op-body-bg-middle" id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">
              <% @doing.each do |o|%>
                <% @current_task=o %>
                <%= render partial: "writer_task" %>
              <% end%>
          </div>
-         <div class="col-md-3 op-body-bg-right" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+         <div class="col-md-3 op-body-bg-right" id="div4" ondrop="drop(event)" ondragover="allowDrop(event)">
              <% @done.each do |o|%>
                <% @current_task=o %>
                <%= render partial: "writer_task" %>
@@ -67,6 +67,8 @@ function drop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(data));
+    <% puts document.getElementById(data) %>
+    <% puts document.getElementById(data) %>
 }
 </script>
 
