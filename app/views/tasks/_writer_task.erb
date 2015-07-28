@@ -1,6 +1,6 @@
 <ul class="nav">
-<li><a style="padding: 0px" class="btn-x" href=<%="/tasks/deleteOpportunity?id="+ @current_task.id.to_s%>  role="button">X</a>
-  <div class="task-bg"> <h3 class="regular-text"><b><%= link_to @current_task.oppty.opptyName, @current_task.oppty%></b></h3>
+<li id="drag1" draggable="true" ondragstart="drag(event)"><a style="padding: 0px" class="btn-x" href=<%="/tasks/deleteOpportunity?id="+ @current_task.id.to_s%>  role="button">X</a>
+  <div class="task-bg"> <h3 class="text-edit"><b><%= link_to @current_task.oppty.opptyName, @current_task.oppty%></b></h3>
     <p>Due in <%= (@current_task.oppty.proposalDueDate-Date.today).to_i %>days</p>
     <p>Priority: (HIGH,MED,LOW)</p>
     <form action ="/tasks/updateStatus" method="post">
@@ -16,13 +16,13 @@
       <input hidden=true type="integer" name="id" value=<%= @current_task.id%>>
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
       <button style="z-index: 3" type="submit">doing</button>
-    </form>
+    </form> 
     <form action ="/tasks/updateStatus" method="post">
       <input name="_method" type="hidden" value="put" />
       <input hidden=true type="integer" name="status" value=0>
       <input hidden=true type="integer" name="id" value=<%= @current_task.id%>>
       <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-      <button  style="z-index: 3" type="submit">done</button>
+      <button style="z-index: 3" type="submit">done</button>
     </form>
     <form action =<%=histories_path %> method="post">
       <input hidden=true type="integer" name="oppty_id" value=<%= @current_task.oppty.id%>>

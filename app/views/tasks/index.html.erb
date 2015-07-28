@@ -20,25 +20,25 @@
           <h2 class="op-title">Done</h2>
         </div>
         <div class="row-2">
-          <div class="col-md-3 op-body-bg-left">
+          <div class="col-md-3 op-body-bg-left" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
               <% @assigned.each do |o|%>
                 <% @current_task=o %>
                 <%= render partial: "writer_task" %>
               <% end%>
          </div>
-          <div class="col-md-3 op-body-bg-left">
+          <div class="col-md-3 op-body-bg-left" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
               <% @to_do.each do |o|%>
                 <% @current_task=o %>
                 <%= render partial: "writer_task" %>
               <% end%>
          </div>
-         <div class="col-md-3 op-body-bg-middle">
+         <div class="col-md-3 op-body-bg-middle" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
              <% @doing.each do |o|%>
                <% @current_task=o %>
                <%= render partial: "writer_task" %>
              <% end%>
          </div>
-         <div class="col-md-3 op-body-bg-right">
+         <div class="col-md-3 op-body-bg-right" id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
              <% @done.each do |o|%>
                <% @current_task=o %>
                <%= render partial: "writer_task" %>
@@ -47,5 +47,29 @@
        </div>
      </div>
     </div>
+
+<style>
+  #div1 {backgorund:transparent !important;border:2px solid black;height:292px;width:292px;}
+</style>
+
+
+<script>
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+}
+</script>
+
+
   </body>
 </html>

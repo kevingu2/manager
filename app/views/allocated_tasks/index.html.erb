@@ -33,7 +33,7 @@
     			</div>
     		</div>
 		</div>
-      <div class="col-md-3 op-body-bg-left regular-text">
+      <div class="col-md-3 op-body-bg-left text-edit">
         <%@name_dict.each do |id, name|%>
             <h4><%= name+': '%></h4>
             <%if @assigned_writer_dict[id].present?%>
@@ -44,7 +44,7 @@
             <%end%>
         <%end%>
       </div>
-      <div class="col-md-3 op-body-bg-left regular-text">
+      <div class="col-md-3 op-body-bg-left text-edit">
         <%@name_dict.each do |id, name|%>
             <h4><%= name+': '%></h4>
             <%if @todo_writer_dict[id].present?%>
@@ -57,7 +57,7 @@
             <%end%>
         <%end%>
       </div>
-      <div class="col-md-3 op-body-bg-middle regular-text">
+      <div class="col-md-3 op-body-bg-middle text-edit">
         <%@name_dict.each do |id, name|%>
             <h4><%= name+': '%></h4>
             <%if @doing_writer_dict[id].present?%>
@@ -68,7 +68,7 @@
             <%end%>
         <%end%>
       </div>
-      <div class="col-md-3 op-body-bg-right regular-text">
+      <div class="col-md-3 op-body-bg-right text-edit">
         <%@name_dict.each do |id, name|%>
             <h4><%= name+': '%></h4>
             <%if @done_writer_dict[id].present?%>
