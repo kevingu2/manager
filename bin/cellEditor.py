@@ -1,22 +1,22 @@
 import sys
 from openpyxl import load_workbook
-from openpyxl import Workbook
-######################USAGE######################
-# python cellEditor.py [fileName] "[['id', 'columnName', 'dataToChange'], ..., ['id1', 'columnName1', 'dataToChange1']]"
-#                                   list of list, in string format
-#################################################
+from openpyxl.cell import column_index_from_string
+from editpyxl import Workbook
 def findRows(fileName, ids):
-    wb = load_workbook(filename=fileName, read_only = True)
-    ws = wb['PipelineView']
+    wb = load_workbook(filename = fileName, read_only=True, keep_vba=True, use_iterators=True)
+    ws = wb.get_sheet_by_name(name='PipelineView')
     count = 1
     rows = []
     for i in ids:
         count = 1
-        for row in ws.rows: # search through all rows for the unique ID
+        for row in ws.iter_rows():
+            #print count
             if row[0].value == i:
-                rows.append(count) # keep count of the row number that matches
+                rows.append(count)
                 break
-            count += 1
+            else:
+                count += 1
+                continue
     return rows
 
 def findCols(cols):
@@ -24,27 +24,28 @@ def findCols(cols):
     column_hash = {'slDir': 'CZ', 'slArch': 'DA', 'leadEstim': 'DB', 'engaged': 'DL', 'solution': 'DM', 'estimate': 'DN', 'slComments': 'DO'}
     columns = []
     for c in cols:
-        columns.append(column_hash[c])
+        columns.append(column_index_from_string(column_hash[c]))
     return columns
 
-args = sys.argv # get command line args
+
+args = sys.argv
 fileName = args[1]
 strs = args[2]
-data = [[i for i in x.strip(" []").split(", ")] for x in strs.strip('[]').split("],")] # magic
-wb = load_workbook(filename = fileName, keep_vba=True)
+wb = load_workbook(filename = fileName, keep_vba = True)
 ws = wb.get_sheet_by_name('PipelineView')
+data = [[i for i in x.strip(" []").split(", ")] for x in strs.strip('[]').split("],")] # magic
 #####get the rows/cols/valuesToChange#########
 ids = []
 cols = []
 changes = []
+columns = []
 for d in data:
     ids.append(d[0].strip('\''))
     cols.append(d[1].strip('\''))
     changes.append(d[2].strip('\''))
+
 rows = findRows(fileName, ids)
 cols = findCols(cols)
-#print len(cols), len(rows)
-for c in range(len(changes)): # make the changes
-    ws[str(cols[c]) + str(rows[c])]= changes[c]
-    print "changed: " + str(cols[c]) + str(rows[c])
+for c in range(len(changes)):
+    ws.cell(row=rows[c], column=cols[c]).value = changes[c]
 wb.save(fileName)
