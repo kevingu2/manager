@@ -13,7 +13,7 @@
             <h2 class="op-title-col">Assigned</h2>
         </div>
     	<div class="col-md-3 op-title-bg-left">
-    		<h2 class="op-title-col">TODO</h2>
+    		<h2 class="op-title-col">TO DO</h2>
     	</div>
 	    <div class="col-md-3 op-title-bg-middle">
     		<h2 class="op-title-col">In Progress</h2>
@@ -33,54 +33,162 @@
     			</div>
     		</div>
 		</div>
-      <div class="col-md-3 op-body-bg-left text-edit">
-        <%@name_dict.each do |id, name|%>
-            <h4><%= name+': '%></h4>
-            <%if @assigned_writer_dict[id].present?%>
-                <% @assigned_writer_dict[id].each do |o|%>
-                    <h3><%= link_to o.oppty.opptyName, o.oppty%></h3>
-                    <br>
-                <%end%>
-            <%end%>
-        <%end%>
-      </div>
-      <div class="col-md-3 op-body-bg-left text-edit">
-        <%@name_dict.each do |id, name|%>
-            <h4><%= name+': '%></h4>
-            <%if @todo_writer_dict[id].present?%>
-                <% @todo_writer_dict[id].each do |o|%>
-                    <% if o.oppty.present?%>
-                        <h3><%= link_to o.oppty.opptyName, o.oppty%></h3>
-                        <br>
+        <div class="col-md-3 op-body-bg-left" id="navigation">
+            <%@name_dict.each do |id, name|%>
+                <% count = 0 %>
+                <%if @assigned_writer_dict[id].present? %>
+                    <% @assigned_writer_dict[id].each do |o|%>
+                        <% count += 1 %>
                     <%end%>
                 <%end%>
+                <ul>
+                    <li>
+                        <a href="#" onclick="swap('<%= name %>'+'assigned');return false;"> <%= name + "\t" + count.to_s%> </a>
+                        <%if @assigned_writer_dict[id].present?%>
+                            <ul id="<%= name + 'assigned' %>" style="display: none;">
+                                <% @assigned_writer_dict[id].each do |o|%>
+                                    <li><div><%= link_to o.oppty.opptyName, o.oppty%></div></li>
+                                <%end%>
+                            </ul>
+                        <%end%>
+                    </li>
+                </ul>
             <%end%>
-        <%end%>
-      </div>
-      <div class="col-md-3 op-body-bg-middle text-edit">
-        <%@name_dict.each do |id, name|%>
-            <h4><%= name+': '%></h4>
-            <%if @doing_writer_dict[id].present?%>
-                <% @doing_writer_dict[id].each do |o|%>
-                    <h3><%= link_to o.oppty.opptyName, o.oppty%></h3>
-                    <br>
-                <%end%>
+        </div>
+        <div class="col-md-3 op-body-bg-left" id="navigation">
+            <%@name_dict.each do |id, name|%>
+                <% count = 0 %>
+                <%if @todo_writer_dict[id].present? %>
+                    <% @todo_writer_dict[id].each do |o|%>
+                        <% count += 1 %>
+                    <% end %>
+                <% end %>
+                <ul>
+                    <li>
+                        <a href="#" onclick="swap('<%= name %>'+'todo');return false;"> <%= name + "\t" + count.to_s%> </a>
+                        <%if @todo_writer_dict[id].present? %>
+                            <ul id="<%= name + 'todo' %>" style="display: none;">
+                                <% @todo_writer_dict[id].each do |o|%>
+                                    <% if o.oppty.present?%>
+                                        <li><div><%= link_to o.oppty.opptyName, o.oppty%></div></li>
+                                    <% end %>
+                                <%end%>
+                            </ul>
+                        <%end%>
+                    </li>
+                </ul>
             <%end%>
-        <%end%>
-      </div>
-      <div class="col-md-3 op-body-bg-right text-edit">
-        <%@name_dict.each do |id, name|%>
-            <h4><%= name+': '%></h4>
-            <%if @done_writer_dict[id].present?%>
-                <% @done_writer_dict[id].each do |o|%>
-                    <h3><%= link_to o.oppty.opptyName, o.oppty%></h3>
-                    <br>
-                <%end%>
+        </div>
+        <div class="col-md-3 op-body-bg-middle" id="navigation">
+            <%@name_dict.each do |id, name|%>
+                <% count = 0 %>
+                <%if @doing_writer_dict[id].present?%>
+                    <% @doing_writer_dict[id].each do |o|%>
+                        <% count += 1 %>
+                    <% end %>
+                <% end %>
+                <ul>
+                    <li>
+                        <a href="#" onclick="swap('<%= name %>'+'doing');return false;"> <%= name + "\t" + count.to_s%> </a>
+                        <%if @doing_writer_dict[id].present?%>
+                            <ul id="<%= name + 'doing'%>" style="display: none;">
+                                <% @doing_writer_dict[id].each do |o|%>
+                                    <li><div><%= link_to o.oppty.opptyName, o.oppty%></div></li>
+                                <%end%>
+                            </ul>
+                        <%end%>
+                    </li>
+                </ul>
             <%end%>
-        <%end%>
-      </div>
+        </div>
+        <div class="col-md-3 op-body-bg-right" id="navigation">
+            <%@name_dict.each do |id, name|%>
+                <% count = 0 %>
+                <%if @done_writer_dict[id].present?%>
+                    <% @done_writer_dict[id].each do |o|%>
+                        <% count += 1 %>
+                    <% end %>
+                <% end %>
+                <ul>
+                    <li>
+                        <a href="#" onclick="swap('<%= name %>'+'done');return false;"> <%= name + "\t" + count.to_s%> </a>
+                        <%if @done_writer_dict[id].present?%>
+                            <ul id="<%= name + 'done'%>" style="display: none;">
+                                <% @done_writer_dict[id].each do |o|%>
+                                    <li><div><%= link_to o.oppty.opptyName, o.oppty%></div></li>
+                                <%end%>
+                            </ul>
+                        <%end%>
+                    </li>
+                </ul>
+            <%end%>
+        </div>
 	</div>
 </div>
+
+
+
+
+<script type="text/javascript">
+function swap(targetId){
+  if (document.getElementById){
+        target = document.getElementById(targetId);
+            if (target.style.display == "none"){
+                target.style.display = "";
+            } else{
+                target.style.display = "none";
+            }
+                
+  }
+}
+
+</script>
+
+<style type="text/css" media="Screen">
+#navigation ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#navigation a {
+  text-decoration: none;
+  display: block;
+  padding: 3px 12px 3px 8px;
+  background-color: #005DA0;
+  color: white;
+  border: 1px solid #ddd;
+}
+#navigation a:active {
+  padding: 2px 13px 4px 7px;
+  color: white;
+  border: 1px solid #333;
+}
+
+#navigation li li a {
+  text-decoration: none;
+  padding: 3px 3px 3px 17px;
+  background-color: #999;
+  color: #111111;
+}
+#navigation li li a:active {
+  padding: 2px 4px 4px 16px;
+}
+
+#navigation li li a:link {
+    color: #0000FF;
+    background-color: transparent !important;
+}
+
+#navigation li li a:visited {
+    color: #663366 !important;
+}
+
+#navigation li li a:hover {
+    text-decoration: underline;
+}
+
+</style>
 
 </body>
 
