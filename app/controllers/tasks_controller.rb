@@ -9,8 +9,13 @@ class TasksController < ApplicationController
   end
 
   def updateStatus
-    userOppty=UserOppty.find(params[:id])
-    userOppty.update(status: params[:status])
+    json_body=JSON.parse(request.body.read)
+    id= json_body.fetch('id')
+    status=json_body.fetch('status')
+    puts "IDDD: "+id.to_s
+    puts "Status: "+status.to_s
+    userOppty=UserOppty.find(id)
+    userOppty.update(status: status)
     @done=UserOppty.where(user_id:session[:user_id]).where(status:0).joins(:oppty).includes(:oppty)
     @doing=UserOppty.where(user_id:session[:user_id]).where(status:1).joins(:oppty).includes(:oppty)
     @to_do=UserOppty.where(user_id:session[:user_id]).where(status:2).joins(:oppty).includes(:oppty)

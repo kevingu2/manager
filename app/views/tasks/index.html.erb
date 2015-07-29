@@ -85,10 +85,13 @@ function drop(ev, target) {
     else if (target.id == "div3") {
         status=0;
     }
-    <%puts "DROPPED"%>
+    var params = "{'id':"+data + ",'status':"+status+"}";
+    params=params.replace(/'/g, '"');
     var xmlHttp = new XMLHttpRequest();
-    var params = "id="+data + "&status="+status+"&authenticity_token="+"<%= form_authenticity_token.to_s %>";
-    xmlHttp.open( "Get", '<%=tasks_updateStatus_url%>?'+params  , false );
+    xmlHttp.open("Content-Type", "application/x-www-form-urlencoded");
+    xmlHttp.open("Content-length", params.length);
+    xmlHttp.open("Connection", "close");
+    xmlHttp.open( "Put", '<%=tasks_updateStatus_url%>' , true );
     xmlHttp.send( params );
 }
 

@@ -25,9 +25,6 @@ Rails.application.routes.draw do
 
   put 'tasks/updateStatus'
 
-  get 'tasks/updateStatus'
-
-  post 'tasks/updateStatus'
   get 'tasks/deleteOpportunity'
 
   get 'history/index'
