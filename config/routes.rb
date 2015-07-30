@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'test_code/index'
+
   resources :user_histories
 
   get 'assign/index'

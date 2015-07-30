@@ -35,7 +35,6 @@ Rails.application.configure do
   config.assets.precompile += %w( jquery.ui.widget.js)
   config.assets.precompile += %w( jquery.iframe-transport.js)
   config.assets.precompile += %w( jquery.fileupload.js)
-  config.assets.precompile += %w( upload.js)
   config.assets.precompile += %w( amcharts.js)
   config.assets.precompile += %w( serial.js)
   config.assets.precompile += %w( light.js)
@@ -43,7 +42,8 @@ Rails.application.configure do
   config.assets.precompile += %w( dataloader.min.js)
   config.assets.precompile += %w( bootstrap-notify.min.js)
   config.assets.precompile += %w( jquery.growl.js)
-
+  config.assets.precompile += %w( Sortable.js)
+  config.assets.precompile += %w( updateStatus.js)
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
