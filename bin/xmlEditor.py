@@ -9,6 +9,17 @@ def findStringMatch(string, stringMatches):
         if s.replace('&amp;', '&') == string: # stupid xml uses &amp; instead of just &
             return index
         index += 1
+
+def isOnlyReference(string, cellMatches):
+    print cellMatches[string]
+
+def appendToSharedStrings(string, sharedStrings): # appends string to the end of sharedStrings.xml and increments the string count
+    match = re.search(r'uniqueCount="(.*)"', sharedStrings) # get the uniqueCount
+    oldUniqueCount = int(match.group(1))
+    newUniqueCount = oldUniqueCount + 1 # increment it by one
+    sharedStrings.replace(str(oldUniqueCount), str(newUniqueCount)) # replace it with the new count
+    return sharedStrings[:sharedStrings.index('</sst>')] + '  <si>\n  <t>' + string + '</t>\n  </si>\n' + sharedStrings[sharedStrings.index('</sst>'):]
+
 # open file and find all of the input strings
 sharedStrings = open('xl/sharedStrings.xml', 'r').read()
 sheet2 = open('xl/worksheets/sheet2.xml').read() # this is the PipelineView sheet
@@ -24,10 +35,15 @@ cellMatches = {}
 for m in matches:
     cellMatches[m.group(1)] = m.group(3) # group 1 is the cell, group 3 is the corresponding sharedStrings number
 
-cellValue = 'DL4'
+cellValue = 'B2'
 if cellValue in excelValues.keys():
     findString = excelValues[cellValue]
-    foundString = findStringMatch(findString.encode('ascii', 'ignore'), stringMatches)
-    print stringMatches[foundString]
+    foundStringIndex = findStringMatch(findString.encode('ascii', 'ignore'), stringMatches)
+    foundString = stringMatches[foundStringIndex]
 else:
     print "empty cell"
+
+newSharedString = appendToSharedStrings("asdflkjasdflkj", sharedStrings)
+f = open("newSharedStrings.xml", "wb")
+f.write(newSharedString)
+f.close()
