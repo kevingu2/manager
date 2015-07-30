@@ -5,7 +5,7 @@
 //= require Sortable
 
 var list1 = document.getElementById("list1");
-Sortable.create(list1,{ group: "movable",
+Sortable.create(list1,{ group: {name:"movable", put:false},
     onAdd: function (/**Event*/evt) {
         var itemEl = evt.item;  // dragged HTMLElement
         var list=evt.to.id
