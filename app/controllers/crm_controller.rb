@@ -528,6 +528,26 @@ class CrmController < ApplicationController
     render :index
   end
 
+  def reconstruct(excelFileName)
+      #reconstruct excel file
+      puts "*"*30, excelFileName
+      arg = "["
+      oppty = Oppty.all
+      oppty.each do |o|
+        arg << '[\'' + o.opptyId + '\', \'' + 'slDir' + '\', \'' + o.slDir + '\'], '
+        arg << '[\'' + o.opptyId + '\', \'' + 'slArch' + '\', \'' + o.slArch + '\'], '
+        arg << '[\'' + o.opptyId + '\', \'' + 'leadEstim' + '\', \'' + o.leadEstim + '\'], '
+        arg << '[\'' + o.opptyId + '\', \'' + 'engaged' + '\', \'' + o.engaged + '\'], '
+        arg << '[\'' + o.opptyId + '\', \'' + 'solution' + '\', \'' + o.solution + '\'], '
+        arg << '[\'' + o.opptyId + '\', \'' + 'estimate' + '\', \'' + o.estimate + '\'], '
+        arg << '[\'' + o.opptyId + '\', \'' + 'slComments' + '\', \'' + o.slComments + '\'], '
+      end
+      arg = arg[0..-3]
+      arg <<"]"
+      #puts arg
+      HardWorker.perform_async(excelFileName, arg)
+    end
+
   #downloading the modified excel file from the browser
   def download
     #pull the database data into an excel
@@ -557,6 +577,7 @@ class CrmController < ApplicationController
 
     end
     if download_path!=""
+      reconstruct(download_path)
       name = download_path.gsub("new_", "")
       File.rename download_path, name
       file = File.open(name, "rb")

@@ -28,6 +28,7 @@ def findCols(cols):
     return columns
 
 
+print "*"*10, "starting python excel editor", "*"*10
 args = sys.argv
 fileName = args[1]
 strs = args[2]
@@ -39,6 +40,7 @@ ids = []
 cols = []
 changes = []
 columns = []
+print "*"*10, "parsing data", "*"*10
 for d in data:
     ids.append(d[0].strip('\''))
     cols.append(d[1].strip('\''))
@@ -46,6 +48,9 @@ for d in data:
 
 rows = findRows(fileName, ids)
 cols = findCols(cols)
+print "*"*10, "starting editing", "*"*10
 for c in range(len(changes)):
     ws.cell(row=rows[c], column=cols[c]).value = changes[c]
+print "*"*10, "finished editing", "*"*10
 wb.save(fileName)
+print "*"*10, "finished saving", "*"*10
