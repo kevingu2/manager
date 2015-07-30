@@ -181,20 +181,38 @@
         window.location.assign(window.location.href.substring (0, window.location.href.indexOf("sort")));
       else if (select == "none")
         window.location.assign( window.location.href );
-      else if (select == "proposalDueDate")
-        window.location.assign( window.location.href + "?sort=proposalDueDate" );
-      else if (select == "opptyName")
-        window.location.assign(window.location.href + "?sort=opptyName");
-      else if (select == "opptyId")
-        window.location.assign(window.location.href + "?sort=opptyId");
-      else if (select == "captureMgr")
-        window.location.assign(window.location.href + "?sort=captureMgr");
-      else if (select == "programMgr")
-        window.location.assign(window.location.href + "?sort=programMgr");
-      else if (select == "proposalMgr")
-        window.location.assign(window.location.href + "?sort=proposalMgr");
-      else if (select == "value")
-        window.location.assign(window.location.href + "?sort=value");
+      else if (window.location.href.substring(window.location.href.indexOf("/browse/index"), window.location.href.toString().length ) == "<%= browse_index_path %>") {
+        if (select == "proposalDueDate")
+          window.location.assign( window.location.href + "?sort=proposalDueDate" );
+        else if (select == "opptyName")
+          window.location.assign(window.location.href + "?sort=opptyName");
+        else if (select == "opptyId")
+          window.location.assign(window.location.href + "?sort=opptyId");
+        else if (select == "captureMgr")
+          window.location.assign(window.location.href + "?sort=captureMgr");
+        else if (select == "programMgr")
+          window.location.assign(window.location.href + "?sort=programMgr");
+        else if (select == "proposalMgr")
+          window.location.assign(window.location.href + "?sort=proposalMgr");
+        else if (select == "value")
+          window.location.assign(window.location.href + "?sort=value");
+      }
+      else {
+        if (select == "proposalDueDate")
+          window.location.assign( window.location.href + "&sort=proposalDueDate" );
+        else if (select == "opptyName")
+          window.location.assign(window.location.href + "&sort=opptyName");
+        else if (select == "opptyId")
+          window.location.assign(window.location.href + "&sort=opptyId");
+        else if (select == "captureMgr")
+          window.location.assign(window.location.href + "&sort=captureMgr");
+        else if (select == "programMgr")
+          window.location.assign(window.location.href + "&sort=programMgr");
+        else if (select == "proposalMgr")
+          window.location.assign(window.location.href + "&sort=proposalMgr");
+        else if (select == "value")
+          window.location.assign(window.location.href + "&sort=value");
+      }
     });
 
     $(document).on("click", "a[name='radio-style-btn']", function (e) {
