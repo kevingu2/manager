@@ -4,7 +4,7 @@
 <div class="container">
   <!-- Main component for a primary marketing message or call to action -->
   <div class="jumbotron oppty-bg">
-    <h1 class="op-title"><%= @oppty.opptyName%></h1>
+    <h2 class="op-title"><%= @oppty.opptyName%></h2>
     <p><b>IDIQ CA:</b> <%= @oppty.idiqCA%></p>
     <p><b>Status:</b> <%= @oppty.status2%></p>
     <p><b>Value:</b> <%= @oppty.value%></p>
@@ -22,7 +22,7 @@
     <p><b>ED:</b> <%= @oppty.ed%></p>
     <p><b>ON:</b> <%= @oppty.on%></p>
     <p><b>ATE:</b> <%= @oppty.ate%></p>
-    <p><b>SL Comments:</b> <%= @oppty.slComments%></p>
+    <p class="comment-paragraph"><b>SL Comments:</b> <%= @oppty.slComments%></p>
     <p><b>SL Director:</b> <%= @oppty.slDir%></p>
     <p><b>Lead Estimator:</b> <%= @oppty.leadEstim%></p>
     <p><b>Engaged:</b> <%= @oppty.engaged%></p>
@@ -58,6 +58,7 @@
     
   </div>
 </div> <!-- /container -->
+
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->

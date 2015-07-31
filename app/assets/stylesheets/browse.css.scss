@@ -1,8 +1,8 @@
 // Place all the styles related to the Browse controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-.upper-search-box {
-	
+.browse-page-title {
+	text-align: center;
 }
 
 td {
@@ -32,6 +32,7 @@ td {
 .inner-search-bar {
 	height: 175px;
 	background-color: #8E8E8E !important;
+	margin-bottom: 20px !important;
 }
 
 .title {
@@ -133,4 +134,7 @@ input#search{
 	}
 }
 
-
+.sort-dropdown-label {
+	float: right;
+	padding-right: 10px;
+}
