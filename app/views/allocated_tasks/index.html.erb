@@ -22,18 +22,19 @@
     		<h2 class="op-title-col">Done</h2>
     	</div>
     	<div class="textColor">
+            <!-- Formatting hack -->
     		<div class="row-2">
-                <div class="col-md-3 op-body-bg-left">
+                <div class="col-md-3 op-body-bg-col-lable" style="min-height: 0px !important;">
                 </div>
-    			<div class="col-md-3 op-body-bg-left">
+    			<div class="col-md-3 op-body-bg-col-lable" style="min-height: 0px !important;">
     			</div>
-     			<div class="col-md-3 op-body-bg-middle">
+     			<div class="col-md-3 op-body-bg-col-lable" style="min-height: 0px !important;">
      			</div>
-    			<div class="col-md-3 op-body-bg-right">
+    			<div class="col-md-3 op-body-bg-col-lable" style="min-height: 0px !important;">
     			</div>
     		</div>
 		</div>
-        <div class="col-md-3 op-body-bg-left" id="navigation">
+        <div class="col-md-3 op-body-bg-col-lable" id="navigation">
             <%@name_dict.each do |id, name|%>
                 <% count = 0 %>
                 <%if @assigned_writer_dict[id].present? %>
@@ -43,7 +44,10 @@
                 <%end%>
                 <ul>
                     <li>
-                        <a href="#" onclick="swap('<%= name %>'+'assigned');return false;"> <%= name + "\t" + count.to_s%> </a>
+                        <a class="col-md-12" href="#" onclick="swap('<%= name %>'+'assigned');return false;"> 
+                            <p class="col-md-8 writer-label"><%= name %></p>
+                            <p class="col-md-4 writer-label"><%= count.to_s + " tasks"%></p>
+                        </a>
                         <%if @assigned_writer_dict[id].present?%>
                             <ul id="<%= name + 'assigned' %>" style="display: none;">
                                 <% @assigned_writer_dict[id].each do |o|%>
@@ -55,7 +59,7 @@
                 </ul>
             <%end%>
         </div>
-        <div class="col-md-3 op-body-bg-left" id="navigation">
+        <div class="col-md-3 op-body-bg-col-lable" id="navigation">
             <%@name_dict.each do |id, name|%>
                 <% count = 0 %>
                 <%if @todo_writer_dict[id].present? %>
@@ -65,7 +69,10 @@
                 <% end %>
                 <ul>
                     <li>
-                        <a href="#" onclick="swap('<%= name %>'+'todo');return false;"> <%= name + "\t" + count.to_s%> </a>
+                        <a class="col-md-12" href="#" onclick="swap('<%= name %>'+'todo');return false;">
+                            <p class="col-md-8 writer-label"><%= name %> </p>
+                            <p class="col-md-4 writer-label"><%= count.to_s + " tasks"%></p>
+                        </a>
                         <%if @todo_writer_dict[id].present? %>
                             <ul id="<%= name + 'todo' %>" style="display: none;">
                                 <% @todo_writer_dict[id].each do |o|%>
@@ -79,7 +86,7 @@
                 </ul>
             <%end%>
         </div>
-        <div class="col-md-3 op-body-bg-middle" id="navigation">
+        <div class="col-md-3 op-body-bg-col-lable" id="navigation">
             <%@name_dict.each do |id, name|%>
                 <% count = 0 %>
                 <%if @doing_writer_dict[id].present?%>
@@ -89,7 +96,10 @@
                 <% end %>
                 <ul>
                     <li>
-                        <a href="#" onclick="swap('<%= name %>'+'doing');return false;"> <%= name + "\t" + count.to_s%> </a>
+                        <a class="col-md-12" href="#" onclick="swap('<%= name %>'+'todo');return false;">
+                            <p class="col-md-8 writer-label"><%= name %> </p>
+                            <p class="col-md-4 writer-label"><%= count.to_s + " tasks"%></p>
+                        </a>
                         <%if @doing_writer_dict[id].present?%>
                             <ul id="<%= name + 'doing'%>" style="display: none;">
                                 <% @doing_writer_dict[id].each do |o|%>
@@ -101,7 +111,7 @@
                 </ul>
             <%end%>
         </div>
-        <div class="col-md-3 op-body-bg-right" id="navigation">
+        <div class="col-md-3 op-body-bg-col-lable" id="navigation">
             <%@name_dict.each do |id, name|%>
                 <% count = 0 %>
                 <%if @done_writer_dict[id].present?%>
@@ -111,7 +121,10 @@
                 <% end %>
                 <ul>
                     <li>
-                        <a href="#" onclick="swap('<%= name %>'+'done');return false;"> <%= name + "\t" + count.to_s%> </a>
+                        <a class="col-md-12" href="#" onclick="swap('<%= name %>'+'todo');return false;">
+                            <p class="col-md-8 writer-label"><%= name %> </p>
+                            <p class="col-md-4 writer-label"><%= count.to_s + " tasks"%></p>
+                        </a>
                         <%if @done_writer_dict[id].present?%>
                             <ul id="<%= name + 'done'%>" style="display: none;">
                                 <% @done_writer_dict[id].each do |o|%>
@@ -132,13 +145,12 @@
 <script type="text/javascript">
 function swap(targetId){
   if (document.getElementById){
-        target = document.getElementById(targetId);
-            if (target.style.display == "none"){
-                target.style.display = "";
-            } else{
-                target.style.display = "none";
-            }
-                
+    target = document.getElementById(targetId);
+    if (target.style.display == "none"){
+        target.style.display = "";
+    } else{
+        target.style.display = "none";
+    }        
   }
 }
 

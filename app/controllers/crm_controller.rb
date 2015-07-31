@@ -12,7 +12,7 @@ class CrmController < ApplicationController
     end
 
     FileUtils.mkdir_p(CRM_PATH) unless File.directory?(CRM_PATH)
-
+    FileUtils.mkdir_p('public/uploads/data') unless File.directory?('public/uploads/data')
     # get existing file in public/uploads
     @oldFileName=nil
     if Dir[CRM_PATH+'/*.xlsm'][0]
@@ -103,6 +103,7 @@ class CrmController < ApplicationController
       #fields
       @oppty.opptyId               = opportunity["OpptyID"]
       @oppty.opptyName             = opportunity["OpptyName"]
+      @oppty.coordinate            = opportunity["coordinate"]
       @oppty.idiqCA                = opportunity["IDIQ_CA"]
       @oppty.status2               = opportunity["Status2"]
       @oppty.value                 = opportunity["Total Value $M"]
@@ -254,6 +255,7 @@ class CrmController < ApplicationController
     puts params[:oldFileName]
     @newFileName=params[:newFileName]
     @oldFileName=params[:oldFileName]
+    `python bin/ripExcel.py "public/uploads/#{@newFileName}" "public/uploads/data/"`
     data = `python bin/excelReader.py "public/uploads/#{@newFileName}"`
     data = JSON.parse(data)
     @changes = [] # holds list of hashes that contain what is changed
@@ -275,6 +277,7 @@ class CrmController < ApplicationController
         change = false
         id                    = opportunity["OpptyID"]
         name                  = opportunity["OpptyName"]
+        coordinate            = opportunity["coordinate"]
         idiqCA                = opportunity["IDIQ_CA"]
         status2               = opportunity["Status2"]
         value                 = opportunity["Total Value $M"]
@@ -378,6 +381,7 @@ class CrmController < ApplicationController
 
 				if name                     != oppty.opptyName                then diff ["opptyName"]               = name end
 				if idiqCA                   != oppty.idiqCA                   then diff ["idiqCA"]                  = idiqCA end
+        #if coordinate               != oppty.coordinate               then diff ["coordinate"]              = coordinate end
 				if status2                  != oppty.status2                  then diff ["status2"]                 = status2 end
 				if value                    != oppty.value                    then diff ["value"]                   = value end
 				if pWin                     != oppty.pWin                     then diff ["pWin"]                    = pWin end

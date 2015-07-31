@@ -15,19 +15,10 @@
 	padding: 10px !important;
 }
 
-.op-body-bg-left {
+.op-body-bg-col-lable {
 	background-color: #F8F8F8 !important;
-	border-color: black !important;
-}
-
-.op-body-bg-middle {
-	background-color: #F8F8F8 !important;
-	border-color: black !important;
-}
-
-.op-body-bg-right {
-	background-color: #F8F8F8 !important;
-	border-color: black !important;
+	border-color: white !important;
+	padding: 0px !important;
 }
 
 .text-edit a:link {
@@ -67,7 +58,12 @@
 }
 
 .regular-text a:link {
-  font-size: 75%;
-  color: #0000FF;
-  background-color: transparent !important;
+    font-size: 75%;
+    color: #0000FF;
+    background-color: transparent !important;
+}
+
+.writer-label {
+ 	font-size: 13px !important; 	
+ 	margin-bottom: 0px !important;
 }
