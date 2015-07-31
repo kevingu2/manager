@@ -35,7 +35,7 @@ def openFile(path):
         if not isinstance(value, float):
             value = value.encode('utf8')
         row_content[list_of_cols[cols].encode('utf8')] = value
-
+        row_content['coordinate'] = xlrd.cellname(rows,cols)
         ###############excel date conversion to string##############
         # because excel stores dates as floats, need to convert to datetime
         # and then convert that into a string
@@ -46,7 +46,6 @@ def openFile(path):
         #         date = newDate.strftime('%d/%m/%Y') #convert to string
         #         #print(newDate.strftime('%d/%m/%y'))
         #         row_content['RFPDate'] = date
-
     info.append(row_content.copy())
   return info
 
