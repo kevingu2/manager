@@ -44,6 +44,7 @@ Rails.application.configure do
   config.assets.precompile += %w( jquery.growl.js)
   config.assets.precompile += %w( Sortable.js)
   config.assets.precompile += %w( updateStatus.js)
+  config.assets.precompile += %w( tasks.js)
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
