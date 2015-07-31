@@ -581,7 +581,7 @@ class CrmController < ApplicationController
 
     end
     if download_path!=""
-      reconstruct(download_path)
+      puts `python bin/recreateExcel.py "#{download_path}" "public/uploads/data/xl/sharedStrings.xml" "public/uploads/data/xl/worksheets/sheet2.xml"`
       name = download_path.gsub("new_", "")
       File.rename download_path, name
       file = File.open(name, "rb")
