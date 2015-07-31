@@ -24,9 +24,12 @@ def openFile(path):
   for cols in range(workSheet.ncols):
     list_of_cols.append(workSheet.cell_value(0, cols))
 
+  rowCount = 1
   for rows in range(workSheet.nrows):
       #info = []
     row_content = {}
+    row_content['coordinate'] = rowCount
+    rowCount += 1
     for cols in range(workSheet.ncols):
         test = 0
         value = workSheet.cell_value(rows,cols)
@@ -35,7 +38,6 @@ def openFile(path):
         if not isinstance(value, float):
             value = value.encode('utf8')
         row_content[list_of_cols[cols].encode('utf8')] = value
-        row_content['coordinate'] = xlrd.cellname(rows,cols)
         ###############excel date conversion to string##############
         # because excel stores dates as floats, need to convert to datetime
         # and then convert that into a string

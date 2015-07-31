@@ -23,8 +23,8 @@ for row in ws.rows:
     rowCount += 1
 
 idToRow.pop('OpptyID')
-pickle.dump(coordinateToValue, open('coordinateToValue', 'wb'))
-pickle.dump(idToRow, open('idToRow', 'wb'))
+pickle.dump(coordinateToValue, open('public/uploads/data/coordinateToValue', 'wb'))
+pickle.dump(idToRow, open('public/uploads/data/idToRow', 'wb'))
 
 newFileName = fileName.replace('.xlsm', '.zip')
 shutil.copy(fileName, newFileName)
