@@ -2,7 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .browse-page-title {
-	text-align: center;
+	font-family: verdana, arial, helvetica, sans-serif;
+    padding: 10px;
+    text-align: center;
+    font-size: 32px;
 }
 
 td {
