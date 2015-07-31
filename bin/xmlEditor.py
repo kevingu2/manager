@@ -22,43 +22,44 @@ def isOnlyReference(string, cellMatches):
     print cellMatches[string]
 
 def pointSheetToString(coordinate, uniqueCount, sheet, sheetDir):
-    print "*"*5, coordinate, uniqueCount,"*"*5
     regexString = r'r="%s" s="(\d*)" t="(\w*)"><v>(\d*)</v>' % coordinate # my brain hurts from this
     match = re.search(regexString, sheet)
 
     if match == None: # if the cell is blank, it will not find. this is the backup
         regexString = r'r="%s" s="(\d*)"/>' % coordinate
-        print "failed to find match for: " + coordinate, uniqueCount
+        match = re.search(regexString, sheet)
+        print "*"*30,match.group(1)
+        replaceString = "r=\"" + coordinate + "\" s=\"" + match.group(1) + "\" t=\"s\"><v>" + str(uniqueCount) + "</v></c>"
+        newSheet = re.sub(regexString, replaceString, sheet)
+        index = newSheet.index(coordinate)
+        print newSheet[index-20:index+100]
+        # print "failed to find match for: " + coordinate, uniqueCount
         #TODO!!!!!!!!!!!!!!!
     else:
         replaceString = "r=\"" + coordinate + "\" s=\"" + match.group(1) + "\" t=\"" + match.group(2) + "\"><v>" + str(uniqueCount) + "</v>" # this made me cry a little inside
         newSheet = re.sub(regexString, replaceString, sheet)
-        f = open(sheetDir, 'wb')
-        f.write(newSheet)
-        f.close()
+        print uniqueCount
+    f = open(sheetDir, 'wb')
+    f.write(newSheet)
+    f.close()
+    return newSheet
 
 def createNewCellValue(string, sharedStrings, coordinate, sheet, sharedStringsDir, sheetDir): # appends string to the end of sharedStrings.xml and increments the string count
     match = re.search(r'uniqueCount="(\d*)"', sharedStrings) # get the uniqueCount
     oldUniqueCount = int(match.group(1))
     newUniqueCount = oldUniqueCount + 1 # increment it by one
-    pointSheetToString(coordinate, oldUniqueCount, sheet, sheetDir)
+    sheet = pointSheetToString(coordinate, oldUniqueCount, sheet, sheetDir)
     sharedStrings = sharedStrings.replace(str(oldUniqueCount), str(newUniqueCount)) # replace it with the new count
     newSharedStrings = sharedStrings[:sharedStrings.index('</sst>')] + '<si><t>' + string + '</t></si>' + sharedStrings[sharedStrings.index('</sst>'):]
     f = open(sharedStringsDir, 'wb')
     f.write(newSharedStrings)
-    f.close()
-    print "z"*5, string, coordinate, "z"*5
-    return newSharedStrings
-
+    f.close
+    return newSharedStrings, sheet
 
 args = sys.argv
 sharedStringsDir = args[1]
 sheetDir = args[2]
 strs = args[3]
-print "*"*10
-print os.path.isfile(sharedStringsDir)
-print os.path.isfile(sheetDir)
-print "*"*10
 # open file and find all of the input strings
 sharedStrings = open(sharedStringsDir, 'r').read()
 sheet = open(sheetDir).read() # this is the PipelineView sheet
@@ -90,7 +91,5 @@ cols = findCols(cols)
 coordinates = []
 for index in range(len(cols)):
     coordinates.append(cols[index] + str(rows[index]))
-print coordinates
-print changes
 for index in range(len(coordinates)):
-    sharedStrings = createNewCellValue(changes[index], sharedStrings, coordinates[index], sheet, sharedStringsDir, sheetDir)
+    sharedStrings,sheet = createNewCellValue(changes[index], sharedStrings, coordinates[index], sheet, sharedStringsDir, sheetDir)
