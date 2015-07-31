@@ -56,7 +56,7 @@ class OpptiesController < ApplicationController
         puts oppty_params.to_json
         arg="["
         JSON.parse(oppty_params.to_json).each do |item|
-          arg << '[\'' + @oppty.opptyId + '\', \'' + item[0] + '\', \'' + item[1] + '\'], '
+          arg << '[\'' + @oppty.coordinate + '\', \'' + item[0] + '\', \'' + item[1] + '\'], '
 
         end
         arg = arg[0..-3]
@@ -64,7 +64,8 @@ class OpptiesController < ApplicationController
       end
       puts arg
       puts "starting python"
-      puts `python bin/cellEditor.py "public/uploads/#{excelFileName}" "#{arg}"`
+      puts `python bin/xmlEditor.py "public/uploads/data/xl/sharedStrings.xml" "public/uploads/data/xl/worksheets/sheet2.xml" "#{arg}"`
+      #puts `python bin/cellEditor.py "public/uploads/#{excelFileName}" "#{arg}"`
       puts "done"
       if @oppty.update(oppty_params)
         format.html { redirect_to @oppty, notice: 'Oppty was successfully updated.' }

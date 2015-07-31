@@ -103,6 +103,7 @@ class CrmController < ApplicationController
       #fields
       @oppty.opptyId               = opportunity["OpptyID"]
       @oppty.opptyName             = opportunity["OpptyName"]
+      @oppty.coordinate            = opportunity["coordinate"]
       @oppty.idiqCA                = opportunity["IDIQ_CA"]
       @oppty.status2               = opportunity["Status2"]
       @oppty.value                 = opportunity["Total Value $M"]
@@ -276,6 +277,7 @@ class CrmController < ApplicationController
         change = false
         id                    = opportunity["OpptyID"]
         name                  = opportunity["OpptyName"]
+        coordinate            = opportunity["coordinate"]
         idiqCA                = opportunity["IDIQ_CA"]
         status2               = opportunity["Status2"]
         value                 = opportunity["Total Value $M"]
@@ -379,6 +381,7 @@ class CrmController < ApplicationController
 
 				if name                     != oppty.opptyName                then diff ["opptyName"]               = name end
 				if idiqCA                   != oppty.idiqCA                   then diff ["idiqCA"]                  = idiqCA end
+        #if coordinate               != oppty.coordinate               then diff ["coordinate"]              = coordinate end
 				if status2                  != oppty.status2                  then diff ["status2"]                 = status2 end
 				if value                    != oppty.value                    then diff ["value"]                   = value end
 				if pWin                     != oppty.pWin                     then diff ["pWin"]                    = pWin end
