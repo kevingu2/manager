@@ -1,8 +1,7 @@
 <ul class="nav">
     <li id="<%= @current_task.id %>">
-      <a href=<%="/tasks/deleteOpportunity?id="+@current_task.id.to_s%>>
-        <img class="btn-x" src="/assets/redx.png" alt="X" border="0"/>
-      </a>
+      <br>
+      <img class="btn-x" onclick="deleteOpt(<%= @current_task.id %>)" src="/assets/redx.png" alt="X" border="0"/>
       <div class="task-bg">
         <h5 class="text-edit"><b><%= link_to @current_task.oppty.opptyName,
                                                                  @current_task.oppty%></b></h5>

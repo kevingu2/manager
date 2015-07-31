@@ -105,13 +105,9 @@ body {
 }
 a:hover {
   background-color: transparent !important;
-}
-img{
   cursor:pointer;
 }
-.ax a{
-  cursor:pointer;
-}
+
 a:visited {
   color: inherit;
 }
@@ -210,7 +206,7 @@ img {
 }
 
 .tile__list img {
-  cursor: move;
+  cursor: pointer;
   margin: 10px;
   border-radius: 100%;
 }
