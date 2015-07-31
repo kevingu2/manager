@@ -43,7 +43,8 @@
                 <%end%>
                 <ul>
                     <li>
-                        <a href="#" onclick="swap('<%= name %>'+'assigned');return false;"> <%= name + "\t" + count.to_s%> </a>
+                        <a class="col-md-8" href="#" onclick="swap('<%= name %>'+'assigned');return false;"> <%= name %> </a>
+                        <a class="col-md-4"> <%= count.to_s + " tasks"%> </a>
                         <%if @assigned_writer_dict[id].present?%>
                             <ul id="<%= name + 'assigned' %>" style="display: none;">
                                 <% @assigned_writer_dict[id].each do |o|%>
@@ -65,7 +66,8 @@
                 <% end %>
                 <ul>
                     <li>
-                        <a href="#" onclick="swap('<%= name %>'+'todo');return false;"> <%= name + "\t" + count.to_s%> </a>
+                        <a class="col-md-8" href="#" onclick="swap('<%= name %>'+'todo');return false;"> <%= name %> </a>
+                        <a class="col-md-4"> <%= count.to_s + " tasks"%> </a>
                         <%if @todo_writer_dict[id].present? %>
                             <ul id="<%= name + 'todo' %>" style="display: none;">
                                 <% @todo_writer_dict[id].each do |o|%>
@@ -89,7 +91,8 @@
                 <% end %>
                 <ul>
                     <li>
-                        <a href="#" onclick="swap('<%= name %>'+'doing');return false;"> <%= name + "\t" + count.to_s%> </a>
+                        <a class="col-md-8" href="#" onclick="swap('<%= name %>'+'doing');return false;"> <%= name %> </a>
+                        <a class="col-md-4"> <%= count.to_s + " tasks"%> </a>
                         <%if @doing_writer_dict[id].present?%>
                             <ul id="<%= name + 'doing'%>" style="display: none;">
                                 <% @doing_writer_dict[id].each do |o|%>
@@ -111,7 +114,8 @@
                 <% end %>
                 <ul>
                     <li>
-                        <a href="#" onclick="swap('<%= name %>'+'done');return false;"> <%= name + "\t" + count.to_s%> </a>
+                        <a class="col-md-8" href="#" onclick="swap('<%= name %>'+'done');return false;"> <%= name %> </a>
+                        <a class="col-md-4"> <%= count.to_s + " tasks"%> </a>
                         <%if @done_writer_dict[id].present?%>
                             <ul id="<%= name + 'done'%>" style="display: none;">
                                 <% @done_writer_dict[id].each do |o|%>
@@ -132,13 +136,12 @@
 <script type="text/javascript">
 function swap(targetId){
   if (document.getElementById){
-        target = document.getElementById(targetId);
-            if (target.style.display == "none"){
-                target.style.display = "";
-            } else{
-                target.style.display = "none";
-            }
-                
+    target = document.getElementById(targetId);
+    if (target.style.display == "none"){
+        target.style.display = "";
+    } else{
+        target.style.display = "none";
+    }        
   }
 }
 
