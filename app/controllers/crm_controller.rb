@@ -12,7 +12,7 @@ class CrmController < ApplicationController
     end
 
     FileUtils.mkdir_p(CRM_PATH) unless File.directory?(CRM_PATH)
-
+    FileUtils.mkdir_p('public/uploads/data') unless File.directory?('public/uploads/data')
     # get existing file in public/uploads
     @oldFileName=nil
     if Dir[CRM_PATH+'/*.xlsm'][0]
@@ -254,6 +254,7 @@ class CrmController < ApplicationController
     puts params[:oldFileName]
     @newFileName=params[:newFileName]
     @oldFileName=params[:oldFileName]
+    `python bin/ripExcel.py "public/uploads/#{@newFileName}" "public/uploads/data/"`
     data = `python bin/excelReader.py "public/uploads/#{@newFileName}"`
     data = JSON.parse(data)
     @changes = [] # holds list of hashes that contain what is changed
