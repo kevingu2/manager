@@ -27,32 +27,27 @@
               		</td>
 
                 	<td class="col-md-1">
-                    <form action="limit" method="get">
-                      <label class="toggle-btn radio black-text">
-                        <input id="thirty_days_left" name="within" type="radio" value=30 checked="false">30 Days
-                      </label> 
-                      <label class="toggle-btn radio black-text">
-                        <input id="sixty_days_left" name="within" type="radio" value=60 checked="false">60 Days
-                      </label>
-                      <label class="toggle-btn radio black-text">
-                        <input id="ninety_days_left" name="within" type="radio" value=90 checked="false">90 Days
-                      </label> 
-                      <label class="toggle-btn radio black-text">
-                        <input id="all-days" name="within" type="radio" value=999999 checked="true">90+ Days
-                      </label> 
+                    <!--form action="limit" method="get"-->
+                    <div>
+                      <div class="toggle-btn radio black-text" id="within" name="within">
+                        <input id="thirty_days_left" name="limiting" type="radio" value="30" checked="false">30 Days
+                        <br>
+                  
+                        <input id="sixty_days_left" name="limiting" type="radio" value="60" checked="false">60 Days
+                        <br>
+                      
+                        <input id="ninety_days_left" name="limiting" type="radio" value="90" checked="false">90 Days
+                        <br>
+                      
+                        <input id="all-days" name="limiting" type="radio" value="999999" checked="true">90+ Days
+                      </div> 
                       <td>
-                        <button name="radio-style-btn" type="submit" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</button>
+                        <a href="#" name="radio-style-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
                       </td>
-                    </form>
+                    </div>
+                    <!--/form-->
                   </td>
-
-
                 </div>
-
-                <!-- this is the space between the radio buttons and the drop down menu for sorting.
-                    it prevents the ratio of clicking not to be a random place on the screen -->
-                <!--td class="col-md-2">
-                </td-->
 
                 <!-- drop down menu in Browse Page to sort the opportunities by a specific field -->
                 <div class="col-md-2">
@@ -73,7 +68,7 @@
                         <option id="opt7" value="proposalMgr">Proposal Managers</option>
                         <option id="opt8" value="value">Value</option>
             				  </select>
-                          
+                      
                 			<a href="#" name="sort-btn" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
               		  </div>  
                   </td>
@@ -82,7 +77,7 @@
               </tr>
             </table>
           </div>
-    	</div>		
+        </div>		
       <br>
     </div>
 
@@ -217,26 +212,41 @@
     });
 
     $(document).on("click", "a[name='radio-style-btn']", function (e) {
-      select = document.getElementById('limiting').value;
+      var radioButtons = $("#within input:radio[name='limiting']");
+      var selectedIndex = radioButtons.index(radioButtons.filter(':checked'));
+      select = document.getElementsByName('limiting')[selectedIndex].value;
       if (window.location.href.indexOf("within") > -1) {
         var url = window.location.toString();
-        if (window.location.href.indexOf(999999) > -1)
-          window.location = url.replace(/within=999999/, 'within='+select);
-        else if (window.location.href.indexOf(30) > -1)
-          window.location = url.replace(/within=30/, 'within='+select);
-        else if (window.location.href.indexOf(60) > -1)
-          window.location = url.replace(/within=60/, 'within='+select);
-        else if (window.location.href.indexOf(90) > -1)
-          window.location = url.replace(/within=90/, 'within='+select);
+        if (window.location.href.indexOf("within=999999") > -1)
+          window.location.href = url.replace(/within=999999/, 'within='+select);
+        else if (window.location.href.indexOf("within=30") > -1)
+          window.location.href = url.replace(/within=30/, 'within='+select);
+        else if (window.location.href.indexOf("within=60") > -1)
+          window.location.href = url.replace(/within=60/, 'within='+select);
+        else if (window.location.href.indexOf("within=90") > -1)
+          window.location.href = url.replace(/within=90/, 'within='+select);
       }
-      else if (select == 999999)
-        window.location.assign( window.location.href );
-      else if (select == 30)
-        window.location.assign( window.location.href + "?within=30" );
-      else if (select == 60)
-        window.location.assign(window.location.href + "?within=60");
-      else if (select == 90)
-        window.location.assign(window.location.href + "?within=90");
+      else if (window.location.href.substring(window.location.href.indexOf("/browse/index"), window.location.href.toString().length ) == "<%= browse_index_path %>") {
+        if (select == 999999)
+          window.location.assign( window.location.href );
+        else if (select == 30)
+          window.location.assign( window.location.href + "?within=30" );
+        else if (select == 60)
+          window.location.assign(window.location.href + "?within=60");
+        else if (select == 90)
+          window.location.assign(window.location.href + "?within=90");
+      }
+      else {
+        if (select == 999999)
+          window.location.assign( window.location.href );
+        else if (select == 30)
+          window.location.assign( window.location.href + "&within=30" );
+        else if (select == 60)
+          window.location.assign(window.location.href + "&within=60");
+        else if (select == 90)
+          window.location.assign(window.location.href + "&within=90");
+      }
+
     });
 
   </script>
