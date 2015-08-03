@@ -29,20 +29,11 @@ body {
 
 .btn-x {
   position:absolute;
-  top:30px;
-  left:15px;
+  top:15px;
+  right:-1px;
   padding: 0px;
-  text-align: center;
-  color: white;
-  background-color: red;
-  width: 20px;
-  height: 20px;
-  z-index: 2;
-}
-
-.btn-x:hover {
-  background-color: #CC0000 !important;
-  color: white !important;
+  width: 15px;
+  height: 18px;
 }
 
 .op-title {
@@ -78,9 +69,6 @@ body {
   z-index: 1;
 }
 
-.task-link:hover {
-  background-color: #F8F8F8 !important;
-}
 
 .tasks-queue {
   padding-bottom: 25px;
@@ -115,7 +103,14 @@ body {
   color: #0000FF;
   background-color: transparent !important;
 }
+a:hover {
+  background-color: transparent !important;
+  cursor:pointer;
+}
 
+a:visited {
+  color: inherit;
+}
 
 h1 {
   color: #FF3F00;
@@ -184,7 +179,7 @@ img {
 .tile {
   width: 22%;
   min-width: 245px;
-  color: #FF7270;
+  color: black;
   padding: 10px 30px;
   text-align: center;
   margin-top: 15px;
@@ -193,11 +188,13 @@ img {
   background-color: #fff;
   display: inline-block;
   vertical-align: top;
+  background-color:gray
 }
 .tile__name {
-  cursor: move;
+  color: black;
+  font-weight: bold;
   padding-bottom: 10px;
-  border-bottom: 1px solid #FF7373;
+  border-bottom: 1px solid black;
 }
 
 .tile__list {
@@ -209,7 +206,7 @@ img {
 }
 
 .tile__list img {
-  cursor: move;
+  cursor: pointer;
   margin: 10px;
   border-radius: 100%;
 }

@@ -1,13 +1,16 @@
 <ul class="nav">
-<li id="<%= @current_task.id %>"><a style="padding: 0px" class="btn-x" href=<%="/tasks/deleteOpportunity?id="+ @current_task.id.to_s%>  role="button">X</a>
-  <div class="task-bg"> <h3 class="text-edit"><b><%= link_to @current_task.oppty.opptyName, @current_task.oppty%></b></h3>
-    <p>Due in <%= (@current_task.oppty.proposalDueDate-Date.today).to_i %>days</p>
-    <p>Priority: (HIGH,MED,LOW)</p>
-    <form action =<%=histories_path %> method="post">
-      <input hidden=true type="integer" name="oppty_id" value=<%= @current_task.oppty.id%>>
-      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-      <button style="z-index: 3" type="submit">Add to history</button>
-    </form>
-  </div></a>
-</li>
+    <li id="<%= @current_task.id %>">
+      <br>
+      <img class="btn-x" onclick="deleteOpt(<%= @current_task.id %>)" src="/assets/redx.png" alt="X" border="0"/>
+      <div class="task-bg">
+        <h5 class="text-edit"><b><%= link_to @current_task.oppty.opptyName,
+                                                                 @current_task.oppty%></b></h5>
+        <p>Due in <%= (@current_task.oppty.proposalDueDate-Date.today).to_i %> days</p>
+        <!--<form action =<%=histories_path %> method="post">
+          <input hidden=true type="integer" name="oppty_id" value=<%= @current_task.oppty.id%>>
+          <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+          <button style="z-index: 3" type="submit">Add to history</button>
+        </form>-->
+      </div>
+    </li>
  </ul>
