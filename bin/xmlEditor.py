@@ -70,10 +70,10 @@ matches = tuple(re.finditer(r'<t>(.*)</t>', sharedStrings, re.M|re.I))
 stringMatches = [m.group(1) for m in matches]#current groups are [<t>] [whatwewant] [</t>], this keeps only what we want
 
 
-matches = tuple(re.finditer(r'<c r="(.*)" s="\d*" t="(.*)">\s*<v>(.*)</v>', sheet, re.M|re.I)) # magical regex I wrote. Seriously
-cellMatches = {}
-for m in matches:
-    cellMatches[m.group(1)] = m.group(3) # group 1 is the cell, group 3 is the corresponding sharedStrings number
+# matches = tuple(re.finditer(r'<c r="(.*)" s="\d*" t="(.*)">\s*<v>(.*)</v>', sheet, re.M|re.I)) # magical regex I wrote. Seriously
+# cellMatches = {}
+# for m in matches:
+#     cellMatches[m.group(1)] = m.group(3) # group 1 is the cell, group 3 is the corresponding sharedStrings number
 
 
 data = [[i for i in x.strip(" []").split(", ")] for x in strs.strip('[]').split("],")] # magic
@@ -85,7 +85,7 @@ columns = []
 for d in data:
     rows.append(d[0].strip('\''))
     cols.append(d[1].strip('\''))
-    changes.append(d[2].strip('\''))
+    changes.append(d[2].strip('\'').replace('&', '&amp;'))
 
 cols = findCols(cols)
 coordinates = []
