@@ -65,18 +65,22 @@ sharedStrings = open(sharedStringsDir, 'rb').read()
 sheet = open(sheetDir, 'rb').read() # this is the PipelineView sheet
 excelValues = pickle.load(open('public/uploads/data/coordinateToValue', 'rb')) # load dictionary of {cellCoordinate : cellValue}
 
-# get all of the pairs in the files
-matches = tuple(re.finditer(r'<t>(.*)</t>', sharedStrings, re.M|re.I))
-stringMatches = [m.group(1) for m in matches]#current groups are [<t>] [whatwewant] [</t>], this keeps only what we want
+#get all of the pairs in the files
+matches = re.finditer(r'<si><t>(.*?)</t></si>', sharedStrings, re.M|re.I)
+index = 0
+stringMatches = defaultdict(int)
+for m in matches:
+    stringMatches[m.group(1)] = index
+    index += 1
+#stringMatches = [m.group(1) for m in matches]#current groups are [<t>] [whatwewant] [</t>], this keeps only what we want
 
-
-matches = tuple(re.findall(r'<c r="(\w*)" s="\d*" t="(\w*)">\s*<v>(\d*)</v>', sheet, re.M|re.I)) # magical regex I wrote. Seriously
+matches = re.finditer(r'<c r="(\w*)" s="\d*" t="(\w*)">\s*<v>(\d*)</v>', sheet, re.M|re.I) # magical regex I wrote. Seriously
 cellMatches = {}
 for m in matches:
     cellMatches[m.group(1)] = m.group(3) # group 1 is the cell, group 3 is the corresponding sharedStrings number
 
 
-data = [[i for i in x.strip(" []").split(", ")] for x in strs.strip('[]').split("],")] # magic
+data = [[i for i in x.strip(" []").split("&&& ")] for x in strs.strip('[]').split("],")] # magic
 #####get the rows/cols/valuesToChange#########
 rows = []
 cols = []
