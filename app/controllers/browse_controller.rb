@@ -13,7 +13,7 @@ class BrowseController < ApplicationController
     end
 
     #get all Oppty objects from database into the @oppties collection
-    @oppties = Oppty.where("proposalDueDate >= ? and proposalDueDate <= ? and rfpDate >= ?", Date.today.to_s, endDate.to_s, Date.today.to_s).order(params[:sort]).page(params[:page]).per_page(15)
+    @oppties = Oppty.where(["opptyName LIKE ? and proposalDueDate >= ? and proposalDueDate <= ? and rfpDate >= ?", "%#{params[:search]}%", Date.today.to_s, endDate.to_s, Date.today.to_s]).order(params[:sort]).page(params[:page]).per_page(15)
     
     @done=UserOppty.where(user_id:session[:user_id]).where(status:0).joins(:oppty).includes(:oppty)
     @doing=UserOppty.where(user_id:session[:user_id]).where(status:1).joins(:oppty).includes(:oppty)
@@ -38,7 +38,7 @@ class BrowseController < ApplicationController
         endDate = Date.today()+999999
     end
 
-    @oppties = Oppty.where(["opptyName LIKE ? and proposalDueDate >= ? and rfpDate >= ?", "%#{params[:search]}%", Date.today.to_s, Date.today.to_s]).order(params[:sort]).page(params[:page]).per_page(15)
+    @oppties = Oppty.where(["opptyName LIKE ? and proposalDueDate >= ? and proposalDueDate <= ? and rfpDate >= ?", "%#{params[:search]}%", Date.today.to_s, endDate.to_s, Date.today.to_s]).order(params[:sort]).page(params[:page]).per_page(15)
 
     @done=UserOppty.where(user_id:session[:user_id]).where(status:0).joins(:oppty).includes(:oppty)
     @doing=UserOppty.where(user_id:session[:user_id]).where(status:1).joins(:oppty).includes(:oppty)

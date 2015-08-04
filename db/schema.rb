@@ -21,6 +21,11 @@ ActiveRecord::Schema.define(version: 20150803150902) do
     t.datetime "updated_at"
   end
 
+  create_table "browses", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "histories", force: true do |t|
     t.string   "opptyId"
     t.string   "opptyName"
