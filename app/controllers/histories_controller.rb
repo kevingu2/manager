@@ -9,10 +9,20 @@ class HistoriesController < ApplicationController
   # GET /histories
   # GET /histories.json
   def index
-    @all_histories=History.all
-    @user_histories = UserHistory.where(user_id: @user.id).includes(:history).paginate(:per_page => 20, :page => params[:page])
+    if params[:within] == "mine"
+      @histories = UserHistory.where(user_id: @user.id).includes(:history).order(params[:sort]).page(params[:page]).per_page(15)
+    else
+      @histories=History.all.order(params[:sort]).page(params[:page]).per_page(15)
+    end
   end
 
+  def search 
+    if params[:within] == "mine"
+      @histories = UserHistory.where(user_id: @user.id).includes(:history).order(params[:sort]).page(params[:page]).per_page(15)
+    else
+      @histories=History.all.order(params[:sort]).page(params[:page]).per_page(15)
+    end
+  end
   # GET /histories/1
   # GET /histories/1.json
   def show
@@ -95,4 +105,5 @@ class HistoriesController < ApplicationController
         @user = User.find(session[:user_id])
       end
     end
+
 end
