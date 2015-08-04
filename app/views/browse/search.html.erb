@@ -175,7 +175,7 @@
         window.location.assign(window.location.href.substring (0, window.location.href.indexOf("sort")));
       else if (select == "none")
         window.location.assign( window.location.href );
-      else if (window.location.href.substring(window.location.href.indexOf("/browse/index"), window.location.href.toString().length ) == "<%= browse_index_path %>") {
+      else if (window.location.href.substring(window.location.href.indexOf("/browse/search"), window.location.href.toString().length ) == "<%= browse_search_path %>") {
         if (select == "proposalDueDate")
           window.location.assign( window.location.href + "?sort=proposalDueDate" );
         else if (select == "opptyName")
@@ -224,7 +224,7 @@
         else if (window.location.href.indexOf("within=90") > -1)
           window.location.href = url.replace(/within=90/, 'within='+select);
       }
-      else if (window.location.href.substring(window.location.href.indexOf("/browse/index"), window.location.href.toString().length ) == "<%= browse_index_path %>") {
+      else if (window.location.href.substring(window.location.href.indexOf("/browse/search"), window.location.href.toString().length ) == "<%= browse_search_path %>") {
         if (select == 999999)
           window.location.assign( window.location.href );
         else if (select == 30)
@@ -246,9 +246,10 @@
       }
 
     });
-    
+
 
     window.onload = function() {
+      
       if (window.location.href.indexOf("within") > -1) {
         if (window.location.href.indexOf("within=999999") > -1)
           document.getElementById("all_days").checked = true;
@@ -278,10 +279,9 @@
         else if (window.location.href.indexOf("value") > -1)
           document.getElementById("opt8").selected = true;
       }
-    }
 
 
-    window.onload = function() {
+
       console.log("Inside function");
       if (document.cookie.indexOf('mycookie')==-1||document.cookie.indexOf('mycookie')==0) {
       	console.log("This is NOT a Refresh");
@@ -293,7 +293,7 @@
       	// reset cookie
         delete_cookie('mycookie');
         // not first visit, so alert
-        location.href = '<%=browse_index_path%>';
+        location.href = '<%=browse_search_path%>';
       }
     }
 
