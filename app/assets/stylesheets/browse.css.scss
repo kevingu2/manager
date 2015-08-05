@@ -12,10 +12,20 @@ td {
 	padding: 0 !important;
 }
 
+.input#search {
+	width: 1000px !important;	
+}
+
 .jumbotron {
 	padding-top: 0px !important;
 	margin-right: 50px !important;
 	margin-left: 50px !important;
+}
+
+.search-form-style {
+	padding-top:20px;
+	padding-right: 101px;
+    padding-left: 101px;
 }
 
 .search-form {
@@ -26,7 +36,7 @@ td {
 
 .btn-search {
 	padding: 0px !important; 
-	float:left;
+	float:right !important;
 	border-style: none; 
 	background-color: #005DA0;
 	width: 40px; height: 40px;
