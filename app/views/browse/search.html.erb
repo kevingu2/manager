@@ -82,10 +82,9 @@
     <h2 class="black-text browse-page-title">Opportunities</h2>
 
     <div class="row" style="font-weight: bold;">
-      <div class="col-md-2" style="text-align: center;"> Opportunity ID </div>
+      <div class="col-md-3" style="text-align: center;"> Opportunity ID </div>
       <div class="col-md-6"> Opportunity Name </div>
-      <div class="col-md-2"> Due Date </div>
-      <div class="col-md-2"> Status </div>
+      <div class="col-md-3"> Due Date </div>
     </div>
 
     <hr />
@@ -93,50 +92,14 @@
     <div id="allDays">
       <% unless @oppties == nil %>
         <% @oppties.each do |o| %>
-          <% if @to_do.include?(o) %>
-            <div class="success row">
-              <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
-              <div class="col-md-6">
-                <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
-                <div class="little-text"><%= o.slComments %></div>
-              </div>
-              <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
-              <div class="col-md-2">Assigned</div>
+          <div class="media row">
+            <div class="col-md-3" style="text-align: center;"><%= o.opptyId %></div>
+            <div class="col-md-6">
+              <div class="regular-text"><%= link_to o.opptyName, o %></div>
+              <div class="little-text"><%= o.slComments %></div>
             </div>
-
-          <% elsif @doing.include?(o) %>
-            <div class="warning row">
-              <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
-              <div class="col-md-6">
-                <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
-                <div class="little-text"><%= o.slComments %></div>
-              </div>
-              <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
-              <div class="col-md-2">In Progress</div>
-            </div>
-
-          <% elsif @none.include?(o) %>
-            <div class="active row">
-              <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
-              <div class="col-md-6">
-                <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
-                <div class="little-text"><%= o.slComments %></div>
-              </div>
-              <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
-              <div class="col-md-2">None</div>
-            </div>
-                
-          <% else %>
-            <div class="media row">
-              <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
-              <div class="col-md-6">
-                <div class="regular-text"><%= link_to o.opptyName, o %></div>
-                <div class="little-text"><%= o.slComments %></div>
-              </div>
-              <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
-              <div class="col-md-2">This block must be deleted</div>
-            </div>
-          <% end %>
+            <div class="col-md-3"><%= o.proposalDueDate.to_s %></div>
+          </div>
         <% end %>
       <% end %> 
 
