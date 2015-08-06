@@ -13,71 +13,77 @@
                    <input id="search-button" class="btn-search" type="image" src="/assets/search.png" alt="Submit_tag"> 
               </td>
             </tr>  
-          </table>
-        </form>
-    			<!-- Radio Buttons in Browse page to limit the search to opportunities within 30, 60, or 90 days -->
-          <div class="form">
-            <table>
-              <tr>
-                <div class="col-md-9">
-                  <td class="col-md-1">
-                    <label class="black-text field-label" style="padding-left: 101px;">
-                  		Within:
-                		</label>
-              		</td>
 
-                	<td class="col-md-1">
-                    <form action="limit" method="get">
-                      <label class="toggle-btn radio black-text">
-                        <input id="thirty_days_left" name="within" type="radio" value=30 checked="false">30 Days
-                      </label> 
-                      <label class="toggle-btn radio black-text">
-                        <input id="sixty_days_left" name="within" type="radio" value=60 checked="false">60 Days
-                      </label>
-                      <label class="toggle-btn radio black-text">
-                        <input id="ninety_days_left" name="within" type="radio" value=90 checked="false">90 Days
-                      </label> 
-                      <label class="toggle-btn radio black-text">
-                        <input id="all-days" name="within" type="radio" value=999999 checked="true">90+ Days
-                      </label> 
-                      <td>
-                        <button name="radio-style-btn" type="submit" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</button>
-                      </td>
-                    </form>
-                  </td>
-                </div>
-
-                <!-- drop down menu in Browse Page to sort the opportunities by a specific field -->
-                <div class="col-md-2">
-                  <td class="col-md-1">
-                		<label class="black-text sort-dropdown-label">
-                  		Sort By:
-                		</label>
-                  </td>
-                	<td class="col-md-3">
-    				        <div>
-                			<select class="selector col-md-9" id="sorting" name="sorting">
-                  			<option id="opt1" value="none">none</option>
-                        <option id="opt2" value="opptyName">Opportunity Name</option>
-                        <option id="opt3" value="opptyId">Opportunity ID</option>
-                        <option id="opt4" value="proposalDueDate">Days Left</option>
-                        <option id="opt5" value="captureMgr">Capture Managers</option>
-                        <option id="opt6" value="programMgr">Program Managers</option>
-                        <option id="opt7" value="proposalMgr">Proposal Managers</option>
-                        <option id="opt8" value="value">Value</option>
-            				  </select>
-                          
-                			<a href="#" name="sort-btn" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
-              		  </div>  
-                  </td>
-                </div>
+        <table cellpadding="0px" cellspacing="0px" class="col-md-12">
+          <tr style="font-size:24px;">
+            <td class="col-md-1"></td>
+            <td class="col-md-10" style="padding-top: 15px !important;">
+              <%= form_tag(browse_index_path, :method => "get", id: "search-form" ) do %>
+                <%= text_field_tag :search, params[:search], placeholder: "Search" %>
+                <input id="search-button" class="btn-search" type="image" style="width: 4% !important;" src="/assets/search.png" alt="Submit_tag"> 
                 <td class="col-md-1"></td>
-              </tr>
-            </table>
-          </div>
-    	</div>		
-      <br>
-    </div>
+              <% end %>
+            </td>
+          </tr>
+        </table>
+      	<!-- Radio Buttons in Browse page to limit the search to opportunities within 30, 60, or 90 days -->
+        <div class="form">
+          <table>
+            <tr>
+              <div class="col-md-9">
+                <td class="col-md-1">
+                  <label class="black-text field-label" style="padding-left: 101px;">
+                		Within:
+              		</label>
+              	</td>
+
+                <td class="col-md-1">
+                  <div>
+                    <div class="toggle-btn radio black-text" id="within" name="within">
+                      <input id="thirty_days_left" name="limiting" type="radio" value="30">30 Days
+                      <br>
+                    
+                      <input id="sixty_days_left" name="limiting" type="radio" value="60">60 Days
+                      <br>
+                        
+                      <input id="ninety_days_left" name="limiting" type="radio" value="90">90 Days
+                      <br>
+                        
+                      <input id="all-days" name="limiting" type="radio" value="999999" checked="true">90+ Days
+                    </div> 
+                    <td>
+                      <a href="#" name="radio-style-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
+                    </td>
+                  </div>
+                </td>
+              </div>
+
+              <!-- drop down menu in Browse Page to sort the opportunities by a specific field -->
+              <div class="col-md-2">
+                <td class="col-md-1">
+                  <label class="black-text sort-dropdown-label">
+                		Sort By:
+              		</label>
+                </td>
+              	<td class="col-md-3">
+      		        <div>
+                  	<select class="selector col-md-9" id="sorting" name="sorting">
+                			<option id="opt1" value="none">none</option>
+                      <option id="opt2" value="opptyName">Opportunity Name</option>
+                      <option id="opt3" value="opptyId">Opportunity ID</option>
+                      <option id="opt4" value="proposalDueDate">Days Left</option>
+                      <option id="opt5" value="captureMgr">Capture Managers</option>
+                      <option id="opt6" value="programMgr">Program Managers</option>
+                      <option id="opt7" value="proposalMgr">Proposal Managers</option>
+                      <option id="opt8" value="value">Value</option>
+          				  </select>
+                        
+                  	<a href="#" name="sort-btn" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
+                	</div>  
+                </td>
+              </div>
+              <td class="col-md-1"></td>
+            </tr>
 
     <h2 class="black-text browse-page-title">Opportunities</h2>
 
@@ -149,6 +155,17 @@
 
 
   <script>
+
+    function createClass(name,rules){
+      var style = document.createElement('style');
+      style.type = 'text/css';
+      document.getElementsByTagName('head')[0].appendChild(style);
+      if(!(style.sheet||{}).insertRule) 
+        (style.styleSheet || style.sheet).addRule(name, rules);
+      else
+        style.sheet.insertRule(name+"{"+rules+"}",0);
+    }
+    createClass('html body div div div.inner-search-bar.col-md-12 table.col-md-12 tbody tr td.col-md-10 form#search-form input#search',"width: 96% !important; padding-left: 10px !important;");
 
     $(document).on("click", "a[name='sort-btn']", function (e) {
       select = document.getElementById('sorting').value;
