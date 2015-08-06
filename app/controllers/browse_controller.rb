@@ -12,7 +12,6 @@ class BrowseController < ApplicationController
         endDate = Date.today()+999999
     end
 
-    params.merge(:sort => :sort, :within => :within)
     if params[:search]
         @oppties = Oppty.where("opptyName like ? and proposalDueDate >= ? and proposalDueDate <= ? and rfpDate >= ?", "%#{params[:search]}%", Date.today.to_s, endDate.to_s, Date.today.to_s).order(params[:sort]).page(params[:page]).per_page(15)
     else 
