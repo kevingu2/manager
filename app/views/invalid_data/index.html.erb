@@ -22,23 +22,39 @@
               <div class="col-md-9">
                 <td class="col-md-1">
                   <label class="black-text field-label" style="padding-left: 101px;">
-                		Within:
+                		Invalid Field:
               		</label>
             		</td>
 
-              	<td class="col-md-1">
+
+
+
+
+
+
+
+
+
+                <!-- ATTENTION SARAAAAAAAA -->
+                <!-- id and name and value MUST be changed -->
+
+
+
+
+
+              	<td class="col-md-2">
                   <div>
                     <div class="toggle-btn radio black-text" id="within" name="within">
-                      <input id="thirty_days_left" name="limiting" type="radio" value="30">30 Days
+                      <input id="thirty_days_left" name="limiting" type="radio" value="30">RFP Date Passed
                       <br>
                 
-                      <input id="sixty_days_left" name="limiting" type="radio" value="60">60 Days
+                      <input id="sixty_days_left" name="limiting" type="radio" value="60">X
                       <br>
                     
-                      <input id="ninety_days_left" name="limiting" type="radio" value="90">90 Days
+                      <input id="ninety_days_left" name="limiting" type="radio" value="90">Y
                       <br>
                     
-                      <input id="all-days" name="limiting" type="radio" value="999999" checked="true">90+ Days
+                      <input id="all-days" name="limiting" type="radio" value="999999" checked="true">Z
                     </div> 
                     <td>
                       <a href="#" name="radio-style-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
@@ -84,7 +100,7 @@
     <div class="row" style="font-weight: bold;">
       <div class="col-md-3" style="text-align: center;"> Opportunity ID </div>
       <div class="col-md-6"> Opportunity Name </div>
-      <div class="col-md-3"> Due Date </div>
+      <div class="col-md-3"> Invalid Field </div>
     </div>
 
     <hr />
@@ -98,7 +114,7 @@
                 <div class="regular-text a:visited"><%= link_to i.opptyName, i %></div>
                 <div class="little-text"><%= i.slComments %></div>
             </div>
-            <div class="col-md-3"><%= i.proposalDueDate.to_s %></div>
+            <div class="col-md-3"><%= "rfpDate=" + i.rfpDate.to_s %></div>
             </div>
 		  <% end %>
 	  
