@@ -1,5 +1,8 @@
-<h1><%= @oppty.opptyName%></h1>
+<div class="jumbotron">
 
-<%= render 'form' %>
+	<h2 style="text-align: center; padding-top: 20px;"><%= @oppty.opptyName %></h2>
 
-<%= link_to 'Back', browse_index_path %>
+	<%= render 'form' %>
+
+	<h5 class="field-title link-text" ><%= link_to 'Back', browse_index_path %></h5>
+</div>
