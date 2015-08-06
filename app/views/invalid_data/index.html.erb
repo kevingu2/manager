@@ -7,7 +7,7 @@
           <tr style="font-size:24px;">
             <td class="col-md-1"></td>
             <td class="col-md-10" style="padding-top: 15px !important;">
-              <%= form_tag(browse_index_path, :method => "get", id: "search-form" ) do %>
+              <%= form_tag(invalid_data_index_path, :method => "get", id: "search-form" ) do %>
                 <%= text_field_tag :search, params[:search], placeholder: "Search" %>
                 <input id="search-button" class="btn-search" type="image" src="/assets/search.png" alt="Submit_tag"> 
                 <td class="col-md-1"></td>
@@ -111,6 +111,18 @@
 
 
   <script>
+
+    function createClass(name,rules){
+      var style = document.createElement('style');
+      style.type = 'text/css';
+      document.getElementsByTagName('head')[0].appendChild(style);
+      if(!(style.sheet||{}).insertRule) 
+        (style.styleSheet || style.sheet).addRule(name, rules);
+      else
+        style.sheet.insertRule(name+"{"+rules+"}",0);
+    }
+    createClass('html body div.jumbotron div.upper-search-box div.inner-search-bar.col-md-12 table.col-md-12 tbody tr td.col-md-10 form#search-form input#search',"width: 96.15% !important; padding-left: 10px !important;");
+
 
     $(document).on("click", "a[name='sort-btn']", function (e) {
       select = document.getElementById('sorting').value;
