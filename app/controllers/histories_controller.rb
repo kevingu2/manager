@@ -12,17 +12,10 @@ class HistoriesController < ApplicationController
     if params[:within] == "mine"
       @histories = UserHistory.where(user_id: @user.id).includes(:history).order(params[:sort]).page(params[:page]).per_page(15)
     else
-      @histories=History.all.order(params[:sort]).page(params[:page]).per_page(15)
+      @histories=History.where("opptyName like ?", "%#{params[:search]}%").order(params[:sort]).page(params[:page]).per_page(15)
     end
   end
 
-  def search 
-    if params[:within] == "mine"
-      @histories = UserHistory.where(user_id: @user.id).includes(:history).order(params[:sort]).page(params[:page]).per_page(15)
-    else
-      @histories=History.all.order(params[:sort]).page(params[:page]).per_page(15)
-    end
-  end
   # GET /histories/1
   # GET /histories/1.json
   def show
