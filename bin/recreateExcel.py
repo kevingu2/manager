@@ -30,7 +30,7 @@ move(excelFileName, zipFileName)
 
 #remove the two files from the zip
 remove_from_zip(zipFileName, 'xl/sharedStrings.xml', 'xl/worksheets/sheet2.xml')
-with zipfile.ZipFile(zipFileName, 'a', zipfile.ZIP_DEFLATED) as z:
+with zipfile.ZipFile(zipFileName, 'a') as z:
     z.writestr(sharedStringName, open(sharedStringsDir).read())
     z.writestr(sheetName, open(sheetDir).read())
     print z.printdir()

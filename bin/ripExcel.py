@@ -16,11 +16,10 @@ coordinateToValue = {} # {'E3':'CA'}
 idToRow = {} # {'someOpptyID':21}
 rowCount = 1
 for row in ws.rows:
-    if row[0].value is not None:
-        idToRow[row[0].value.encode('ascii', 'ignore')] = rowCount
-        for cell in row:
-            if cell.value != None:
-                coordinateToValue[cell.coordinate] = cell.value
+    idToRow[row[0].value.encode('ascii', 'ignore')] = rowCount
+    for cell in row:
+        if cell.value != None:
+            coordinateToValue[cell.coordinate] = cell.value
     rowCount += 1
 
 idToRow.pop('OpptyID')
@@ -32,4 +31,3 @@ shutil.copy(fileName, newFileName)
 zFile = zipfile.ZipFile(newFileName)
 zFile.extract('xl/sharedStrings.xml', destination)
 zFile.extract('xl/worksheets/sheet2.xml', destination)
-zFile.close()

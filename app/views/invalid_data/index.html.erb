@@ -9,7 +9,7 @@
             <td class="col-md-10" style="padding-top: 15px !important;">
               <%= form_tag(invalid_data_index_path, :method => "get", id: "search-form" ) do %>
                 <%= text_field_tag :search, params[:search], placeholder: "Search" %>
-                <input id="search-button" class="btn-search" type="image" src="/assets/search.png" alt="Submit_tag"> 
+                <input id="search-button" class="btn-search" type="image" style="width: 4% !important;" src="/assets/search.png" alt="Submit_tag"> 
                 <td class="col-md-1"></td>
               <% end %>
             </td>
@@ -137,7 +137,7 @@
       else
         style.sheet.insertRule(name+"{"+rules+"}",0);
     }
-    createClass('html body div.jumbotron div.upper-search-box div.inner-search-bar.col-md-12 table.col-md-12 tbody tr td.col-md-10 form#search-form input#search',"width: 96.15% !important; padding-left: 10px !important;");
+    createClass('html body div.jumbotron div.upper-search-box div.inner-search-bar.col-md-12 table.col-md-12 tbody tr td.col-md-10 form#search-form input#search',"width: 96% !important; padding-left: 10px !important;");
 
 
     $(document).on("click", "a[name='sort-btn']", function (e) {
@@ -274,5 +274,3 @@
 
 </body>
 </html>
-
-

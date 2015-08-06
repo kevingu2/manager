@@ -37,7 +37,6 @@ def openFile(path):
             continue
         if not isinstance(value, float):
             value = value.encode('utf8')
-        if value is None or list_of_cols[cols] is None: continue
         row_content[list_of_cols[cols].encode('utf8')] = value
         ###############excel date conversion to string##############
         # because excel stores dates as floats, need to convert to datetime

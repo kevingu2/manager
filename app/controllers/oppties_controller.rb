@@ -56,7 +56,7 @@ class OpptiesController < ApplicationController
         puts oppty_params.to_json
         arg="["
         JSON.parse(oppty_params.to_json).each do |item|
-          arg << '[\'' + @oppty.coordinate + '\'&&& \'' + item[0] + '\'&&& \'' + item[1] + '\'], '
+          arg << '[\'' + @oppty.coordinate + '\', \'' + item[0] + '\', \'' + item[1] + '\'], '
 
         end
         arg = arg[0..-3]

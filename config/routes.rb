@@ -33,11 +33,11 @@ Rails.application.routes.draw do
 
   get 'invalid_data/index'
 
-  get 'invalid_data/search'
-
   get 'browse/index'
 
   get 'browse/search'
+
+  get 'browse/limit'
 
   get 'tasks/index'
 
