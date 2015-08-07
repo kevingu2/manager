@@ -4,6 +4,7 @@ from shutil import move, rmtree
 import os
 import sys
 
+# takes a zip, removes all the files in filenames
 def remove_from_zip(zipfname, *filenames):
     tempdir = tempfile.mkdtemp()
     try:

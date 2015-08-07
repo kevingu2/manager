@@ -3,6 +3,12 @@ import sys
 import cPickle as pickle
 from collections import defaultdict
 import os
+#############################################
+# This file edits the extracted xml files sharedStrings.xml and sheet2.xml
+# from the excel file. sharedStrings.xml contains all of the strings in the entire excel file (seriously)
+# and sheet2.xml contains a mapping of cell -> string in sharedStrings.xml
+#############################################
+
 def findCols(cols):
     # can only edit certain columns. if more are needed, add to this dictionary
     column_hash = {'slDir': 'CZ', 'slArch': 'DA', 'leadEstim': 'DB', 'engaged': 'DL', 'solution': 'DM', 'estimate': 'DN', 'slComments': 'DO'}
@@ -11,16 +17,7 @@ def findCols(cols):
         columns.append(column_hash[c])
     return columns
 
-def findStringMatch(string, stringMatches):
-    index = 0
-    for s in stringMatches:
-        if s.replace('&amp;', '&') == string: # stupid xml uses &amp; instead of just &
-            return index
-        index += 1
-
-def isOnlyReference(string, cellMatches):
-    print cellMatches[string]
-
+# makes the cell we're changing to point to that new string we will make in sharedStrings.xml
 def pointSheetToString(coordinate, uniqueCount, sheet, sheetDir):
     regexString = r'r="%s" s="(\d*)" t="(\w*)"><v>(\d*)</v>' % coordinate # my brain hurts from this
     match = re.search(regexString, sheet)
@@ -28,17 +25,12 @@ def pointSheetToString(coordinate, uniqueCount, sheet, sheetDir):
     if match == None: # if the cell is blank, it will not find. this is the backup
         regexString = r'r="%s" s="(\d*)"/>' % coordinate
         match = re.search(regexString, sheet)
-        print "*"*30,match.group(1)
         replaceString = "r=\"" + coordinate + "\" s=\"" + match.group(1) + "\" t=\"s\"><v>" + str(uniqueCount) + "</v></c>"
-        newSheet = re.sub(regexString, replaceString, sheet)
+        newSheet = re.sub(regexString, replaceString, sheet) # replace where the cell points to
         index = newSheet.index(coordinate)
-        print newSheet[index-20:index+100]
-        # print "failed to find match for: " + coordinate, uniqueCount
-        #TODO!!!!!!!!!!!!!!!
     else:
         replaceString = "r=\"" + coordinate + "\" s=\"" + match.group(1) + "\" t=\"" + match.group(2) + "\"><v>" + str(uniqueCount) + "</v>" # this made me cry a little inside
         newSheet = re.sub(regexString, replaceString, sheet)
-        print uniqueCount
     f = open(sheetDir, 'wb')
     f.write(newSheet)
     f.close()
@@ -54,7 +46,7 @@ def createNewCellValue(string, sharedStrings, coordinate, sheet, sharedStringsDi
     f = open(sharedStringsDir, 'wb')
     f.write(newSharedStrings)
     f.close
-    return newSharedStrings, sheet
+    return newSharedStrings, sheet # pass the value so we don't have to read the file again
 
 args = sys.argv
 sharedStringsDir = args[1]
@@ -65,24 +57,13 @@ sharedStrings = open(sharedStringsDir, 'r').read()
 sheet = open(sheetDir).read() # this is the PipelineView sheet
 excelValues = pickle.load(open('public/uploads/data/coordinateToValue', 'rb')) # load dictionary of {cellCoordinate : cellValue}
 
-# get all of the pairs in the files
-matches = tuple(re.finditer(r'<t>(.*)</t>', sharedStrings, re.M|re.I))
-stringMatches = [m.group(1) for m in matches]#current groups are [<t>] [whatwewant] [</t>], this keeps only what we want
-
-
-matches = tuple(re.finditer(r'<c r="(.*)" s="\d*" t="(.*)">\s*<v>(.*)</v>', sheet, re.M|re.I)) # magical regex I wrote. Seriously
-cellMatches = {}
-for m in matches:
-    cellMatches[m.group(1)] = m.group(3) # group 1 is the cell, group 3 is the corresponding sharedStrings number
-
-
 data = [[i for i in x.strip(" []").split(", ")] for x in strs.strip('[]').split("],")] # magic
 #####get the rows/cols/valuesToChange#########
 rows = []
 cols = []
 changes = []
 columns = []
-for d in data:
+for d in data: # parses the data passed in, so we know what/where to change
     rows.append(d[0].strip('\''))
     cols.append(d[1].strip('\''))
     changes.append(d[2].strip('\''))

@@ -19,23 +19,23 @@ def openFile(path):
   info = [] # lists of dictionaries
   row_content = {}
   list_of_cols = []
-  date_format = xlwt.XFStyle()
+  date_format = xlwt.XFStyle() # used to extract the dateformat in excel (it's stupid)
   date_format.num_format_str = 'dd/mm/yyyy'
-  for cols in range(workSheet.ncols):
+  for cols in range(workSheet.ncols): # column names are stored in row 0, this gets all of them
     list_of_cols.append(workSheet.cell_value(0, cols))
 
-  rowCount = 1
+  rowCount = 1 # start at row 1
   for rows in range(workSheet.nrows):
       #info = []
     row_content = {}
-    row_content['coordinate'] = rowCount
+    row_content['coordinate'] = rowCount # coordinate is the cell coordinator, A1
     rowCount += 1
     for cols in range(workSheet.ncols):
         test = 0
         value = workSheet.cell_value(rows,cols)
         if list_of_cols[cols] == value:
             continue
-        if not isinstance(value, float):
+        if not isinstance(value, float): # if it's not a float, encode to get rid of u'text
             value = value.encode('utf8')
         row_content[list_of_cols[cols].encode('utf8')] = value
         ###############excel date conversion to string##############
@@ -54,5 +54,5 @@ def openFile(path):
 args = sys.argv # command line arguments
 data = []
 data = openFile(args[1])
-data = data[1:]
+data = data[1:] # throw away row 0
 print json.dumps(data, ensure_ascii=True)
