@@ -73,11 +73,11 @@ class CrmController < ApplicationController
     if changes.any?
       changes.each do |c|
         if History.find_by(opptyId:c) # if in history delete from history, add new one, move to history
-          History.find_by(opptyId:c).delete
+          History.find_by(opptyId:c).destory
           newIds.push(c)
           ids.push(c) # because hax
         else
-          Oppty.find_by(opptyId:c).delete
+          Oppty.find_by(opptyId:c).destroy
           newIds.push(c)
         end
       end
@@ -214,7 +214,7 @@ class CrmController < ApplicationController
       oppty_dict.delete('id')
       #puts oppty_dict
       history=History.create(oppty_dict)
-      oppty.delete
+      oppty.destroy
       # if !UserHistory.where(["user_id=? and history_id=?", user_id, history.id]).present?
       #   user=user_history.build(history_id: history.id)
       # end

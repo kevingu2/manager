@@ -51,7 +51,9 @@
                         <%if @assigned_writer_dict[id].present?%>
                             <ul id="<%= name + 'assigned' %>" style="display: none;">
                                 <% @assigned_writer_dict[id].each do |o|%>
+                                  <%if o.oppty.present?%>
                                     <li><div><%= link_to o.oppty.opptyName, o.oppty%></div></li>
+                                  <%end%>
                                 <%end%>
                             </ul>
                         <%end%>
@@ -103,7 +105,9 @@
                         <%if @doing_writer_dict[id].present?%>
                             <ul id="<%= name + 'doing'%>" style="display: none;">
                                 <% @doing_writer_dict[id].each do |o|%>
+                                  <%if o.oppty.present?%>
                                     <li><div><%= link_to o.oppty.opptyName, o.oppty%></div></li>
+                                  <%end%>
                                 <%end%>
                             </ul>
                         <%end%>
@@ -128,7 +132,9 @@
                         <%if @done_writer_dict[id].present?%>
                             <ul id="<%= name + 'done'%>" style="display: none;">
                                 <% @done_writer_dict[id].each do |o|%>
+                                  <%if o.oppty.present?%>
                                     <li><div><%= link_to o.oppty.opptyName, o.oppty%></div></li>
+                                   <%end%>
                                 <%end%>
                             </ul>
                         <%end%>
