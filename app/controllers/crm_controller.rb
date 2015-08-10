@@ -3,14 +3,24 @@ class CrmController < ApplicationController
   def index
     delete
     @uploaded=false
+    if File.basename(Dir[CRM_PATH+'/*.xlsm'][0]) != nil
+      @fileExists = true
+      #final brackets splice the string to extract the 'new_' from the beginning of the filename
+      @downloadName=File.basename(Dir[CRM_PATH+'/*.xlsm'][0])[4..-1]
+    end
   end
   def checkDate
+    if File.basename(Dir[CRM_PATH+'/*.xlsm'][0]) != nil
+      @fileExists = true
+      #final brackets splice the string to extract the 'new_' from the beginning of the filename
+      @downloadName=File.basename(Dir[CRM_PATH+'/*.xlsm'][0])[4..-1]
+    end
+
     uploaded_io = params[:upl]
     if !uploaded_io.present?
       redirect_to crm_index_path, notice: "Please upload a file"
       return
     end
-
     FileUtils.mkdir_p(CRM_PATH) unless File.directory?(CRM_PATH)
     FileUtils.mkdir_p('public/uploads/data') unless File.directory?('public/uploads/data')
     # get existing file in public/uploads

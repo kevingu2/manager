@@ -9,7 +9,7 @@
 		<form id="upload" method="post" action="checkDate" enctype="multipart/form-data">
 		    <input type="file" id="upl" name="upl" class="file-input"/>
 		    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-            <button class="btn btn-lg btn-primary btn-right" type="submit">Upload
+            <button class="btn btn-lg btn-primary btn-right btn-padded" type="submit">Upload
               <span class="glyphicon glyphicon-upload"></span></button>
 		</form>
 	  </div>
@@ -40,8 +40,15 @@
 	<div class="col-md-6 column-wrapper">
 	  <div class="inner-column">
 		<h2 class="column-title">Download</h2>
+    <p>File to be Downloaded: 
+      <%if @fileExists%>
+        <i><%=@downloadName%></i>
+      <%else%>
+        <i>No File will be downloaded</i>
+      <%end%>
+    <p>
 		<form id="download" method="get" action="download" enctype="multipart/form-data">
-		  <button class="btn btn-lg btn-primary btn-left" type="submit">Download
+		  <button class="btn btn-lg btn-primary btn-right btn-padded" type="submit">Download
 		  	<span class="glyphicon glyphicon-download"></span></button>
 		</form>
 	  </div>
