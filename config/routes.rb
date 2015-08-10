@@ -27,7 +27,7 @@ Rails.application.routes.draw do
 
   put 'tasks/updateStatus'
 
-  get 'tasks/deleteOpportunity'
+  delete 'tasks/deleteOpportunity'
 
   get 'history/index'
 
