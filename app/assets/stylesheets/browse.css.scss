@@ -100,7 +100,7 @@ input#search{
 }
 
 .pagination {
-	background: white;
+	background-color: transparent !important;
 	cursor: default;
 	height: 22px;
 	a, span, em {
@@ -108,6 +108,8 @@ input#search{
 		display: block;
 		float: left;
 		margin-right: 1px;
+		background-color: white;
+		padding-bottom: 0.5em;
 	}
 	.disabled {
 		display: none;
@@ -123,7 +125,11 @@ input#search{
 		text-decoration: none;
 		border: 1px solid #9aafe5;
 		&:hover, &:focus {
-			//background-color: transparent;
+			background-color: white !important;
+			padding-bottom: 0.2em;
+		}
+		&:visited {
+			color: #663366 !important;
 		}
 	}
 	.page-info {
