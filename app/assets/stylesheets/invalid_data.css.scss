@@ -1,3 +1,143 @@
 // Place all the styles related to the InvalidData controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.browse-page-title {
+    font-family: verdana, arial, helvetica, sans-serif;
+   padding: 10px;
+   text-align: center;
+   font-size: 32px;
+}
+
+td {
+    padding: 0 !important;
+}
+
+.jumbotron {
+    padding-top: 0px !important;
+    margin-right: 50px !important;
+    margin-left: 50px !important;
+}
+
+.search-form {
+    padding-top:20px;
+    padding-right: 101px;
+   padding-left: 101px;
+}
+
+.btn-search {
+    padding: 0px !important; 
+    float:left;
+    border-style: none; 
+    background-color: #005DA0 ;
+    width: 40px; height: 40px;
+}
+
+.inner-search-bar {
+    height: 175px;
+    background-color: #8E8E8E  !important;
+    margin-bottom: 20px !important;
+}
+
+.title {
+    font-size: 250%;
+    text-align: center;
+}
+
+.regular-text a:link {
+    font-size: 120%;
+    color: #0000FF ;
+    background-color: transparent !important;
+}
+
+/* visited link */
+.regular-text a:visited {
+   color: #663366  !important;
+}
+
+.little-text {
+    font-size: 80%;
+}
+
+.black-text {
+    color: black;
+}
+
+.selector {
+    float: left;
+}
+
+.selector-button {
+    height: 20px !important;
+    float: right;
+    text-align: center;
+    vertical-align: top;
+    line-height: 22px !important;
+    padding-top:0px !important;
+    color: white !important;
+    background-color: #005DA0  !important;
+    border-color: #005DA0  !important;
+}
+
+.control-label-button {
+    float: left !important;
+}
+
+.field-label {
+    padding-right: 30px !important;
+}
+
+input#search{
+    border:1px solid;
+    border-color: black;
+    height:40px;
+    padding:0px 0px !important; 
+    position:relative;
+    font-size: 20px;
+}
+
+.pagination {
+    background: white;
+    cursor: default;
+    height: 22px;
+    a, span, em {
+        padding: 0.2em 0.5em;
+        display: block;
+        float: left;
+        margin-right: 1px;
+    }
+    .disabled {
+        display: none;
+    }
+    .current {
+        font-style: normal;
+        font-weight: bold;
+        background: #2e6ab1 ;
+        color: white;
+        border: 1px solid #2e6ab1 ;
+    }
+    a {
+        text-decoration: none;
+        border: 1px solid #9aafe5 ;
+        &:hover, &:focus {
+            background-color: transparent;
+        }
+    }
+    .page-info {
+        background: #2e6ab1 ;
+        color: white;
+        padding: 0.4em 0.6em;
+        width: 22em;
+        margin-bottom: 0.3em;
+        text-align: center;
+        b {
+            color: #000033 ;
+            background: #2e6ab1  + 60;
+            padding: 0.1em 0.25em;
+        }
+    }
+}
+
+.sort-dropdown-label {
+    float: right;
+    padding-right: 10px;
+}

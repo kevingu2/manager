@@ -26,7 +26,7 @@ td {
 
 .btn-search {
 	padding: 0px !important; 
-	float:left;
+	float:right !important;
 	border-style: none; 
 	background-color: #005DA0;
 	width: 40px; height: 40px;
@@ -78,6 +78,10 @@ td {
 	border-color: #005DA0 !important;
 }
 
+.selector-button:hover {
+	background-color: #005DA0 !important;
+}
+
 .control-label-button {
 	float: left !important;
 }
@@ -119,7 +123,7 @@ input#search{
 		text-decoration: none;
 		border: 1px solid #9aafe5;
 		&:hover, &:focus {
-			background-color: transparent;
+			//background-color: transparent;
 		}
 	}
 	.page-info {

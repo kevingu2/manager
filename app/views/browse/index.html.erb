@@ -1,247 +1,257 @@
 <html lang="en">
 <body>
-  <div class="jumbotron">
-    <div class="upper-search-box">
-    	<div class="inner-search-bar col-md-12">
-    		<form method="get" action="search" class="search-form"> 
-          <table cellpadding="0px" cellspacing="0px" class="col-md-12">
-            <tr style="font-size:24px;">
-              <td class="col-md-12">
-                <input id="search" name="search" type="text" placeholder="Search" class="col-md-12" value="">
-              </td>
-              <td class="col-md-1">
-                   <input id="search-button" class="btn-search" type="image" src="/assets/search.png" alt="Submit_tag"> 
-              </td>
-            </tr>  
-          </table>
-        </form>
-    			<!-- Radio Buttons in Browse page to limit the search to opportunities within 30, 60, or 90 days -->
-          <div class="form">
-            <table>
-              <tr>
-                <div class="col-md-9">
-                  <td class="col-md-1">
-                    <label class="black-text field-label" style="padding-left: 101px;">
-                  		Within:
-                		</label>
-              		</td>
+ <div class="jumbotron">
+   <div class="upper-search-box">
+       <div class="inner-search-bar col-md-12">
+       <table cellpadding="0px" cellspacing="0px" class="col-md-12">
+         <tr style="font-size:24px;">
+           <td class="col-md-1"></td>
+           <td class="col-md-10" style="padding-top: 15px !important;">
+             <%= form_tag(browse_index_path, :method => "get", id: "search-form" ) do %>
+               <%= text_field_tag :search, params[:search], placeholder: "Search" %>
+               <input id="search-button" class="btn-search" type="image" style="width: 4% !important;" src="/assets/search.png" alt="Submit_tag"> 
+               <td class="col-md-1"></td>
+             <% end %>
+           </td>
+         </tr>
+       </table>
 
-                	<td class="col-md-1">
-                    <form action="limit" method="get">
-                      <label class="toggle-btn radio black-text">
-                        <input id="thirty_days_left" name="within" type="radio" value=30 checked="false">30 Days
-                      </label> 
-                      <label class="toggle-btn radio black-text">
-                        <input id="sixty_days_left" name="within" type="radio" value=60 checked="false">60 Days
-                      </label>
-                      <label class="toggle-btn radio black-text">
-                        <input id="ninety_days_left" name="within" type="radio" value=90 checked="false">90 Days
-                      </label> 
-                      <label class="toggle-btn radio black-text">
-                        <input id="all-days" name="within" type="radio" value=999999 checked="true">90+ Days
-                      </label> 
-                      <td>
-                        <button name="radio-style-btn" type="submit" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</button>
-                      </td>
-                    </form>
-                  </td>
+       <!-- Radio Buttons in Browse page to limit the search to opportunities within 30, 60, or 90 days -->
+       <div class="form">
+         <table>
+           <tr>
+             <div class="col-md-9">
+               <td class="col-md-1">
+                 <label class="black-text field-label" style="padding-left: 101px;">
+                       Within:
+                     </label>
+                 </td>
 
+               <td class="col-md-1">
+                 <div>
+                   <div class="toggle-btn radio black-text" id="within" name="within">
+                     <input id="thirty_days_left" name="limiting" type="radio" value="30">30 Days
+                     <br>
+                   
+                     <input id="sixty_days_left" name="limiting" type="radio" value="60">60 Days
+                     <br>
+                       
+                     <input id="ninety_days_left" name="limiting" type="radio" value="90">90 Days
+                     <br>
+                       
+                     <input id="all-days" name="limiting" type="radio" value="999999" checked="true">90+ Days
+                   </div> 
+                   <td>
+                     <a href="#" name="radio-style-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
+                   </td>
+                 </div>
+               </td>
+             </div>
+             <!-- drop down menu in Browse Page to sort the opportunities by a specific field -->
+             <div class="col-md-2">
+               <td class="col-md-1">
+                 <label class="black-text sort-dropdown-label">
+                       Sort By:
+                     </label>
+               </td>
+                 <td class="col-md-3">
+                     <div>
+                     <select class="selector col-md-9" id="sorting" name="sorting">
+                           <option id="opt1" value="none">none</option>
+                     <option id="opt2" value="opptyName">Opportunity Name</option>
+                     <option id="opt3" value="opptyId">Opportunity ID</option>
+                     <option id="opt4" value="proposalDueDate">Days Left</option>
+                     <option id="opt5" value="captureMgr">Capture Managers</option>
+                     <option id="opt6" value="programMgr">Program Managers</option>
+                     <option id="opt7" value="proposalMgr">Proposal Managers</option>
+                     <option id="opt8" value="value">Value</option>
+                           </select>
+                       
+                     <a href="#" name="sort-btn" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
+                   </div>  
+               </td>
+             </div>
+             <td class="col-md-1"></td>
+           </tr>
+         </table>
+       </div>
+     </div>        
+     <br>
+   </div>
 
-                </div>
+   <h2 class="black-text browse-page-title">Opportunities</h2>
 
-                <!-- this is the space between the radio buttons and the drop down menu for sorting.
-                    it prevents the ratio of clicking not to be a random place on the screen -->
-                <!--td class="col-md-2">
-                </td-->
+   <div class="row" style="font-weight: bold;">
+     <div class="col-md-3" style="text-align: center;"> Opportunity ID </div>
+     <div class="col-md-6"> Opportunity Name </div>
+     <div class="col-md-3"> Due Date </div>
+   </div>
 
-                <!-- drop down menu in Browse Page to sort the opportunities by a specific field -->
-                <div class="col-md-2">
-                  <td class="col-md-1">
-                		<label class="black-text sort-dropdown-label">
-                  		Sort By:
-                		</label>
-                  </td>
-                	<td class="col-md-3">
-    				        <div>
-                			<select class="selector col-md-9" id="sorting" name="sorting">
-                  			<option id="opt1" value="none">none</option>
-                        <option id="opt2" value="opptyName">Opportunity Name</option>
-                        <option id="opt3" value="opptyId">Opportunity ID</option>
-                        <option id="opt4" value="proposalDueDate">Days Left</option>
-                        <option id="opt5" value="captureMgr">Capture Managers</option>
-                        <option id="opt6" value="programMgr">Program Managers</option>
-                        <option id="opt7" value="proposalMgr">Proposal Managers</option>
-                        <option id="opt8" value="value">Value</option>
-            				  </select>
-                          
-                			<a href="#" name="sort-btn" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
-              		  </div>  
-                  </td>
-                </div>
-                <td class="col-md-1"></td>
-              </tr>
-            </table>
-          </div>
-    	</div>		
-      <br>
-    </div>
+   <hr />
 
-    <h2 class="black-text browse-page-title">Opportunities</h2>
+   <div id="allDays">
+     <% unless @oppties == nil %>
+       <% @oppties.each do |o| %>
+         <div class="media row">
+           <div class="col-md-3" style="text-align: center;"><%= o.opptyId %></div>
+           <div class="col-md-6">
+             <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
+             <div class="little-text"><%= o.slComments %></div>
+           </div>
+           <div class="col-md-3"><%= o.proposalDueDate.to_s %></div>
+         </div>
+       <% end %>
+     <% end %>
 
-    <div class="row" style="font-weight: bold;">
-      <div class="col-md-2" style="text-align: center;"> Opportunity ID </div>
-      <div class="col-md-6"> Opportunity Name </div>
-      <div class="col-md-2"> Due Date </div>
-      <div class="col-md-2"> Status </div>
-    </div>
+     <div style="float: right !important;">
+       <div name="paginate-div"><%= will_paginate @oppties, previous_label: h("<"), next_label: h(">") %></div>
+     </div>
+   </div>
+ </div>
 
-    <hr />
+<script>
 
-    <div id="allDays">
-      <% unless @oppties == nil %>
-        <% @oppties.each do |o| %>
-          <% if @to_do.include?(o) %>
-            <div class="success row">
-              <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
-              <div class="col-md-6">
-                <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
-                <div class="little-text"><%= o.slComments %></div>
-              </div>
-              <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
-              <div class="col-md-2">Assigned</div>
-            </div>
+   function createClass(name,rules){
+     var style = document.createElement('style');
+     style.type = 'text/css';
+     document.getElementsByTagName('head')[0].appendChild(style);
+     if(!(style.sheet||{}).insertRule) 
+       (style.styleSheet || style.sheet).addRule(name, rules);
+     else
+       style.sheet.insertRule(name+"{"+rules+"}",0);
+   }
+   createClass('html body div div div.inner-search-bar.col-md-12 table.col-md-12 tbody tr td.col-md-10 form#search-form input#search',"width: 96% !important; padding-left: 10px !important;");
 
-          <% elsif @doing.include?(o) %>
-            <div class="warning row">
-              <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
-              <div class="col-md-6">
-                <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
-                <div class="little-text"><%= o.slComments %></div>
-              </div>
-              <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
-              <div class="col-md-2">In Progress</div>
-            </div>
+$(document).on("click", "a[name='sort-btn']", function (e) {
+     select = document.getElementById('sorting').value;
+     if (window.location.href.indexOf("sort") > -1 && select != 'none') {
+       var url = window.location.toString();
+       if (window.location.href.indexOf("none") > -1)
+         window.location = url.replace(/sorting=none/, 'sort='+select);
+       else if (window.location.href.indexOf("proposalDueDate") > -1)
+         window.location = url.replace(/sort=proposalDueDate/, 'sort='+select);
+       else if (window.location.href.indexOf("opptyName") > -1)
+         window.location = url.replace(/sort=opptyName/, 'sort='+select);
+       else if (window.location.href.indexOf("opptyId") > -1)
+         window.location = url.replace(/sort=opptyId/, 'sort='+select);
+       else if (window.location.href.indexOf("captureMgr") > -1)
+         window.location = url.replace(/sort=captureMgr/, 'sort='+select);
+       else if (window.location.href.indexOf("programMgr") > -1)
+         window.location = url.replace(/sort=programMgr/, 'sort='+select);
+       else if (window.location.href.indexOf("proposalMgr") > -1)
+         window.location = url.replace(/sort=proposalMgr/, 'sort='+select);
+       else if (window.location.href.indexOf("value") > -1)
+         window.location = url.replace(/sort=value/, 'sort='+select);
+     }
+     else if (window.location.href.indexOf("sort") > -1 && select == 'none') 
+       window.location.assign(window.location.href.substring (0, window.location.href.indexOf("sort")));
+     else if (select == "none")
+       window.location.assign( window.location.href );
+     else if (window.location.href.substring(window.location.href.indexOf("/browse/index"), window.location.href.toString().length ) == "<%= browse_index_path %>") {
+       if (select == "proposalDueDate")
+         window.location.assign( window.location.href + "?sort=proposalDueDate" );
+       else if (select == "opptyName")
+         window.location.assign(window.location.href + "?sort=opptyName");
+       else if (select == "opptyId")
+         window.location.assign(window.location.href + "?sort=opptyId");
+       else if (select == "captureMgr")
+         window.location.assign(window.location.href + "?sort=captureMgr");
+       else if (select == "programMgr")
+         window.location.assign(window.location.href + "?sort=programMgr");
+       else if (select == "proposalMgr")
+         window.location.assign(window.location.href + "?sort=proposalMgr");
+       else if (select == "value")
+         window.location.assign(window.location.href + "?sort=value");
+     }
+     else {
+       if (select == "proposalDueDate")
+         window.location.assign( window.location.href + "&sort=proposalDueDate" );
+       else if (select == "opptyName")
+         window.location.assign(window.location.href + "&sort=opptyName");
+       else if (select == "opptyId")
+         window.location.assign(window.location.href + "&sort=opptyId");
+       else if (select == "captureMgr")
+         window.location.assign(window.location.href + "&sort=captureMgr");
+       else if (select == "programMgr")
+         window.location.assign(window.location.href + "&sort=programMgr");
+       else if (select == "proposalMgr")
+         window.location.assign(window.location.href + "&sort=proposalMgr");
+       else if (select == "value")
+         window.location.assign(window.location.href + "&sort=value");
+     }
+   });
 
-          <% elsif @none.include?(o) %>
-            <div class="active row">
-              <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
-              <div class="col-md-6">
-                <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
-                <div class="little-text"><%= o.slComments %></div>
-              </div>
-              <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
-              <div class="col-md-2">None</div>
-            </div>
-                
-          <% else %>
-            <div class="media row">
-              <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
-              <div class="col-md-6">
-                <div class="regular-text"><%= link_to o.opptyName, o %></div>
-                <div class="little-text"><%= o.slComments %></div>
-              </div>
-              <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
-              <div class="col-md-2">This block must be deleted</div>
-            </div>
-          <% end %>
-        <% end %>
-      <% end %> 
+  $(document).on("click", "a[name='radio-style-btn']", function (e) {
+       var radioButtons = $("#within input:radio[name='limiting']");
+       var selectedIndex = radioButtons.index(radioButtons.filter(':checked'));
+       select = document.getElementsByName('limiting')[selectedIndex].value;
+       if (window.location.href.indexOf("within") > -1) {
+         var url = window.location.toString();
+         if (window.location.href.indexOf("within=999999") > -1)
+           window.location.href = url.replace(/within=999999/, 'within='+select);
+         else if (window.location.href.indexOf("within=30") > -1)
+           window.location.href = url.replace(/within=30/, 'within='+select);
+         else if (window.location.href.indexOf("within=60") > -1)
+           window.location.href = url.replace(/within=60/, 'within='+select);
+         else if (window.location.href.indexOf("within=90") > -1)
+           window.location.href = url.replace(/within=90/, 'within='+select);
+       }
+       else if (window.location.href.substring(window.location.href.indexOf("/browse/index"), window.location.href.toString().length ) == "<%= browse_index_path %>") {
+         if (select == 999999)
+           window.location.assign( window.location.href );
+         else if (select == 30)
+           window.location.assign( window.location.href + "?within=30" );
+         else if (select == 60)
+           window.location.assign(window.location.href + "?within=60");
+         else if (select == 90)
+           window.location.assign(window.location.href + "?within=90");
+       }
+       else {
+         if (select == 999999)
+           window.location.assign( window.location.href );
+         else if (select == 30)
+           window.location.assign( window.location.href + "&within=30" );
+         else if (select == 60)
+           window.location.assign(window.location.href + "&within=60");
+         else if (select == 90)
+           window.location.assign(window.location.href + "&within=90");
+       }
 
-      <div style="float: right !important;">
-        <div name="paginate-div"><%= will_paginate @oppties, previous_label: h("<"), next_label: h(">") %></div>
-      </div>
-    </div>
-  </div>
+     }); 
 
+window.onload = function() {
+     if (window.location.href.indexOf("within") > -1) {
+       if (window.location.href.indexOf("within=999999") > -1)
+         document.getElementById("all_days").checked = true;
+       else if (window.location.href.indexOf("within=30") > -1)
+         document.getElementById("thirty_days_left").checked = true;
+       else if (window.location.href.indexOf("within=60") > -1)
+         document.getElementById("sixty_days_left").checked = true;
+       else if (window.location.href.indexOf("within=90") > -1)
+         document.getElementById("ninety_days_left").checked = true;
+     }
 
+     if (window.location.href.indexOf("sort")){
+       if (window.location.href.indexOf("none") > -1)
+         document.getElementById("opt1").selected = true;
+       else if (window.location.href.indexOf("opptyName") > -1)
+         document.getElementById("opt2").selected = true;
+       else if (window.location.href.indexOf("opptyId") > -1)
+         document.getElementById("opt3").selected = true;
+       else if (window.location.href.indexOf("proposalDueDate") > -1)
+         document.getElementById("opt4").selected = true;
+       else if (window.location.href.indexOf("captureMgr") > -1)
+         document.getElementById("opt5").selected = true;
+       else if (window.location.href.indexOf("programMgr") > -1)
+         document.getElementById("opt6").selected = true;
+       else if (window.location.href.indexOf("proposalMgr") > -1)
+         document.getElementById("opt7").selected = true;
+       else if (window.location.href.indexOf("value") > -1)
+         document.getElementById("opt8").selected = true;
+     }
+   }
 
-  <script>
-
-    $(document).on("click", "a[name='sort-btn']", function (e) {
-      select = document.getElementById('sorting').value;
-      if (window.location.href.indexOf("sort") > -1 && select != 'none') {
-        var url = window.location.toString();
-        if (window.location.href.indexOf("none") > -1)
-          window.location = url.replace(/sorting=none/, 'sort='+select);
-        else if (window.location.href.indexOf("proposalDueDate") > -1)
-          window.location = url.replace(/sort=proposalDueDate/, 'sort='+select);
-        else if (window.location.href.indexOf("opptyName") > -1)
-          window.location = url.replace(/sort=opptyName/, 'sort='+select);
-        else if (window.location.href.indexOf("opptyId") > -1)
-          window.location = url.replace(/sort=opptyId/, 'sort='+select);
-        else if (window.location.href.indexOf("captureMgr") > -1)
-          window.location = url.replace(/sort=captureMgr/, 'sort='+select);
-        else if (window.location.href.indexOf("programMgr") > -1)
-          window.location = url.replace(/sort=programMgr/, 'sort='+select);
-        else if (window.location.href.indexOf("proposalMgr") > -1)
-          window.location = url.replace(/sort=proposalMgr/, 'sort='+select);
-        else if (window.location.href.indexOf("value") > -1)
-          window.location = url.replace(/sort=value/, 'sort='+select);
-      }
-      else if (window.location.href.indexOf("sort") > -1 && select == 'none') 
-        window.location.assign(window.location.href.substring (0, window.location.href.indexOf("sort")));
-      else if (select == "none")
-        window.location.assign( window.location.href );
-      else if (window.location.href.substring(window.location.href.indexOf("/browse/index"), window.location.href.toString().length ) == "<%= browse_index_path %>") {
-        if (select == "proposalDueDate")
-          window.location.assign( window.location.href + "?sort=proposalDueDate" );
-        else if (select == "opptyName")
-          window.location.assign(window.location.href + "?sort=opptyName");
-        else if (select == "opptyId")
-          window.location.assign(window.location.href + "?sort=opptyId");
-        else if (select == "captureMgr")
-          window.location.assign(window.location.href + "?sort=captureMgr");
-        else if (select == "programMgr")
-          window.location.assign(window.location.href + "?sort=programMgr");
-        else if (select == "proposalMgr")
-          window.location.assign(window.location.href + "?sort=proposalMgr");
-        else if (select == "value")
-          window.location.assign(window.location.href + "?sort=value");
-      }
-      else {
-        if (select == "proposalDueDate")
-          window.location.assign( window.location.href + "&sort=proposalDueDate" );
-        else if (select == "opptyName")
-          window.location.assign(window.location.href + "&sort=opptyName");
-        else if (select == "opptyId")
-          window.location.assign(window.location.href + "&sort=opptyId");
-        else if (select == "captureMgr")
-          window.location.assign(window.location.href + "&sort=captureMgr");
-        else if (select == "programMgr")
-          window.location.assign(window.location.href + "&sort=programMgr");
-        else if (select == "proposalMgr")
-          window.location.assign(window.location.href + "&sort=proposalMgr");
-        else if (select == "value")
-          window.location.assign(window.location.href + "&sort=value");
-      }
-    });
-
-    $(document).on("click", "a[name='radio-style-btn']", function (e) {
-      select = document.getElementById('limiting').value;
-      if (window.location.href.indexOf("within") > -1) {
-        var url = window.location.toString();
-        if (window.location.href.indexOf(999999) > -1)
-          window.location = url.replace(/within=999999/, 'within='+select);
-        else if (window.location.href.indexOf(30) > -1)
-          window.location = url.replace(/within=30/, 'within='+select);
-        else if (window.location.href.indexOf(60) > -1)
-          window.location = url.replace(/within=60/, 'within='+select);
-        else if (window.location.href.indexOf(90) > -1)
-          window.location = url.replace(/within=90/, 'within='+select);
-      }
-      else if (select == 999999)
-        window.location.assign( window.location.href );
-      else if (select == 30)
-        window.location.assign( window.location.href + "?within=30" );
-      else if (select == 60)
-        window.location.assign(window.location.href + "?within=60");
-      else if (select == 90)
-        window.location.assign(window.location.href + "?within=90");
-    });
-
-  </script>
+ </script>
 
 </body>
 </html>
-
-

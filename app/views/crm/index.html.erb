@@ -9,7 +9,8 @@
 		<form id="upload" method="post" action="checkDate" enctype="multipart/form-data">
 		    <input type="file" id="upl" name="upl" class="file-input"/>
 		    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-            <button class="btn btn-lg btn-primary btn-right" type="submit">Upload</button>
+            <button class="btn btn-lg btn-primary btn-right" type="submit">Upload
+              <span class="glyphicon glyphicon-upload"></span></button>
 		</form>
 	  </div>
       <%if @oldOrNew.present?%>
