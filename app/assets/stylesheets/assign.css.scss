@@ -8,3 +8,23 @@
 	margin-left: 50px !important;
 	margin-bottom: 30px !important;
 }
+
+.not-assigned-row {
+	min-height: 46px !important;
+	border: 1px solid black;
+}
+
+.assigned-row {
+	min-height: 46px !important;
+	border: 1px solid black;
+}
+
+.row-item {
+    line-height: 46px !important;
+    min-height: 46px !important;
+}
+
+.writer-name {
+	line-height: 46px !important;
+	margin: 0px !important;
+}
