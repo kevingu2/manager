@@ -34,13 +34,11 @@
 				    		<p class="writer-name"><%=w.user.name%></p>
 						</div>
 						<div class="col-md-6 row-item">
-						    <form method="post" action= "assignUser" >
+						    <form method="post" action= "unAssignUser" >
 						      <input name="oppty_id" type="hidden" value="<%= @oppty.id%>">
-						      <input name="user_id" type="hidden" value="<%= w.id%>">
+						      <input name="user_id" type="hidden" value="<%= w.user.id%>">
 						      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-						      <button class="btn btn-lg btn-primary btn-right" 
-						      style="background-color: red;" type="submit">Un-Assign
-						  	  </button>
+						      <button class="btn btn-lg btn-primary btn-right un-assign-button" type="submit">Un-Assign</button>
 						    </form>
 						</div>
 					</div>

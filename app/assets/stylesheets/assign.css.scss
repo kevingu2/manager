@@ -28,3 +28,12 @@
 	line-height: 46px !important;
 	margin: 0px !important;
 }
+
+.un-assign-button {
+	background-color: #f00a10 !important; 
+	border-color: #f00a10 !important; 
+}
+
+.un-assign-button:hover {
+	background-color: darken(#f00a10, 10%) !important;
+}

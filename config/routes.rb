@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   post 'assign/assignUser'
 
+  post 'assign/unAssignUser'
+
   get 'invalid_entry/index'
 
   get 'allocated_tasks/index'

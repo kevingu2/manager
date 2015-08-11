@@ -8,6 +8,7 @@ class AssignController < ApplicationController
     @not_assigned_writers=User.where(role: "writer").where('Not Exists(select * from user_oppties
                                       where oppty_id=? and users.id=user_id)', opptyId)
   end
+
   def assignUser
     oppty=Oppty.find(params[:oppty_id])
     user=User.find(params[:user_id])
@@ -25,5 +26,25 @@ class AssignController < ApplicationController
         format.json { render json: @user_oppty.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def unAssignUser
+    oppty=Oppty.find(params[:oppty_id])
+    user=User.find(params[:user_id])
+    @user_oppty=user.remove_oppty(params[:user_id], oppty.id, 3)
+    redirect_to browse_index_path
+    # if !@user_oppty
+    #   redirect_to invalid_entry_index_path, notice: "User has been Assigned"
+    #   return
+    # end
+    # respond_to do |format|
+    #   if @user_oppty.save
+    #     format.html { redirect_to @user_oppty, notice: 'Successfully Assigned User' }
+    #     format.json { render :show, status: :created, location: @user_oppty }
+    #   else
+    #     format.html { render :new }
+    #     format.json { render json: @user_oppty.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 end
