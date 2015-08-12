@@ -34,7 +34,7 @@
            <%else%>class="col-md-6 manager-col-button"
            <%end%> 
       >
-      <a class="btn btn-lg btn-primary btn-left" href=<%=url_for(:back)%> role="button" style="color:white">Cancel</a>
+      <a class="btn btn-lg btn-primary btn-left oppty-btn" href=<%=url_for(:back)%> role="button">Cancel</a>
       </div class="col-md-6 writer-col-button">
       <%if session[:role]=="writer" %>
         <form method="post" action= <%=user_oppties_path(oppty_id: @oppty.id)%> >
@@ -44,13 +44,13 @@
       <%end%>
       <%if session[:role]=="manager" %>
         <div class="col-md-4 manager-col-button">
-          <a class="btn btn-lg btn-primary btn-center" href=<%= edit_oppty_path(@oppty)%>  role="button" style="color:white">Edit</a>
+          <a class="btn btn-lg btn-primary btn-center oppty-btn" href=<%= edit_oppty_path(@oppty)%>  role="button" style="color:white">Edit</a>
         </div>
         <div class="col-md-4 manager-col-button">
           <form action =<%= assign_index_path%> method="get" style="min-height:1px">
             <input hidden=true type="hidden" name="opptyId" value=<%= @oppty.id%>>
             <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-            <button class="btn btn-lg btn-primary btn-right" type="submit" role="button" style="color:white">Assign</button>
+            <button class="btn btn-lg btn-primary btn-right oppty-btn" type="submit" role="button">Assign</button>
           </form>
         </div>  
       <%end%>
