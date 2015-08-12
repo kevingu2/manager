@@ -3,10 +3,12 @@ class CrmController < ApplicationController
   def index
     delete
     @uploaded=false
-    if File.basename(Dir[CRM_PATH+'/*.xlsm'][0]) != nil
-      @fileExists = true
-      #final brackets splice the string to extract the 'new_' from the beginning of the filename
-      @downloadName=File.basename(Dir[CRM_PATH+'/*.xlsm'][0])[4..-1]
+    if Dir[CRM_PATH+'/*.xlsm'].count>0
+      if File.basename(Dir[CRM_PATH+'/*.xlsm'][0]).present?
+        @fileExists = true
+        #final brackets splice the string to extract the 'new_' from the beginning of the filename
+        @downloadName=File.basename(Dir[CRM_PATH+'/*.xlsm'][0])[4..-1]
+      end
     end
   end
   def checkDate

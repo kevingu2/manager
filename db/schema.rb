@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150803150902) do
+ActiveRecord::Schema.define(version: 20150812153421) do
 
   create_table "allocated_tasks", force: true do |t|
     t.string   "title"
@@ -263,6 +263,7 @@ ActiveRecord::Schema.define(version: 20150803150902) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "status"
+    t.boolean  "changeRFP"
   end
 
   add_index "user_oppties", ["oppty_id"], name: "index_user_oppties_on_oppty_id"
