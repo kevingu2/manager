@@ -52,7 +52,10 @@
                             <ul id="<%= name + 'assigned' %>" style="display: none;">
                                 <% @assigned_writer_dict[id].each do |o|%>
                                   <%if o.oppty.present?%>
-                                    <li><div><%= link_to o.oppty.opptyName, o.oppty%></div></li>
+                                    <li>
+                                        <h5 class="col-md-11"><%= link_to o.oppty.opptyName, o.oppty%></h5>
+                                        <a href="#" name="remove-btn" class="col-md-1 red-cross glyphicon glyphicon-remove"></a>
+                                    </li>
                                   <%end%>
                                 <%end%>
                             </ul>
@@ -79,7 +82,10 @@
                             <ul id="<%= name + 'todo' %>" style="display: none;">
                                 <% @todo_writer_dict[id].each do |o|%>
                                     <% if o.oppty.present?%>
-                                        <li><div><%= link_to o.oppty.opptyName, o.oppty%></div></li>
+                                        <li>
+                                            <h5 class="col-md-11"><%= link_to o.oppty.opptyName, o.oppty%></h5>
+                                            <a href="#" name="remove-btn" class="col-md-1 red-cross glyphicon glyphicon-remove"></a>
+                                        </li>
                                     <% end %>
                                 <%end%>
                             </ul>
@@ -106,7 +112,10 @@
                             <ul id="<%= name + 'doing'%>" style="display: none;">
                                 <% @doing_writer_dict[id].each do |o|%>
                                   <%if o.oppty.present?%>
-                                    <li><div><%= link_to o.oppty.opptyName, o.oppty%></div></li>
+                                    <li>
+                                        <h5 class="col-md-11"><%= link_to o.oppty.opptyName, o.oppty%></h5>
+                                        <a href="#" name="remove-btn" class="col-md-1 red-cross glyphicon glyphicon-remove"></a>
+                                    </li>
                                   <%end%>
                                 <%end%>
                             </ul>
@@ -133,7 +142,10 @@
                             <ul id="<%= name + 'done'%>" style="display: none;">
                                 <% @done_writer_dict[id].each do |o|%>
                                   <%if o.oppty.present?%>
-                                    <li><div><%= link_to o.oppty.opptyName, o.oppty%></div></li>
+                                    <li>
+                                        <h5 class="col-md-11"><%= link_to o.oppty.opptyName, o.oppty%></h5>
+                                        <a href="#" name="remove-btn" class="col-md-1 red-cross glyphicon glyphicon-remove"></a>
+                                    </li>
                                    <%end%>
                                 <%end%>
                             </ul>
