@@ -35,3 +35,12 @@
 .link-text a:visited {
     color: #663366 !important;
 }
+
+.oppty-btn {
+	color: white !important;
+	background-color: #005DA0 !important;
+}
+
+.oppty-btn:hover {
+	background-color: darken(#005DA0, 10%) !important;
+}

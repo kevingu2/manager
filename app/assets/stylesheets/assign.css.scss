@@ -37,3 +37,22 @@
 .un-assign-button:hover {
 	background-color: darken(#f00a10, 10%) !important;
 }
+
+.un-assign-button:active,
+.un-assign-button:focus {
+	outline:0 !important;
+}
+
+.assign-button {
+	background-color: #005DA0 !important; 
+	border-color: #005DA0 !important; 
+}
+
+.assign-button:hover {
+	background-color: darken(#005DA0, 10%) !important;
+}
+
+.assign-button:active,
+.assign-button:focus {
+	outline:0 !important;
+}
