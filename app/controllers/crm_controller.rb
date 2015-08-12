@@ -2,13 +2,13 @@ class CrmController < ApplicationController
   CRM_PATH = File.join(Rails.root, "public", "uploads")
   def index
     delete
+    FileUtils.mkdir_p(CRM_PATH) unless File.directory?(CRM_PATH)
+    FileUtils.mkdir_p('public/uploads/data') unless File.directory?('public/uploads/data')
     @uploaded=false
-    if Dir[CRM_PATH+'/*.xlsm'].count>0
-      if File.basename(Dir[CRM_PATH+'/*.xlsm'][0]).present?
+    if File.basename(Dir[CRM_PATH+'/*.xlsm'][0]).present?
         @fileExists = true
         #final brackets splice the string to extract the 'new_' from the beginning of the filename
         @downloadName=File.basename(Dir[CRM_PATH+'/*.xlsm'][0])[4..-1]
-      end
     end
   end
   def checkDate
@@ -23,8 +23,6 @@ class CrmController < ApplicationController
       redirect_to crm_index_path, notice: "Please upload a file"
       return
     end
-    FileUtils.mkdir_p(CRM_PATH) unless File.directory?(CRM_PATH)
-    FileUtils.mkdir_p('public/uploads/data') unless File.directory?('public/uploads/data')
     # get existing file in public/uploads
     @oldFileName=nil
     if Dir[CRM_PATH+'/*.xlsm'][0]
