@@ -17,3 +17,11 @@
 	font-weight: bold;
 }
 
+#username:hover{
+    background-color: inherit;
+}
+#username{
+    pointer-events: none;
+    cursor: default;
+}
+
