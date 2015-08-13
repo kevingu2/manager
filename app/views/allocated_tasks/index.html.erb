@@ -3,7 +3,7 @@
 	<div class="textCenter">
 		<h2 class="title-banner">Allocated Tasks</h2>
 
-</div>
+    </div>
 
 <body>
 <div class="container tasks-queue">
@@ -46,15 +46,15 @@
                     <li>
                         <a class="col-md-12" href="#" onclick="swap('<%= name %>'+'assigned');return false;"> 
                             <p class="col-md-8 writer-label"><%= name %></p>
-                            <p class="col-md-4 writer-label"><%= count.to_s + " tasks"%></p>
+                            <p id="<%= name + 'ajax' %>" class="col-md-4 writer-label"><%= count.to_s + " tasks"%></p>
                         </a>
                         <%if @assigned_writer_dict[id].present?%>
                             <ul id="<%= name + 'assigned' %>" style="display: none;">
                                 <% @assigned_writer_dict[id].each do |o|%>
                                   <%if o.oppty.present?%>
-                                    <li class="col-md-12">
+                                    <li id="<%= o.id%>" class="col-md-12">
                                         <h5 class="col-md-11"><%= link_to o.oppty.opptyName, o.oppty%></h5>
-                                        <img class="btn-x-manager" onclick="deleteOptManager(<%= o.id %>)" src="/assets/redx.png" alt="X" border="0"/>
+                                        <img id="delete-btn-manager" class="btn-x-manager" onclick="deleteOptManager(<%= o.id %>, <%= name + 'ajax' %>, 0)" src="/assets/redx.png" alt="X" border="0"/>
                                     </li>
                                   <%end%>
                                 <%end%>
@@ -76,15 +76,15 @@
                     <li>
                         <a class="col-md-12" href="#" onclick="swap('<%= name %>'+'todo');return false;">
                             <p class="col-md-8 writer-label"><%= name %> </p>
-                            <p class="col-md-4 writer-label"><%= count.to_s + " tasks"%></p>
+                            <p id="<%= name + 'ajax' %>" class="col-md-4 writer-label"><%= count.to_s + " tasks"%></p>
                         </a>
                         <%if @todo_writer_dict[id].present? %>
                             <ul id="<%= name + 'todo' %>" style="display: none;">
                                 <% @todo_writer_dict[id].each do |o|%>
                                     <% if o.oppty.present?%>
-                                        <li>
+                                        <li id="<%= o.id%>" class="col-md-12">
                                             <h5 class="col-md-11"><%= link_to o.oppty.opptyName, o.oppty%></h5>
-                                            <a href="#" name="remove-btn" class="col-md-1 red-cross glyphicon glyphicon-remove"></a>
+                                            <img id="delete-btn-manager-1" class="btn-x-manager" onclick="deleteOptManager(<%= o.id %>, <%= name + 'ajax' %>, 1)" src="/assets/redx.png" alt="X" border="0"/>
                                         </li>
                                     <% end %>
                                 <%end%>
@@ -106,15 +106,15 @@
                     <li>
                         <a class="col-md-12" href="#" onclick="swap('<%= name %>'+'doing');return false;">
                             <p class="col-md-8 writer-label"><%= name %> </p>
-                            <p class="col-md-4 writer-label"><%= count.to_s + " tasks"%></p>
+                            <p id="<%= name + 'ajax' %>" class="col-md-4 writer-label"><%= count.to_s + " tasks"%></p>
                         </a>
                         <%if @doing_writer_dict[id].present?%>
                             <ul id="<%= name + 'doing'%>" style="display: none;">
                                 <% @doing_writer_dict[id].each do |o|%>
                                   <%if o.oppty.present?%>
-                                    <li>
+                                    <li id="<%= o.id%>" class="col-md-12">
                                         <h5 class="col-md-11"><%= link_to o.oppty.opptyName, o.oppty%></h5>
-                                        <a href="#" name="remove-btn" class="col-md-1 red-cross glyphicon glyphicon-remove"></a>
+                                        <img id="delete-btn-manager-2" class="btn-x-manager" onclick="deleteOptManager(<%= o.id %>, <%= name + 'ajax' %>, 2)" src="/assets/redx.png" alt="X" border="0"/>
                                     </li>
                                   <%end%>
                                 <%end%>
@@ -136,15 +136,15 @@
                     <li>
                         <a class="col-md-12" href="#" onclick="swap('<%= name %>'+'done');return false;">
                             <p class="col-md-8 writer-label"><%= name %> </p>
-                            <p class="col-md-4 writer-label"><%= count.to_s + " tasks"%></p>
+                            <p id="<%= name + 'ajax' %>" class="col-md-4 writer-label"><%= count.to_s + " tasks"%></p>
                         </a>
                         <%if @done_writer_dict[id].present?%>
                             <ul id="<%= name + 'done'%>" style="display: none;">
                                 <% @done_writer_dict[id].each do |o|%>
                                   <%if o.oppty.present?%>
-                                    <li>
+                                    <li id="<%= o.id%>" class="col-md-12">
                                         <h5 class="col-md-11"><%= link_to o.oppty.opptyName, o.oppty%></h5>
-                                        <a href="#" name="remove-btn" class="col-md-1 red-cross glyphicon glyphicon-remove"></a>
+                                        <img id="delete-btn-manager-3" class="btn-x-manager" onclick="deleteOptManager(<%= o.id %>, <%= name + 'ajax' %>, 3)" src="/assets/redx.png" alt="X" border="0"/>
                                     </li>
                                    <%end%>
                                 <%end%>
