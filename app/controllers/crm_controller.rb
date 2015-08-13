@@ -81,16 +81,18 @@ class CrmController < ApplicationController
     data = `python bin/excelReader.py "public/uploads/#{newFileName}"` # get parsed excel data
     data = JSON.parse(data)
     uploadedIds = [] # holds uploaded ids
+    data_hash={}
     data.each do |d|
       uploadedIds.push(d["OpptyID"]) # holds all ids in the excel
+      data_hash[d["OpptyID"]]=d
     end
     ids = opptyIds - uploadedIds # ids = everything in opptyIds and NOT in uploadedIds, the ones to be moved to history
     newIds = uploadedIds - opptyIds # new - old = new ones to add
 
     #change user_oppties rfp has changed
     if changedRFP.any?
-      changedRFP.each do |c|
-        ups=UserOppty.where(oppty_id:c)
+      changedRFP.each do |id|
+        ups=UserOppty.where(oppty_id:id)
         ups.each do |up|
           up.update(changeRFP:true)
         end
@@ -98,140 +100,136 @@ class CrmController < ApplicationController
     end
     if changes.any?
       changes.each do |c|
+        #TODO: fix like oppty
         if History.find_by(opptyId:c) # if in history delete from history, add new one, move to history
           History.find_by(opptyId:c).delete
           newIds.push(c)
           ids.push(c) # because hax
         else
-          oppty=Oppty.find_by(opptyId:c).delete
-          newIds.push(c)
+          oppty=Oppty.find_by(opptyId:c)
+          updateOppty(oppty, data_hash[c])
         end
       end
     end
-    addNewOppty(data, newIds, uploadedIds)
+    data.each do |opportunity|
+      if !newIds.include? opportunity["OpptyID"] then next end # if id not supposed to be added, skip
+      if History.find_by(opptyId:opportunity["OpptyID"]) then next end
+      uploadedIds.push(opportunity["OpptyID"])
+      oppty=Oppty.new
+      updateOppty(oppty, opportunity)
+    end
     ids.each do |i|
       moveToHistory(i)
     end
     redirect_to crm_index_path
   end
 
-  def addNewOppty(data, newIds, uploadedIds)
-    data.each do |opportunity|
-      if !newIds.include? opportunity["OpptyID"] then next end # if id not supposed to be added, skip
-      if History.find_by(opptyId:opportunity["OpptyID"]) then next end
-      uploadedIds.push(opportunity["OpptyID"])
-      #if there is some magical ruby way to do this better, please do it. I don't know ruby :(
-      #quite possibly the hackiest code in this project
-      #######################get values from json##########################
-
-      @oppty=Oppty.new
-      #fields
-      @oppty.opptyId               = opportunity["OpptyID"]
-      @oppty.opptyName             = opportunity["OpptyName"]
-      @oppty.coordinate            = opportunity["coordinate"]
-      @oppty.idiqCA                = opportunity["IDIQ_CA"]
-      @oppty.status2               = opportunity["Status2"]
-      @oppty.value                 = opportunity["Total Value $M"]
-      @oppty.pWin                  = opportunity["pWin"]
-      @oppty.captureMgr            = opportunity["Capturemgr"]
-      @oppty.programMgr            = opportunity["ProgramMgr"]
-      @oppty.proposalMgr           = opportunity["ProposalMgr"]
-      @oppty.technicalLead         = opportunity["TechnicalLead"]
-      @oppty.slArch                = opportunity["SLArch"]
-      puts "SLLORG: "+opportunity["SLLOrg"].to_s
-      @oppty.sslOrg                = opportunity["SLLOrg"]
-      @oppty.slComments            = opportunity["SL Comments"]
-      @oppty.rfpDate               = Date.new(1899,12,30) + opportunity["RFPDate"].to_f
-      @oppty.awardDate             = Date.new(1899,12,30) + opportunity["AwardDate"].to_f
-      @oppty.slDir                 = opportunity["SLDir"]
-      @oppty.leadEstim             = opportunity["LeadEstim"]
-      @oppty.engaged               = opportunity["Engaged r/y/g"]
-      @oppty.solution              = opportunity["Solution r/y/g"]
-      @oppty.estimate              = opportunity["Estimate r/y/g"]
-      @oppty.proposalDueDate       = Date.new(1899,12,30) + opportunity["ProposalDueDate"].to_f
-      @oppty.codeName              = opportunity["CodeName"]
-      @oppty.descriptionOfWork     = opportunity["DescriptionOfWork"]
-      @oppty.category              = opportunity["Category"]
-      @oppty.pwald                 = opportunity["PWALD"]
-      @oppty.pBid                  = opportunity["pBid"]
-      @oppty.awardFV               = opportunity["AwardFV"]
-      @oppty.saicvaPercent         = opportunity["SAICVA%"]
-      @oppty.saicva                = opportunity["SAIC VA $M"]
-      @oppty.mat                   = opportunity["Mat%"]
-      @oppty.materialsTV           = opportunity["Mat TV $M"]
-      @oppty.subc                  = opportunity["Subc%"]
-      @oppty.subTV                 = opportunity["Subc TV $M"]
-      @oppty.cg_va                 = opportunity["CG_VA"]
-      @oppty.sss_va                = opportunity["SSS-3621"] # i have no idea why
-      @oppty.nwi_va                = opportunity["NWI-3933"]
-      @oppty.hwi_va                = opportunity["HWI-3648"]
-      @oppty.itms_va               = opportunity["ITMS-3896"]
-      @oppty.tss_va                = opportunity["TSS-3676"]
-      @oppty.ccds_va               = opportunity["CCDS-3932"]
-      @oppty.mss_va                = opportunity["MSS-3690"]
-      @oppty.swi_va                = opportunity["SWI-3934"]
-      @oppty.lsc_va                = opportunity["LSC-3640"]
-      @oppty.zzOth_va              = opportunity["zzOth_VA"]
-      @oppty.pri                   = opportunity["Pri"]
-      @oppty.aop                   = opportunity["AOP"]
-      @oppty.peg                   = opportunity["PEG"]
-      @oppty.mustWin               = opportunity["MustWin"]
-      @oppty.feeIndic              = opportunity["FeeIndic"]
-      @oppty.slutil                = opportunity["Slutil"]
-      @oppty.recompete             = opportunity["Recompete"]
-      @oppty.competitive           = opportunity["Competitive"]
-      @oppty.international         = opportunity["International"]
-      @oppty.strategic             = opportunity["Strategic"]
-      @oppty.bundle                = opportunity["Bundle"]
-      @oppty.bidReviewStream       = opportunity["BidReviewStream"]
-      @oppty.definedDelivPgm       = opportunity["DefinedDelivPgm"]
-      @oppty.evaluationCriteria    = opportunity["EvaluationCriteria"]
-      @oppty.perfWorkLoc           = opportunity["PerfWorkLoc"]
-      @oppty.classIfReqmt          = opportunity["ClassifReqmt"]
-      @oppty.grouping              = opportunity["Grouping"]
-      @oppty.reasonForWinLoss      = opportunity["ReasonforWinLoss"]
-      @oppty.egr                   = opportunity["EGR"]
-      @oppty.slCat                 = opportunity["SLcat"]
-      @oppty.slPri                 = opportunity["Slpri"]
-      @oppty.slNote                = opportunity["Slnote"]
-      @oppty.crmRunDate            = Date.new(1899,12,30) + opportunity["CRMRunDate"].to_f
-      @oppty.contractStartDate     = Date.new(1899,12,30) + opportunity["ContractStartDate"].to_f
-      @oppty.rfpFYPer              = opportunity["RFPFYPer"]
-      @oppty.submitFYPer           = opportunity["SubmitFYPer"]
-      @oppty.awardFYPer            = opportunity["AwardFYPer"]
-      @oppty.preBPprojID           = opportunity["PreBPprojID"]
-      @oppty.fy16PreBP             = opportunity["FY16 PreB&P$"]
-      @oppty.fy16PreBPSpent        = opportunity["FY16 PreB&P $Spent"]
-      @oppty.fy16PreBPSpentPercent = opportunity["FY16 PreB&P %Spent"]
-      @oppty.bpProjID              = opportunity["BPprojID"]
-      @oppty.fy16BDTot             = opportunity["FY16 BDTot$"]
-      @oppty.fy16BDTotSpent        = opportunity["FY16 BDTot $Spent"]
-      @oppty.fy16BDTotSpentPercent = opportunity["FY16 BDTot %Spent"]
-      @oppty.financeDate           = Date.new(1899,12,30) + opportunity["FinDate"].to_f
-      @oppty.cgSecOrg              = opportunity["SecOrg"]
-      @oppty.cgSecMgr              = opportunity["SecMgr"]
-      @oppty.cgOrg                 = opportunity["CGOrg"]
-      @oppty.cgMgr                 = opportunity["CGMgr"]
-      @oppty.opOrg                 = opportunity["OpOrg"]
-      @oppty.cgOpMgr               = opportunity["OpMgr"]
-      @oppty.cgPgmDir              = opportunity["PgmDir"]
-      @oppty.bdMgr                 = opportunity["BDMgr"]
-      @oppty.crmRecOwner           = opportunity["CRMRecOwner"]
-      @oppty.sslMgr                = opportunity["SSLeadMgr"]
-      @oppty.divNum                = opportunity["DivNum"]
-      @oppty.customer              = opportunity["Customer"]
-      @oppty.endCustomer           = opportunity["EndCustomer"]
-      @oppty.crn                   = opportunity["CRN"]
-      @oppty.contractType          = opportunity["ContractType"]
-      @oppty.opptyClass            = opportunity["OpptyClass"]
-      @oppty.numberOfAwards        = opportunity["NumberOfAwards"]
-      @oppty.totalPOP              = opportunity["TotalPOP"]
-      @oppty.primeSub              = opportunity["PrimeSub"]
-      @oppty.fy16BP                = opportunity["FY16 B&P$"]
-      @oppty.fy16BPSpent           = opportunity["FY16 B&P $Spent"]
-      @oppty.fy16BPSpentPercent    = opportunity["FY16 B&P %Spent"]
-      @oppty.save
-    end
+  def updateOppty(oppty, new_dict)
+    #fields
+    oppty.opptyId               = new_dict["OpptyID"]
+    oppty.opptyName             = new_dict["OpptyName"]
+    oppty.coordinate            = new_dict["coordinate"]
+    oppty.idiqCA                = new_dict["IDIQ_CA"]
+    oppty.status2               = new_dict["Status2"]
+    oppty.value                 = new_dict["Total Value $M"]
+    oppty.pWin                  = new_dict["pWin"]
+    oppty.captureMgr            = new_dict["Capturemgr"]
+    oppty.programMgr            = new_dict["ProgramMgr"]
+    oppty.proposalMgr           = new_dict["ProposalMgr"]
+    oppty.technicalLead         = new_dict["TechnicalLead"]
+    oppty.slArch                = new_dict["SLArch"]
+    oppty.sslOrg                = new_dict["SLLOrg"]
+    oppty.slComments            = new_dict["SL Comments"]
+    oppty.rfpDate               = Date.new(1899,12,30) + new_dict["RFPDate"].to_f
+    oppty.awardDate             = Date.new(1899,12,30) + new_dict["AwardDate"].to_f
+    oppty.slDir                 = new_dict["SLDir"]
+    oppty.leadEstim             = new_dict["LeadEstim"]
+    oppty.engaged               = new_dict["Engaged r/y/g"]
+    oppty.solution              = new_dict["Solution r/y/g"]
+    oppty.estimate              = new_dict["Estimate r/y/g"]
+    oppty.proposalDueDate       = Date.new(1899,12,30) + new_dict["ProposalDueDate"].to_f
+    oppty.codeName              = new_dict["CodeName"]
+    oppty.descriptionOfWork     = new_dict["DescriptionOfWork"]
+    oppty.category              = new_dict["Category"]
+    oppty.pwald                 = new_dict["PWALD"]
+    oppty.pBid                  = new_dict["pBid"]
+    oppty.awardFV               = new_dict["AwardFV"]
+    oppty.saicvaPercent         = new_dict["SAICVA%"]
+    oppty.saicva                = new_dict["SAIC VA $M"]
+    oppty.mat                   = new_dict["Mat%"]
+    oppty.materialsTV           = new_dict["Mat TV $M"]
+    oppty.subc                  = new_dict["Subc%"]
+    oppty.subTV                 = new_dict["Subc TV $M"]
+    oppty.cg_va                 = new_dict["CG_VA"]
+    oppty.sss_va                = new_dict["SSS-3621"] # i have no idea why
+    oppty.nwi_va                = new_dict["NWI-3933"]
+    oppty.hwi_va                = new_dict["HWI-3648"]
+    oppty.itms_va               = new_dict["ITMS-3896"]
+    oppty.tss_va                = new_dict["TSS-3676"]
+    oppty.ccds_va               = new_dict["CCDS-3932"]
+    oppty.mss_va                = new_dict["MSS-3690"]
+    oppty.swi_va                = new_dict["SWI-3934"]
+    oppty.lsc_va                = new_dict["LSC-3640"]
+    oppty.zzOth_va              = new_dict["zzOth_VA"]
+    oppty.pri                   = new_dict["Pri"]
+    oppty.aop                   = new_dict["AOP"]
+    oppty.peg                   = new_dict["PEG"]
+    oppty.mustWin               = new_dict["MustWin"]
+    oppty.feeIndic              = new_dict["FeeIndic"]
+    oppty.slutil                = new_dict["Slutil"]
+    oppty.recompete             = new_dict["Recompete"]
+    oppty.competitive           = new_dict["Competitive"]
+    oppty.international         = new_dict["International"]
+    oppty.strategic             = new_dict["Strategic"]
+    oppty.bundle                = new_dict["Bundle"]
+    oppty.bidReviewStream       = new_dict["BidReviewStream"]
+    oppty.definedDelivPgm       = new_dict["DefinedDelivPgm"]
+    oppty.evaluationCriteria    = new_dict["EvaluationCriteria"]
+    oppty.perfWorkLoc           = new_dict["PerfWorkLoc"]
+    oppty.classIfReqmt          = new_dict["ClassifReqmt"]
+    oppty.grouping              = new_dict["Grouping"]
+    oppty.reasonForWinLoss      = new_dict["ReasonforWinLoss"]
+    oppty.egr                   = new_dict["EGR"]
+    oppty.slCat                 = new_dict["SLcat"]
+    oppty.slPri                 = new_dict["Slpri"]
+    oppty.slNote                = new_dict["Slnote"]
+    oppty.crmRunDate            = Date.new(1899,12,30) + new_dict["CRMRunDate"].to_f
+    oppty.contractStartDate     = Date.new(1899,12,30) + new_dict["ContractStartDate"].to_f
+    oppty.rfpFYPer              = new_dict["RFPFYPer"]
+    oppty.submitFYPer           = new_dict["SubmitFYPer"]
+    oppty.awardFYPer            = new_dict["AwardFYPer"]
+    oppty.preBPprojID           = new_dict["PreBPprojID"]
+    oppty.fy16PreBP             = new_dict["FY16 PreB&P$"]
+    oppty.fy16PreBPSpent        = new_dict["FY16 PreB&P $Spent"]
+    oppty.fy16PreBPSpentPercent = new_dict["FY16 PreB&P %Spent"]
+    oppty.bpProjID              = new_dict["BPprojID"]
+    oppty.fy16BDTot             = new_dict["FY16 BDTot$"]
+    oppty.fy16BDTotSpent        = new_dict["FY16 BDTot $Spent"]
+    oppty.fy16BDTotSpentPercent = new_dict["FY16 BDTot %Spent"]
+    oppty.financeDate           = Date.new(1899,12,30) + new_dict["FinDate"].to_f
+    oppty.cgSecOrg              = new_dict["SecOrg"]
+    oppty.cgSecMgr              = new_dict["SecMgr"]
+    oppty.cgOrg                 = new_dict["CGOrg"]
+    oppty.cgMgr                 = new_dict["CGMgr"]
+    oppty.opOrg                 = new_dict["OpOrg"]
+    oppty.cgOpMgr               = new_dict["OpMgr"]
+    oppty.cgPgmDir              = new_dict["PgmDir"]
+    oppty.bdMgr                 = new_dict["BDMgr"]
+    oppty.crmRecOwner           = new_dict["CRMRecOwner"]
+    oppty.sslMgr                = new_dict["SSLeadMgr"]
+    oppty.divNum                = new_dict["DivNum"]
+    oppty.customer              = new_dict["Customer"]
+    oppty.endCustomer           = new_dict["EndCustomer"]
+    oppty.crn                   = new_dict["CRN"]
+    oppty.contractType          = new_dict["ContractType"]
+    oppty.opptyClass            = new_dict["OpptyClass"]
+    oppty.numberOfAwards        = new_dict["NumberOfAwards"]
+    oppty.totalPOP              = new_dict["TotalPOP"]
+    oppty.primeSub              = new_dict["PrimeSub"]
+    oppty.fy16BP                = new_dict["FY16 B&P$"]
+    oppty.fy16BPSpent           = new_dict["FY16 B&P $Spent"]
+    oppty.fy16BPSpentPercent    = new_dict["FY16 B&P %Spent"]
+    oppty.save
   end
 
   def moveToHistory(oppty_id)
