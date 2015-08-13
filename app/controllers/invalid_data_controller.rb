@@ -11,4 +11,3 @@ class InvalidDataController < ApplicationController
 	end
 
 end
-"TBD", "", "TBD", "", "TBD", "", "TBD", ""
