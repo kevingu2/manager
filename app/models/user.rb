@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   def add_oppty(user_id, oppty_id, status, changeRFP)
     uo=nil
     if !UserOppty.where(["user_id=? and oppty_id=?", user_id, oppty_id]).present?
-      uo=user_oppty.build(oppty_id: oppty_id, status: status, changedRFP:changeRFP)
+      uo=user_oppty.build(oppty_id: oppty_id, status: status, changeRFP:changeRFP)
     end
     uo
   end

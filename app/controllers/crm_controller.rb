@@ -5,23 +5,26 @@ class CrmController < ApplicationController
     FileUtils.mkdir_p(CRM_PATH) unless File.directory?(CRM_PATH)
     FileUtils.mkdir_p('public/uploads/data') unless File.directory?('public/uploads/data')
     @uploaded=false
-    if File.basename(Dir[CRM_PATH+'/*.xlsm'][0]).present?
-        @fileExists = true
-        #final brackets splice the string to extract the 'new_' from the beginning of the filename
-        @downloadName=File.basename(Dir[CRM_PATH+'/*.xlsm'][0])[4..-1]
+    if (Dir[CRM_PATH+'/*.xlsm'].count>0)
+      if File.basename(Dir[CRM_PATH+'/*.xlsm'][0]).present?
+          @fileExists = true
+          #final brackets splice the string to extract the 'new_' from the beginning of the filename
+          @downloadName=File.basename(Dir[CRM_PATH+'/*.xlsm'][0])[4..-1]
+      end
     end
   end
   def checkDate
-    if File.basename(Dir[CRM_PATH+'/*.xlsm'][0]) != nil
-      @fileExists = true
-      #final brackets splice the string to extract the 'new_' from the beginning of the filename
-      @downloadName=File.basename(Dir[CRM_PATH+'/*.xlsm'][0])[4..-1]
-    end
-
     uploaded_io = params[:upl]
     if !uploaded_io.present?
       redirect_to crm_index_path, notice: "Please upload a file"
       return
+    end
+    if (Dir[CRM_PATH+'/*.xlsm'].count>0)
+      if File.basename(Dir[CRM_PATH+'/*.xlsm'][0]) != nil
+        @fileExists = true
+        #final brackets splice the string to extract the 'new_' from the beginning of the filename
+        @downloadName=File.basename(Dir[CRM_PATH+'/*.xlsm'][0])[4..-1]
+      end
     end
     # get existing file in public/uploads
     @oldFileName=nil
@@ -64,6 +67,9 @@ class CrmController < ApplicationController
     oldFileName=params[:old]
     newFileName=params[:new]
     changes=params[:changes]
+    puts changes
+    puts params[:changedRFP]
+    changedRFP=JSON.parse(params[:changedRFP])
     changes = JSON.parse(changes)
     if Dir[CRM_PATH+ '/*.xlsm'].length > 1
       `rm #{CRM_PATH}/#{oldFileName}`
@@ -83,7 +89,7 @@ class CrmController < ApplicationController
     if changes.any?
       changes.each do |c|
         if History.find_by(opptyId:c) # if in history delete from history, add new one, move to history
-          History.find_by(opptyId:c).destory
+          History.find_by(opptyId:c).delete
           newIds.push(c)
           ids.push(c) # because hax
         else
@@ -269,6 +275,7 @@ class CrmController < ApplicationController
     data = `python bin/excelReader.py "public/uploads/#{@newFileName}"`
     data = JSON.parse(data)
     @changes = [] # holds list of hashes that contain what is changed
+    @changedRFP=[] # holds the list oppty_id of oppties that have their rfp changed
     @added = 0
     uploadedIds=[]
     opptyIds=[]
@@ -387,8 +394,10 @@ class CrmController < ApplicationController
         fy16BP                = opportunity["FY16 B&P$"]
         fy16BPSpent           = opportunity["FY16 B&P $Spent"]
         fy16BPSpentPercent    = opportunity["FY16 B&P %Spent"]
-      # if the cell changed, hashtable contains the new value a     nd ID
 
+      # check if rfp date has changed
+        if rfpDate                  != oppty.rfpDate                  then @changedRFP.push(oppty.id) end
+      # if the cell changed, hashtable contains the new value a     nd ID
 				if name                     != oppty.opptyName                then diff ["opptyName"]               = name end
 				if idiqCA                   != oppty.idiqCA                   then diff ["idiqCA"]                  = idiqCA end
         #if coordinate               != oppty.coordinate               then diff ["coordinate"]              = coordinate end
