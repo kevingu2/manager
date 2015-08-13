@@ -86,6 +86,16 @@ class CrmController < ApplicationController
     end
     ids = opptyIds - uploadedIds # ids = everything in opptyIds and NOT in uploadedIds, the ones to be moved to history
     newIds = uploadedIds - opptyIds # new - old = new ones to add
+
+    #change user_oppties rfp has changed
+    if changedRFP.any?
+      changedRFP.each do |c|
+        ups=UserOppty.where(oppty_id:c)
+        ups.each do |up|
+          up.update(changeRFP:true)
+        end
+      end
+    end
     if changes.any?
       changes.each do |c|
         if History.find_by(opptyId:c) # if in history delete from history, add new one, move to history
@@ -93,12 +103,11 @@ class CrmController < ApplicationController
           newIds.push(c)
           ids.push(c) # because hax
         else
-          Oppty.find_by(opptyId:c).destroy
+          oppty=Oppty.find_by(opptyId:c).delete
           newIds.push(c)
         end
       end
     end
-
     addNewOppty(data, newIds, uploadedIds)
     ids.each do |i|
       moveToHistory(i)
@@ -129,6 +138,8 @@ class CrmController < ApplicationController
       @oppty.proposalMgr           = opportunity["ProposalMgr"]
       @oppty.technicalLead         = opportunity["TechnicalLead"]
       @oppty.slArch                = opportunity["SLArch"]
+      puts "SLLORG: "+opportunity["SLLOrg"].to_s
+      @oppty.sslOrg                = opportunity["SLLOrg"]
       @oppty.slComments            = opportunity["SL Comments"]
       @oppty.rfpDate               = Date.new(1899,12,30) + opportunity["RFPDate"].to_f
       @oppty.awardDate             = Date.new(1899,12,30) + opportunity["AwardDate"].to_f
@@ -304,6 +315,7 @@ class CrmController < ApplicationController
         proposalMgr           = opportunity["ProposalMgr"]
         technicalLead         = opportunity["TechnicalLead"]
         slArch                = opportunity["SLArch"]
+        sllOrg                = opportunity["SLLOrg"]
         slComments            = opportunity["SL Comments"]
         rfpDate               = Date.new(1899,12,30) + opportunity["RFPDate"].to_f
         awardDate             = Date.new(1899,12,30) + opportunity["AwardDate"].to_f
@@ -409,6 +421,7 @@ class CrmController < ApplicationController
 				if proposalMgr              != oppty.proposalMgr              then diff ["proposalMgr"]             = proposalMgr end
 				if technicalLead            != oppty.technicalLead            then diff ["technicalLead"]           = technicalLead end
 				if slArch                   != oppty.slArch                   then diff ["slArch"]                  = slArch end
+        if sllOrg                   != oppty.sslOrg                   then diff ["sslOrg"]                  = sllOrg end
 				if slComments               != oppty.slComments               then diff ["slComments"]              = slComments end
 				if rfpDate                  != oppty.rfpDate                  then diff ["rfpDate"]                 = rfpDate end
 				if awardDate                != oppty.awardDate                then diff ["awardDate"]               = awardDate end
@@ -520,9 +533,12 @@ class CrmController < ApplicationController
           else
             @equal += 1
           end
+        else
+          @equal += 1
         end
       else # else not in database, add it
-        @added += 1
+        if History.find_by(opptyId:opportunity["OpptyID"]) then next end
+          @added += 1
       end
     end
     Oppty.find_each do |o|
@@ -600,7 +616,6 @@ class CrmController < ApplicationController
 
     end
     if download_path!=""
-      puts `python bin/recreateExcel.py "#{download_path}" "public/uploads/data/xl/sharedStrings.xml" "public/uploads/data/xl/worksheets/sheet2.xml"`
       name = download_path.gsub("new_", "")
       File.rename download_path, name
       file = File.open(name, "rb")
