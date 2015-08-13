@@ -82,9 +82,10 @@
    <h2 class="black-text browse-page-title">Opportunities</h2>
 
    <div class="row" style="font-weight: bold;">
-     <div class="col-md-3" style="text-align: center;"> Opportunity ID </div>
+     <div class="col-md-2" style="text-align: center;"> Opportunity ID </div>
      <div class="col-md-6"> Opportunity Name </div>
-     <div class="col-md-3"> Due Date </div>
+     <div class="col-md-2"> Due Date </div>
+     <div class="col-md-2"> Invalid Field(s) </div>
    </div>
 
    <hr />
@@ -93,12 +94,48 @@
      <% unless @oppties == nil %>
        <% @oppties.each do |o| %>
          <div class="media row">
-           <div class="col-md-3" style="text-align: center;"><%= o.opptyId %></div>
+           <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
            <div class="col-md-6">
              <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
              <div class="little-text"><%= o.slComments %></div>
            </div>
-           <div class="col-md-3"><%= o.proposalDueDate.to_s %></div>
+           <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
+           <div class="col-md-2">
+              <% if o.rfpDate < Date.today %>
+                <div class="regular-text"><%= "rfpDate: " + o.rfpDate.to_s %></div>
+              <% end %>
+              <% if o.technicalLead == "TBD" %>
+                <div class="regular-text"><%= "Technical Lead: " + o.technicalLead %></div>
+              <% end %>
+              <% if o.technicalLead == "" %>
+                <div class="regular-text"><%= "Technical Lead: none" %></div>
+              <% end %>
+              <% if o.slDir == "TBD" %>
+                <div class="regular-text"><%= "Service Line Director: " + o.slDir %></div>
+              <% end %>
+              <% if o.slDir == "" %>
+                <div class="regular-text"><%= "Service Line Director: none" %></div>
+              <% end %>
+              <% if o.slArch == "TBD" %>
+                <div class="regular-text"><%= "Solution Architect: " + o.slArch %></div>
+              <% end %>
+              <% if o.slArch == "" %>
+                <div class="regular-text"><%= "Solution Architect: none" %></div>
+              <% end %>
+              <% if o.leadEstim == "TBD" %>
+                <div class="regular-text"><%= "Lead Estimator: " + o.leadEstim %></div>
+              <% end %>
+              <% if o.leadEstim == "" %>
+                <div class="regular-text"><%= "Lead Estimator: none" %></div>
+              <% end %>
+              <% if o.sslOrg == "SWI" and o.swi_va == 0 %>
+                <div class="regular-text"><%= "SSLOrg: " + o.sslOrg + "and SWI: " + o.swi_va %></div>
+              <% end %>
+              <% if o.sslOrg == "SWI" and o.swi_va == "" %>
+                <div class="regular-text"><%= "SSLOrg: " + o.sslOrg + "and SWI: none" %></div>
+              <% end %>
+
+           </div>
          </div>
        <% end %>
      <% end %>

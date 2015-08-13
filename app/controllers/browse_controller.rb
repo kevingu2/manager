@@ -13,9 +13,9 @@ class BrowseController < ApplicationController
    end
 
    if params[:search]
-       @oppties = Oppty.where("opptyName like ? and proposalDueDate >= ? and proposalDueDate <= ? and rfpDate >= ?", "%#{params[:search]}%", Date.today.to_s, endDate.to_s, Date.today.to_s).order(params[:sort]).page(params[:page]).per_page(15)
+       @oppties = Oppty.where("opptyName like ? and proposalDueDate <= ?", "%#{params[:search]}%", endDate.to_s).order(params[:sort]).page(params[:page]).per_page(15)
    else 
-       @oppties = Oppty.where("proposalDueDate >= ? and proposalDueDate <= ? and rfpDate >= ?", Date.today.to_s, endDate.to_s, Date.today.to_s).order(params[:sort]).page(params[:page]).per_page(15)
+       @oppties = Oppty.where("proposalDueDate <= ?", endDate.to_s).order(params[:sort]).page(params[:page]).per_page(15)
    end
 
  end
