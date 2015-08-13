@@ -39,10 +39,6 @@ Rails.application.routes.draw do
 
   get 'browse/index'
 
-  get 'browse/search'
-
-  get 'browse/limit'
-
   get 'tasks/index'
 
   get 'sessions/new'
