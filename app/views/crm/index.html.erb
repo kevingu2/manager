@@ -23,6 +23,9 @@
             </form>
       <% end%>
       <%if @uploaded%>
+          <%puts "*"*30%>
+          <%puts @changes.to_s%>
+          <%puts "*"*30%>
           <h4>Number of Added: <%=@added%><h4/>
           <h4>Number of Deleted: <%=@deleted%><h4/>
           <h4>Number of Updates:<%=@changes.length.to_s%><h4/>
@@ -30,7 +33,8 @@
             <form action ="updateCRM" method="post">
               <input hidden=true type="string" name="old" value=<%= @oldFileName%>>
               <input hidden=true type="string" name="new" value=<%= @newFileName%>>
-							<input hidden=true type="string" name="changes" value=<%= @changes%>>
+			  <input hidden=true type="string" name="changes" value=<%= @changes.to_s.delete(' ')%>>
+              <input hidden=true type="string" name="changedRFP" value=<%= @changedRFP.to_s.delete(' ')%>>
               <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
               <button style= "z-index:3" type="submit">Submit</button>
             </form>
@@ -40,7 +44,7 @@
 	<div class="col-md-6 column-wrapper">
 	  <div class="inner-column">
 		<h2 class="column-title">Download</h2>
-    <p>File to be Downloaded: 
+    <p>File to be Downloaded:
       <%if @fileExists%>
         <i><%=@downloadName%></i>
       <%else%>

@@ -51,42 +51,6 @@
 
 <%= javascript_include_tag 'updateStatus' %>
 
-<script>
-
-function allowDrop(ev) {
-    ev.preventDefault();
-}
-
-function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-}
-
-function drop(ev, target) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
-    var status;
-    if(target.id == "div1") {
-        status=2;
-    }
-    else if (target.id == "div2") {
-        status=1;
-    }
-    else if (target.id == "div3") {
-        status=0;
-    }
-    var params = "{'id':"+data + ",'status':"+status+"}";
-    params=params.replace(/'/g, '"');
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("Content-Type", "application/x-www-form-urlencoded");
-    xmlHttp.open("Content-length", params.length);
-    xmlHttp.open("Connection", "close");
-    xmlHttp.open( "Put", '<%=tasks_updateStatus_url%>' , true );
-    xmlHttp.send( params );
-}
-
-</script>
-
 
   </body>
 </html>
