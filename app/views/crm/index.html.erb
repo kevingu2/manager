@@ -23,12 +23,9 @@
             </form>
       <% end%>
       <%if @uploaded%>
-          <%puts "*"*30%>
-          <%puts @changes.to_s%>
-          <%puts "*"*30%>
           <h4>Number of Added: <%=@added%><h4/>
           <h4>Number of Deleted: <%=@deleted%><h4/>
-          <h4>Number of Updates:<%=@changes.length.to_s%><h4/>
+          <h4>Number of Updates: <%=@changes.length.to_s%><h4/>
 					<h4>Number of Equal: <%=@equal%><h4/>
             <form action ="updateCRM" method="post">
               <input hidden=true type="string" name="old" value=<%= @oldFileName%>>

@@ -33,7 +33,7 @@ class UserOpptiesController < ApplicationController
     end
       respond_to do |format|
         if @user_oppty.save
-          format.html { redirect_to @user_oppty, notice: 'User oppty was successfully created.' }
+          format.html { redirect_to tasks_index_path }
           format.json { render :show, status: :created, location: @user_oppty }
         else
           format.html { render :new }

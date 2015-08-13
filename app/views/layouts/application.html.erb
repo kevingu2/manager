@@ -19,11 +19,10 @@
   <%= javascript_include_tag('jquery.growl.js') %>
 </head>
 <body class='<%=controller.controller_name%>'>
-<head>
   <!-- Static navbar -->
   <%if session[:user_id] %>
-  <nav class="navbar navbar-default navbar-static-top">
-    <div class="container">
+  <nav class="navbar navbar-default navbar-static-top  ">
+    <div class="container-fluid">
       <div id="navbar" class="navbar-collapse collapse">
         <img class="nav-logo" src="/assets/saic-logo-social-small-grey.png" height="50" width="108">
         <ul class="nav navbar-nav">
@@ -41,7 +40,7 @@
           <li class="tab nav-histories"><a href=<%= histories_path%>>History</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li ><a>Welcome <%=session[:username] %></a></li>
+          <li id="username"><a>Welcome <%=session[:username] %></a></li>
           <li class="tab nav-notifications"><a href="#notifications" name="notificationIcon"><img src="/assets/notif-bell-2.png" height="30" width="30" style="padding-bottom: 5px"></a></li>
           <li><a href=<%=sessions_destroy_path %>>Logout</a><li>
         </ul>
