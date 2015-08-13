@@ -1,5 +1,7 @@
 class AllocatedTasksController < ApplicationController
-	def index
+	skip_before_action :verify_authenticity_token
+
+  def index
     assigned_writer=UserOppty.where(status: 3).joins('join (select * from users where role="writer")u
                                       on user_oppties.user_id=u.id').includes(:user, :oppty)
     todo_writer=UserOppty.where(status: 2).joins('join (select * from users where role="writer")u
@@ -52,6 +54,16 @@ class AllocatedTasksController < ApplicationController
         @done_writer_dict[o.user.id]=[o]
       end
     end
+  end
+
+  def deleteOpportunity
+    userOppty=UserOppty.find(params[:id])
+    userOppty.delete
+
+    respond_to do |format|
+        format.json { render json: "OK"}
+    end
+    
   end
 
 end

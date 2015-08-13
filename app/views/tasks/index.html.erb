@@ -12,7 +12,7 @@
               <% @assigned.each do |o|%>
                 <% @current_task=o %>
                 <%= render partial: "writer_task" %>
-              <% end%>
+              <% end %>
             </div>
           </div>
           <div class="layer tile" data-force="30">
@@ -21,7 +21,7 @@
                 <% @to_do.each do |o|%>
                     <% @current_task=o %>
                     <%= render partial: "writer_task" %>
-                 <%end%>
+                 <% end %>
             </div>
           </div>
 
@@ -32,7 +32,7 @@
              <% @doing.each do |o|%>
                <% @current_task=o %>
                <%= render partial: "writer_task" %>
-             <% end%>
+             <% end %>
             </div>
           </div>
 
@@ -42,7 +42,7 @@
              <% @done.each do |o|%>
                <% @current_task=o %>
                <%= render partial: "writer_task" %>
-             <% end%>
+             <% end %>
             </div>
           </div>
 <style>

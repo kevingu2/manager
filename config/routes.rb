@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
   get 'allocated_tasks/index'
 
+  delete 'allocated_tasks/deleteOpportunity'
+
   get 'statistics/index'
 
   get 'crm/index'
@@ -36,10 +38,6 @@ Rails.application.routes.draw do
   get 'invalid_data/index'
 
   get 'browse/index'
-
-  get 'browse/search'
-
-  get 'browse/limit'
 
   get 'tasks/index'
 
