@@ -12,7 +12,7 @@ class AssignController < ApplicationController
   def assignUser
     oppty=Oppty.find(params[:oppty_id])
     user=User.find(params[:user_id])
-    @user_oppty=user.add_oppty(params[:user_id], oppty.id, 3)
+    @user_oppty=user.add_oppty(params[:user_id], oppty.id, 3, false)
     if !@user_oppty
       redirect_to invalid_entry_index_path, notice: "User has been Assigned"
       return
@@ -31,7 +31,7 @@ class AssignController < ApplicationController
   def unAssignUser
     oppty=Oppty.find(params[:oppty_id])
     user=User.find(params[:user_id])
-    @user_oppty=user.remove_oppty(params[:user_id], oppty.id, 3)
+    @user_oppty=user.remove_oppty(params[:user_id], oppty.id, 3, false)
     redirect_to browse_index_path
     # if !@user_oppty
     #   redirect_to invalid_entry_index_path, notice: "User has been Assigned"

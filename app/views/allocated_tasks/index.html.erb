@@ -52,9 +52,9 @@
                             <ul id="<%= name + 'assigned' %>" style="display: none;">
                                 <% @assigned_writer_dict[id].each do |o|%>
                                   <%if o.oppty.present?%>
-                                    <li>
+                                    <li class="col-md-12">
                                         <h5 class="col-md-11"><%= link_to o.oppty.opptyName, o.oppty%></h5>
-                                        <a href="#" name="remove-btn" class="col-md-1 red-cross glyphicon glyphicon-remove"></a>
+                                        <img class="btn-x-manager" onclick="deleteOptManager(<%= o.id %>)" src="/assets/redx.png" alt="X" border="0"/>
                                     </li>
                                   <%end%>
                                 <%end%>

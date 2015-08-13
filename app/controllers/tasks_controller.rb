@@ -34,6 +34,7 @@ class TasksController < ApplicationController
       format.json { render json: "OK"}
     end
   end
+  
   def set_oppties
     @done=UserOppty.where(user_id:session[:user_id]).where(status:0).joins(:oppty).includes(:oppty)
     @doing=UserOppty.where(user_id:session[:user_id]).where(status:1).joins(:oppty).includes(:oppty)

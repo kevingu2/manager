@@ -7,8 +7,8 @@
          <tr style="font-size:24px;">
            <td class="col-md-1"></td>
            <td class="col-md-10" style="padding-top: 15px !important;">
-             <%= form_tag(browse_index_path, :method => "get", id: "search-form" ) do %>
-               <%= text_field_tag :search, params[:search], placeholder: "Search" %>
+             <%= form_tag(browse_index_path, :method => "get" ) do %>
+               <%= text_field_tag :search, params[:search], id: "search-form", placeholder: "Search" %>
                <input id="search-button" class="btn-search" type="image" style="width: 4% !important;" src="/assets/search.png" alt="Submit_tag"> 
                <td class="col-md-1"></td>
              <% end %>
@@ -120,7 +120,7 @@
      else
        style.sheet.insertRule(name+"{"+rules+"}",0);
    }
-   createClass('html body div div div.inner-search-bar.col-md-12 table.col-md-12 tbody tr td.col-md-10 form#search-form input#search',"width: 96% !important; padding-left: 10px !important;");
+   createClass('html body div div div.inner-search-bar.col-md-12 table.col-md-12 tbody tr td.col-md-10 form input#search-form',"width: 96% !important; padding-left: 10px !important; height: 100% !important;");
 
 $(document).on("click", "a[name='sort-btn']", function (e) {
      select = document.getElementById('sorting').value;
