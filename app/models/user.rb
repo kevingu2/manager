@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
     uh
   end
 
-  def remove_oppty(user_id, oppty_id, status)
+  def remove_oppty(user_id, oppty_id)
     uo=nil
     uo=UserOppty.where(["user_id=? and oppty_id=?", user_id, oppty_id])
     if uo.present?

@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   #status, 0 is done, 1 is doing, 2 is to do, 3 is assigned by an manager but not accepted
-  skip_before_action :verify_authenticity_token
+  skip_before_action :verify_authenticity_token, only: [:updateStatus]
   before_action :set_oppties
   def index
   end

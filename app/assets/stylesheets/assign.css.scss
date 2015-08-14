@@ -1,26 +1,25 @@
 // Place all the styles related to the Assign controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
-.assigned-jumbotron {
-	min-height: 600px !important;
-	margin-right: 50px !important;
-	margin-left: 50px !important;
-	margin-bottom: 30px !important;
+h2{
+  width: 600px;
+  margin:0 auto;
+  text-align: center;
+  padding-bottom: 40px;
+  font-family: verdana, arial, helvetica,
+  sans-serif;font-size: 32px;
 }
-
 .not-assigned-row {
-	min-height: 46px !important;
-	border: 1px solid black;
+	min-height: 30px !important;
+    border-bottom: 1px solid black;
 }
 
 .assigned-row {
-	min-height: 46px !important;
-	border: 1px solid black;
+	min-height: 30px !important;
+    border-bottom: 1px solid black;
 }
 
 .row-item {
-    line-height: 46px !important;
     min-height: 46px !important;
 }
 
@@ -31,9 +30,26 @@
 
 .un-assign-button {
 	background-color: #f00a10 !important; 
-	border-color: #f00a10 !important; 
+	border-color: #f00a10 !important;
 }
-
+.plus {
+  position:relative;
+  top:15px;
+  left:30px;
+  padding: 0px;
+  width: 20px ;
+  height: 20px ;
+  cursor:pointer;
+}
+.redx {
+  position:relative;
+  top:15px;
+  left:30px;
+  padding: 0px;
+  width: 20px ;
+  height: 20px ;
+  cursor:pointer;
+}
 .un-assign-button:hover {
 	background-color: darken(#f00a10, 10%) !important;
 }
@@ -42,7 +58,13 @@
 .un-assign-button:focus {
 	outline:0 !important;
 }
+.outer-assigned-row{
+  border: 2px solid black;
+}
+.outer-not-assigned-row{
+  border: 2px solid black;
 
+}
 .assign-button {
 	background-color: #005DA0 !important; 
 	border-color: #005DA0 !important; 
