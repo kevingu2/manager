@@ -2,21 +2,14 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.assigned-jumbotron {
-	min-height: 600px !important;
-	margin-right: 50px !important;
-	margin-left: 50px !important;
-	margin-bottom: 30px !important;
-}
-
 .not-assigned-row {
-	min-height: 46px !important;
+	min-height: 30px !important;
 	border: 1px solid black;
 }
 
 .assigned-row {
-	min-height: 46px !important;
-	border: 1px solid black;
+	min-height: 30px !important;
+	border: 1px solid black ;
 }
 
 .row-item {
@@ -31,7 +24,7 @@
 
 .un-assign-button {
 	background-color: #f00a10 !important; 
-	border-color: #f00a10 !important; 
+	border-color: #f00a10 !important;
 }
 
 .un-assign-button:hover {

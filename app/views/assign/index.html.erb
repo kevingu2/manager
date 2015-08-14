@@ -1,6 +1,6 @@
 <html>
 <body>
-	<div class="jumbotron container assigned-jumbotron col-md-12">
+	<div class="jumbotron container">
 		<h2 style="text-align: center; padding-top: 20px; padding-bottom: 20px;font-family: verdana, arial, helvetica, sans-serif;font-size: 32px;">
 			<%= @oppty.opptyName%></h2>
 		
@@ -8,17 +8,14 @@
 			<h3 style="padding-bottom: 20px;">Not Assigned Writers</h3>
 			<div class="outer-not-assigned-row" id="outer-not-assigned-row">
 				<%@not_assigned_writers.each do |w|%>
-					<div class="col-md-12 not-assigned-row" id="not-assigned-row">
-						<div class="col-md-6 row-item">
+					<div class="col-md-12 not-assigned-row" id=<%=w.id%>>
+						<div id= "username" class="col-md-6 row-item">
 					    	<p class="writer-name"><%=w.name%></p>
 						</div>
-						<div class="col-md-6 row-item">
-						    <form method="post" action= "assignUser" >
-						      <input name="oppty_id" type="hidden" value="<%= @oppty.id%>">
-						      <input name="user_id" type="hidden" value="<%= w.id%>">
-						      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-						      <button class="btn btn-lg btn-primary btn-right assign-button" type="submit">Assign</button>
-						    </form>
+						<div id="button" class="col-md-6 row-item">
+                            <button id="assign-button" class="btn btn-lg btn-primary btn-right assign-button" type="submit"
+                                    onclick="assign(<%= @oppty.id%>, <%= w.id%>)">
+                                    Assign</button>
 						</div>
 					</div>
 				<%end%>
@@ -29,17 +26,14 @@
 			<h3 style="padding-bottom: 20px;">Assigned Writers</h3>
 			<div class="outer-assigned-row" id="outer-assigned-row">
 				<%@assigned_writers.each do |w|%>
-					<div class="col-md-12 assigned-row" id="assigned-row">
-						<div class="col-md-6 row-item">
+					<div class="col-md-12 assigned-row" id=<%=w.user.id%>>
+						<div id= "username" class="col-md-6 row-item">
 				    		<p class="writer-name"><%=w.user.name%></p>
 						</div>
 						<div class="col-md-6 row-item">
-						    <form method="post" action= "unAssignUser" >
-						      <input name="oppty_id" type="hidden" value="<%= @oppty.id%>">
-						      <input name="user_id" type="hidden" value="<%= w.user.id%>">
-						      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-						      <button class="btn btn-lg btn-primary btn-right un-assign-button" type="submit">Un-Assign</button>
-						    </form>
+                          <button id="assign-button" class="btn btn-lg btn-primary btn-right un-assign-button" type="submit"
+                                  onclick="unassign(<%= @oppty.id%>, <%= w.user.id%>)">
+                            Unassign</button>
 						</div>
 					</div>
 				<%end%>
@@ -49,19 +43,7 @@
 
 	<%= javascript_include_tag('jquery.slimscroll.min.js') %>
 
-	<script>
-		$(function(){
-    		$('#outer-not-assigned-row').slimScroll({
-        		height: '336px'
-    		});
-		});
 
-		$(function(){
-    		$('#outer-assigned-row').slimScroll({
-        		height: '336px'
-    		});
-		});
-	</script>
 </body>
 
 

@@ -1,4 +1,5 @@
 class AssignController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:assignUser, :unAssignUser]
   def index
     opptyId=params[:opptyId]
     puts opptyId
@@ -10,9 +11,11 @@ class AssignController < ApplicationController
   end
 
   def assignUser
-    oppty=Oppty.find(params[:oppty_id])
-    user=User.find(params[:user_id])
-    @user_oppty=user.add_oppty(params[:user_id], oppty.id, 3, false)
+    json_body=JSON.parse(request.body.read)
+    user_id= json_body.fetch('user_id')
+    oppty_id=json_body.fetch('oppty_id')
+    user=User.find(user_id)
+    @user_oppty=user.add_oppty(params[:user_id], oppty_id, 3, false)
     if !@user_oppty
       redirect_to invalid_entry_index_path, notice: "User has been Assigned"
       return
@@ -29,22 +32,16 @@ class AssignController < ApplicationController
   end
 
   def unAssignUser
-    oppty=Oppty.find(params[:oppty_id])
-    user=User.find(params[:user_id])
-    @user_oppty=user.remove_oppty(params[:user_id], oppty.id, 3, false)
-    redirect_to browse_index_path
-    # if !@user_oppty
-    #   redirect_to invalid_entry_index_path, notice: "User has been Assigned"
-    #   return
-    # end
-    # respond_to do |format|
-    #   if @user_oppty.save
-    #     format.html { redirect_to @user_oppty, notice: 'Successfully Assigned User' }
-    #     format.json { render :show, status: :created, location: @user_oppty }
-    #   else
-    #     format.html { render :new }
-    #     format.json { render json: @user_oppty.errors, status: :unprocessable_entity }
-    #   end
-    # end
+    json_body=JSON.parse(request.body.read)
+    user_id= json_body.fetch('user_id')
+    oppty_id=json_body.fetch('oppty_id')
+    user=User.find(user_id)
+    respond_to do |format|
+      if user.remove_oppty(user_id, oppty_id).present?
+        format.json { render json: {msg:"OK"}}
+      else
+        format.json {  render json: {msg:"ERROR"}}
+      end
+    end
   end
 end
