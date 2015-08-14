@@ -2,12 +2,14 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 h2{
-  width: 600px;
-  margin:0 auto;
-  text-align: center;
   padding-bottom: 40px;
   font-family: verdana, arial, helvetica,
   sans-serif;font-size: 32px;
+}
+.assign_name{
+  width: 600px;
+  margin:0 auto;
+  text-align: center;
 }
 .not-assigned-row {
 	min-height: 30px !important;
