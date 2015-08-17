@@ -35,8 +35,6 @@ Rails.application.routes.draw do
 
   get 'history/index'
 
-  get 'invalid_data/index'
-
   get 'browse/index'
 
   get 'tasks/index'
