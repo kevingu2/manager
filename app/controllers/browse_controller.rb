@@ -25,17 +25,17 @@ class BrowseController < ApplicationController
       @oppties = Oppty.where("opptyName like ? and proposalDueDate >= ? and proposalDueDate <= ? and (slDir == ? or slDir == ?)", "%#{params[:search]}%", beginDate, endDate.to_s, "TBD", "").order(params[:sort]).page(params[:page]).per_page(15)
     elsif params[:invalid] == "slArch"
       @oppties = Oppty.where("opptyName like ? and proposalDueDate >= ? and proposalDueDate <= ? and (slArch == ? or slArch == ?)", "%#{params[:search]}%", beginDate, endDate.to_s, "TBD", "").order(params[:sort]).page(params[:page]).per_page(15)
-    elsif params[:invalid] == "sslOrg"
+    elsif params[:invalid] == "sllOrg"
       @oppties = Oppty.where("opptyName like ? and proposalDueDate >= ? and proposalDueDate <= ? and
-                             ((sslOrg == ? and (tss_va == ? or tss_va == ?)) or 
-                              (sslOrg == ? and (swi_va == ? or swi_va == ?)) or 
-                              (sslOrg == ? and (itms_va == ? or itms_va == ?)) or 
-                              (sslOrg == ? and (mss_va == ? or mss_va == ?)) or 
-                              (sslOrg == ? and (hwi_va == ? or hwi_va == ?)) or 
-                              (sslOrg == ? and (ccds_va == ? or ccds_va == ?)) or 
-                              (sslOrg == ? and (lsc_va == ? or lsc_va == ?)) or 
-                              (sslOrg == ? and (nwi_va == ? or nwi_va == ?)) or 
-                              (sslOrg == ? and (sss_va == ? or sss_va == ?)) )", 
+                             ((sllOrg == ? and (tss_va == ? or tss_va == ?)) or 
+                              (sllOrg == ? and (swi_va == ? or swi_va == ?)) or 
+                              (sllOrg == ? and (itms_va == ? or itms_va == ?)) or 
+                              (sllOrg == ? and (mss_va == ? or mss_va == ?)) or 
+                              (sllOrg == ? and (hwi_va == ? or hwi_va == ?)) or 
+                              (sllOrg == ? and (ccds_va == ? or ccds_va == ?)) or 
+                              (sllOrg == ? and (lsc_va == ? or lsc_va == ?)) or 
+                              (sllOrg == ? and (nwi_va == ? or nwi_va == ?)) or 
+                              (sllOrg == ? and (sss_va == ? or sss_va == ?)) )", 
                               "%#{params[:search]}%", beginDate, endDate.to_s,
                               "TSS", 0.0, "",
                               "SWI", 0.0, "",
@@ -52,6 +52,10 @@ class BrowseController < ApplicationController
     #else 
     #  @oppties = Oppty.where("proposalDueDate <= ?", endDate.to_s).order(params[:sort]).page(params[:page]).per_page(15)
     #end
+
+    @oppties.each do |o|
+      puts o.sllOrg
+    end
 
   end
 
