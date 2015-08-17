@@ -3,7 +3,7 @@ class CrmController < ApplicationController
   before_action :getFileName
 
   def getFileName
-    if File.basename(Dir[CRM_PATH+'/*.xlsm'][0]) != nil
+    if (Dir[CRM_PATH+'/*.xlsm'].count>0)
       @fileExists = true
       #final brackets splice the string to extract the 'new_' from the beginning of the filename
       @downloadName=File.basename(Dir[CRM_PATH+'/*.xlsm'][0])[4..-1]
