@@ -58,7 +58,7 @@ function updateUserOppties(id, list){
     xmlHttp.open("Content-Type", "application/x-www-form-urlencoded");
     xmlHttp.open("Content-length", params.length);
     xmlHttp.open("Connection", "close");
-    xmlHttp.open( "Put", 'http://localhost:3000/tasks/updateStatus' , true );
+    xmlHttp.open( "Put", '/tasks/updateStatus' , true );
     xmlHttp.send( params );
     // + indexes from onEnd
 }
