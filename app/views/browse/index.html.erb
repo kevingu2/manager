@@ -20,14 +20,14 @@
         <div class="form">
           <table>
             <tr>
-              <div class="col-md-3">
-                <td class="col-md-1">
+              <div class="col-md-4">
+                <td colspan=1>
                   <label class="black-text field-label" style="padding-left: 101px;">
                     Within:
                   </label>
                 </td>
 
-                <td class="col-md-1">
+                <td colspan=1>
                   <div>
                     <div class="toggle-btn radio black-text" id="within" name="within">
                       <input id="thirty_days_left" name="limiting" type="radio" value="30">30 Days
@@ -47,18 +47,18 @@
                   </div>
                 </td>
               </div>
-              <div class="col-md-10">
-                <td class="col-md-1">
-                  <label class="black-text field-label">
+              <div class="col-md-4">
+                <td colspan=1>
+                  <label class="black-text field-label" style="padding-left:20px;">
                     Invalid Field:
                   </label>
                 </td>
 
-                <td class="col-md-1">
+                <td colspan=1>
                   <div>
                     <div class="toggle-btn radio black-text" id="invalidDiv" name="invalidDiv">
                       <div class="row">
-                        <div class="col-md-6" style="padding-right:20px !important;">
+                        <div class="col-md-6" style="padding-right:10px !important;">
                           <input id="allInvalidFields" name="invalid" type="radio" value="all" checked="true">All
                           <br>
 
@@ -71,7 +71,7 @@
                           <input id="technicalLeadField" name="invalid" type="radio" value="technicalLead">Technical Lead
                           <br>
                         </div>
-                        <div class="col-md-6" style="padding-right:20px !important;">
+                        <div class="col-md-6" style="padding-right:10px !important;">
                           <input id="slDirField" name="invalid" type="radio" value="slDir">Service Line Director
                           <br>
 
@@ -90,15 +90,15 @@
                 </td>
               </div>
               <!-- drop down menu in Browse Page to sort the opportunities by a specific field -->
-              <div class="col-md-2">
-                <td class="col-md-1">
-                  <label class="black-text sort-dropdown-label">
+              <div class="col-md-4">
+                <td colspan=1>
+                  <label class="black-text sort-dropdown-label" style="padding-left:20px;">
                     Sort By:
                   </label>
                 </td>
-                  <td class="col-md-3">
+                  <td colspan=1>
                     <div>
-                      <select class="selector col-md-9" id="sorting" name="sorting">
+                      <select class="selector col-md-10" id="sorting" name="sorting">
                         <option id="opt1" value="none">none</option>
                         <option id="opt2" value="opptyName">Opportunity Name</option>
                         <option id="opt3" value="opptyId">Opportunity ID</option>
@@ -108,12 +108,13 @@
                         <option id="opt7" value="proposalMgr">Proposal Managers</option>
                         <option id="opt8" value="value">Value</option>
                       </select>
-                       
-                      <a href="#" name="sort-btn" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
+                      <td>
+                        <a href="#" name="sort-btn" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
+                      </td>
                     </div>  
                   </td>
               </div>
-              <td class="col-md-1"></td>
+              <td colspan=1></td>
             </tr>
           </table>
         </div>
@@ -232,6 +233,7 @@
         style.sheet.insertRule(name+"{"+rules+"}",0);
      }
      createClass('html body div div div.inner-search-bar.col-md-12 table.col-md-12 tbody tr td.col-md-10 form#search-form input#search',"width: 96% !important; padding-left: 10px !important;");
+     //createClass('html body div div div.inner-search-bar.col-md-12 div.form table tbody tr td div div#invalidDiv.toggle-btn.radio.black-text',"width:95% !important;")
 
 
     $(document).on("click", "a[name='invalid-btn']", function (e) {
