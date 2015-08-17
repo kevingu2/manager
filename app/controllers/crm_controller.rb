@@ -147,7 +147,7 @@ class CrmController < ApplicationController
     oppty.proposalMgr           = new_dict["ProposalMgr"]
     oppty.technicalLead         = new_dict["TechnicalLead"]
     oppty.slArch                = new_dict["SLArch"]
-    oppty.sslOrg                = new_dict["SLLOrg"]
+    oppty.sllOrg                = new_dict["SLLOrg"]
     oppty.slComments            = new_dict["SL Comments"]
     oppty.rfpDate               = Date.new(1899,12,30) + new_dict["RFPDate"].to_f
     oppty.awardDate             = Date.new(1899,12,30) + new_dict["AwardDate"].to_f
@@ -428,7 +428,7 @@ class CrmController < ApplicationController
 				if proposalMgr              != oppty.proposalMgr              then diff ["proposalMgr"]             = proposalMgr end
 				if technicalLead            != oppty.technicalLead            then diff ["technicalLead"]           = technicalLead end
 				if slArch                   != oppty.slArch                   then diff ["slArch"]                  = slArch end
-        if sllOrg                   != oppty.sslOrg                   then diff ["sslOrg"]                  = sllOrg end
+        if sllOrg                   != oppty.sllOrg                   then diff ["sllOrg"]                  = sllOrg end
 				if slComments               != oppty.slComments               then diff ["slComments"]              = slComments end
 				if rfpDate                  != oppty.rfpDate                  then diff ["rfpDate"]                 = rfpDate end
 				if awardDate                != oppty.awardDate                then diff ["awardDate"]               = awardDate end
