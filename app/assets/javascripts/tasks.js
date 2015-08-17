@@ -9,7 +9,7 @@ function deleteOpt (id){
     }
     xmlHttp.open("Content-Type", "application/x-www-form-urlencoded");
     xmlHttp.open("Connection", "close");
-    xmlHttp.open( "delete", "http://localhost:3000/tasks/deleteOpportunity?id="+id , true );
+    xmlHttp.open( "delete", "/tasks/deleteOpportunity?id="+id , true );
     xmlHttp.send(null);
 
 

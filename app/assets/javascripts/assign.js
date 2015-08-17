@@ -19,7 +19,7 @@ function assign(oppty_id, user_id){
     xmlHttp.open("Content-Type", "application/x-www-form-urlencoded");
     xmlHttp.open("Content-length", params.length);
     xmlHttp.open("Connection", "close");
-    xmlHttp.open( "Post", 'http://localhost:3000/assign/assignUser' , true );
+    xmlHttp.open( "Post", '/assign/assignUser' , true );
     xmlHttp.send( params );
 
     var name = document.getElementById(user_id).cloneNode(true);
@@ -40,7 +40,7 @@ function unassign(oppty_id, user_id){
     xmlHttp.open("Content-Type", "application/x-www-form-urlencoded");
     xmlHttp.open("Content-length", params.length);
     xmlHttp.open("Connection", "close");
-    xmlHttp.open( "Post", 'http://localhost:3000/assign/unAssignUser', true );
+    xmlHttp.open( "Post", '/assign/unAssignUser', true );
     xmlHttp.send( params );
 
     var name = document.getElementById(user_id).cloneNode(true);
