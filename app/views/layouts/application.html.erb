@@ -33,7 +33,6 @@
           <%if session[:role]=="manager" %>
             <li class="tab nav-allocated_tasks"><a href=<%= allocated_tasks_index_path%>>Allocated Tasks</a></li>
             <li class="tab nav-browse"><a href=<%= browse_index_path%> >Browse</a></li>
-            <li class="tab nav-invalid_data"><a href=<%= invalid_data_index_path%>>Invalid Data</a></li>
             <li class="tab nav-crm"><a href=<%= crm_index_path%>>Upload CRM</a></li>
             <li class="tab nav-statistics"><a href=<%= statistics_index_path%>>Statistics</a></li>
           <%end%>
