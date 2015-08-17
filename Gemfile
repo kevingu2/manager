@@ -47,3 +47,5 @@ gem 'will_paginate'
 gem 'therubyracer', :platforms => :ruby
 
 gem 'sidekiq', '3.2.5'
+
+gem 'rack-cors', :require => 'rack/cors'
