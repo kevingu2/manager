@@ -11,17 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150817170527) do
+ActiveRecord::Schema.define(version: 20150818172734) do
 
   create_table "allocated_tasks", force: true do |t|
     t.string   "title"
     t.string   "taskId"
     t.text     "comment"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "browses", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -36,7 +31,7 @@ ActiveRecord::Schema.define(version: 20150817170527) do
     t.string   "captureMgr"
     t.string   "programMgr"
     t.string   "proposalMgr"
-    t.string   "sslOrg"
+    t.string   "sllOrg"
     t.string   "technicalLead"
     t.string   "slArch"
     t.string   "ed"
@@ -267,7 +262,7 @@ ActiveRecord::Schema.define(version: 20150817170527) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "status",     default: 2
+    t.integer  "status"
     t.boolean  "changeRFP"
   end
 

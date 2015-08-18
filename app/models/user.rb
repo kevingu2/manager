@@ -16,16 +16,12 @@ class User < ActiveRecord::Base
     uo
   end
 
-  def add_history(user_id, oppty_id)
+  def add_history(user_id, oppty_id, history_id)
     uh=nil
     oppty=Oppty.find_by(["id=?", oppty_id])
     if oppty.present?
-      puts "Add to History"
-      oppty_dict=oppty.attributes
-      oppty_dict.delete('id')
-      history=History.create(oppty_dict)
-      if !UserHistory.where(["user_id=? and history_id=?", user_id, history.id]).present?
-        uh=user_history.build(history_id: history.id)
+      if !UserHistory.where(["user_id=? and history_id=?", user_id, history_id]).present?
+        uh=user_history.build(history_id: history_id)
       end
     end
     uh
