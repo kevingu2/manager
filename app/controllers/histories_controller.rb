@@ -54,6 +54,7 @@ class HistoriesController < ApplicationController
    redirect_to histories_path, notice: 'History was successfully created.'
    deleteOppty(oppty.id)
  end
+
  def deleteOppty(oppty_id)
    puts "Delete Oppty: "+oppty_id.to_s
    oppty=Oppty.destroy(oppty_id)

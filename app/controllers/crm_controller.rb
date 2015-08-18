@@ -1,5 +1,6 @@
 class CrmController < ApplicationController
   CRM_PATH = File.join(Rails.root, "public", "uploads")
+  ACCEPTED_FORMATS = [".xlsm", ".xls"]
   before_action :getFileName
 
   def getFileName
@@ -24,8 +25,13 @@ class CrmController < ApplicationController
   end
   def checkDate
     uploaded_io = params[:upl]
+
     if !uploaded_io.present?
       redirect_to crm_index_path, notice: "Please upload a file"
+      return
+    end
+    if !ACCEPTED_FORMATS.include? File.extname(uploaded_io.original_filename)
+      redirect_to crm_index_path, notice: "Please upload an XLSM or XLS file"
       return
     end
     if (Dir[CRM_PATH+'/*.xlsm'].count>0)
@@ -109,154 +115,159 @@ class CrmController < ApplicationController
     end
     if changes.any?
       changes.each do |c|
-        #TODO: fix like oppty
         if History.find_by(opptyId:c) # if in history delete from history, add new one, move to history
-          History.find_by(opptyId:c).delete
-          newIds.push(c)
-          ids.push(c) # because hax
+          history=History.find_by(opptyId:c)
+          updateObject(history, data_hash[c])
         else
           oppty=Oppty.find_by(opptyId:c)
-          updateOppty(oppty, data_hash[c])
+          updateObject(oppty, data_hash[c])
         end
       end
     end
     data.each do |opportunity|
       if !newIds.include? opportunity["OpptyID"] then next end # if id not supposed to be added, skip
       if History.find_by(opptyId:opportunity["OpptyID"]) then next end
-      uploadedIds.push(opportunity["OpptyID"])
       oppty=Oppty.new
-      updateOppty(oppty, opportunity)
+      updateObject(oppty, opportunity)
     end
     ids.each do |i|
       moveToHistory(i)
     end
-    redirect_to crm_index_path
+    redirect_to crm_index_path notice: "Successfully Uploaded "
   end
 
-  def updateOppty(oppty, new_dict)
+  #Can use to update oppty or history
+  def updateObject(object, new_dict)
     #fields
-    oppty.opptyId               = new_dict["OpptyID"]
-    oppty.opptyName             = new_dict["OpptyName"]
-    oppty.coordinate            = new_dict["coordinate"]
-    oppty.idiqCA                = new_dict["IDIQ_CA"]
-    oppty.status2               = new_dict["Status2"]
-    oppty.value                 = new_dict["Total Value $M"]
-    oppty.pWin                  = new_dict["pWin"]
-    oppty.captureMgr            = new_dict["Capturemgr"]
-    oppty.programMgr            = new_dict["ProgramMgr"]
-    oppty.proposalMgr           = new_dict["ProposalMgr"]
-    oppty.technicalLead         = new_dict["TechnicalLead"]
-    oppty.slArch                = new_dict["SLArch"]
-    oppty.sllOrg                = new_dict["SLLOrg"]
-    oppty.slComments            = new_dict["SL Comments"]
-    oppty.rfpDate               = Date.new(1899,12,30) + new_dict["RFPDate"].to_f
-    oppty.awardDate             = Date.new(1899,12,30) + new_dict["AwardDate"].to_f
-    oppty.slDir                 = new_dict["SLDir"]
-    oppty.leadEstim             = new_dict["LeadEstim"]
-    oppty.engaged               = new_dict["Engaged r/y/g"]
-    oppty.solution              = new_dict["Solution r/y/g"]
-    oppty.estimate              = new_dict["Estimate r/y/g"]
-    oppty.proposalDueDate       = Date.new(1899,12,30) + new_dict["ProposalDueDate"].to_f
-    oppty.codeName              = new_dict["CodeName"]
-    oppty.descriptionOfWork     = new_dict["DescriptionOfWork"]
-    oppty.category              = new_dict["Category"]
-    oppty.pwald                 = new_dict["PWALD"]
-    oppty.pBid                  = new_dict["pBid"]
-    oppty.awardFV               = new_dict["AwardFV"]
-    oppty.saicvaPercent         = new_dict["SAICVA%"]
-    oppty.saicva                = new_dict["SAIC VA $M"]
-    oppty.mat                   = new_dict["Mat%"]
-    oppty.materialsTV           = new_dict["Mat TV $M"]
-    oppty.subc                  = new_dict["Subc%"]
-    oppty.subTV                 = new_dict["Subc TV $M"]
-    oppty.cg_va                 = new_dict["CG_VA"]
-    oppty.sss_va                = new_dict["SSS-3621"] # i have no idea why
-    oppty.nwi_va                = new_dict["NWI-3933"]
-    oppty.hwi_va                = new_dict["HWI-3648"]
-    oppty.itms_va               = new_dict["ITMS-3896"]
-    oppty.tss_va                = new_dict["TSS-3676"]
-    oppty.ccds_va               = new_dict["CCDS-3932"]
-    oppty.mss_va                = new_dict["MSS-3690"]
-    oppty.swi_va                = new_dict["SWI-3934"]
-    oppty.lsc_va                = new_dict["LSC-3640"]
-    oppty.zzOth_va              = new_dict["zzOth_VA"]
-    oppty.pri                   = new_dict["Pri"]
-    oppty.aop                   = new_dict["AOP"]
-    oppty.peg                   = new_dict["PEG"]
-    oppty.mustWin               = new_dict["MustWin"]
-    oppty.feeIndic              = new_dict["FeeIndic"]
-    oppty.slutil                = new_dict["Slutil"]
-    oppty.recompete             = new_dict["Recompete"]
-    oppty.competitive           = new_dict["Competitive"]
-    oppty.international         = new_dict["International"]
-    oppty.strategic             = new_dict["Strategic"]
-    oppty.bundle                = new_dict["Bundle"]
-    oppty.bidReviewStream       = new_dict["BidReviewStream"]
-    oppty.definedDelivPgm       = new_dict["DefinedDelivPgm"]
-    oppty.evaluationCriteria    = new_dict["EvaluationCriteria"]
-    oppty.perfWorkLoc           = new_dict["PerfWorkLoc"]
-    oppty.classIfReqmt          = new_dict["ClassifReqmt"]
-    oppty.grouping              = new_dict["Grouping"]
-    oppty.reasonForWinLoss      = new_dict["ReasonforWinLoss"]
-    oppty.egr                   = new_dict["EGR"]
-    oppty.slCat                 = new_dict["SLcat"]
-    oppty.slPri                 = new_dict["Slpri"]
-    oppty.slNote                = new_dict["Slnote"]
-    oppty.crmRunDate            = Date.new(1899,12,30) + new_dict["CRMRunDate"].to_f
-    oppty.contractStartDate     = Date.new(1899,12,30) + new_dict["ContractStartDate"].to_f
-    oppty.rfpFYPer              = new_dict["RFPFYPer"]
-    oppty.submitFYPer           = new_dict["SubmitFYPer"]
-    oppty.awardFYPer            = new_dict["AwardFYPer"]
-    oppty.preBPprojID           = new_dict["PreBPprojID"]
-    oppty.fy16PreBP             = new_dict["FY16 PreB&P$"]
-    oppty.fy16PreBPSpent        = new_dict["FY16 PreB&P $Spent"]
-    oppty.fy16PreBPSpentPercent = new_dict["FY16 PreB&P %Spent"]
-    oppty.bpProjID              = new_dict["BPprojID"]
-    oppty.fy16BDTot             = new_dict["FY16 BDTot$"]
-    oppty.fy16BDTotSpent        = new_dict["FY16 BDTot $Spent"]
-    oppty.fy16BDTotSpentPercent = new_dict["FY16 BDTot %Spent"]
-    oppty.financeDate           = Date.new(1899,12,30) + new_dict["FinDate"].to_f
-    oppty.cgSecOrg              = new_dict["SecOrg"]
-    oppty.cgSecMgr              = new_dict["SecMgr"]
-    oppty.cgOrg                 = new_dict["CGOrg"]
-    oppty.cgMgr                 = new_dict["CGMgr"]
-    oppty.opOrg                 = new_dict["OpOrg"]
-    oppty.cgOpMgr               = new_dict["OpMgr"]
-    oppty.cgPgmDir              = new_dict["PgmDir"]
-    oppty.bdMgr                 = new_dict["BDMgr"]
-    oppty.crmRecOwner           = new_dict["CRMRecOwner"]
-    oppty.sslMgr                = new_dict["SSLeadMgr"]
-    oppty.divNum                = new_dict["DivNum"]
-    oppty.customer              = new_dict["Customer"]
-    oppty.endCustomer           = new_dict["EndCustomer"]
-    oppty.crn                   = new_dict["CRN"]
-    oppty.contractType          = new_dict["ContractType"]
-    oppty.opptyClass            = new_dict["OpptyClass"]
-    oppty.numberOfAwards        = new_dict["NumberOfAwards"]
-    oppty.totalPOP              = new_dict["TotalPOP"]
-    oppty.primeSub              = new_dict["PrimeSub"]
-    oppty.fy16BP                = new_dict["FY16 B&P$"]
-    oppty.fy16BPSpent           = new_dict["FY16 B&P $Spent"]
-    oppty.fy16BPSpentPercent    = new_dict["FY16 B&P %Spent"]
-    oppty.save
+    object.opptyId               = new_dict["OpptyID"]
+    object.opptyName             = new_dict["OpptyName"]
+    object.coordinate            = new_dict["coordinate"]
+    object.idiqCA                = new_dict["IDIQ_CA"]
+    object.status2               = new_dict["Status2"]
+    object.value                 = new_dict["Total Value $M"]
+    object.pWin                  = new_dict["pWin"]
+    object.captureMgr            = new_dict["Capturemgr"]
+    object.programMgr            = new_dict["ProgramMgr"]
+    object.proposalMgr           = new_dict["ProposalMgr"]
+    object.technicalLead         = new_dict["TechnicalLead"]
+    object.slArch                = new_dict["SLArch"]
+    object.sllOrg                = new_dict["SLLOrg"]
+    object.slComments            = new_dict["SL Comments"]
+    object.rfpDate               = Date.new(1899,12,30) + new_dict["RFPDate"].to_f
+    object.awardDate             = Date.new(1899,12,30) + new_dict["AwardDate"].to_f
+    object.slDir                 = new_dict["SLDir"]
+    object.leadEstim             = new_dict["LeadEstim"]
+    object.engaged               = new_dict["Engaged r/y/g"]
+    object.solution              = new_dict["Solution r/y/g"]
+    object.estimate              = new_dict["Estimate r/y/g"]
+    object.proposalDueDate       = Date.new(1899,12,30) + new_dict["ProposalDueDate"].to_f
+    object.codeName              = new_dict["CodeName"]
+    object.descriptionOfWork     = new_dict["DescriptionOfWork"]
+    object.category              = new_dict["Category"]
+    object.pwald                 = new_dict["PWALD"]
+    object.pBid                  = new_dict["pBid"]
+    object.awardFV               = new_dict["AwardFV"]
+    object.saicvaPercent         = new_dict["SAICVA%"]
+    object.saicva                = new_dict["SAIC VA $M"]
+    object.mat                   = new_dict["Mat%"]
+    object.materialsTV           = new_dict["Mat TV $M"]
+    object.subc                  = new_dict["Subc%"]
+    object.subTV                 = new_dict["Subc TV $M"]
+    object.cg_va                 = new_dict["CG_VA"]
+    object.sss_va                = new_dict["SSS-3621"]
+    object.nwi_va                = new_dict["NWI-3933"]
+    object.hwi_va                = new_dict["HWI-3648"]
+    object.itms_va               = new_dict["ITMS-3896"]
+    object.tss_va                = new_dict["TSS-3676"]
+    object.ccds_va               = new_dict["CCDS-3932"]
+    object.mss_va                = new_dict["MSS-3690"]
+    object.swi_va                = new_dict["SWI-3934"]
+    object.lsc_va                = new_dict["LSC-3640"]
+    object.zzOth_va              = new_dict["zzOth_VA"]
+    object.pri                   = new_dict["Pri"]
+    object.aop                   = new_dict["AOP"]
+    object.peg                   = new_dict["PEG"]
+    object.mustWin               = new_dict["MustWin"]
+    object.feeIndic              = new_dict["FeeIndic"]
+    object.slutil                = new_dict["Slutil"]
+    object.recompete             = new_dict["Recompete"]
+    object.competitive           = new_dict["Competitive"]
+    object.international         = new_dict["International"]
+    object.strategic             = new_dict["Strategic"]
+    object.bundle                = new_dict["Bundle"]
+    object.bidReviewStream       = new_dict["BidReviewStream"]
+    object.definedDelivPgm       = new_dict["DefinedDelivPgm"]
+    object.evaluationCriteria    = new_dict["EvaluationCriteria"]
+    object.perfWorkLoc           = new_dict["PerfWorkLoc"]
+    object.classIfReqmt          = new_dict["ClassifReqmt"]
+    object.grouping              = new_dict["Grouping"]
+    object.reasonForWinLoss      = new_dict["ReasonforWinLoss"]
+    object.egr                   = new_dict["EGR"]
+    object.slCat                 = new_dict["SLcat"]
+    object.slPri                 = new_dict["Slpri"]
+    object.slNote                = new_dict["Slnote"]
+    object.crmRunDate            = Date.new(1899,12,30) + new_dict["CRMRunDate"].to_f
+    object.contractStartDate     = Date.new(1899,12,30) + new_dict["ContractStartDate"].to_f
+    object.rfpFYPer              = new_dict["RFPFYPer"]
+    object.submitFYPer           = new_dict["SubmitFYPer"]
+    object.awardFYPer            = new_dict["AwardFYPer"]
+    object.preBPprojID           = new_dict["PreBPprojID"]
+    object.fy16PreBP             = new_dict["FY16 PreB&P$"]
+    object.fy16PreBPSpent        = new_dict["FY16 PreB&P $Spent"]
+    object.fy16PreBPSpentPercent = new_dict["FY16 PreB&P %Spent"]
+    object.bpProjID              = new_dict["BPprojID"]
+    object.fy16BDTot             = new_dict["FY16 BDTot$"]
+    object.fy16BDTotSpent        = new_dict["FY16 BDTot $Spent"]
+    object.fy16BDTotSpentPercent = new_dict["FY16 BDTot %Spent"]
+    object.financeDate           = Date.new(1899,12,30) + new_dict["FinDate"].to_f
+    object.cgSecOrg              = new_dict["SecOrg"]
+    object.cgSecMgr              = new_dict["SecMgr"]
+    object.cgOrg                 = new_dict["CGOrg"]
+    object.cgMgr                 = new_dict["CGMgr"]
+    object.opOrg                 = new_dict["OpOrg"]
+    object.cgOpMgr               = new_dict["OpMgr"]
+    object.cgPgmDir              = new_dict["PgmDir"]
+    object.bdMgr                 = new_dict["BDMgr"]
+    object.crmRecOwner           = new_dict["CRMRecOwner"]
+    object.sslMgr                = new_dict["SSLeadMgr"]
+    object.divNum                = new_dict["DivNum"]
+    object.customer              = new_dict["Customer"]
+    object.endCustomer           = new_dict["EndCustomer"]
+    object.crn                   = new_dict["CRN"]
+    object.contractType          = new_dict["ContractType"]
+    object.opptyClass            = new_dict["OpptyClass"]
+    object.numberOfAwards        = new_dict["NumberOfAwards"]
+    object.totalPOP              = new_dict["TotalPOP"]
+    object.primeSub              = new_dict["PrimeSub"]
+    object.fy16BP                = new_dict["FY16 B&P$"]
+    object.fy16BPSpent           = new_dict["FY16 B&P $Spent"]
+    object.fy16BPSpentPercent    = new_dict["FY16 B&P %Spent"]
+    object.save
   end
+  def validateFile(filename)
 
+  end
   def moveToHistory(oppty_id)
     oppty=Oppty.find_by(["opptyId=?", oppty_id])
     if oppty.present?
-      oppty_dict=oppty.attributes
-      oppty_dict.delete('id')
-      #puts oppty_dict
-      history=History.create(oppty_dict)
+      UserOppty.where(oppty_id:oppty.id).each do|uo|
+        user=User.find(uo.user_id)
+        oppty_dict=oppty.attributes
+        oppty_dict.delete('id')
+        #puts oppty_dict
+        history=History.create(oppty_dict)
+        user_history=user.add_history(uo.user_id, oppty.id, history.id)
+        if user_history.save
+          puts "history saved: "+user_history.user_id.to_s
+        else
+          puts "history not saved"
+        end
+      end
       oppty.destroy
-      # if !UserHistory.where(["user_id=? and history_id=?", user_id, history.id]).present?
-      #   user=user_history.build(history_id: history.id)
-      # end
     else
       puts "oppty not present"
     end
   end
-
   def delete
     if Dir[CRM_PATH + '/*.xlsm'].length > 1 #if there is more than one file, delete the old one. else the new overwrote the old, don't delete
       earliest_file_name=""
