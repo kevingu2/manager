@@ -17,7 +17,7 @@
         </table>
 
         <!-- Radio Buttons in Browse page to limit the search to opportunities within 30, 60, or 90 days -->
-        <div class="form">
+        <div class="form col-md-12">
           <table>
             <tr>
               <div class="col-md-4">
@@ -49,7 +49,7 @@
               </div>
               <div class="col-md-4">
                 <td colspan=1>
-                  <label class="black-text field-label" style="padding-left:20px;">
+                  <label class="black-text field-label" style="padding-left:50px;">
                     Invalid Field:
                   </label>
                 </td>
@@ -92,7 +92,7 @@
               <!-- drop down menu in Browse Page to sort the opportunities by a specific field -->
               <div class="col-md-4">
                 <td colspan=1>
-                  <label class="black-text sort-dropdown-label" style="padding-left:20px;">
+                  <label class="black-text sort-dropdown-label" style="padding-left:50px;">
                     Sort By:
                   </label>
                 </td>
@@ -173,39 +173,39 @@
               <% end %>
 
               <% if o.sllOrg == "SWI" and o.swi_va == 0.0 %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and swi_va: " + o.swi_va.to_s + ")" %></div>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and swi_va: $" + o.swi_va.to_s + ")" %></div>
               <% elsif o.sllOrg == "SWI" and o.swi_va == "" %>
                 <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and swi_va: none)" %></div>
               <% elsif o.sllOrg == "TSS" and o.tss_va == 0.0 %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and tss_va: " + o.tss_va.to_s + ")" %></div>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and tss_va: $" + o.tss_va.to_s + ")" %></div>
               <% elsif o.sllOrg == "TSS" and o.tss_va == "" %>
                 <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and tss_va: none)" %></div>
               <% elsif o.sllOrg == "ITMS" and o.itms_va == 0.0 %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and itms_va: " + o.itms_va.to_s + ")" %></div>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and itms_va: $" + o.itms_va.to_s + ")" %></div>
               <% elsif o.sllOrg == "ITMS" and o.itms_va == "" %>
                 <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and itms_va: none)" %></div>
               <% elsif o.sllOrg == "MSS" and o.mss_va == 0.0 %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and mss_va: " + o.mss_va.to_s + ")" %></div>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and mss_va: $" + o.mss_va.to_s + ")" %></div>
               <% elsif o.sllOrg == "MSS" and o.mss_va == "" %>
                 <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and mss_va: none)" %></div>
               <% elsif o.sllOrg == "HWI" and o.hwi_va == 0.0 %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and hwi_va: " + o.hwi_va.to_s + ")" %></div>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and hwi_va: $" + o.hwi_va.to_s + ")" %></div>
               <% elsif o.sllOrg == "HWI" and o.hwi_va == "" %>
                 <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and hwi_va: none)" %></div>
               <% elsif o.sllOrg == "CCDS" and o.ccds_va == 0.0 %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and ccds_va: " + o.ccds_va.to_s + ")" %></div>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and ccds_va: $" + o.ccds_va.to_s + ")" %></div>
               <% elsif o.sllOrg == "CCDS" and o.ccds_va == "" %>
                 <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and ccds_va: none)" %></div>
               <% elsif o.sllOrg == "LSC" and o.lsc_va == 0.0 %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and lsc_va: " + o.lsc_va.to_s + ")" %></div>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and lsc_va: $" + o.lsc_va.to_s + ")" %></div>
               <% elsif o.sllOrg == "LSC" and o.lsc_va == "" %>
                 <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and lsc_va: none)" %></div>
               <% elsif o.sllOrg == "NWI" and o.nwi_va == 0.0 %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and nwi_va: " + o.nwi_va.to_s + ")" %></div>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and nwi_va: $" + o.nwi_va.to_s + ")" %></div>
               <% elsif o.sllOrg == "NWI" and o.nwi_va == "" %>
                 <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and nwi_va: none)" %></div>
               <% elsif o.sllOrg == "SSS" and o.sss_va == 0.0 %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and sss_va: " + o.sss_va.to_s + ")" %></div>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and sss_va: $" + o.sss_va.to_s + ")" %></div>
               <% elsif o.sllOrg == "SSS" and o.sss_va == "" %>
                 <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and sss_va: none)" %></div>
               <% end %>
