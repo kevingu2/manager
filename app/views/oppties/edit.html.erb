@@ -1,8 +1,9 @@
-<div class="jumbotron">
+<div class="container">
+	<div class="jumbotron edit-bg">
+		<h2 style="text-align: center; padding-top: 20px; padding-bottom: 20px;">Edit <%= @oppty.opptyName %></h2>
 
-	<h2 style="text-align: center; padding-top: 20px;"><%= @oppty.opptyName %></h2>
-
-	<%= render 'form' %>
-
-	<h5 class="field-title link-text" ><%= link_to 'Back', browse_index_path %></h5>
+		<%= render 'form' %>
+		<div class="margin: 25px 20px 20px 20px !important; min-height: 10px !important; visibility: hidden !important;">Formatting Hack</div>
+		<a class="btn btn-lg btn-primary btn-left oppty-btn bottom-button" href=<%=oppty_path%> role="button">Cancel</a>
+	</div>
 </div>
