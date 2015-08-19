@@ -64,19 +64,20 @@ class StatisticsController < ApplicationController
       #get month of this particular opportunity
       month = opp.awardDate.mon
       year = opp.awardDate.year
+      valid = opp.status2
 
-      #fill up the milMonths array 
-      unless opp.value == nil then
-         #fill up the rfpMonths array 
+      #fill up the milMonths arrays 
+      if opp.value != nil and valid == 'W1-Won' then
+        #fill up the milMonths array 
         @milMonths[month-1] += opp.value
 
-        #fill up the rfpMonths2014 array 
+        #fill up the milMonths2014 array 
         if year == 2014 then @milMonths2014[month-1] += opp.value end
 
-        #fill up the rfpMonths2015 array 
+        #fill up the milMonths2015 array 
         if year == 2015 then @milMonths2015[month-1] += opp.value end
 
-        #fill up the rfpMonths2016 array 
+        #fill up the milMonths2016 array 
         if year == 2016 then @milMonths2016[month-1] += opp.value end
       end
     end
@@ -86,19 +87,20 @@ class StatisticsController < ApplicationController
       #get month of this particular opportunity
       month = hist.awardDate.mon
       year = hist.awardDate.year
+      valid = hist.status2
 
-      #fill up the milMonths array 
-      unless hist.value == nil then
-         #fill up the rfpMonths array 
+      #fill up the milMonths arrays 
+      if hist.value != nil and valid == 'W1-Won' then
+         #fill up the milMonths array 
         @milMonths[month-1] += hist.value
 
-        #fill up the rfpMonths2014 array 
+        #fill up the milMonths2015 array 
         if year == 2014 then @milMonths2014[month-1] += hist.value end
 
-        #fill up the rfpMonths2015 array 
+        #fill up the milMonths2015 array 
         if year == 2015 then @milMonths2015[month-1] += hist.value end
 
-        #fill up the rfpMonths2016 array 
+        #fill up the milMonths2016 array 
         if year == 2016 then @milMonths2016[month-1] += hist.value end
       end
     end

@@ -14,7 +14,6 @@ class BrowseController < ApplicationController
       beginDate = Date.today-999999
     end
 
-    #if params[:search]
     if params[:invalid] == "rfpDate"
       @oppties = Oppty.where("opptyName like ? and proposalDueDate >= ? and proposalDueDate <= ? and rfpDate < ? and (status2 == ? or status2 == ? or status2 == ?)", "%#{params[:search]}%", beginDate, endDate.to_s, Date.today().to_s, "P1-ID/Track", "P2-Qualification", "P3-Pursuit").order(params[:sort]).page(params[:page]).per_page(15)
     elsif params[:invalid] == "leadEstim"
@@ -48,13 +47,6 @@ class BrowseController < ApplicationController
                               "SSS", 0.0, "").order(params[:sort]).page(params[:page]).per_page(15)
     else 
       @oppties = Oppty.where("opptyName like ? and proposalDueDate >= ? and proposalDueDate <= ?", "%#{params[:search]}%", beginDate, endDate.to_s).order(params[:sort]).page(params[:page]).per_page(15)
-    end
-    #else 
-    #  @oppties = Oppty.where("proposalDueDate <= ?", endDate.to_s).order(params[:sort]).page(params[:page]).per_page(15)
-    #end
-
-    @oppties.each do |o|
-      puts o.sllOrg
     end
 
   end

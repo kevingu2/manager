@@ -17,12 +17,12 @@ class ApplicationController < ActionController::Base
     end
     writer=['tasks']
     manager=['allocated_tasks', 'invalid_data', 'upload_crm', 'statistics']
-    if session[:role]=="writer"
+    if session[:role]=="Writer"
       if manager.include? params[:controller]
         redirect_to invalid_entry_index_path, notice: "No Access"
       end
     end
-    if session[:role]=="manager"
+    if session[:role]=="Manager"
       if writer.include? params[:controller]
         redirect_to invalid_entry_index_path, notice: "No Access"
       end

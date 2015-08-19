@@ -20,11 +20,11 @@ class SessionsController < ApplicationController
 			session[:role]=user.role
 		
 			#redirecting to desired pages according to the role
-			if user.role=="writer"
+			if user.role=="Writer"
 				redirect_to tasks_index_path
 			end
 
-			if user.role=="manager"
+			if user.role=="Manager"
 				redirect_to allocated_tasks_index_path
 			end
 		else

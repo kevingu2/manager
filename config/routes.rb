@@ -45,6 +45,8 @@ Rails.application.routes.draw do
 
   post 'users/new'
 
+  get 'users/create'
+
   resources :histories
 
   resources :user_oppties

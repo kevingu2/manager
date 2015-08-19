@@ -28,15 +28,16 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
+    puts params
     @user = User.new(user_params)
     
     if @user.save
-      puts 'saved'
+      redirect_to sessions_new_path
+      puts 'user saved'
     else
-      puts ' not saved'
+      puts 'user not saved'
+      redirect_to users_new_path, notice: "Invalid username or password. Try again."
     end
-
-    redirect_to sessions_new_path
   end
 
   # PATCH/PUT /users/1
@@ -73,6 +74,8 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:name, :password, :password_confirmation, :role)
     end
+
+    # Reset the session that may be left by a previous user
     def set_user_id
       session[:user_id] = nil
     end
