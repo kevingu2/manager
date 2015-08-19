@@ -233,7 +233,6 @@
         style.sheet.insertRule(name+"{"+rules+"}",0);
      }
      createClass('html body div div div.inner-search-bar.col-md-12 table.col-md-12 tbody tr td.col-md-10 form#search-form input#search',"width: 96% !important; padding-left: 10px !important;");
-     //createClass('html body div div div.inner-search-bar.col-md-12 div.form table tbody tr td div div#invalidDiv.toggle-btn.radio.black-text',"width:95% !important;")
 
 
     $(document).on("click", "a[name='invalid-btn']", function (e) {
@@ -277,21 +276,12 @@
           }
         }
 
-        /*if (window.location.href.indexOf('?&') > -1)
-          newUrl = newUrl.replace(/?&/, '?');
-        if (window.location.href.indexOf('&&') > -1)
-          newUrl = newUrl.replace(/&&/, '&');*/
-
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
         window.location = newUrl;
       }
       else if (select != "all") {
         newUrl = window.location.toString();
-        /*if (window.location.href.indexOf('?&') > -1)
-          newUrl = newUrl.replace(/?&/, '?');
-        if (window.location.href.indexOf('&&') > -1)
-          newUrl = newUrl.replace(/&&/, '&');*/
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
@@ -299,49 +289,11 @@
       }
       else {
         newUrl = window.location.toString();
-        /*if (window.location.href.indexOf('?&') > -1)
-          newUrl = newUrl.replace(/?&/, '?');
-        if (window.location.href.indexOf('&&') > -1)
-          newUrl = newUrl.replace(/&&/, '&');*/
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
         window.location = newUrl;
       }
-      /*var radioButtons = $("#within input:radio[name='limiting']");
-      var selectedIndex = radioButtons.index(radioButtons.filter(':checked'));
-      select = document.getElementsByName('limiting')[selectedIndex].value;
-      if (window.location.href.indexOf("within") > -1) {
-        var url = window.location.toString();
-        if (window.location.href.indexOf("within=999999") > -1)
-          window.location.href = url.replace(/within=999999/, 'within='+select);
-        else if (window.location.href.indexOf("within=30") > -1)
-          window.location.href = url.replace(/within=30/, 'within='+select);
-        else if (window.location.href.indexOf("within=60") > -1)
-          window.location.href = url.replace(/within=60/, 'within='+select);
-        else if (window.location.href.indexOf("within=90") > -1)
-          window.location.href = url.replace(/within=90/, 'within='+select);
-      }
-      else if (window.location.href.substring(window.location.href.indexOf("/browse/index"), window.location.href.toString().length ) == "<%= browse_index_path %>") {
-        if (select == 999999)
-          window.location.assign( window.location.href );
-        else if (select == 30)
-          window.location.assign( window.location.href + "?within=30" );
-        else if (select == 60)
-          window.location.assign(window.location.href + "?within=60");
-        else if (select == 90)
-          window.location.assign(window.location.href + "?within=90");
-      }
-      else {
-        if (select == 999999)
-          window.location.assign( window.location.href );
-        else if (select == 30)
-          window.location.assign( window.location.href + "&within=30" );
-        else if (select == 60)
-          window.location.assign(window.location.href + "&within=60");
-        else if (select == 90)
-          window.location.assign(window.location.href + "&within=90");
-      }*/
     }); 
 
     $(document).on("click", "a[name='sort-btn']", function (e) {
@@ -378,10 +330,6 @@
             }
           }
         }
-        /*if (window.location.href.indexOf('?&') > -1)
-          newUrl = newUrl.replace(/?&/, '?');
-        if (window.location.href.indexOf('&&') > -1)
-          newUrl = newUrl.replace(/&&/, '&');*/
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
@@ -389,10 +337,6 @@
       }
       else if (select != "none") {
         newUrl = window.location.toString();
-        /*if (window.location.href.indexOf('?&') > -1)
-          newUrl = newUrl.replace(/?&/, '?');
-        if (window.location.href.indexOf('&&') > -1)
-          newUrl = newUrl.replace(/&&/, '&');*/
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
@@ -400,192 +344,14 @@
       }
       else { 
         newUrl = window.location.toString();
-        /*if (window.location.href.indexOf('?&') > -1)
-          newUrl = newUrl.replace(/?&/, '?');
-        if (window.location.href.indexOf('&&') > -1)
-          newUrl = newUrl.replace(/&&/, '&');*/
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
         window.location = newUrl;
       }
-      /*select = document.getElementById('sorting').value;
-      if (window.location.href.indexOf("sort") > -1 && select != 'none') {
-        var url = window.location.toString();
-        if (window.location.href.indexOf("none") > -1)
-          window.location = url.replace(/sorting=none/, 'sort='+select);
-        else if (window.location.href.indexOf("proposalDueDate") > -1)
-          window.location = url.replace(/sort=proposalDueDate/, 'sort='+select);
-        else if (window.location.href.indexOf("opptyName") > -1)
-          window.location = url.replace(/sort=opptyName/, 'sort='+select);
-        else if (window.location.href.indexOf("opptyId") > -1)
-          window.location = url.replace(/sort=opptyId/, 'sort='+select);
-        else if (window.location.href.indexOf("captureMgr") > -1)
-          window.location = url.replace(/sort=captureMgr/, 'sort='+select);
-        else if (window.location.href.indexOf("programMgr") > -1)
-          window.location = url.replace(/sort=programMgr/, 'sort='+select);
-        else if (window.location.href.indexOf("proposalMgr") > -1)
-          window.location = url.replace(/sort=proposalMgr/, 'sort='+select);
-        else if (window.location.href.indexOf("value") > -1)
-          window.location = url.replace(/sort=value/, 'sort='+select);
-      }
-      else if (window.location.href.indexOf("sort") > -1 && select == 'none') 
-        window.location.assign(window.location.href.substring (0, window.location.href.indexOf("sort")));
-      else if (select == "none")
-        window.location.assign( window.location.href );
-      else if (window.location.href.substring(window.location.href.indexOf("/browse/index"), window.location.href.toString().length ) == "<%= browse_index_path %>") {
-        if (select == "proposalDueDate")
-          window.location.assign( window.location.href + "?sort=proposalDueDate" );
-        else if (select == "opptyName")
-          window.location.assign(window.location.href + "?sort=opptyName");
-        else if (select == "opptyId")
-          window.location.assign(window.location.href + "?sort=opptyId");
-        else if (select == "captureMgr")
-          window.location.assign(window.location.href + "?sort=captureMgr");
-        else if (select == "programMgr")
-          window.location.assign(window.location.href + "?sort=programMgr");
-        else if (select == "proposalMgr")
-          window.location.assign(window.location.href + "?sort=proposalMgr");
-        else if (select == "value")
-          window.location.assign(window.location.href + "?sort=value");
-      }
-      else {
-        if (select == "proposalDueDate")
-          window.location.assign( window.location.href + "&sort=proposalDueDate" );
-        else if (select == "opptyName")
-          window.location.assign(window.location.href + "&sort=opptyName");
-        else if (select == "opptyId")
-          window.location.assign(window.location.href + "&sort=opptyId");
-        else if (select == "captureMgr")
-          window.location.assign(window.location.href + "&sort=captureMgr");
-        else if (select == "programMgr")
-          window.location.assign(window.location.href + "&sort=programMgr");
-        else if (select == "proposalMgr")
-          window.location.assign(window.location.href + "&sort=proposalMgr");
-        else if (select == "value")
-          window.location.assign(window.location.href + "&sort=value");
-      }*/
     });
 
-    $(document).on("click", "a[name='radio-style-btn']", function (e) {
-      var radioButtons = $("#within input:radio[name='limiting']");
-      var selectedIndex = radioButtons.index(radioButtons.filter(':checked'));
-      select = document.getElementsByName('limiting')[selectedIndex].value;
-      url = window.location.href;
-      if (window.location.href.indexOf('?') > -1) {
-        urlSplit = url.split('?');
-        if (urlSplit[1].indexOf('&')) {
-          diffParts = urlSplit[1].split('&');
-          
-          if (diffParts.length > 1) 
-            newUrl = urlSplit[0]+'?';
-          else
-            newUrl = urlSplit[0];
-
-          if (urlSplit[1].indexOf('within') == -1 && select != "999999") {
-            if (urlSplit[1].indexOf('page') == -1)
-              newUrl = url + "&within=" + select;
-            else
-              newUrl = urlSplit[0]+'?'+ "within=" + select;
-          }
-          else {
-            for (i = 0; i < diffParts.length; i++) {
-              if (diffParts[i].indexOf('within') == -1 && diffParts[i].indexOf('page') == -1) {
-                if (i != diffParts.length-1)
-                  newUrl += diffParts[i]+'&';
-                else
-                  newUrl += diffParts[i];
-              }
-              else if (diffParts[i].indexOf('within') > -1) {
-                if ( select != "999999") {
-                  if (i != diffParts.length-1)
-                    newUrl += "within="+select+'&';
-                  else
-                    newUrl += "within="+select;
-                }
-              }
-            }
-          }
-        }
-
-        /*if (window.location.href.indexOf('?&') > -1)
-          newUrl = newUrl.replace(/?&/, '?');
-        if (window.location.href.indexOf('&&') > -1)
-          newUrl = newUrl.replace(/&&/, '&');*/
-
-        if (newUrl.substring(newUrl.length-1) == '&')
-          newUrl = newUrl.substring(0, newUrl.length-1);
-        window.location = newUrl;
-      }
-      else if (select != "999999") {
-        newUrl = window.location.toString();
-        /*if (window.location.href.indexOf('?&') > -1)
-          newUrl = newUrl.replace(/?&/, '?');
-        if (window.location.href.indexOf('&&') > -1)
-          newUrl = newUrl.replace(/&&/, '&');*/
-
-        if (newUrl.substring(newUrl.length-1) == '&')
-          newUrl = newUrl.substring(0, newUrl.length-1);
-        window.location = newUrl + "?within=" + select;
-      }
-      else {
-        newUrl = window.location.toString();
-        /*if (window.location.href.indexOf('?&') > -1)
-          newUrl = newUrl.replace(/?&/, '?');
-        if (window.location.href.indexOf('&&') > -1)
-          newUrl = newUrl.replace(/&&/, '&');*/
-
-        if (newUrl.substring(newUrl.length-1) == '&')
-          newUrl = newUrl.substring(0, newUrl.length-1);
-        window.location = newUrl;
-      }
-      /*var radioButtons = $("#within input:radio[name='limiting']");
-      var selectedIndex = radioButtons.index(radioButtons.filter(':checked'));
-      select = document.getElementsByName('limiting')[selectedIndex].value;
-      if (window.location.href.indexOf("within") > -1) {
-        var url = window.location.toString();
-        if (window.location.href.indexOf("within=999999") > -1)
-          window.location.href = url.replace(/within=999999/, 'within='+select);
-        else if (window.location.href.indexOf("within=30") > -1)
-          window.location.href = url.replace(/within=30/, 'within='+select);
-        else if (window.location.href.indexOf("within=60") > -1)
-          window.location.href = url.replace(/within=60/, 'within='+select);
-        else if (window.location.href.indexOf("within=90") > -1)
-          window.location.href = url.replace(/within=90/, 'within='+select);
-      }
-      else if (window.location.href.substring(window.location.href.indexOf("/browse/index"), window.location.href.toString().length ) == "<%= browse_index_path %>") {
-        if (select == 999999)
-          window.location.assign( window.location.href );
-        else if (select == 30)
-          window.location.assign( window.location.href + "?within=30" );
-        else if (select == 60)
-          window.location.assign(window.location.href + "?within=60");
-        else if (select == 90)
-          window.location.assign(window.location.href + "?within=90");
-      }
-      else {
-        if (select == 999999)
-          window.location.assign( window.location.href );
-        else if (select == 30)
-          window.location.assign( window.location.href + "&within=30" );
-        else if (select == 60)
-          window.location.assign(window.location.href + "&within=60");
-        else if (select == 90)
-          window.location.assign(window.location.href + "&within=90");
-      }*/
-    }); 
-
     window.onload = function() {
-      if (window.location.href.indexOf("within") > -1) {
-        if (window.location.href.indexOf("within=30") > -1)
-          document.getElementById("thirty_days_left").checked = true;
-        else if (window.location.href.indexOf("within=60") > -1)
-          document.getElementById("sixty_days_left").checked = true;
-        else if (window.location.href.indexOf("within=90") > -1)
-          document.getElementById("ninety_days_left").checked = true;
-        else
-          document.getElementById("all_days").checked = true;
-      }
 
       if (window.location.href.indexOf("sort")) {
         if (window.location.href.indexOf("opptyName") > -1)
