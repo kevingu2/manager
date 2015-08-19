@@ -15,7 +15,7 @@
 	  </div>
       <%if @oldOrNew.present?%>
           <h4>Your File is <%=@oldOrNew%><h4/>
-            <form action ="upload" method="post">
+            <form action ="calculateChanges" method="post">
               <input hidden=true type="string" name="oldFileName" value=<%= @oldFileName%>>
               <input hidden=true type="string" name="newFileName" value=<%= @newFileName%>>
               <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
