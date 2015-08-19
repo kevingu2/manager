@@ -14,7 +14,7 @@ class HistoriesController < ApplicationController
    #else
     # @histories=History.where("opptyName like ?", "%#{params[:search]}%").order(params[:sort]).page(params[:page]).per_page(15)
    #end
-    if session[:role]=="writer"
+    if session[:role]=="Writer"
      if params[:invalid] == "rfpDate"
         @histories = UserHistory.where("user_id == ? and opptyName like ? and rfpDate < ? and (status2 == ? or status2 == ? or status2 == ?)", @user.id, "%#{params[:search]}%", Date.today().to_s, "P1-ID/Track", "P2-Qualification", "P3-Pursuit").includes(:history).order(params[:sort]).page(params[:page]).per_page(15)
       elsif params[:invalid] == "leadEstim"
