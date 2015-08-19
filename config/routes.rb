@@ -18,10 +18,8 @@ Rails.application.routes.draw do
   get 'statistics/index'
 
   get 'crm/index'
-
-  get 'crm/upload'
-  
   post 'crm/upload'
+  post 'crm/calculateChanges'
 
   post 'crm/updateCRM'
 

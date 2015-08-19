@@ -16,10 +16,11 @@ coordinateToValue = {} # {'E3':'CA'}
 idToRow = {} # {'someOpptyID':21}
 rowCount = 1
 for row in ws.rows:
-    idToRow[row[0].value.encode('ascii', 'ignore')] = rowCount
-    for cell in row:
-        if cell.value != None:
-            coordinateToValue[cell.coordinate] = cell.value
+    if row[0].value!=None:
+        idToRow[row[0].value.encode('ascii', 'ignore')] = rowCount
+        for cell in row:
+            if cell.value != None:
+                coordinateToValue[cell.coordinate] = cell.value
     rowCount += 1
 
 idToRow.pop('OpptyID')
