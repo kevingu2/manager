@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  oppty_id: 
-  user_id: 
+  oppty_id: 4587	
+  user_id: 1678	
 
 two:
-  oppty_id: 
-  user_id: 
+  oppty_id: 777887	
+  user_id: 123659

@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  id: MyString
-  comment: MyText
+  title: tasks1
+  id: 888
+  comment: truth
 
 two:
-  title: MyString
-  id: MyString
-  comment: MyText
+  title: tasks2
+  id: 889
+  comment: fiction

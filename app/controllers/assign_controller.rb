@@ -6,8 +6,13 @@ class AssignController < ApplicationController
     @oppty=Oppty.find(opptyId)
     @assigned_writers=UserOppty.where(oppty_id: opptyId).joins('join (select * from users where role="Writer")u
                                       on user_oppties.user_id=u.id').includes(:user)
-    @not_assigned_writers=User.where(role: "Writer").where('Not Exists(select * from user_oppties
+    if params[:search]
+      @not_assigned_writers=User.where("role == ? and name LIKE ?", "Writer", "%#{params[:search]}%").where('Not Exists(select * from user_oppties
                                       where oppty_id=? and users.id=user_id)', opptyId)
+    else 
+      @not_assigned_writers=User.where(role: "Writer").where('Not Exists(select * from user_oppties
+                                      where oppty_id=? and users.id=user_id)', opptyId)
+    end
   end
 
   def assignUser
