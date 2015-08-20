@@ -9,11 +9,83 @@ class HistoriesController < ApplicationController
  # GET /histories
  # GET /histories.json
  def index
-   if params[:within] == "mine"
-     @histories = UserHistory.where(user_id: @user.id).includes(:history).order(params[:sort]).page(params[:page]).per_page(15)
-   else
-     @histories=History.where("opptyName like ?", "%#{params[:search]}%").order(params[:sort]).page(params[:page]).per_page(15)
-   end
+   #if params[:within] == "mine"
+    # @histories = UserHistory.where(user_id: @user.id).includes(:history).order(params[:sort]).page(params[:page]).per_page(15)
+   #else
+    # @histories=History.where("opptyName like ?", "%#{params[:search]}%").order(params[:sort]).page(params[:page]).per_page(15)
+   #end
+    if session[:role]=="Writer"
+     if params[:invalid] == "rfpDate"
+        @histories = UserHistory.where("user_id == ? and opptyName like ? and rfpDate < ? and (status2 == ? or status2 == ? or status2 == ?)", @user.id, "%#{params[:search]}%", Date.today().to_s, "P1-ID/Track", "P2-Qualification", "P3-Pursuit").includes(:history).order(params[:sort]).page(params[:page]).per_page(15)
+      elsif params[:invalid] == "leadEstim"
+        @histories = UserHistory.where("user_id == ? and opptyName like ? and (leadEstim == ? or leadEstim == ?)", @user.id, "%#{params[:search]}%", "TBD", "").includes(:history).order(params[:sort]).page(params[:page]).per_page(15)
+      elsif params[:invalid] == "technicalLead"
+        @histories = UserHistory.where("user_id == ? and opptyName like ? and (technicalLead == ? or technicalLead == ?)", @user.id, "%#{params[:search]}%", "TBD", "").includes(:history).order(params[:sort]).page(params[:page]).per_page(15)
+      elsif params[:invalid] == "slDir"
+        @histories = UserHistory.where("user_id == ? and opptyName like ? and (slDir == ? or slDir == ?)", @user.id, "%#{params[:search]}%", "TBD", "").includes(:history).order(params[:sort]).page(params[:page]).per_page(15)
+      elsif params[:invalid] == "slArch"
+        @histories = UserHistory.where("user_id == ? and opptyName like ? and (slArch == ? or slArch == ?)", @user.id, "%#{params[:search]}%", "TBD", "").includes(:history).order(params[:sort]).page(params[:page]).per_page(15)
+      elsif params[:invalid] == "sllOrg"
+        @histories = UserHistory.where("user_id == ? and opptyName like ? and proposalDueDate >= ? and proposalDueDate <= ? and
+                               ((sllOrg == ? and (tss_va == ? or tss_va == ?)) or 
+                                (sllOrg == ? and (swi_va == ? or swi_va == ?)) or 
+                                (sllOrg == ? and (itms_va == ? or itms_va == ?)) or 
+                                (sllOrg == ? and (mss_va == ? or mss_va == ?)) or 
+                                (sllOrg == ? and (hwi_va == ? or hwi_va == ?)) or 
+                                (sllOrg == ? and (ccds_va == ? or ccds_va == ?)) or 
+                                (sllOrg == ? and (lsc_va == ? or lsc_va == ?)) or 
+                                (sllOrg == ? and (nwi_va == ? or nwi_va == ?)) or 
+                                (sllOrg == ? and (sss_va == ? or sss_va == ?)) )", 
+                                @user.id, "%#{params[:search]}%",
+                                "TSS", 0.0, "",
+                                "SWI", 0.0, "",
+                                "ITMS", 0.0, "",
+                                "MSS", 0.0, "",
+                                "HWI", 0.0, "",
+                                "CCDS", 0.0, "",
+                                "LSC", 0.0, "",
+                                "NWI", 0.0, "",
+                                "SSS", 0.0, "").includes(:history).order(params[:sort]).page(params[:page]).per_page(15)
+      else 
+        @histories = UserHistory.where("user_id == ? and opptyName like ?", @user.id, "%#{params[:search]}%").includes(:history).order(params[:sort]).page(params[:page]).per_page(15)
+      end
+
+    else
+      if params[:invalid] == "rfpDate"
+        @histories = History.where("opptyName like ? and rfpDate < ? and (status2 == ? or status2 == ? or status2 == ?)", "%#{params[:search]}%", Date.today().to_s, "P1-ID/Track", "P2-Qualification", "P3-Pursuit").order(params[:sort]).page(params[:page]).per_page(15)
+      elsif params[:invalid] == "leadEstim"
+        @histories = History.where("opptyName like ? and (leadEstim == ? or leadEstim == ?)", "%#{params[:search]}%", "TBD", "").order(params[:sort]).page(params[:page]).per_page(15)
+      elsif params[:invalid] == "technicalLead"
+        @histories = History.where("opptyName like ? and (technicalLead == ? or technicalLead == ?)", "%#{params[:search]}%", "TBD", "").order(params[:sort]).page(params[:page]).per_page(15)
+      elsif params[:invalid] == "slDir"
+        @histories = History.where("opptyName like ? and (slDir == ? or slDir == ?)", "%#{params[:search]}%", "TBD", "").order(params[:sort]).page(params[:page]).per_page(15)
+      elsif params[:invalid] == "slArch"
+        @histories = History.where("opptyName like ? and (slArch == ? or slArch == ?)", "%#{params[:search]}%", "TBD", "").order(params[:sort]).page(params[:page]).per_page(15)
+      elsif params[:invalid] == "sllOrg"
+        @histories = History.where("opptyName like ? and proposalDueDate >= ? and proposalDueDate <= ? and
+                               ((sllOrg == ? and (tss_va == ? or tss_va == ?)) or 
+                                (sllOrg == ? and (swi_va == ? or swi_va == ?)) or 
+                                (sllOrg == ? and (itms_va == ? or itms_va == ?)) or 
+                                (sllOrg == ? and (mss_va == ? or mss_va == ?)) or 
+                                (sllOrg == ? and (hwi_va == ? or hwi_va == ?)) or 
+                                (sllOrg == ? and (ccds_va == ? or ccds_va == ?)) or 
+                                (sllOrg == ? and (lsc_va == ? or lsc_va == ?)) or 
+                                (sllOrg == ? and (nwi_va == ? or nwi_va == ?)) or 
+                                (sllOrg == ? and (sss_va == ? or sss_va == ?)) )", 
+                                "%#{params[:search]}%",
+                                "TSS", 0.0, "",
+                                "SWI", 0.0, "",
+                                "ITMS", 0.0, "",
+                                "MSS", 0.0, "",
+                                "HWI", 0.0, "",
+                                "CCDS", 0.0, "",
+                                "LSC", 0.0, "",
+                                "NWI", 0.0, "",
+                                "SSS", 0.0, "").order(params[:sort]).page(params[:page]).per_page(15)
+      else 
+        @histories = History.where("opptyName like ?", "%#{params[:search]}%").order(params[:sort]).page(params[:page]).per_page(15)
+      end
+    end
  end
 
  # GET /histories/1

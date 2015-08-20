@@ -1,37 +1,66 @@
-<h1>Sign Up</h1>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="Sign up">
+    <!--favicon-->
+    <link rel="shortcut icon" href="/public/favicon.ico" />
 
-<%= form_for @user do |f| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+    <title>Sign Up</title>
 
-      <ul>
-      <% @user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  </head>
+
+  <body>
+    <div class="highercontainer">
+      <div class="signin-container">
+        <% if notice %>
+              <p id="notice"><%= notice %></p>
+          <% end %>
+          <img class="form-signin-logo" src="/assets/saic-logo-social-small.png"
+               height="139" width="300" style="margin-bottom: 10px;">
+        <%= form_for @user do |f| %>
+          <% if @user.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+              <ul>
+              <% @user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <div class="field">
+            <%= f.label :Username %><br>
+            <%= f.text_field :name, {:class => "form-control", :placeholder => "Username"} %>
+          </div>
+          <div class="field">
+            <%= f.label :password %><br>
+            <%= f.password_field :password, {:class => "form-control", :placeholder => "Password"} %>
+          </div>
+          <div class="field">
+            <%= f.label :password_confirmation %><br>
+            <%= f.password_field :password_confirmation, {:class => "form-control", :placeholder => "Password Confirmation"} %>
+          </div>
+          <div class="field last-field">
+            <%= f.label :role %><br>
+            <%= f.select :role, ['Writer', 'Manager'], {}, {:class => "select-user-role form-control" }%>
+          </div>
+          <div class="actions">
+            <button class="btn btn-lg btn-primary btn-block" style="padding-top" type="submit">Sign Up</button>
+          </div>
+          <div class="back-button">
+            <%= link_to 'Back', sessions_new_path%>
+          </div>
+        <% end %>
+
+        
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :password %><br>
-    <%= f.password_field :password %>
-  </div>
-  <div>
-    <%= f.label :password_confirmation %><br>
-    <%= f.password_field :password_confirmation %>
-  </div>
-  <div class="field">
-    <%= f.label :role %><br>
-    <%= f.text_field :role %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
-
-<%= link_to 'Back', sessions_new_path %>
+  </body>
+</html>

@@ -13,7 +13,7 @@ class OpptiesController < ApplicationController
   # GET /oppties/1
   # GET /oppties/1.json
   def show
-    @numWriters=UserOppty.where(oppty_id: params[:id]).joins(:user).where('users.role'=>'writer').count
+    @numWriters=UserOppty.where(oppty_id: params[:id]).joins(:user).where('users.role'=>'Writer').count
     puts @numWriters
   end
 
@@ -95,7 +95,7 @@ class OpptiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def oppty_params
-      params.require(:oppty).permit(:opptyId, :opptyName, :idiqCA, :status2, :value, :pWin, :captureMgr, :programMgr, :proposalMgr, :sslOrg, :technicalLead, :sslArch, :ed, :on, :ate, :slComments, :rfpDate, :awardDate, :submitDate, :numWriters,
+      params.require(:oppty).permit(:opptyId, :opptyName, :idiqCA, :status2, :value, :pWin, :captureMgr, :programMgr, :proposalMgr, :sslOrg, :technicalLead, :slArch, :ed, :on, :ate, :slComments, :rfpDate, :awardDate, :submitDate, :numWriters,
         :slDir, :leadEstim, :engaged, :solution, :estimate)
     end
 end

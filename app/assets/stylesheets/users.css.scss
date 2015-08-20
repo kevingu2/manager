@@ -1,3 +1,90 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+// Place all the styles related to the Sessions controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-image: url("grey-gaussian-background-large.jpg");
+}
+
+
+.signin-container {
+  background-color: #D6D6D6;
+  max-width: 330px !important;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.form-signin-logo {
+  height: 139px;
+  width:300px;
+}
+
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="username"] {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 0px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.form-signin input[type="passwordConfirmation"] {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="role"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.btn {
+  border-radius: 0;
+}
+
+.back-button {
+  text-align: right;
+  padding-top:10px;
+}
+
+.role-label {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	font-size: 15px;
+	font-family: verdana, arial, helvetica, sans-serif;
+	margin-bottom: 0px;
+}
+
+.role-selector {
+	margin-bottom: 10px;
+}
+
+.select-user-role {
+	width: 100%;
+}
+
+.last-field {
+	padding-bottom: 20px !important;
+}

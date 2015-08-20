@@ -18,10 +18,8 @@ Rails.application.routes.draw do
   get 'statistics/index'
 
   get 'crm/index'
-
-  get 'crm/upload'
-  
   post 'crm/upload'
+  post 'crm/calculateChanges'
 
   post 'crm/updateCRM'
 
@@ -46,6 +44,8 @@ Rails.application.routes.draw do
   get 'sessions/destroy'
 
   post 'users/new'
+
+  get 'users/create'
 
   resources :histories
 

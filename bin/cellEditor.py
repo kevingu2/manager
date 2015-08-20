@@ -1,7 +1,8 @@
-    import sys
+import sys
 from openpyxl import load_workbook
 from openpyxl.cell import column_index_from_string
 from editpyxl import Workbook
+
 def findRows(fileName, ids):
     wb = load_workbook(filename = fileName, read_only=True, keep_vba=True, use_iterators=True)
     ws = wb.get_sheet_by_name(name='PipelineView')
@@ -50,6 +51,10 @@ rows = findRows(fileName, ids)
 cols = findCols(cols)
 print "*"*10, "starting editing", "*"*10
 for c in range(len(changes)):
+    print rows
+    print cols
+    print rows[c]
+    print cols[c]
     ws.cell(row=rows[c], column=cols[c]).value = changes[c]
 print "*"*10, "finished editing", "*"*10
 wb.save(fileName)

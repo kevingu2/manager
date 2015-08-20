@@ -30,19 +30,19 @@
     <p><b>Estimate:</b> <%= @oppty.estimate%></p>
     
     <div class="btn-container">
-      <div <%if session[:role]=="manager" %>class="col-md-4 manager-col-button"
+      <div <%if session[:role]=="Manager" %>class="col-md-4 manager-col-button"
            <%else%>class="col-md-6 manager-col-button"
            <%end%> 
       >
       <a class="btn btn-lg btn-primary btn-left oppty-btn" href=<%=url_for(:back)%> role="button">Cancel</a>
       </div class="col-md-6 writer-col-button">
-      <%if session[:role]=="writer" %>
+      <%if session[:role]=="Writer" %>
         <form method="post" action= <%=user_oppties_path(oppty_id: @oppty.id)%> >
             <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
             <button class="btn btn-lg btn-primary btn-right" type="submit">Add</button>
         </form>
       <%end%>
-      <%if session[:role]=="manager" %>
+      <%if session[:role]=="Manager" %>
         <div class="col-md-4 manager-col-button">
           <a class="btn btn-lg btn-primary btn-center oppty-btn" href=<%= edit_oppty_path(@oppty)%>  role="button" style="color:white">Edit</a>
         </div>
@@ -54,8 +54,7 @@
           </form>
         </div>  
       <%end%>
-    </div>
-    
+    </div>  
   </div>
 </div> <!-- /container -->
 

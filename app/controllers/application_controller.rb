@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   before_action :authorize
   protect_from_forgery with: :exception
+  CRM_PATH = File.join(Rails.root, "public", "uploads")
   
   #depending on user's role, they can access/update certain information
   protected
@@ -15,16 +16,15 @@ class ApplicationController < ActionController::Base
     end
     writer=['tasks']
     manager=['allocated_tasks', 'invalid_data', 'upload_crm', 'statistics']
-    if session[:role]=="writer"
+    if session[:role]=="Writer"
       if manager.include? params[:controller]
         redirect_to invalid_entry_index_path, notice: "No Access"
       end
     end
-    if session[:role]=="manager"
+    if session[:role]=="Manager"
       if writer.include? params[:controller]
         redirect_to invalid_entry_index_path, notice: "No Access"
       end
     end
   end
-
 end
