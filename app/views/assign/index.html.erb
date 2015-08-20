@@ -2,6 +2,14 @@
 <body>
 	<div class="jumbotron container">
 		<h2 class="assign_name"><%= @oppty.opptyName%></h2>
+		
+		<%= form_tag assign_index_path, :method => 'get' do %>
+			<p style="padding:0px !important;">
+				<%= hidden_field_tag :opptyId, @oppty.id %>
+				<%= text_field_tag :search, params[:search] %>
+				<input id="search-button" class="btn-assign-search" type="image" src="/assets/search.png" alt="Submit_tag"> 
+			</p> 
+		<% end %>
 
 		<div class="col-md-6">
 			<h4>Not Assigned Writers</h4>
