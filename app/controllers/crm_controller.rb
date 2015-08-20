@@ -24,7 +24,13 @@ class CrmController < ApplicationController
   end
 
   def index
-    deleteUnUnploadedFile
+    if Dir[CRM_PATH + '/*.xlsm'].length > 1 #if there is more than one file, delete the old one. else the new overwrote the old, don't delete
+      Dir[CRM_PATH + '/*.xlsm'].each do |item|
+        if(item!=@download_path)
+          FileUtils.rm(item)
+        end
+      end
+    end
     FileUtils.mkdir_p(CRM_PATH) unless File.directory?(CRM_PATH)
     FileUtils.mkdir_p('public/uploads/data') unless File.directory?('public/uploads/data')
     @uploaded=false
