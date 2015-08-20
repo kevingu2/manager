@@ -29,9 +29,9 @@ class ApplicationController < ActionController::Base
     end
   end
   def deleteUnUnploadedFile
+    earliest_file_name=""
+    earliest_date=Time.new
     if Dir[CRM_PATH + '/*.xlsm'].length > 1 #if there is more than one file, delete the old one. else the new overwrote the old, don't delete
-      earliest_file_name=""
-      earliest_date=Time.new
       Dir[CRM_PATH + '/*.xlsm'].each do |item|
         next if item == '.' or item == '..'
         puts "*"*30

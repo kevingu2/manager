@@ -2,25 +2,31 @@ class CrmController < ApplicationController
   CRM_PATH = File.join(Rails.root, "public", "uploads")
   ACCEPTED_FORMATS = [".xlsm", ".xls"]
   before_action :getFileName
+
   def getFileName
-    if (Dir[CRM_PATH+'/*.xlsm'].count>0)
-      @fileExists = true
-      #final brackets splice the string to extract the 'new_' from the beginning of the filename
-      @downloadName=File.basename(Dir[CRM_PATH+'/*.xlsm'][0])[4..-1]
+    @download_path=""
+    if Dir[CRM_PATH + '/*.xlsm'].length > 1 #if there is more than one file, delete the old one. else the new overwrote the old, don't delete
+      earliest_file_name=""
+      earliest_date=Time.new
+      Dir[CRM_PATH + '/*.xlsm'].each do |item|
+        next if item == '.' or item == '..'
+        if (File.ctime(item)<earliest_date)
+          earliest_file_name=item
+          earliest_date=File.ctime(item)
+        end
+      end
+      @download_path= earliest_file_name
+    else if Dir[CRM_PATH+'/*.xlsm'].length==1
+      @download_path=File.join(Dir[CRM_PATH+'/*.xlsm'][0])
+         end
     end
+    puts "Download path: "+@download_path
   end
+
   def index
     deleteUnUnploadedFile
     FileUtils.mkdir_p(CRM_PATH) unless File.directory?(CRM_PATH)
     FileUtils.mkdir_p('public/uploads/data') unless File.directory?('public/uploads/data')
-    @uploaded=false
-    if (Dir[CRM_PATH+'/*.xlsm'].count>0)
-      if File.basename(Dir[CRM_PATH+'/*.xlsm'][0]).present?
-        @fileExists = true
-        #final brackets splice the string to extract the 'new_' from the beginning of the filename
-        @downloadName=File.basename(Dir[CRM_PATH+'/*.xlsm'][0])[4..-1]
-      end
-    end
     @uploaded=false
   end
   def checkDate
@@ -83,6 +89,7 @@ class CrmController < ApplicationController
     Oppty.find_each do |o|
       opptyIds.push(o.opptyId) # get all ids in database
     end
+    `python bin/ripExcel.py "public/uploads/#{newFileName}" "public/uploads/data/"`
     data = `python bin/excelReader.py "public/uploads/#{newFileName}"` # get parsed excel data
     data = JSON.parse(data)
     uploadedIds = [] # holds uploaded ids
@@ -122,7 +129,7 @@ class CrmController < ApplicationController
     ids.each do |i|
       moveToHistory(i)
     end
-    redirect_to crm_index_path, notice: "Successfully uploaded: "+@downloadName
+    redirect_to crm_index_path, notice: "Successfully uploaded: "+newFileName
   end
 
   #Can use to update oppty or history
@@ -288,7 +295,6 @@ class CrmController < ApplicationController
     puts params[:oldFileName]
     @newFileName=params[:newFileName]
     @oldFileName=params[:oldFileName]
-    `python bin/ripExcel.py "public/uploads/#{@newFileName}" "public/uploads/data/"`
     data = `python bin/excelReader.py "public/uploads/#{@newFileName}"`
     data = JSON.parse(data)
     @changes = [] # holds list of hashes that contain what is changed
@@ -578,39 +584,17 @@ class CrmController < ApplicationController
   def download
     #pull the database data into an excel
     #pulls and downloads the first .xlsm file from the /uploads folder
-    download_path=""
-    if Dir[CRM_PATH + '/*.xlsm'].length > 1 #if there is more than one file, delete the old one. else the new overwrote the old, don't delete
-      earliest_file_name=""
-      earliest_date=Time.new
-      Dir[CRM_PATH + '/*.xlsm'].each do |item|
-        next if item == '.' or item == '..'
-        puts "*"*30
-        puts item
-        puts "*"*30
-        puts "creation Time: "+File.ctime(item).to_s
-        puts "Earliest_time: "+earliest_date.to_s
-        if (File.ctime(item)<earliest_date)
-          earliest_file_name=item
-          earliest_date=File.ctime(item)
-        end
-      end
-      download_path= earliest_file_name
-    else if Dir[CRM_PATH+'/*.xlsm'].length==1
-      download_path=File.join(Dir[CRM_PATH+'/*.xlsm'][0])
-    else
-      redirect_to crm_index_path, notice: "Please upload a file"
-    end
-
-    end
-    if download_path!=""
-      puts `python bin/recreateExcel.py "#{download_path}" "public/uploads/data/xl/sharedStrings.xml" "public/uploads/data/xl/worksheets/sheet2.xml"`
-      name = download_path.gsub("new_", "")
-      File.rename download_path, name
+    if @download_path!=""
+      puts `python bin/recreateExcel.py "#{@download_path}" "public/uploads/data/xl/sharedStrings.xml" "public/uploads/data/xl/worksheets/sheet2.xml"`
+      name = @download_path.gsub("new_", "")
+      File.rename @download_path, name
       file = File.open(name, "rb")
       contents = file.read
       file.close
-      File.rename name, download_path
+      File.rename name, @download_path
       send_data(contents, :filename =>File.basename( name))
+    else
+      redirect_to crm_index_path, notice: "Please upload a file"
     end
   end
 end

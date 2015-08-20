@@ -42,8 +42,8 @@
 	  <div class="inner-column">
 		<h2 class="column-title">Download</h2>
     <p>File to be Downloaded:
-      <%if @fileExists%>
-        <i><%=@downloadName%></i>
+      <%if @download_path!=""%>
+        <i><%=File.basename(@download_path)%></i>
       <%else%>
         <i>No File will be downloaded</i>
       <%end%>
