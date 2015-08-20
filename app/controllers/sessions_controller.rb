@@ -27,6 +27,9 @@ class SessionsController < ApplicationController
 			if user.role=="Manager"
 				redirect_to allocated_tasks_index_path
 			end
+
+			#if role is neither a writer or manager, redirect back to login 	
+			redirect_to sessions_new_path, notice: "Invalid user role"
 		else
 			redirect_to sessions_new_path, notice: "Invalid user/password combination"
 		end

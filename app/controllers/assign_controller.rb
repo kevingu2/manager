@@ -16,7 +16,6 @@ class AssignController < ApplicationController
   end
 
   def assignUser
-    puts "YES"
     json_body=JSON.parse(request.body.read)
     user_id= json_body.fetch('user_id')
     oppty_id=json_body.fetch('oppty_id')
