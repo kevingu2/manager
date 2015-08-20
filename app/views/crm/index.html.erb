@@ -43,7 +43,7 @@
 		<h2 class="column-title">Download</h2>
     <p>File to be Downloaded:
       <%if @download_path!=""%>
-        <i><%=File.basename(@download_path)%></i>
+        <i><%=File.basename(@download_path).gsub("new_", "")%></i>
       <%else%>
         <i>No File will be downloaded</i>
       <%end%>
