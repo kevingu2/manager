@@ -9,7 +9,7 @@ class AssignController < ApplicationController
     if params[:search]
       @not_assigned_writers=User.where("role == ? and name LIKE ?", "Writer", "%#{params[:search]}%").where('Not Exists(select * from user_oppties
                                       where oppty_id=? and users.id=user_id)', opptyId)
-    else 
+    else
       @not_assigned_writers=User.where(role: "Writer").where('Not Exists(select * from user_oppties
                                       where oppty_id=? and users.id=user_id)', opptyId)
     end

@@ -5,7 +5,9 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   before_action :authorize
+  before_action :deleteUnUploadedFile
   protect_from_forgery with: :exception
+  helper_method :getUploadedFileName
   CRM_PATH = File.join(Rails.root, "public", "uploads")
   
   #depending on user's role, they can access/update certain information
@@ -24,6 +26,36 @@ class ApplicationController < ActionController::Base
     if session[:role]=="Manager"
       if writer.include? params[:controller]
         redirect_to invalid_entry_index_path, notice: "No Access"
+      end
+    end
+  end
+  def getUploadedFileName
+    @download_path=""
+    if Dir[CRM_PATH + '/*.xlsm'].length > 1 #if there is more than one file, delete the old one. else the new overwrote the old, don't delete
+      earliest_file_name=""
+      earliest_date=Time.new
+      Dir[CRM_PATH + '/*.xlsm'].each do |item|
+        next if item == '.' or item == '..'
+        if (File.ctime(item)<earliest_date)
+          earliest_file_name=item
+          earliest_date=File.ctime(item)
+        end
+      end
+      @download_path= earliest_file_name
+    else if Dir[CRM_PATH+'/*.xlsm'].length==1
+           @download_path=File.join(Dir[CRM_PATH+'/*.xlsm'][0])
+         end
+    end
+    @uploaded_file_name=File.basename(@download_path).gsub("new_", "").gsub("%20", " ")
+    return @download_path
+  end
+  def deleteUnUploadedFile
+    download_path=getUploadedFileName
+    if Dir[CRM_PATH + '/*.xlsm'].length > 1 #if there is more than one file, delete the old one. else the new overwrote the old, don't delete
+      Dir[CRM_PATH + '/*.xlsm'].each do |item|
+        if(item!=download_path)
+          FileUtils.rm(item)
+        end
       end
     end
   end
