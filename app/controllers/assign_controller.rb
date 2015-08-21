@@ -2,15 +2,22 @@ class AssignController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:assignUser, :unAssignUser]
   def index
     opptyId=params[:opptyId]
-    puts opptyId
     @oppty=Oppty.find(opptyId)
     @assigned_writers=UserOppty.where(oppty_id: opptyId).joins('join (select * from users where role="Writer")u
                                       on user_oppties.user_id=u.id').includes(:user)
-    if params[:search]
-      @not_assigned_writers=User.where("role == ? and name LIKE ?", "Writer", "%#{params[:search]}%").where('Not Exists(select * from user_oppties
-                                      where oppty_id=? and users.id=user_id)', opptyId)
-    else 
-      @not_assigned_writers=User.where(role: "Writer").where('Not Exists(select * from user_oppties
+    @not_assigned_writers=getUnassigned(WRITER_ROLE, params[:search], opptyId)
+  end
+
+  def searchNotAssigned
+
+  end
+
+  def getUnassigned(role, keyword, opptyId)
+    if keyword.present?
+      return User.where("role == ? and name LIKE ?", role, keyword).where('Not Exists(select * from user_oppties
+                                         where oppty_id=? and users.id=user_id)', opptyId)
+    else
+       return User.where(role: "Writer").where('Not Exists(select * from user_oppties
                                       where oppty_id=? and users.id=user_id)', opptyId)
     end
   end

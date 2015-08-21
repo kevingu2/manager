@@ -1,27 +1,8 @@
 class CrmController < ApplicationController
   CRM_PATH = File.join(Rails.root, "public", "uploads")
   ACCEPTED_FORMATS = [".xlsm", ".xls"]
-  before_action :getFileName
-
-  def getFileName
-    @download_path=""
-    if Dir[CRM_PATH + '/*.xlsm'].length > 1 #if there is more than one file, delete the old one. else the new overwrote the old, don't delete
-      earliest_file_name=""
-      earliest_date=Time.new
-      Dir[CRM_PATH + '/*.xlsm'].each do |item|
-        next if item == '.' or item == '..'
-        if (File.ctime(item)<earliest_date)
-          earliest_file_name=item
-          earliest_date=File.ctime(item)
-        end
-      end
-      @download_path= earliest_file_name
-    else if Dir[CRM_PATH+'/*.xlsm'].length==1
-      @download_path=File.join(Dir[CRM_PATH+'/*.xlsm'][0])
-         end
-    end
-    puts "Download path: "+@download_path
-  end
+  before_action :getUploadedFileName
+  skip_before_action :deleteUnUploadedFile , only: [:checkDate,:updateCRM, :calculateChanges]
 
   def index
     if Dir[CRM_PATH + '/*.xlsm'].length > 1 #if there is more than one file, delete the old one. else the new overwrote the old, don't delete
@@ -128,7 +109,10 @@ class CrmController < ApplicationController
     end
     data.each do |opportunity|
       if !newIds.include? opportunity["OpptyID"] then next end # if id not supposed to be added, skip
-      if History.find_by(opptyId:opportunity["OpptyID"]) then next end
+      history= History.find_by(opptyId:opportunity["OpptyID"])
+      if history.present?
+        history.destroy
+      end
       oppty=Oppty.new
       updateObject(oppty, opportunity)
     end
@@ -556,7 +540,6 @@ class CrmController < ApplicationController
           @equal += 1
         end
       else # else not in database, add it
-        if History.find_by(opptyId:opportunity["OpptyID"]) then next end
         @added += 1
       end
     end
