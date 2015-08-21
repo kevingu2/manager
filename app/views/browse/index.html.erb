@@ -17,17 +17,15 @@
         </table>
 
         <!-- Radio Buttons in Browse page to limit the search to opportunities within 30, 60, or 90 days -->
-        <div class="form col-md-12">
-          <table>
+          <table class="form col-md-12">
             <tr>
-              <div class="col-md-4">
-                <td colspan=1>
+                <td class="col-md-1">
                   <label class="black-text field-label" style="padding-left: 101px;">
                     Within:
                   </label>
                 </td>
 
-                <td colspan=1>
+                <td class="col-md-1">
                   <div>
                     <div class="toggle-btn radio black-text" id="within" name="within">
                       <input id="thirty_days_left" name="limiting" type="radio" value="30">30 Days
@@ -46,15 +44,30 @@
                     </td>
                   </div>
                 </td>
-              </div>
-              <div class="col-md-4">
-                <td colspan=1>
+
+                <td class="col-md-2">
                   <label class="black-text field-label" style="padding-left:50px;">
                     Invalid Field:
                   </label>
                 </td>
 
-                <td colspan=1>
+                <td class="col-md-3">
+                    <div>
+                      <select class="selector col-md-10" id="invalidDiv" name="invalidDiv">
+                        <option id="allInvalidFields" value="all">all</option>
+                        <option id="rfpDateField" value="rfpDate">RFP Date</option>
+                        <option id="leadEstimField" value="leadEstim">Lead Estimator</option>
+                        <option id="technicalLeadField" value="technicalLead">Technical Lead</option>
+                        <option id="slDirField" value="slDir">Service Line Director</option>
+                        <option id="slArchField" value="slArch">Solution Architect</option>
+                        <option id="sllOrgField" value="sllOrg">Service Line Lead Organization</option>
+                      </select>
+                      <td>
+                        <a href="#" name="invalid-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
+                      </td>
+                    </div>  
+                  </td>
+                <!--<td colspan=1>
                   <div>
                     <div class="toggle-btn radio black-text" id="invalidDiv" name="invalidDiv">
                       <div class="row">
@@ -87,16 +100,15 @@
                       <a href="#" name="invalid-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
                     </td>
                   </div>
-                </td>
-              </div>
+                </td> -->
+
               <!-- drop down menu in Browse Page to sort the opportunities by a specific field -->
-              <div class="col-md-4">
-                <td colspan=1>
-                  <label class="black-text sort-dropdown-label" style="padding-left:50px;">
+                <td class="col-md-2">
+                  <label class="black-text sort-dropdown-label">
                     Sort By:
                   </label>
                 </td>
-                  <td colspan=1>
+                  <td class="col-md-3">
                     <div>
                       <select class="selector col-md-10" id="sorting" name="sorting">
                         <option id="opt1" value="none">none</option>
@@ -113,11 +125,8 @@
                       </td>
                     </div>  
                   </td>
-              </div>
-              <td colspan=1></td>
             </tr>
           </table>
-        </div>
       </div>        
       <br>
     </div>
@@ -307,9 +316,7 @@
 
 
     $(document).on("click", "a[name='invalid-btn']", function (e) {
-      var radioButtons = $("#invalidDiv input:radio[name='invalid']");
-      var selectedIndex = radioButtons.index(radioButtons.filter(':checked'));
-      select = document.getElementsByName('invalid')[selectedIndex].value;
+      select = document.getElementById('invalidDiv').value;
       url = window.location.href;
       if (window.location.href.indexOf('?') > -1) {
         urlSplit = url.split('?');
