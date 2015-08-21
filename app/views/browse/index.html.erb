@@ -235,6 +235,73 @@
      createClass('html body div div div.inner-search-bar.col-md-12 table.col-md-12 tbody tr td.col-md-10 form#search-form input#search',"width: 96% !important; padding-left: 10px !important;");
 
 
+     $(document).on("click", "a[name='radio-style-btn']", function (e) {
+      var radioButtons = $("#within input:radio[name='limiting']");
+      var selectedIndex = radioButtons.index(radioButtons.filter(':checked'));
+      select = document.getElementsByName('limiting')[selectedIndex].value;
+      url = window.location.href;
+      if (window.location.href.indexOf('?') > -1) {
+        urlSplit = url.split('?');
+        if (urlSplit[1].indexOf('&') > -1) {
+          diffParts = urlSplit[1].split('&');
+          
+          if (diffParts.length > 1) 
+            newUrl = urlSplit[0]+'?';
+          else
+            newUrl = urlSplit[0];
+
+          if (urlSplit[1].indexOf('within') == -1 && select != "999999") {
+            if (urlSplit[1].indexOf('page') == -1)
+              newUrl = url + "&within=" + select;
+            else
+              newUrl = urlSplit[0]+ "?within=" + select;
+          }
+          else {
+            for (i = 0; i < diffParts.length; i++) {
+              if (diffParts[i].indexOf('within') == -1 && diffParts[i].indexOf('page') == -1) {
+                if (i != diffParts.length-1)
+                  newUrl += diffParts[i]+'&';
+                else
+                  newUrl += diffParts[i];
+              }
+              else if (diffParts[i].indexOf('within') > -1) {
+                if ( select != "999999") {
+                  if (i != diffParts.length-1)
+                    newUrl += "within="+select+'&';
+                  else
+                    newUrl += "within="+select;
+                }
+              }
+            }
+          }
+        }
+        else if (urlSplit[1].indexOf('within') > -1 && select != "999999")
+          newUrl = urlSplit[0]+ "?within=" + select;
+        else if (urlSplit[1].indexOf('within') > -1 && select == "999999")
+          newUrl = urlSplit[0];
+
+        if (newUrl.substring(newUrl.length-1) == '&')
+          newUrl = newUrl.substring(0, newUrl.length-1);
+
+        window.location = newUrl;
+      }
+      else if (select != "999999") {
+        newUrl = window.location.toString();
+
+        if (newUrl.substring(newUrl.length-1) == '&')
+          newUrl = newUrl.substring(0, newUrl.length-1);
+        window.location = newUrl + "?within=" + select;
+      }
+      else {
+        newUrl = window.location.toString();
+
+        if (newUrl.substring(newUrl.length-1) == '&')
+          newUrl = newUrl.substring(0, newUrl.length-1);
+        window.location = newUrl;
+      }
+    }); 
+
+
     $(document).on("click", "a[name='invalid-btn']", function (e) {
       var radioButtons = $("#invalidDiv input:radio[name='invalid']");
       var selectedIndex = radioButtons.index(radioButtons.filter(':checked'));
@@ -242,7 +309,7 @@
       url = window.location.href;
       if (window.location.href.indexOf('?') > -1) {
         urlSplit = url.split('?');
-        if (urlSplit[1].indexOf('&')) {
+        if (urlSplit[1].indexOf('&') > -1) {
           diffParts = urlSplit[1].split('&');
           
           if (diffParts.length > 1) 
@@ -275,9 +342,14 @@
             }
           }
         }
+        else if (urlSplit[1].indexOf('invalid') > -1 && select != "all")
+          newUrl = urlSplit[0]+ "?invalid=" + select;
+        else if (urlSplit[1].indexOf('invalid') > -1 && select == "all")
+          newUrl = urlSplit[0];
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
+
         window.location = newUrl;
       }
       else if (select != "all") {
@@ -301,7 +373,7 @@
       url = window.location.href;
       if (window.location.href.indexOf('?') > -1) {
         urlSplit = url.split('?');
-        if (urlSplit[1].indexOf('&')) {
+        if (urlSplit[1].indexOf('&') > -1) {
           diffParts = urlSplit[1].split('&');
 
           if (diffParts.length > 1) 
@@ -330,6 +402,10 @@
             }
           }
         }
+        else if (urlSplit[1].indexOf('sort') > -1 && select != "none")
+          newUrl = urlSplit[0]+ "?sort=" + select;
+        else if (urlSplit[1].indexOf('sort') > -1 && select == "none")
+          newUrl = urlSplit[0];
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
@@ -352,6 +428,17 @@
     });
 
     window.onload = function() {
+
+      if (window.location.href.indexOf("within") > -1) {
+        if (window.location.href.indexOf("within=30") > -1)
+          document.getElementById("thirty_days_left").checked = true;
+        else if (window.location.href.indexOf("within=60") > -1)
+          document.getElementById("sixty_days_left").checked = true;
+        else if (window.location.href.indexOf("within=90") > -1)
+          document.getElementById("ninety_days_left").checked = true;
+        else
+          document.getElementById("all_days").checked = true;
+      }
 
       if (window.location.href.indexOf("sort")) {
         if (window.location.href.indexOf("opptyName") > -1)
