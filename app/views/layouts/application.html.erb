@@ -32,7 +32,7 @@
           <%end%>
           <%if session[:role]=="Manager" %>
             <li class="tab nav-allocated_tasks"><a href=<%= allocated_tasks_index_path%>>Allocated Tasks</a></li>
-            <li class="tab nav-browse"><a href=<%= browse_index_path%> >Browse</a></li>
+            <li class="tab nav-browse"><a href=<%= browse_index_path%>>Browse</a></li>
             <li class="tab nav-crm"><a href=<%= crm_index_path%>>Upload CRM</a></li>
             <li class="tab nav-statistics"><a href=<%= statistics_index_path%>>Statistics</a></li>
           <%end%>
@@ -57,16 +57,18 @@
 
 <script>
   $(document).on("click","a[name='notificationIcon']", function (e) {
-    $.notify({
-      icon: 'glyphicon glyphicon-exclamation-sign',
-      title: '3 Tasks have been accepted',
-      message: 'Click notification to visit the Tasks Page',
-      url: '<%= allocated_tasks_index_path%>',
-      target: '_self'
-    },{
-      delay: '0',
-      type: 'info',
-    });
+    if (true) {
+      $.notify({
+        icon: 'glyphicon glyphicon-exclamation-sign',
+        title: 'The opportunity: ### has had its request for proposal date moved.',
+        message: 'Click notification to visit the Tasks Page',
+        url: '<%= allocated_tasks_index_path%>',
+        target: '_self'
+      },{
+        delay: '5',
+        type: 'info',
+      });
+    }
   });
 </script>
 </body>
