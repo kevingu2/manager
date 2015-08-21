@@ -57,7 +57,7 @@
                       </div>
                     </div>
                     <td>
-                      <a href="#" name="radio-style-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
+                      <a href="#" name="invalid-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
                     </td>
                   </div>
                 </td>
@@ -98,9 +98,10 @@
     <h2 class="black-text browse-page-title">History</h2>
 
     <div class="row" style="font-weight: bold;">
-      <div class="col-md-3" style="text-align: center;"> Opportunity ID </div>
+      <div class="col-md-2" style="text-align: center;"> Opportunity ID </div>
       <div class="col-md-6"> Opportunity Name </div>
-      <div class="col-md-3"> Due Date </div>
+      <div class="col-md-2"> Due Date </div>
+      <div class="col-md-2"> Invalid Field(s) </div>
     </div>
 
     <hr />
@@ -108,12 +109,79 @@
     <div id="history-data">
       <% @histories.each do |o| %>
             <div class="success row">
-              <div class="col-md-3" style="text-align: center;"><%= o.opptyId %></div>
+              <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
               <div class="col-md-6">
                 <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
                 <div class="little-text"><%= o.slComments %></div>
               </div>
-              <div class="col-md-3"><%= o.proposalDueDate.to_s %></div>
+              <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
+              <div class="col-md-2">
+              <% if o.rfpDate < Date.today and (o.status2 == "P1-ID/Track" or o.status2 ==  "P2-Qualification" or o.status2 == "P3-Pursuit") %>
+                <div class="regular-text"><%= "(RFP Date: " + o.rfpDate.to_s + " and status2: " + o.status2 + ")" %></div>
+              <% end %>
+
+              <% if o.technicalLead == "TBD" %>
+                <div class="regular-text"><%= "(Technical Lead: " + o.technicalLead + ")" %></div>
+              <% elsif o.technicalLead == "" %>
+                <div class="regular-text"><%= "(Technical Lead: none)" %></div>
+              <% end %>
+
+              <% if o.slDir == "TBD" %>
+                <div class="regular-text"><%= "(Service Line Director: " + o.slDir + ")" %></div>
+              <% elsif o.slDir == "" %>
+                <div class="regular-text"><%= "(Service Line Director: none)" %></div>
+              <% end %>
+
+              <% if o.slArch == "TBD" %>
+                <div class="regular-text"><%= "(Solution Architect: " + o.slArch + ")" %></div>
+              <% elsif o.slArch == "" %>
+                <div class="regular-text"><%= "(Solution Architect: none)" %></div>
+              <% end %>
+
+              <% if o.leadEstim == "TBD" %>
+                <div class="regular-text"><%= "(Lead Estimator: " + o.leadEstim + ")" %></div>
+              <% elsif o.leadEstim == "" %>
+                <div class="regular-text"><%= "(Lead Estimator: none)" %></div>
+              <% end %>
+
+              <% if o.sllOrg == "SWI" and o.swi_va == 0.0 %>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and swi_va: $" + o.swi_va.to_s + ")" %></div>
+              <% elsif o.sllOrg == "SWI" and o.swi_va == "" %>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and swi_va: none)" %></div>
+              <% elsif o.sllOrg == "TSS" and o.tss_va == 0.0 %>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and tss_va: $" + o.tss_va.to_s + ")" %></div>
+              <% elsif o.sllOrg == "TSS" and o.tss_va == "" %>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and tss_va: none)" %></div>
+              <% elsif o.sllOrg == "ITMS" and o.itms_va == 0.0 %>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and itms_va: $" + o.itms_va.to_s + ")" %></div>
+              <% elsif o.sllOrg == "ITMS" and o.itms_va == "" %>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and itms_va: none)" %></div>
+              <% elsif o.sllOrg == "MSS" and o.mss_va == 0.0 %>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and mss_va: $" + o.mss_va.to_s + ")" %></div>
+              <% elsif o.sllOrg == "MSS" and o.mss_va == "" %>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and mss_va: none)" %></div>
+              <% elsif o.sllOrg == "HWI" and o.hwi_va == 0.0 %>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and hwi_va: $" + o.hwi_va.to_s + ")" %></div>
+              <% elsif o.sllOrg == "HWI" and o.hwi_va == "" %>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and hwi_va: none)" %></div>
+              <% elsif o.sllOrg == "CCDS" and o.ccds_va == 0.0 %>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and ccds_va: $" + o.ccds_va.to_s + ")" %></div>
+              <% elsif o.sllOrg == "CCDS" and o.ccds_va == "" %>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and ccds_va: none)" %></div>
+              <% elsif o.sllOrg == "LSC" and o.lsc_va == 0.0 %>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and lsc_va: $" + o.lsc_va.to_s + ")" %></div>
+              <% elsif o.sllOrg == "LSC" and o.lsc_va == "" %>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and lsc_va: none)" %></div>
+              <% elsif o.sllOrg == "NWI" and o.nwi_va == 0.0 %>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and nwi_va: $" + o.nwi_va.to_s + ")" %></div>
+              <% elsif o.sllOrg == "NWI" and o.nwi_va == "" %>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and nwi_va: none)" %></div>
+              <% elsif o.sllOrg == "SSS" and o.sss_va == 0.0 %>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and sss_va: $" + o.sss_va.to_s + ")" %></div>
+              <% elsif o.sllOrg == "SSS" and o.sss_va == "" %>
+                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and sss_va: none)" %></div>
+              <% end %>
+            </div>
             </div>
         <% end %>
 
@@ -146,7 +214,7 @@
       url = window.location.href;
       if (window.location.href.indexOf('?') > -1) {
         urlSplit = url.split('?');
-        if (urlSplit[1].indexOf('&')) {
+        if (urlSplit[1].indexOf('&') > -1) {
           diffParts = urlSplit[1].split('&');
           
           if (diffParts.length > 1) 
@@ -179,9 +247,16 @@
             }
           }
         }
+        else if (urlSplit[1].indexOf('invalid') > -1 && select != "all")
+          newUrl = urlSplit[0]+ "?invalid=" + select;
+        else if (urlSplit[1].indexOf('invalid') > -1 && select == "all")
+          newUrl = urlSplit[0];
+        else if (urlSplit[1].indexOf('invalid') == -1)
+          newUrl = window.location.toString() + "&invalid=" + select;
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
+
         window.location = newUrl;
       }
       else if (select != "all") {
@@ -189,6 +264,7 @@
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
+
         window.location = newUrl + "?invalid=" + select;
       }
       else {
@@ -196,6 +272,7 @@
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
+
         window.location = newUrl;
       }
     }); 
@@ -205,7 +282,7 @@
       url = window.location.href;
       if (window.location.href.indexOf('?') > -1) {
         urlSplit = url.split('?');
-        if (urlSplit[1].indexOf('&')) {
+        if (urlSplit[1].indexOf('&') > -1) {
           diffParts = urlSplit[1].split('&');
 
           if (diffParts.length > 1) 
@@ -234,9 +311,16 @@
             }
           }
         }
+        else if (urlSplit[1].indexOf('sort') > -1 && select != "none")
+          newUrl = urlSplit[0]+ "?sort=" + select;
+        else if (urlSplit[1].indexOf('sort') > -1 && select == "none")
+          newUrl = urlSplit[0];
+        else if (urlSplit[1].indexOf('sort') == -1)
+          newUrl = window.location.toString() + "&sort=" + select;
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
+
         window.location = newUrl;
       }
       else if (select != "none") {
@@ -244,6 +328,7 @@
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
+        
         window.location = newUrl + "?sort=" + select;
       }
       else { 
@@ -251,70 +336,10 @@
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
+
         window.location = newUrl;
       }
     });
-
-    $(document).on("click", "a[name='radio-style-btn']", function (e) {
-      var radioButtons = $("#within input:radio[name='limiting']");
-      var selectedIndex = radioButtons.index(radioButtons.filter(':checked'));
-      select = document.getElementsByName('limiting')[selectedIndex].value;
-      url = window.location.href;
-      if (window.location.href.indexOf('?') > -1) {
-        urlSplit = url.split('?');
-        if (urlSplit[1].indexOf('&')) {
-          diffParts = urlSplit[1].split('&');
-          
-          if (diffParts.length > 1) 
-            newUrl = urlSplit[0]+'?';
-          else
-            newUrl = urlSplit[0];
-
-          if (urlSplit[1].indexOf('within') == -1 && select != "999999") {
-            if (urlSplit[1].indexOf('page') == -1)
-              newUrl = url + "&within=" + select;
-            else
-              newUrl = urlSplit[0]+'?'+ "within=" + select;
-          }
-          else {
-            for (i = 0; i < diffParts.length; i++) {
-              if (diffParts[i].indexOf('within') == -1 && diffParts[i].indexOf('page') == -1) {
-                if (i != diffParts.length-1)
-                  newUrl += diffParts[i]+'&';
-                else
-                  newUrl += diffParts[i];
-              }
-              else if (diffParts[i].indexOf('within') > -1) {
-                if ( select != "999999") {
-                  if (i != diffParts.length-1)
-                    newUrl += "within="+select+'&';
-                  else
-                    newUrl += "within="+select;
-                }
-              }
-            }
-          }
-        }
-
-        if (newUrl.substring(newUrl.length-1) == '&')
-          newUrl = newUrl.substring(0, newUrl.length-1);
-        window.location = newUrl;
-      }
-      else if (select != "999999") {
-        newUrl = window.location.toString();
-
-        if (newUrl.substring(newUrl.length-1) == '&')
-          newUrl = newUrl.substring(0, newUrl.length-1);
-        window.location = newUrl + "?within=" + select;
-      }
-      else {
-        newUrl = window.location.toString();
-
-        if (newUrl.substring(newUrl.length-1) == '&')
-          newUrl = newUrl.substring(0, newUrl.length-1);
-        window.location = newUrl;
-      }
-    }); 
 
     window.onload = function() {
 
