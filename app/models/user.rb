@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  roles = [ 'Writer', 'Manager' ]
+  roles = [WRITER_ROLE, MANAGER_ROLE ]
   validates :name, presence:true, uniqueness:true
   validates :role, presence:roles
   has_secure_password

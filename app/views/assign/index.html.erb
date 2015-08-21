@@ -2,24 +2,28 @@
 <body>
 	<div class="jumbotron container">
 		<h2 class="assign_name"><%= @oppty.opptyName%></h2>
-		
-		<%= form_tag assign_index_path, :method => 'get' do %>
-			<p style="padding:0px !important;">
-				<%= hidden_field_tag :opptyId, @oppty.id %>
-				<%= text_field_tag :search, params[:search] %>
-				<input id="search-button" class="btn-assign-search" type="image" src="/assets/search.png" alt="Submit_tag"> 
-			</p> 
-		<% end %>
 
 		<div class="col-md-6">
-			<h4>Not Assigned Writers</h4>
+          <h3>Not Assigned</h3>
+          <br>
+          <div class="col-md-12 ">
+                 <div class="col-md-6">
+                    <input id="search_not_assigned" class="search" type="text" name="search" placeholder="Search" onKeyUp="search_not_assigned(<%=@oppty.id%> )">
+                 </div>
+                    <select class="selector" id="sorting_not_assigned" name="sorting">
+                      <option id="opt1" value="Writer">Writer</option>
+                    </select>
+          </div>
+          <br>
+          <br>
+          <br>
 			<div class="outer-not-assigned-row" id="outer-not-assigned-row">
 				<%@not_assigned_writers.each do |w|%>
 					<div class="col-md-12 not-assigned-row" id="<%=w.id%>">
-						<div id="username" class="col-md-6 row-item">
-					    	<p class="writer-name"><%=w.name%></p>
+						<div class="col-md-6 row-item">
+					    	<p class="name"><%=w.name+" ("+w.role+")"%></p>
 						</div>
-						<div id="button" class="col-md-6 row-item">
+						<div class="col-md-6 row-item">
                           <img class="plus" onclick="assign(<%= @oppty.id%>, <%= w.id%>)" src="/assets/plus_btn.png" alt="+" border="0"/>
 						</div>
 					</div>
@@ -28,12 +32,24 @@
 		</div>
 
 		<div class="col-md-6">
-			<h4>Assigned Writers</h4>
+			<h3>Assigned</h3>
+          <br>
+              <div class="col-md-12 ">
+                <div class="col-md-6">
+                  <input id="search_assigned" class="search" type="text" name="search" placeholder="Search" onKeyUp="search_assigned(<%=@oppty.id%> )">
+                </div>
+                <select class="selector" id="sorting_assigned" name="sorting">
+                  <option id="opt1" value="Writer">Writer</option>
+                </select>
+              </div>
+          <br>
+          <br>
+          <br>
 			<div class="outer-assigned-row" id="outer-assigned-row">
 				<%@assigned_writers.each do |w|%>
-					<div class="col-md-12 assigned-row" id=<%=w.user.id%>>
-						<div id= "username" class="col-md-6 row-item">
-				    		<p class="writer-name"><%=w.user.name%></p>
+					<div class="col-md-12 assigned-row" id="<%=w.user.id%>">
+						<div class="col-md-6 row-item">
+				    		<p class="name"><%=w.user.name+" ("+w.user.role+")"%></p>
 						</div>
 						<div class="col-md-6 row-item">
                           <img class="redx" onclick="unassign(<%= @oppty.id%>, <%= w.user.id%>)" src="/assets/redx.png" alt="+" border="0"/>

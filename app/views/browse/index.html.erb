@@ -17,17 +17,15 @@
         </table>
 
         <!-- Radio Buttons in Browse page to limit the search to opportunities within 30, 60, or 90 days -->
-        <div class="form col-md-12">
-          <table>
+          <table class="form col-md-12">
             <tr>
-              <div class="col-md-4">
-                <td colspan=1>
+                <td class="col-md-1">
                   <label class="black-text field-label" style="padding-left: 101px;">
                     Within:
                   </label>
                 </td>
 
-                <td colspan=1>
+                <td class="col-md-1">
                   <div>
                     <div class="toggle-btn radio black-text" id="within" name="within">
                       <input id="thirty_days_left" name="limiting" type="radio" value="30">30 Days
@@ -46,15 +44,30 @@
                     </td>
                   </div>
                 </td>
-              </div>
-              <div class="col-md-4">
-                <td colspan=1>
+
+                <td class="col-md-2">
                   <label class="black-text field-label" style="padding-left:50px;">
                     Invalid Field:
                   </label>
                 </td>
 
-                <td colspan=1>
+                <td class="col-md-3">
+                    <div>
+                      <select class="selector col-md-10" id="invalidDiv" name="invalidDiv">
+                        <option id="allInvalidFields" value="all">all</option>
+                        <option id="rfpDateField" value="rfpDate">RFP Date</option>
+                        <option id="leadEstimField" value="leadEstim">Lead Estimator</option>
+                        <option id="technicalLeadField" value="technicalLead">Technical Lead</option>
+                        <option id="slDirField" value="slDir">Service Line Director</option>
+                        <option id="slArchField" value="slArch">Solution Architect</option>
+                        <option id="sllOrgField" value="sllOrg">Service Line Lead Organization</option>
+                      </select>
+                      <td>
+                        <a href="#" name="invalid-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
+                      </td>
+                    </div>  
+                  </td>
+                <!--<td colspan=1>
                   <div>
                     <div class="toggle-btn radio black-text" id="invalidDiv" name="invalidDiv">
                       <div class="row">
@@ -87,16 +100,15 @@
                       <a href="#" name="invalid-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
                     </td>
                   </div>
-                </td>
-              </div>
+                </td> -->
+
               <!-- drop down menu in Browse Page to sort the opportunities by a specific field -->
-              <div class="col-md-4">
-                <td colspan=1>
-                  <label class="black-text sort-dropdown-label" style="padding-left:50px;">
+                <td class="col-md-2">
+                  <label class="black-text sort-dropdown-label">
                     Sort By:
                   </label>
                 </td>
-                  <td colspan=1>
+                  <td class="col-md-3">
                     <div>
                       <select class="selector col-md-10" id="sorting" name="sorting">
                         <option id="opt1" value="none">none</option>
@@ -113,11 +125,8 @@
                       </td>
                     </div>  
                   </td>
-              </div>
-              <td colspan=1></td>
             </tr>
           </table>
-        </div>
       </div>        
       <br>
     </div>
@@ -235,14 +244,83 @@
      createClass('html body div div div.inner-search-bar.col-md-12 table.col-md-12 tbody tr td.col-md-10 form#search-form input#search',"width: 96% !important; padding-left: 10px !important;");
 
 
-    $(document).on("click", "a[name='invalid-btn']", function (e) {
-      var radioButtons = $("#invalidDiv input:radio[name='invalid']");
+     $(document).on("click", "a[name='radio-style-btn']", function (e) {
+      var radioButtons = $("#within input:radio[name='limiting']");
       var selectedIndex = radioButtons.index(radioButtons.filter(':checked'));
-      select = document.getElementsByName('invalid')[selectedIndex].value;
+      select = document.getElementsByName('limiting')[selectedIndex].value;
       url = window.location.href;
       if (window.location.href.indexOf('?') > -1) {
         urlSplit = url.split('?');
-        if (urlSplit[1].indexOf('&')) {
+        if (urlSplit[1].indexOf('&') > -1) {
+          diffParts = urlSplit[1].split('&');
+          
+          if (diffParts.length > 1) 
+            newUrl = urlSplit[0]+'?';
+          else
+            newUrl = urlSplit[0];
+
+          if (urlSplit[1].indexOf('within') == -1 && select != "999999") {
+            if (urlSplit[1].indexOf('page') == -1)
+              newUrl = url + "&within=" + select;
+            else
+              newUrl = urlSplit[0]+ "?within=" + select;
+          }
+          else {
+            for (i = 0; i < diffParts.length; i++) {
+              if (diffParts[i].indexOf('within') == -1 && diffParts[i].indexOf('page') == -1) {
+                if (i != diffParts.length-1)
+                  newUrl += diffParts[i]+'&';
+                else
+                  newUrl += diffParts[i];
+              }
+              else if (diffParts[i].indexOf('within') > -1) {
+                if ( select != "999999") {
+                  if (i != diffParts.length-1)
+                    newUrl += "within="+select+'&';
+                  else
+                    newUrl += "within="+select;
+                }
+              }
+            }
+          }
+        }
+        else if (urlSplit[1].indexOf('within') > -1 && select != "999999")
+          newUrl = urlSplit[0]+ "?within=" + select;
+        else if (urlSplit[1].indexOf('within') > -1 && select == "999999")
+          newUrl = urlSplit[0];
+        else if (urlSplit[1].indexOf('within') == -1)
+          newUrl = window.location.toString() + "&within=" + select;
+
+        if (newUrl.substring(newUrl.length-1) == '&')
+          newUrl = newUrl.substring(0, newUrl.length-1);
+
+        window.location = newUrl;
+      }
+      else if (select != "999999") {
+        newUrl = window.location.toString();
+
+        if (newUrl.substring(newUrl.length-1) == '&')
+          newUrl = newUrl.substring(0, newUrl.length-1);
+
+        window.location = newUrl + "?within=" + select;
+      }
+      else {
+        newUrl = window.location.toString();
+
+        if (newUrl.substring(newUrl.length-1) == '&')
+          newUrl = newUrl.substring(0, newUrl.length-1);
+
+        window.location = newUrl;
+      }
+    }); 
+
+
+    $(document).on("click", "a[name='invalid-btn']", function (e) {
+      select = document.getElementById('invalidDiv').value;
+      url = window.location.href;
+      if (window.location.href.indexOf('?') > -1) {
+        urlSplit = url.split('?');
+        if (urlSplit[1].indexOf('&') > -1) {
           diffParts = urlSplit[1].split('&');
           
           if (diffParts.length > 1) 
@@ -275,9 +353,16 @@
             }
           }
         }
+        else if (urlSplit[1].indexOf('invalid') > -1 && select != "all")
+          newUrl = urlSplit[0]+ "?invalid=" + select;
+        else if (urlSplit[1].indexOf('invalid') > -1 && select == "all")
+          newUrl = urlSplit[0];
+        else if (urlSplit[1].indexOf('invalid') == -1)
+          newUrl = window.location.toString() + "&invalid=" + select;
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
+
         window.location = newUrl;
       }
       else if (select != "all") {
@@ -285,6 +370,7 @@
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
+
         window.location = newUrl + "?invalid=" + select;
       }
       else {
@@ -292,6 +378,7 @@
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
+
         window.location = newUrl;
       }
     }); 
@@ -301,7 +388,7 @@
       url = window.location.href;
       if (window.location.href.indexOf('?') > -1) {
         urlSplit = url.split('?');
-        if (urlSplit[1].indexOf('&')) {
+        if (urlSplit[1].indexOf('&') > -1) {
           diffParts = urlSplit[1].split('&');
 
           if (diffParts.length > 1) 
@@ -330,9 +417,16 @@
             }
           }
         }
+        else if (urlSplit[1].indexOf('sort') > -1 && select != "none")
+          newUrl = urlSplit[0]+ "?sort=" + select;
+        else if (urlSplit[1].indexOf('sort') > -1 && select == "none")
+          newUrl = urlSplit[0];
+        else if (urlSplit[1].indexOf('sort') == -1)
+          newUrl = window.location.toString() + "&sort=" + select;
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
+
         window.location = newUrl;
       }
       else if (select != "none") {
@@ -340,6 +434,7 @@
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
+
         window.location = newUrl + "?sort=" + select;
       }
       else { 
@@ -347,11 +442,23 @@
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
+
         window.location = newUrl;
       }
     });
 
     window.onload = function() {
+
+      if (window.location.href.indexOf("within") > -1) {
+        if (window.location.href.indexOf("within=30") > -1)
+          document.getElementById("thirty_days_left").checked = true;
+        else if (window.location.href.indexOf("within=60") > -1)
+          document.getElementById("sixty_days_left").checked = true;
+        else if (window.location.href.indexOf("within=90") > -1)
+          document.getElementById("ninety_days_left").checked = true;
+        else
+          document.getElementById("all_days").checked = true;
+      }
 
       if (window.location.href.indexOf("sort")) {
         if (window.location.href.indexOf("opptyName") > -1)
