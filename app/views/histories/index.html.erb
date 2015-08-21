@@ -214,7 +214,7 @@
       url = window.location.href;
       if (window.location.href.indexOf('?') > -1) {
         urlSplit = url.split('?');
-        if (urlSplit[1].indexOf('&')) {
+        if (urlSplit[1].indexOf('&') > -1) {
           diffParts = urlSplit[1].split('&');
           
           if (diffParts.length > 1) 
@@ -247,9 +247,16 @@
             }
           }
         }
+        else if (urlSplit[1].indexOf('invalid') > -1 && select != "all")
+          newUrl = urlSplit[0]+ "?invalid=" + select;
+        else if (urlSplit[1].indexOf('invalid') > -1 && select == "all")
+          newUrl = urlSplit[0];
+        else if (urlSplit[1].indexOf('invalid') == -1)
+          newUrl = window.location.toString() + "&invalid=" + select;
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
+
         window.location = newUrl;
       }
       else if (select != "all") {
@@ -257,6 +264,7 @@
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
+
         window.location = newUrl + "?invalid=" + select;
       }
       else {
@@ -264,6 +272,7 @@
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
+
         window.location = newUrl;
       }
     }); 
@@ -273,7 +282,7 @@
       url = window.location.href;
       if (window.location.href.indexOf('?') > -1) {
         urlSplit = url.split('?');
-        if (urlSplit[1].indexOf('&')) {
+        if (urlSplit[1].indexOf('&') > -1) {
           diffParts = urlSplit[1].split('&');
 
           if (diffParts.length > 1) 
@@ -302,9 +311,16 @@
             }
           }
         }
+        else if (urlSplit[1].indexOf('sort') > -1 && select != "none")
+          newUrl = urlSplit[0]+ "?sort=" + select;
+        else if (urlSplit[1].indexOf('sort') > -1 && select == "none")
+          newUrl = urlSplit[0];
+        else if (urlSplit[1].indexOf('sort') == -1)
+          newUrl = window.location.toString() + "&sort=" + select;
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
+
         window.location = newUrl;
       }
       else if (select != "none") {
@@ -312,6 +328,7 @@
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
+        
         window.location = newUrl + "?sort=" + select;
       }
       else { 
@@ -319,6 +336,7 @@
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
+
         window.location = newUrl;
       }
     });
