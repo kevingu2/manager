@@ -15,6 +15,11 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
   <%= javascript_include_tag('bootstrap-notify.min.js') %>
   <%= javascript_include_tag('jquery.growl.js') %>
 </head>
@@ -40,7 +45,12 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li id="username"><a>Welcome <%=session[:username] %></a></li>
-          <li class="tab nav-notifications"><a href="#notifications" name="notificationIcon"><img src="/assets/notif-bell-2.png" height="30" width="30" style="padding-bottom: 5px"></a></li>
+          <li class="tab nav-notifications">
+            <div id="accordion">
+              <a href='javascript:;'><img src="/assets/notif-bell-2.png" name="notificationIcon" height="30" width="30" style="padding-bottom: 5px;"></a>
+              <div class='content'>  SOME CONTENT HERE </div>
+            </div>  
+          </li>
           <li><a href=<%=sessions_destroy_path %>>Logout</a><li>
         </ul>
       </div><!--/.nav-collapse -->
@@ -53,23 +63,49 @@
 .nav-<%=controller.controller_name%> {
   background-color: #e7e7e7;
 }
+
+.ui-accordion .ui-accordion-content {padding-left: 0 !important;}   
 </style>
 
 <script>
-  $(document).on("click","a[name='notificationIcon']", function (e) {
-    if (true) {
-      $.notify({
-        icon: 'glyphicon glyphicon-exclamation-sign',
-        title: 'The opportunity: ### has had its request for proposal date moved.',
-        message: 'Click notification to visit the Tasks Page',
-        url: '<%= allocated_tasks_index_path%>',
-        target: '_self'
-      },{
-        delay: '5',
-        type: 'info',
-      });
-    }
+  $(function() {
+    $( "#accordion" ).accordion({
+      collapsible: true
+    });
   });
+
+  /* creates style rule programmatically after triangle logo exists */
+  function createClass(name,rules){
+      var style = document.createElement('style');
+      style.type = 'text/css';
+      document.getElementsByTagName('head')[0].appendChild(style);
+      if(!(style.sheet||{}).insertRule) 
+          (style.styleSheet || style.sheet).addRule(name, rules);
+      else
+          style.sheet.insertRule(name+"{"+rules+"}",0);
+  }
+
+  /* hides the triangle right logo */
+  createClass('html body nav div #navbar ul li  #accordion #ui-id-1 span.ui-accordion-header-icon.ui-icon.ui-icon-triangle-1-e',"display: none !important;");
+  /* hides the triangle down logo */
+  createClass('html body nav div #navbar ul li  #accordion #ui-id-1 span.ui-accordion-header-icon.ui-icon.ui-icon-triangle-1-s',"display: none !important;");
+  /* notification icon spacing */
+  createClass('html body nav div #navbar ul li  #accordion a#ui-id-1.ui-accordion-header.ui-state-default.ui-accordion-icons.ui-corner-top',"padding-left: .5em !important;");
+  /* notification icon spacing */
+  createClass('html body nav div #navbar ul li  #accordion a#ui-id-1.ui-accordion-header.ui-state-default.ui-accordion-icons.ui-corner-all',"padding-left: .5em !important;");
+  /* notification icon spacing */
+  createClass('html body nav div #navbar ul li  #accordion a#ui-id-1.ui-accordion-header.ui-state-default.ui-accordion-icons.ui-accordion-header-active.ui-state-active.ui-corner-top',"padding-left: .5em !important;");
 </script>
+
 </body>
 </html>
+<!--
+  <div class="hider">
+                <img src="/assets/notif-bell-2.png" name="notificationIcon" height="30" width="30" style="padding-bottom: 5px; margin-top: 15px;">
+
+                <ul data-role="listview">
+                  <li>I'm the collapsible set content.</li>
+                  <li>I should roll over the data beneath me.</li>
+                </ul>
+              </div> 
+  --> 
