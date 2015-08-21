@@ -3,18 +3,40 @@ class AssignController < ApplicationController
   def index
     opptyId=params[:opptyId]
     @oppty=Oppty.find(opptyId)
-    @assigned_writers=UserOppty.where(oppty_id: opptyId).joins('join (select * from users where role="Writer")u
-                                      on user_oppties.user_id=u.id').includes(:user)
-    @not_assigned_writers=getUnassigned(WRITER_ROLE, params[:search], opptyId)
+    @assigned_writers=getAssigned(WRITER_ROLE, nil, opptyId)
+    @not_assigned_writers=getUnassigned(WRITER_ROLE, nil, opptyId)
   end
 
   def searchNotAssigned
-
+    not_assigned=getUnassigned(params[:role], params[:search], params[:opptyId])
+    respond_to do |format|
+      format.json { render json: not_assigned.to_json}
+    end
   end
 
+  def searchAssigned
+    user_oppties=getAssigned(params[:role], params[:search], params[:opptyId])
+    assigned=[]
+    user_oppties.each do |uo|
+      assigned.push(uo.user);
+    end
+    respond_to do |format|
+      format.json { render json: assigned.to_json}
+    end
+  end
+
+  def getAssigned(role, keyword,opptyId)
+    if keyword.present?
+      return UserOppty.where(oppty_id: opptyId).joins('join (select * from users where role="'+role+'" and name LIKE"'+"%#{keyword}%"+'")u
+                                      on user_oppties.user_id=u.id').includes(:user)
+    else
+      return UserOppty.where(oppty_id: opptyId).joins('join (select * from users where role="'+role+'")u
+                                      on user_oppties.user_id=u.id').includes(:user)
+    end
+  end
   def getUnassigned(role, keyword, opptyId)
     if keyword.present?
-      return User.where("role == ? and name LIKE ?", role, keyword).where('Not Exists(select * from user_oppties
+      return User.where("role == ? and name LIKE ?", role, "%#{keyword}%").where('Not Exists(select * from user_oppties
                                          where oppty_id=? and users.id=user_id)', opptyId)
     else
        return User.where(role: "Writer").where('Not Exists(select * from user_oppties

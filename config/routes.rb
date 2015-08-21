@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
   get 'assign/searchNotAssigned'
 
+  get 'assign/searchAssigned'
+
   get 'invalid_entry/index'
 
   get 'allocated_tasks/index'
