@@ -20,16 +20,13 @@ class SessionsController < ApplicationController
 			session[:role]=user.role
 		
 			#redirecting to desired pages according to the role
-			if user.role=="Writer"
-				redirect_to tasks_index_path
-			end
-
 			if user.role=="Manager"
 				redirect_to allocated_tasks_index_path
-			end
-
-			#if role is neither a writer or manager, redirect back to login 	
-			redirect_to sessions_new_path, notice: "Invalid user role"
+			elsif user.role=="Writer"
+				redirect_to tasks_index_path
+			else
+				redirect_to tasks_index_path
+			end 
 		else
 			redirect_to sessions_new_path, notice: "Invalid user/password combination"
 		end
