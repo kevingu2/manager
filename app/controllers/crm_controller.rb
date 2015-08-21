@@ -16,7 +16,7 @@ class CrmController < ApplicationController
         end
       end
       @download_path= earliest_file_name
-    else if Dir[CRM_PATH+'/*.xlsm'].length==1
+    elsif Dir[CRM_PATH+'/*.xlsm'].length==1
       @download_path=File.join(Dir[CRM_PATH+'/*.xlsm'][0])
          end
     end

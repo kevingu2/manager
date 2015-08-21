@@ -15,8 +15,8 @@
 			<h4>Not Assigned Writers</h4>
 			<div class="outer-not-assigned-row" id="outer-not-assigned-row">
 				<%@not_assigned_writers.each do |w|%>
-					<div class="col-md-12 not-assigned-row" id=<%=w.id%>>
-						<div id= "username" class="col-md-6 row-item">
+					<div class="col-md-12 not-assigned-row" id="<%=w.id%>">
+						<div id="username" class="col-md-6 row-item">
 					    	<p class="writer-name"><%=w.name%></p>
 						</div>
 						<div id="button" class="col-md-6 row-item">
