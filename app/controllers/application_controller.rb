@@ -50,7 +50,6 @@ class ApplicationController < ActionController::Base
       @download_path= earliest_file_name
     elsif Dir[CRM_PATH+'/*.xlsm'].length==1
            @download_path=File.join(Dir[CRM_PATH+'/*.xlsm'][0])
-         end
     end
     @uploaded_file_name=File.basename(@download_path).gsub("new_", "").gsub("%20", " ")
     return @download_path
