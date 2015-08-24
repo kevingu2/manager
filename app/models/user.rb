@@ -5,8 +5,11 @@ class User < ActiveRecord::Base
   has_secure_password
   has_many :user_oppty, dependent: :destroy
   has_many :user_history, dependent: :destroy
+  has_many :notification, dependent: :destroy
   has_many :oppty, through: :user_oppty
   has_many :oppty, through: :user_history
+  has_many :oppty, through: :notification
+
 
   def add_oppty(user_id, oppty_id, status, changeRFP)
     uo=nil
@@ -36,7 +39,7 @@ class User < ActiveRecord::Base
     uo
   end
 
-  def add_notification(user_id, oppty_id, title, message)
-
+  def add_notification(oppty_id, title, message)
+    notification.build(oppty_id:oppty_id, title:title, message:message)
   end
 end

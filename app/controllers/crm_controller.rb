@@ -82,10 +82,16 @@ class CrmController < ApplicationController
     newIds = uploadedIds - opptyIds # new - old = new ones to add
     #change user_oppties rfp has changed
     if changedRFP.any?
-      changedRFP.each do |id|
-        ups=UserOppty.where(oppty_id:id)
+      changedRFP.each do |oppty_id|
+        oppty=Oppty.find(oppty_id)
+        ups=UserOppty.where(oppty_id:oppty_id).includes(:user)
         ups.each do |up|
-          up.update(changeRFP:true)
+          notification=up.user.add_notification(oppty_id, CHANGEDRFP,oppty.opptyName+" RFP date has changed");
+          if notification.save
+            puts "notification saved: "+notification.user_id.to_s
+          else
+            puts "notification not saved"
+          end
         end
       end
     end
