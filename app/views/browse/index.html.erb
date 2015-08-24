@@ -17,117 +17,85 @@
         </table>
 
         <!-- Radio Buttons in Browse page to limit the search to opportunities within 30, 60, or 90 days -->
-          <table class="form col-md-12">
-            <tr>
-                <td class="col-md-1">
-                  <label class="black-text field-label" style="padding-left: 101px;">
-                    Within:
-                  </label>
-                </td>
+        <table class="form col-md-12">
+          <tr>
+            <td class="col-md-1">
+              <label class="black-text field-label" style="padding-left: 101px;">
+                Within:
+              </label>
+            </td>
 
-                <td class="col-md-1">
-                  <div>
-                    <div class="toggle-btn radio black-text" id="within" name="within">
-                      <input id="thirty_days_left" name="limiting" type="radio" value="30">30 Days
-                      <br>
+            <td class="col-md-1">
+              <div>
+                <div class="toggle-btn radio black-text" id="within" name="within">
+                  <input id="thirty_days_left" name="limiting" type="radio" value="30">30 Days
+                  <br>
                    
-                      <input id="sixty_days_left" name="limiting" type="radio" value="60">60 Days
-                      <br>
+                  <input id="sixty_days_left" name="limiting" type="radio" value="60">60 Days
+                  <br>
                        
-                      <input id="ninety_days_left" name="limiting" type="radio" value="90">90 Days
-                      <br>
+                  <input id="ninety_days_left" name="limiting" type="radio" value="90">90 Days
+                  <br>
                        
-                      <input id="all-days" name="limiting" type="radio" value="999999" checked="true">90+ Days
-                    </div> 
-                    <td>
-                      <a href="#" name="radio-style-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
-                    </td>
-                  </div>
+                  <input id="all-days" name="limiting" type="radio" value="999999" checked="true">90+ Days
+
+                </div> 
+                
+                <td>
+                  <a href="#" name="radio-style-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
                 </td>
+              </div>
+            </td>
 
-                <td class="col-md-2">
-                  <label class="black-text field-label" style="padding-left:50px;">
-                    Invalid Field:
-                  </label>
+            <td class="col-md-2">
+              <label class="black-text field-label" style="padding-left:50px;">
+                Invalid Field:
+              </label>
+            </td>
+
+            <td class="col-md-2">
+              <div>
+                <select class="selector col-md-10" id="invalidDiv" name="invalidDiv">
+                  <option id="allInvalidFields" value="all">all</option>
+                  <option id="rfpDateField" value="rfpDate">RFP Date</option>
+                  <option id="leadEstimField" value="leadEstim">Lead Estimator</option>
+                  <option id="technicalLeadField" value="technicalLead">Technical Lead</option>
+                  <option id="slDirField" value="slDir">Service Line Director</option>
+                  <option id="slArchField" value="slArch">Solution Architect</option>
+                  <option id="sllOrgField" value="sllOrg">Service Line Lead Organization</option>
+                </select>
+                <td>
+                  <a href="#" name="invalid-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
                 </td>
+              </div>  
+            </td>
 
-                <td class="col-md-2">
-                    <div>
-                      <select class="selector col-md-10" id="invalidDiv" name="invalidDiv">
-                        <option id="allInvalidFields" value="all">all</option>
-                        <option id="rfpDateField" value="rfpDate">RFP Date</option>
-                        <option id="leadEstimField" value="leadEstim">Lead Estimator</option>
-                        <option id="technicalLeadField" value="technicalLead">Technical Lead</option>
-                        <option id="slDirField" value="slDir">Service Line Director</option>
-                        <option id="slArchField" value="slArch">Solution Architect</option>
-                        <option id="sllOrgField" value="sllOrg">Service Line Lead Organization</option>
-                      </select>
-                      <td>
-                        <a href="#" name="invalid-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
-                      </td>
-                    </div>  
-                  </td>
-                <!--<td colspan=1>
-                  <div>
-                    <div class="toggle-btn radio black-text" id="invalidDiv" name="invalidDiv">
-                      <div class="row">
-                        <div class="col-md-6" style="padding-right:10px !important;">
-                          <input id="allInvalidFields" name="invalid" type="radio" value="all" checked="true">All
-                          <br>
-
-                          <input id="rfpDateField" name="invalid" type="radio" value="rfpDate">RFP Date
-                          <br>
-                    
-                          <input id="leadEstimField" name="invalid" type="radio" value="leadEstim">Lead Estimator
-                          <br>
-                           
-                          <input id="technicalLeadField" name="invalid" type="radio" value="technicalLead">Technical Lead
-                          <br>
-                        </div>
-                        <div class="col-md-6" style="padding-right:10px !important;">
-                          <input id="slDirField" name="invalid" type="radio" value="slDir">Service Line Director
-                          <br>
-
-                          <input id="slArchField" name="invalid" type="radio" value="slArch">Solution Architect
-                          <br>
-
-                          <input id="sllOrgField" name="invalid" type="radio" value="sllOrg">Service Line Lead Organization
-                          <br>
-                        </div>
-                      </div>
-                    </div> 
-                    <td>
-                      <a href="#" name="invalid-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
-                    </td>
-                  </div>
-                </td> -->
-
-              <!-- drop down menu in Browse Page to sort the opportunities by a specific field -->
-                <td class="col-md-2">
-                  <label class="black-text sort-dropdown-label">
-                    Sort By:
-                  </label>
+            <!-- drop down menu in Browse Page to sort the opportunities by a specific field -->
+            <td class="col-md-2">
+              <label class="black-text sort-dropdown-label">
+                Sort By:
+              </label>
+            </td>
+            <td class="col-md-2">
+              <div>
+                <select class="selector col-md-10" id="sorting" name="sorting">
+                  <option id="opt1" value="none">none</option>
+                  <option id="opt2" value="opptyName">Opportunity Name</option>
+                  <option id="opt3" value="opptyId">Opportunity ID</option>
+                  <option id="opt4" value="proposalDueDate">Days Left</option>
+                  <option id="opt5" value="captureMgr">Capture Managers</option>
+                  <option id="opt6" value="programMgr">Program Managers</option>
+                  <option id="opt7" value="proposalMgr">Proposal Managers</option>
+                  <option id="opt8" value="value">Value</option>
+                </select>
+                <td>
+                  <a href="#" name="sort-btn" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
                 </td>
-                  <td class="col-md-2">
-                    <div>
-                      <select class="selector col-md-10" id="sorting" name="sorting">
-                        <option id="opt1" value="none">none</option>
-                        <option id="opt2" value="opptyName">Opportunity Name</option>
-                        <option id="opt3" value="opptyId">Opportunity ID</option>
-                        <option id="opt4" value="proposalDueDate">Days Left</option>
-                        <option id="opt5" value="captureMgr">Capture Managers</option>
-                        <option id="opt6" value="programMgr">Program Managers</option>
-                        <option id="opt7" value="proposalMgr">Proposal Managers</option>
-                        <option id="opt8" value="value">Value</option>
-                      </select>
-                      <td>
-                        <a href="#" name="sort-btn" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
-                      </td>
-                    </div>  
-                  </td>
-                  <td class="col-md-1"></td>
-            </tr>
-          </table>
+              </div>  
+            </td>
+            <td class="col-md-1"></td>
+          </tr>
+        </table>
       </div>        
       <br>
     </div>

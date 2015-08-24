@@ -17,56 +17,56 @@
           </tr>
         </table>
         <!-- Radio Buttons in History page to limit the search to opportunities within 30, 60, or 90 days -->
-          <table class="form col-md-12">
-            <tr>
-              <td class="col-md-1"></td>
-                <td class="col-md-2">
-                  <label class="black-text field-label" style="padding-left:7px !important;">
-                    Invalid Field:
-                  </label>
+        <table class="form col-md-12">
+          <tr>
+            <td class="col-md-1"></td>
+            <td class="col-md-2">
+              <label class="black-text field-label" style="padding-left:7px !important;">
+                Invalid Field:
+              </label>
+            </td>
+            <td class="col-md-3">
+              <div>
+                <select class="selector col-md-10" id="invalidDiv" name="invalidDiv">
+                  <option id="allInvalidFields" value="all">all</option>
+                  <option id="rfpDateField" value="rfpDate">RFP Date</option>
+                  <option id="leadEstimField" value="leadEstim">Lead Estimator</option>
+                  <option id="technicalLeadField" value="technicalLead">Technical Lead</option>
+                  <option id="slDirField" value="slDir">Service Line Director</option>
+                  <option id="slArchField" value="slArch">Solution Architect</option>
+                  <option id="sllOrgField" value="sllOrg">Service Line Lead Organization</option>
+                </select>
+                <td>
+                  <a href="#" name="invalid-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
                 </td>
-                <td class="col-md-3">
-                    <div>
-                      <select class="selector col-md-10" id="invalidDiv" name="invalidDiv">
-                        <option id="allInvalidFields" value="all">all</option>
-                        <option id="rfpDateField" value="rfpDate">RFP Date</option>
-                        <option id="leadEstimField" value="leadEstim">Lead Estimator</option>
-                        <option id="technicalLeadField" value="technicalLead">Technical Lead</option>
-                        <option id="slDirField" value="slDir">Service Line Director</option>
-                        <option id="slArchField" value="slArch">Solution Architect</option>
-                        <option id="sllOrgField" value="sllOrg">Service Line Lead Organization</option>
-                      </select>
-                      <td>
-                        <a href="#" name="invalid-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
-                      </td>
-                    </div>  
-                  </td>
+              </div>  
+            </td>
 
-              <!-- drop down menu in History Page to sort the opportunities by a specific field -->
-                <td class="col-md-2">
-                  <label class="black-text sort-dropdown-label">
-                    Sort By:
-                  </label>
-                </td>
-                <td class="col-md-3">
-                  <div>
-                    <select class="selector col-md-9" id="sorting" name="sorting">
-                      <option id="opt1" value="none">none</option>
-                      <option id="opt2" value="opptyName">Opportunity Name</option>
-                      <option id="opt3" value="opptyId">Opportunity ID</option>
-                      <option id="opt4" value="proposalDueDate">Days Left</option>
-                      <option id="opt5" value="captureMgr">Capture Managers</option>
-                      <option id="opt6" value="programMgr">Program Managers</option>
-                      <option id="opt7" value="proposalMgr">Proposal Managers</option>
-                      <option id="opt8" value="value">Value</option>
-                    </select>
+            <!-- drop down menu in History Page to sort the opportunities by a specific field -->
+            <td class="col-md-2">
+              <label class="black-text sort-dropdown-label">
+                  Sort By:
+              </label>
+            </td>
+            <td class="col-md-3">
+              <div>
+                <select class="selector col-md-9" id="sorting" name="sorting">
+                  <option id="opt1" value="none">none</option>
+                  <option id="opt2" value="opptyName">Opportunity Name</option>
+                  <option id="opt3" value="opptyId">Opportunity ID</option>
+                  <option id="opt4" value="proposalDueDate">Days Left</option>
+                  <option id="opt5" value="captureMgr">Capture Managers</option>
+                  <option id="opt6" value="programMgr">Program Managers</option>
+                  <option id="opt7" value="proposalMgr">Proposal Managers</option>
+                  <option id="opt8" value="value">Value</option>
+                </select>
                       
-                    <a href="#" name="sort-btn" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
-                  </div>  
-                </td>
-              <td class="col-md-1"></td>
-            </tr>
-          </table>
+                <a href="#" name="sort-btn" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
+              </div>  
+            </td>
+            <td class="col-md-1"></td>
+          </tr>
+        </table>
       </div>    
       <br>
     </div>
@@ -84,82 +84,82 @@
 
     <div id="history-data">
       <% @histories.each do |o| %>
-            <div class="success row">
-              <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
-              <div class="col-md-6">
-                <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
-                <div class="little-text"><%= o.slComments %></div>
-              </div>
-              <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
-              <div class="col-md-2">
-              <% if o.rfpDate < Date.today and (o.status2 == "P1-ID/Track" or o.status2 ==  "P2-Qualification" or o.status2 == "P3-Pursuit") %>
-                <div class="regular-text"><%= "(RFP Date: " + o.rfpDate.to_s + " and status2: " + o.status2 + ")" %></div>
-              <% end %>
+        <div class="success row">
+          <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
+          <div class="col-md-6">
+            <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
+            <div class="little-text"><%= o.slComments %></div>
+          </div>
+          <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
+          <div class="col-md-2">
+            <% if o.rfpDate < Date.today and (o.status2 == "P1-ID/Track" or o.status2 ==  "P2-Qualification" or o.status2 == "P3-Pursuit") %>
+              <div class="regular-text"><%= "(RFP Date: " + o.rfpDate.to_s + " and status2: " + o.status2 + ")" %></div>
+            <% end %>
 
-              <% if o.technicalLead == "TBD" %>
-                <div class="regular-text"><%= "(Technical Lead: " + o.technicalLead + ")" %></div>
-              <% elsif o.technicalLead == "" %>
-                <div class="regular-text"><%= "(Technical Lead: none)" %></div>
-              <% end %>
+            <% if o.technicalLead == "TBD" %>
+              <div class="regular-text"><%= "(Technical Lead: " + o.technicalLead + ")" %></div>
+            <% elsif o.technicalLead == "" %>
+              <div class="regular-text"><%= "(Technical Lead: none)" %></div>
+            <% end %>
 
-              <% if o.slDir == "TBD" %>
-                <div class="regular-text"><%= "(Service Line Director: " + o.slDir + ")" %></div>
-              <% elsif o.slDir == "" %>
-                <div class="regular-text"><%= "(Service Line Director: none)" %></div>
-              <% end %>
+            <% if o.slDir == "TBD" %>
+              <div class="regular-text"><%= "(Service Line Director: " + o.slDir + ")" %></div>
+            <% elsif o.slDir == "" %>
+              <div class="regular-text"><%= "(Service Line Director: none)" %></div>
+            <% end %>
 
-              <% if o.slArch == "TBD" %>
-                <div class="regular-text"><%= "(Solution Architect: " + o.slArch + ")" %></div>
-              <% elsif o.slArch == "" %>
-                <div class="regular-text"><%= "(Solution Architect: none)" %></div>
-              <% end %>
+            <% if o.slArch == "TBD" %>
+              <div class="regular-text"><%= "(Solution Architect: " + o.slArch + ")" %></div>
+            <% elsif o.slArch == "" %>
+              <div class="regular-text"><%= "(Solution Architect: none)" %></div>
+            <% end %>
 
-              <% if o.leadEstim == "TBD" %>
-                <div class="regular-text"><%= "(Lead Estimator: " + o.leadEstim + ")" %></div>
-              <% elsif o.leadEstim == "" %>
-                <div class="regular-text"><%= "(Lead Estimator: none)" %></div>
-              <% end %>
+            <% if o.leadEstim == "TBD" %>
+              <div class="regular-text"><%= "(Lead Estimator: " + o.leadEstim + ")" %></div>
+            <% elsif o.leadEstim == "" %>
+              <div class="regular-text"><%= "(Lead Estimator: none)" %></div>
+            <% end %>
 
-              <% if o.sllOrg == "SWI" and o.swi_va == 0.0 %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and swi_va: $" + o.swi_va.to_s + ")" %></div>
-              <% elsif o.sllOrg == "SWI" and o.swi_va == "" %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and swi_va: none)" %></div>
-              <% elsif o.sllOrg == "TSS" and o.tss_va == 0.0 %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and tss_va: $" + o.tss_va.to_s + ")" %></div>
-              <% elsif o.sllOrg == "TSS" and o.tss_va == "" %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and tss_va: none)" %></div>
-              <% elsif o.sllOrg == "ITMS" and o.itms_va == 0.0 %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and itms_va: $" + o.itms_va.to_s + ")" %></div>
-              <% elsif o.sllOrg == "ITMS" and o.itms_va == "" %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and itms_va: none)" %></div>
-              <% elsif o.sllOrg == "MSS" and o.mss_va == 0.0 %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and mss_va: $" + o.mss_va.to_s + ")" %></div>
-              <% elsif o.sllOrg == "MSS" and o.mss_va == "" %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and mss_va: none)" %></div>
-              <% elsif o.sllOrg == "HWI" and o.hwi_va == 0.0 %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and hwi_va: $" + o.hwi_va.to_s + ")" %></div>
-              <% elsif o.sllOrg == "HWI" and o.hwi_va == "" %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and hwi_va: none)" %></div>
-              <% elsif o.sllOrg == "CCDS" and o.ccds_va == 0.0 %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and ccds_va: $" + o.ccds_va.to_s + ")" %></div>
-              <% elsif o.sllOrg == "CCDS" and o.ccds_va == "" %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and ccds_va: none)" %></div>
-              <% elsif o.sllOrg == "LSC" and o.lsc_va == 0.0 %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and lsc_va: $" + o.lsc_va.to_s + ")" %></div>
-              <% elsif o.sllOrg == "LSC" and o.lsc_va == "" %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and lsc_va: none)" %></div>
-              <% elsif o.sllOrg == "NWI" and o.nwi_va == 0.0 %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and nwi_va: $" + o.nwi_va.to_s + ")" %></div>
-              <% elsif o.sllOrg == "NWI" and o.nwi_va == "" %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and nwi_va: none)" %></div>
-              <% elsif o.sllOrg == "SSS" and o.sss_va == 0.0 %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and sss_va: $" + o.sss_va.to_s + ")" %></div>
-              <% elsif o.sllOrg == "SSS" and o.sss_va == "" %>
-                <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and sss_va: none)" %></div>
-              <% end %>
-            </div>
-            </div>
-        <% end %>
+            <% if o.sllOrg == "SWI" and o.swi_va == 0.0 %>
+              <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and swi_va: $" + o.swi_va.to_s + ")" %></div>
+            <% elsif o.sllOrg == "SWI" and o.swi_va == "" %>
+              <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and swi_va: none)" %></div>
+            <% elsif o.sllOrg == "TSS" and o.tss_va == 0.0 %>
+              <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and tss_va: $" + o.tss_va.to_s + ")" %></div>
+            <% elsif o.sllOrg == "TSS" and o.tss_va == "" %>
+              <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and tss_va: none)" %></div>
+            <% elsif o.sllOrg == "ITMS" and o.itms_va == 0.0 %>
+              <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and itms_va: $" + o.itms_va.to_s + ")" %></div>
+            <% elsif o.sllOrg == "ITMS" and o.itms_va == "" %>
+              <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and itms_va: none)" %></div>
+            <% elsif o.sllOrg == "MSS" and o.mss_va == 0.0 %>
+              <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and mss_va: $" + o.mss_va.to_s + ")" %></div>
+            <% elsif o.sllOrg == "MSS" and o.mss_va == "" %>
+              <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and mss_va: none)" %></div>
+            <% elsif o.sllOrg == "HWI" and o.hwi_va == 0.0 %>
+              <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and hwi_va: $" + o.hwi_va.to_s + ")" %></div>
+            <% elsif o.sllOrg == "HWI" and o.hwi_va == "" %>
+              <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and hwi_va: none)" %></div>
+            <% elsif o.sllOrg == "CCDS" and o.ccds_va == 0.0 %>
+              <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and ccds_va: $" + o.ccds_va.to_s + ")" %></div>
+            <% elsif o.sllOrg == "CCDS" and o.ccds_va == "" %>
+              <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and ccds_va: none)" %></div>
+            <% elsif o.sllOrg == "LSC" and o.lsc_va == 0.0 %>
+              <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and lsc_va: $" + o.lsc_va.to_s + ")" %></div>
+            <% elsif o.sllOrg == "LSC" and o.lsc_va == "" %>
+              <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and lsc_va: none)" %></div>
+            <% elsif o.sllOrg == "NWI" and o.nwi_va == 0.0 %>
+              <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and nwi_va: $" + o.nwi_va.to_s + ")" %></div>
+            <% elsif o.sllOrg == "NWI" and o.nwi_va == "" %>
+              <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and nwi_va: none)" %></div>
+            <% elsif o.sllOrg == "SSS" and o.sss_va == 0.0 %>
+              <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and sss_va: $" + o.sss_va.to_s + ")" %></div>
+            <% elsif o.sllOrg == "SSS" and o.sss_va == "" %>
+              <div class="regular-text"><%= "(SLL Organization: " + o.sllOrg + " and sss_va: none)" %></div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
 
       <div style="float: right !important;">
         <div name="paginate-div"><%= will_paginate @histories, previous_label: h("<"), next_label: h(">") %></div>
@@ -181,7 +181,6 @@
         style.sheet.insertRule(name+"{"+rules+"}",0);
     }
     createClass('html body div.jumbotron div.upper-search-box div.inner-search-bar.col-md-12 table.col-md-12 tbody tr td.col-md-10 form#search-form input#search',"width: 96% !important; padding-left: 10px !important;");
-
 
     $(document).on("click", "a[name='invalid-btn']", function (e) {
       select = document.getElementById('invalidDiv').value;
