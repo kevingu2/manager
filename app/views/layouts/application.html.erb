@@ -46,8 +46,19 @@
           <li id="username"><a>Welcome <%=session[:username] %></a></li>
           <li class="tab nav-notifications">
             <div id="accordion">
+              <!-- The bell icon which expands notification feed -->
               <a href="javascript:;"><img src="/assets/notif-bell-2.png" name="notificationIcon" height="30" width="30" style="padding-bottom: 3px;"></a>
-              <div class="content">  SOME CONTENT HERE </div>
+              <!-- The expandable notifications feed -->
+              <div class="content">
+                <% if @notifications != nil %>
+                  <% @notifications.each do |o| %>
+                    <p><b>@notifications.title</b></p>
+                    <p>@notifications.message</p> 
+                  <%end%>
+                <%else%>
+                  <p style="text-align: center; padding-left: 10px !important;">No Notifications</p>  
+                <%end%>
+              </div>
             </div>  
           </li>
           <li><a href=<%=sessions_destroy_path %>>Logout</a><li>
@@ -95,8 +106,10 @@
   createClass('html body nav div #navbar ul li  #accordion a#ui-id-1.ui-accordion-header.ui-state-default.ui-accordion-icons.ui-corner-all',"padding-left: .5em !important;");
   /* notification icon spacing */
   createClass('html body nav div #navbar ul li  #accordion a#ui-id-1.ui-accordion-header.ui-state-default.ui-accordion-icons.ui-accordion-header-active.ui-state-active.ui-corner-top',"padding-left: .5em !important;");
-  /* notification icon background */
-  createClass('html body nav div #navbar ul li  #accordion a#ui-id-1.ui-accordion-header.ui-state-default.ui-corner-all.ui-accordion-icons',"background-color: #f7f7f7 !important; border: 0px solid black !important;  background-image: none !important;");
+  /* notification icon background when not expanded */
+  createClass('html body nav div #navbar ul li  #accordion a#ui-id-1.ui-accordion-header.ui-state-default.ui-corner-all.ui-accordion-icons',"background-color: #f7f7f7 !important;  background-image: none !important;");
+  /* notification icon background when expanded */
+  createClass('html body nav div #navbar ul li  #accordion a#ui-id-1.ui-accordion-header.ui-state-default.ui-accordion-icons.ui-accordion-header-active.ui-state-active.ui-corner-top', "background-color: #f7f7f7 !important; background-image: none !important;");
 </script>
 
 </body>
