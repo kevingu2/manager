@@ -29,6 +29,12 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+
+  def notify 
+      #iterate through all of the user's opportunities
+      @notifications = Notification.find_by(id: session[:user_id])
+  end 
+
   def getUploadedFileName
     @download_path=""
     if Dir[CRM_PATH + '/*.xlsm'].length > 1 #if there is more than one file, delete the old one. else the new overwrote the old, don't delete
@@ -42,13 +48,13 @@ class ApplicationController < ActionController::Base
         end
       end
       @download_path= earliest_file_name
-    else if Dir[CRM_PATH+'/*.xlsm'].length==1
+    elsif Dir[CRM_PATH+'/*.xlsm'].length==1
            @download_path=File.join(Dir[CRM_PATH+'/*.xlsm'][0])
-         end
     end
     @uploaded_file_name=File.basename(@download_path).gsub("new_", "").gsub("%20", " ")
     return @download_path
   end
+
   def deleteUnUploadedFile
     download_path=getUploadedFileName
     if Dir[CRM_PATH + '/*.xlsm'].length > 1 #if there is more than one file, delete the old one. else the new overwrote the old, don't delete
