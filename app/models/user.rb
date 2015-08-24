@@ -35,4 +35,8 @@ class User < ActiveRecord::Base
     end
     uo
   end
+
+  def add_notification(user_id, oppty_id, title, message)
+
+  end
 end
