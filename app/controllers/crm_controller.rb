@@ -5,13 +5,6 @@ class CrmController < ApplicationController
   skip_before_action :deleteUnUploadedFile , only: [:checkDate,:updateCRM, :calculateChanges]
 
   def index
-    if Dir[CRM_PATH + '/*.xlsm'].length > 1 #if there is more than one file, delete the old one. else the new overwrote the old, don't delete
-      Dir[CRM_PATH + '/*.xlsm'].each do |item|
-        if(item!=@download_path)
-          FileUtils.rm(item)
-        end
-      end
-    end
     FileUtils.mkdir_p(CRM_PATH) unless File.directory?(CRM_PATH)
     FileUtils.mkdir_p('public/uploads/data') unless File.directory?('public/uploads/data')
     @uploaded=false
@@ -566,6 +559,9 @@ class CrmController < ApplicationController
     # end
     @deleted = (opptyIds - uploadedIds).length.to_s
     @uploaded=true
+    if Dir[CRM_PATH + '/*.xlsm'].length == 1
+      @download_path=""
+    end
     render :index
   end
 
@@ -573,14 +569,15 @@ class CrmController < ApplicationController
   def download
     #pull the database data into an excel
     #pulls and downloads the first .xlsm file from the /uploads folder
-    if @download_path!=""
-      puts `python bin/recreateExcel.py "#{@download_path}" "public/uploads/data/xl/sharedStrings.xml" "public/uploads/data/xl/worksheets/sheet2.xml"`
-      name = @download_path.gsub("new_", "")
-      File.rename @download_path, name
+    download_path=getUploadedFileName
+    if download_path!=""
+      puts `python bin/recreateExcel.py "#{download_path}" "public/uploads/data/xl/sharedStrings.xml" "public/uploads/data/xl/worksheets/sheet2.xml"`
+      name = download_path.gsub("new_", "")
+      File.rename download_path, name
       file = File.open(name, "rb")
       contents = file.read
       file.close
-      File.rename name, @download_path
+      File.rename name, download_path
       send_data(contents, :filename =>File.basename( name))
     else
       redirect_to crm_index_path, notice: "Please upload a file"
