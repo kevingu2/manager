@@ -25,6 +25,11 @@
 #username:hover{
     background-color: inherit;
 }
+
+.nav-notifications:hover{
+    background-color: #e7e7e7 !important;
+}
+
 #username{
     pointer-events: none;
     cursor: default;
