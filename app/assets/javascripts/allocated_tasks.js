@@ -18,3 +18,14 @@ function deleteOptManager (id, nameOfRowCount, index){
     xmlHttp.open("delete", "http://localhost:3000/allocated_tasks/deleteOpportunity?id="+id , true );
     xmlHttp.send(null);
 }
+
+function swap(targetId){
+    if (document.getElementById(targetId)){
+        target = document.getElementById(targetId);
+        if (target.style.display == "none"){
+            target.style.display = "";
+        } else{
+            target.style.display = "none";
+        }
+    }
+}

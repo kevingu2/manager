@@ -13,6 +13,8 @@ $(function(){
 });
 
 function assign(oppty_id, user_id){
+    console.log("Assign");
+    console.log("Oppty_id: "+oppty_id+"   user_id: "+oppty_id);
     var params = "{'oppty_id':"+oppty_id + ",'user_id':"+user_id+"}";
     params=params.replace(/'/g, '"');
     var xmlHttp = new XMLHttpRequest();
@@ -34,6 +36,8 @@ function assign(oppty_id, user_id){
 }
 
 function unassign(oppty_id, user_id){
+    console.log("Unassign");
+    console.log("Oppty_id: "+oppty_id+"   user_id: "+oppty_id);
     var params = "{'oppty_id':"+oppty_id + ",'user_id':"+user_id+"}";
     params=params.replace(/'/g, '"');
     var xmlHttp = new XMLHttpRequest();
