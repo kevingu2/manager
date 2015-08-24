@@ -51,7 +51,7 @@
                   </label>
                 </td>
 
-                <td class="col-md-3">
+                <td class="col-md-2">
                     <div>
                       <select class="selector col-md-10" id="invalidDiv" name="invalidDiv">
                         <option id="allInvalidFields" value="all">all</option>
@@ -108,7 +108,7 @@
                     Sort By:
                   </label>
                 </td>
-                  <td class="col-md-3">
+                  <td class="col-md-2">
                     <div>
                       <select class="selector col-md-10" id="sorting" name="sorting">
                         <option id="opt1" value="none">none</option>
@@ -125,6 +125,7 @@
                       </td>
                     </div>  
                   </td>
+                  <td class="col-md-1"></td>
             </tr>
           </table>
       </div>        
@@ -481,19 +482,19 @@
 
       if (window.location.href.indexOf("invalid")) {
         if (window.location.href.indexOf("rfpDate") > -1)
-          document.getElementById("rfpDateField").checked = true;
+          document.getElementById("rfpDateField").selected = true;
         else if (window.location.href.indexOf("leadEstim") > -1)
-          document.getElementById("leadEstimField").checked = true;
+          document.getElementById("leadEstimField").selected = true;
         else if (window.location.href.indexOf("technicalLead") > -1)
-          document.getElementById("technicalLeadField").checked = true;
+          document.getElementById("technicalLeadField").selected = true;
         else if (window.location.href.indexOf("slDir") > -1)
-          document.getElementById("slDirField").checked = true;
+          document.getElementById("slDirField").selected = true;
         else if (window.location.href.indexOf("slArch") > -1)
-          document.getElementById("slArchField").checked = true;
+          document.getElementById("slArchField").selected = true;
         else if (window.location.href.indexOf("sllOrg") > -1)
-          document.getElementById("sllOrgField").checked = true;
+          document.getElementById("sllOrgField").selected = true;
         else
-          document.getElementById("allInvalidFields").checked = true;
+          document.getElementById("allInvalidFields").selected = true;
       }
     }
 

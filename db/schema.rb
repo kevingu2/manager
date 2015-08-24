@@ -21,6 +21,11 @@ ActiveRecord::Schema.define(version: 20150821202337) do
     t.datetime "updated_at"
   end
 
+  create_table "browses", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "histories", force: true do |t|
     t.string   "opptyId"
     t.string   "opptyName"
@@ -271,7 +276,7 @@ ActiveRecord::Schema.define(version: 20150821202337) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "status"
+    t.integer  "status",     default: 2
     t.boolean  "changeRFP"
   end
 
