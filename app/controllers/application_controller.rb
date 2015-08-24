@@ -9,10 +9,16 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :getUploadedFileName
   CRM_PATH = File.join(Rails.root, "public", "uploads")
+
+  
   
   #depending on user's role, they can access/update certain information
   protected
   def authorize
+    #iterate through all of the user's opportunities
+    @notifications = Notification.all
+    #.find_by(user_id: session[:user_id])
+
     unless User.find_by(id: session[:user_id])
       redirect_to sessions_new_path, notice: "Please log in"
     end
@@ -32,7 +38,7 @@ class ApplicationController < ActionController::Base
 
   def notify 
       #iterate through all of the user's opportunities
-      @notifications = Notification.find_by(id: session[:user_id])
+      @notifications = Notification.find_by(user_id: session[:user_id])
   end 
 
   def getUploadedFileName

@@ -51,7 +51,12 @@
             <ul class="dropdown-menu" style="position: absolute !important; top: 49px !important; right: -25px !important; min-width: 300px !important;">
               <% if @notifications != nil %>
                 <% @notifications.each do |o| %>
-                  <li class="notification-feed"><a href="#"><b><%=@notifications.title%></b><%=@notifications.message%></a></li>
+                  <li class="notification-feed" style="padding-bottom: 15px !important;">
+                    <a href="#">
+                      <p class="notify-title"><b><%=o.title%></b> <a class="notify-creation-date" style="float: right;"><%=o.created_at.to_date%></a><p>
+                      <p><%=o.message%></p>
+                    </a>
+                  </li>
                 <%end%>
               <%else%>
                   <li style="text-align: center; padding-left: 10px !important;">No Notifications</li>  
@@ -69,6 +74,23 @@
 <style type="text/css">
   .nav-<%=controller.controller_name%> {
     background-color: #e7e7e7;
+  }
+
+  .notification-feed {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .notify-creation-date {
+    color: black;
+  }
+
+  .notify-title {
+    color: #005DA0;
+  }
+
+  .notification-feed:hover {
+    background-color: #e7e7e7 !important;
   }
 </style>
 
