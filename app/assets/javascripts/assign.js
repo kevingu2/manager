@@ -14,7 +14,7 @@ $(function(){
 
 function assign(oppty_id, user_id){
     console.log("Assign");
-    console.log("Oppty_id: "+oppty_id+"   user_id: "+oppty_id);
+    console.log("Oppty_id: "+oppty_id+"   user_id: "+user_id);
     var params = "{'oppty_id':"+oppty_id + ",'user_id':"+user_id+"}";
     params=params.replace(/'/g, '"');
     var xmlHttp = new XMLHttpRequest();
@@ -37,7 +37,7 @@ function assign(oppty_id, user_id){
 
 function unassign(oppty_id, user_id){
     console.log("Unassign");
-    console.log("Oppty_id: "+oppty_id+"   user_id: "+oppty_id);
+    console.log("Oppty_id: "+oppty_id+"   user_id: "+user_id);
     var params = "{'oppty_id':"+oppty_id + ",'user_id':"+user_id+"}";
     params=params.replace(/'/g, '"');
     var xmlHttp = new XMLHttpRequest();
@@ -69,27 +69,34 @@ function search_not_assigned(oppty_id){
                 outer_not_assigned.removeChild(outer_not_assigned.firstChild);
             }
             for(var key in user_data){
-                    var user_div = document.createElement('div');
-                    user_div.setAttribute('class', 'col-md-12 not-assigned-row');
-                    user_div.setAttribute('id', user_data[key].id);
-                    var name_div=document.createElement('div');
-                    name_div.setAttribute('class', 'col-md-6 row-item');
-                    user_div.appendChild(name_div);
-                    var name_p=document.createElement('p');
-                    name_p.setAttribute('class', 'name');
-                    name_p.innerHTML=user_data[key].name +" ("+user_data[key].role+")";
-                    name_div.appendChild(name_p);
-                    var button_div=document.createElement('div');
-                    button_div.setAttribute('class', 'col-md-6 row-item');
-                    user_div.appendChild(button_div);
-                    var img=document.createElement('img');
-                    img.setAttribute('class', 'plus');
-                    img.onclick=function(){assign(oppty_id, user_data[key].id)};
-                    img.src='/assets/plus_btn.png';
-                    img.alt='+';
-                    img.border='0';
-                    button_div.appendChild(img);
-                    outer_not_assigned.appendChild(user_div);
+                var user_div = document.createElement('div');
+                user_div.setAttribute('class', 'col-md-12 not-assigned-row');
+                user_div.setAttribute('id', user_data[key].id);
+                var name_div=document.createElement('div');
+                name_div.setAttribute('class', 'col-md-6 row-item');
+                user_div.appendChild(name_div);
+                var name_p=document.createElement('p');
+                name_p.setAttribute('class', 'name');
+                name_p.innerHTML=user_data[key].name +" ("+user_data[key].role+")";
+                name_div.appendChild(name_p);
+                var button_div=document.createElement('div');
+                button_div.setAttribute('class', 'col-md-6 row-item');
+                user_div.appendChild(button_div);
+                var img=document.createElement('img');
+                img.setAttribute('class', 'plus');
+                img.onclick=(function(){
+                    var current_id=user_data[key].id;
+                    return function() {
+                        assign(oppty_id,current_id);
+                    }
+                })();
+                console.log("onclick");
+                console.log(img.onclick);
+                img.src='/assets/plus_btn.png';
+                img.alt='+';
+                img.border='0';
+                button_div.appendChild(img);
+                outer_not_assigned.appendChild(user_div);
             }
         }
     }
@@ -126,7 +133,12 @@ function search_assigned(oppty_id){
                 user_div.appendChild(button_div);
                 var img=document.createElement('img');
                 img.setAttribute('class', 'redx');
-                img.onclick=function(){unassign(oppty_id, user_data[key].id)};
+                img.onclick=(function(){
+                    var current_id=user_data[key].id;
+                    return function() {
+                        unassign(oppty_id,current_id);
+                    }
+                })();
                 img.src='/assets/redx.png';
                 img.alt='+';
                 img.border='0';
