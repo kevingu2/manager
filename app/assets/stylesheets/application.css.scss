@@ -13,6 +13,10 @@
  *= require_tree .
  *= require_self
  */
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
 [data-notify="title"] { 
 	font-weight: bold;
 }
@@ -23,4 +27,9 @@
 #username{
     pointer-events: none;
     cursor: default;
+}
+
+.jumbotron {
+	padding-left:0px !important;
+	padding-right:0px !important;
 }

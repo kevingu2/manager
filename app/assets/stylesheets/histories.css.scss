@@ -7,6 +7,13 @@
 	background-color: #8E8E8E !important;
 }
 
+.jumbotron {
+	padding-top: 0px !important;
+	margin-right: 50px !important;
+	margin-left: 50px !important;
+	padding-bottom: 65px !important;
+}
+
 .selector-button {
 	height: 20px !important;
 	float: right;
@@ -21,4 +28,53 @@
 
 .control-label-button {
 	float: left !important;
+}
+
+.pagination {
+	margin-right: 10px !important;
+	background-color: transparent !important;
+	cursor: default;
+	height: 22px;
+	a, span, em {
+		padding: 0.2em 0.5em;
+		display: block;
+		float: left;
+		margin-right: 1px;
+		background-color: white;
+		padding-bottom: 0.5em;
+	}
+	.disabled {
+		display: none;
+	}
+	.current {
+		font-style: normal;
+		font-weight: bold;
+		background: #2e6ab1;
+		color: white;
+		border: 1px solid #2e6ab1;
+	}
+	a {
+		text-decoration: none;
+		border: 1px solid #9aafe5;
+		&:hover, &:focus {
+			background-color: white !important;
+			padding-bottom: 0.2em;
+		}
+		&:visited {
+			color: #663366 !important;
+		}
+	}
+	.page-info {
+		background: #2e6ab1;
+		color: white;
+		padding: 0.4em 0.6em;
+		width: 22em;
+		margin-bottom: 0.3em;
+		text-align: center;
+		b {
+			color: #000033;
+			background: #2e6ab1 + 60;
+			padding: 0.1em 0.25em;
+		}
+	}
 }
