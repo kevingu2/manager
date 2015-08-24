@@ -7,7 +7,7 @@
           <tr style="font-size:24px;">
             <td class="col-md-1"></td>
             <!-- serach field holds the value that is searched -->
-            <td class="col-md-10" style="padding-top: 15px !important;">
+            <td class="col-md-10" style="padding-top: 15px !important; padding-bottom:30px !important;">
               <%= form_tag(histories_path, :method => "get", id: "search-form" ) do %>
                 <%= text_field_tag :search, params[:search], placeholder: "Search" %>
                 <input id="search-button" class="btn-search" style="width: 4% !important;" type="image" src="/assets/search.png" alt="Submit_tag"> 
@@ -17,55 +17,33 @@
           </tr>
         </table>
         <!-- Radio Buttons in History page to limit the search to opportunities within 30, 60, or 90 days -->
-        <div class="form">
-          <table>
+          <table class="form col-md-12">
             <tr>
-              <div class="col-md-10">
+              <td class="col-md-1"></td>
                 <td class="col-md-2">
-                  <label class="black-text field-label" style="padding-left: 101px;">
+                  <label class="black-text field-label" style="padding-left:7px !important;">
                     Invalid Field:
                   </label>
                 </td>
-
                 <td class="col-md-3">
-                  <div>
-                    <div class="toggle-btn radio black-text" id="invalidDiv" name="invalidDiv">
-                      <div class="row">
-                        <div class="col-md-6" style="padding-right:10px !important;">
-                          <input id="allInvalidFields" name="invalid" type="radio" value="all" checked="true">All
-                          <br>
-
-                          <input id="rfpDateField" name="invalid" type="radio" value="rfpDate">RFP Date
-                          <br>
-                    
-                          <input id="leadEstimField" name="invalid" type="radio" value="leadEstim">Lead Estimator
-                          <br>
-                           
-                          <input id="technicalLeadField" name="invalid" type="radio" value="technicalLead">Technical Lead
-                          <br>
-                        </div>
-                        <div class="col-md-6" style="padding-right:10px !important;">
-                          <input id="slDirField" name="invalid" type="radio" value="slDir">Service Line Director
-                          <br>
-
-                          <input id="slArchField" name="invalid" type="radio" value="slArch">Solution Architect
-                          <br>
-
-                          <input id="sllOrgField" name="invalid" type="radio" value="sllOrg">Service Line Lead Organization
-                          <br>
-                        </div>
-                      </div>
-                    </div>
-                    <td>
-                      <a href="#" name="invalid-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
-                    </td>
-                  </div>
-                </td>
-              </div>
+                    <div>
+                      <select class="selector col-md-10" id="invalidDiv" name="invalidDiv">
+                        <option id="allInvalidFields" value="all">all</option>
+                        <option id="rfpDateField" value="rfpDate">RFP Date</option>
+                        <option id="leadEstimField" value="leadEstim">Lead Estimator</option>
+                        <option id="technicalLeadField" value="technicalLead">Technical Lead</option>
+                        <option id="slDirField" value="slDir">Service Line Director</option>
+                        <option id="slArchField" value="slArch">Solution Architect</option>
+                        <option id="sllOrgField" value="sllOrg">Service Line Lead Organization</option>
+                      </select>
+                      <td>
+                        <a href="#" name="invalid-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
+                      </td>
+                    </div>  
+                  </td>
 
               <!-- drop down menu in History Page to sort the opportunities by a specific field -->
-              <div class="col-md-2">
-                <td class="col-md-1">
+                <td class="col-md-2">
                   <label class="black-text sort-dropdown-label">
                     Sort By:
                   </label>
@@ -86,11 +64,9 @@
                     <a href="#" name="sort-btn" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
                   </div>  
                 </td>
-              </div>
               <td class="col-md-1"></td>
             </tr>
           </table>
-        </div>
       </div>    
       <br>
     </div>
@@ -208,9 +184,7 @@
 
 
     $(document).on("click", "a[name='invalid-btn']", function (e) {
-      var radioButtons = $("#invalidDiv input:radio[name='invalid']");
-      var selectedIndex = radioButtons.index(radioButtons.filter(':checked'));
-      select = document.getElementsByName('invalid')[selectedIndex].value;
+      select = document.getElementById('invalidDiv').value;
       url = window.location.href;
       if (window.location.href.indexOf('?') > -1) {
         urlSplit = url.split('?');
@@ -328,7 +302,7 @@
 
         if (newUrl.substring(newUrl.length-1) == '&')
           newUrl = newUrl.substring(0, newUrl.length-1);
-        
+
         window.location = newUrl + "?sort=" + select;
       }
       else { 
@@ -364,19 +338,19 @@
 
       if (window.location.href.indexOf("invalid")) {
         if (window.location.href.indexOf("rfpDate") > -1)
-          document.getElementById("rfpDateField").checked = true;
+          document.getElementById("rfpDateField").selected = true;
         else if (window.location.href.indexOf("leadEstim") > -1)
-          document.getElementById("leadEstimField").checked = true;
+          document.getElementById("leadEstimField").selected = true;
         else if (window.location.href.indexOf("technicalLead") > -1)
-          document.getElementById("technicalLeadField").checked = true;
+          document.getElementById("technicalLeadField").selected = true;
         else if (window.location.href.indexOf("slDir") > -1)
-          document.getElementById("slDirField").checked = true;
+          document.getElementById("slDirField").selected = true;
         else if (window.location.href.indexOf("slArch") > -1)
-          document.getElementById("slArchField").checked = true;
+          document.getElementById("slArchField").selected = true;
         else if (window.location.href.indexOf("sllOrg") > -1)
-          document.getElementById("sllOrgField").checked = true;
+          document.getElementById("sllOrgField").selected = true;
         else
-          document.getElementById("allInvalidFields").checked = true;
+          document.getElementById("allInvalidFields").selected = true;
       }
     }
 

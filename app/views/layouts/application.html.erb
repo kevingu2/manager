@@ -8,7 +8,6 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <meta name="description" content="home">
   <%= favicon_link_tag '/favicon.ico' %>
 
@@ -17,8 +16,8 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
   <%= javascript_include_tag('bootstrap-notify.min.js') %>
   <%= javascript_include_tag('jquery.growl.js') %>
@@ -26,7 +25,7 @@
 <body class='<%=controller.controller_name%>'>
   <!-- Static navbar -->
   <%if session[:user_id] %>
-  <nav class="navbar navbar-default navbar-static-top  ">
+  <nav class="navbar navbar-default navbar-static-top" style="max-height: 50px !important;">
     <div class="container-fluid">
       <div id="navbar" class="navbar-collapse collapse">
         <img class="nav-logo" src="/assets/saic-logo-social-small-grey.png" height="50" width="108">
@@ -47,8 +46,8 @@
           <li id="username"><a>Welcome <%=session[:username] %></a></li>
           <li class="tab nav-notifications">
             <div id="accordion">
-              <a href='javascript:;'><img src="/assets/notif-bell-2.png" name="notificationIcon" height="30" width="30" style="padding-bottom: 5px;"></a>
-              <div class='content'>  SOME CONTENT HERE </div>
+              <a href="javascript:;"><img src="/assets/notif-bell-2.png" name="notificationIcon" height="30" width="30" style="padding-bottom: 3px;"></a>
+              <div class="content">  SOME CONTENT HERE </div>
             </div>  
           </li>
           <li><a href=<%=sessions_destroy_path %>>Logout</a><li>
@@ -70,7 +69,8 @@
 <script>
   $(function() {
     $( "#accordion" ).accordion({
-      collapsible: true
+      collapsible: true,
+      active: false
     });
   });
 
@@ -95,17 +95,9 @@
   createClass('html body nav div #navbar ul li  #accordion a#ui-id-1.ui-accordion-header.ui-state-default.ui-accordion-icons.ui-corner-all',"padding-left: .5em !important;");
   /* notification icon spacing */
   createClass('html body nav div #navbar ul li  #accordion a#ui-id-1.ui-accordion-header.ui-state-default.ui-accordion-icons.ui-accordion-header-active.ui-state-active.ui-corner-top',"padding-left: .5em !important;");
+  /* notification icon background */
+  createClass('html body nav div #navbar ul li  #accordion a#ui-id-1.ui-accordion-header.ui-state-default.ui-corner-all.ui-accordion-icons',"background-color: #f7f7f7 !important; border: 0px solid black !important;  background-image: none !important;");
 </script>
 
 </body>
 </html>
-<!--
-  <div class="hider">
-                <img src="/assets/notif-bell-2.png" name="notificationIcon" height="30" width="30" style="padding-bottom: 5px; margin-top: 15px;">
-
-                <ul data-role="listview">
-                  <li>I'm the collapsible set content.</li>
-                  <li>I should roll over the data beneath me.</li>
-                </ul>
-              </div> 
-  --> 
