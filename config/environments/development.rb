@@ -40,7 +40,7 @@ Rails.application.configure do
   config.assets.precompile += %w( light.js)
   config.assets.precompile += %w( chart.js)
   config.assets.precompile += %w( dataloader.min.js)
-  config.assets.precompile +=   %w( bootstrap-notify.min.js)
+  config.assets.precompile += %w( bootstrap-notify.min.js)
   config.assets.precompile += %w( jquery.growl.js)
   config.assets.precompile += %w( Sortable.js)
   config.assets.precompile += %w( updateStatus.js)
