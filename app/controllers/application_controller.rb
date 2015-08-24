@@ -63,6 +63,11 @@ class ApplicationController < ActionController::Base
           FileUtils.rm(item)
         end
       end
+    elsif Dir[CRM_PATH+ '/data/*'].length==0
+      Dir[CRM_PATH + '/*.xlsm'].each do |item|
+        FileUtils.rm(item)
+      end
     end
+    puts "data length: "+Dir[CRM_PATH+ '/data'].length.to_s
   end
 end
