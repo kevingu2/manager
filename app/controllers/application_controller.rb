@@ -25,11 +25,17 @@ class ApplicationController < ActionController::Base
     writer=['tasks']
     manager=['allocated_tasks', 'invalid_data', 'upload_crm', 'statistics']
     if session[:role]=="Writer"
+      #collect all of a user's notifications into an instance variable
+      @notifications = Notification.where(user_id: session[:user_id])
+
       if manager.include? params[:controller]
         redirect_to invalid_entry_index_path, notice: "No Access"
       end
     end
     if session[:role]=="Manager"
+      #collect all of the notifications into an instance variable for manager
+      @notifications = Notification.all
+
       if writer.include? params[:controller]
         redirect_to invalid_entry_index_path, notice: "No Access"
       end

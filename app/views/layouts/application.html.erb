@@ -49,7 +49,7 @@
               <img src="/assets/notif-bell-2.png" name="notificationIcon" height="30" width="30" style="padding-bottom: 3px;">
             </a> 
             <ul class="dropdown-menu" style="position: absolute !important; top: 49px !important; right: -25px !important; min-width: 300px !important;">
-              <% if @notifications != nil %>
+              <% if @notifications.size > 0 %>
                 <% @notifications.each do |o| %>
                   <li class="notification-feed" style="padding-bottom: 15px !important;">
                     <a href="#">
