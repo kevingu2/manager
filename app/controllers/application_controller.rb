@@ -15,9 +15,8 @@ class ApplicationController < ActionController::Base
   #depending on user's role, they can access/update certain information
   protected
   def authorize
-    #collect all of a user's notifications into an instance variable
-    @notifications = Notification.all
-    #.find_by(user_id: session[:user_id])
+    #get the count of new notifications for this user
+    @new_notif_count = User.find_by(id: session[:user_id]).new_notif_count
 
     unless User.find_by(id: session[:user_id])
       redirect_to sessions_new_path, notice: "Please log in"

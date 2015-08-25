@@ -45,9 +45,15 @@
         <ul class="nav navbar-nav navbar-right">
           <li id="username"><a>Welcome <%=session[:username] %></a></li>
           <li class="tab dropdown" style="max-height: 50px !important;">
-            <a href="#" class="dropdown-toggle nav-notifications" data-toggle="dropdown" style="max-height: 50px !important; padding-top: 10px !important;">
+            <a href="#" class="dropdown-toggle nav-notifications" data-toggle="dropdown" style="max-height: 50px !important; padding-top: 10px !important;" 
+               onclick="resetNotifCount(<%=@new_notif_count %>)">
               <img src="/assets/notif-bell-2.png" name="notificationIcon" height="35" width="35" style="padding-bottom: 4px;">
-              <div id="circle"><!--<%=@notifications.size %>-->18</div>
+              <!-- red circle which displays the amount of new notifications for the current user -->
+              <%unless @new_notif_count < 1 %>
+                <div id="circle">
+                  <%=@new_notif_count %>
+                </div>
+              <%end%>  
             </a> 
             <ul class="dropdown-menu" style="position: absolute !important; top: 49px !important; right: -25px !important; min-width: 300px !important;">
               <% if @notifications.size > 0 %>
@@ -109,6 +115,10 @@
           (style.styleSheet || style.sheet).addRule(name, rules);
       else
           style.sheet.insertRule(name+"{"+rules+"}",0);
+  }
+
+  function resetNotifCount(notif_count) {
+    
   }
 </script>
 

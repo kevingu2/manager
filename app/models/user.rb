@@ -41,5 +41,6 @@ class User < ActiveRecord::Base
 
   def add_notification(oppty_id, title, message)
     notification.build(oppty_id:oppty_id, title:title, message:message)
+    User.find(params[:id]).increment!(:new_notif_count,1)
   end
 end
