@@ -84,8 +84,19 @@ class CrmController < ApplicationController
     if changedRFP.any?
       changedRFP.each do |oppty_id|
         oppty=Oppty.find(oppty_id)
+        #create notification for the manager
+        managers=User.where(role:MANAGER)
+        manager.each do|m|
+          notification=m.add_notification(oppty_id, CHANGEDRFP,oppty.opptyName+" RFP date has changed");
+          if notification.save
+            puts "notification saved: "+notification.user_id.to_s
+          else
+            puts "notification not saved"
+          end
+        end
         ups=UserOppty.where(oppty_id:oppty_id).includes(:user)
         ups.each do |up|
+          #create notification for the users working on the opppty
           notification=up.user.add_notification(oppty_id, CHANGEDRFP,oppty.opptyName+" RFP date has changed");
           if notification.save
             puts "notification saved: "+notification.user_id.to_s
@@ -565,9 +576,6 @@ class CrmController < ApplicationController
     # end
     @deleted = (opptyIds - uploadedIds).length.to_s
     @uploaded=true
-    if Dir[CRM_PATH + '/*.xlsm'].length == 1
-      @download_path=""
-    end
     render :index
   end
 

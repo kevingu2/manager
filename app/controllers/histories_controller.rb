@@ -97,31 +97,6 @@ class HistoriesController < ApplicationController
   def edit
   end
 
-  # POST /histories
-  # POST /histories.json
-  def create
-    oppty=Oppty.find(params[:oppty_id])
-    puts "Add to History"
-    puts "*"*30
-    UserOppty.where(oppty_id:oppty.id).each do|uo|
-      puts "Add User "+uo.user_id.to_s
-      user=User.find(uo.user_id)
-      history=user.add_history(uo.user_id, oppty.id)
-        if history.save
-          puts "history saved: "+history.user_id.to_s
-          #format.html { redirect_to histories_path, notice: 'History was successfully created.' }
-          #format.json { render :show, status: :created, location: @history }
-        else
-          puts "history not saved"
-          #format.html { render :new }
-          #format.json { render json: @history.errors, status: :unprocessable_entity }
-        end
-    end
-    puts "*"*30
-    redirect_to histories_path, notice: 'History was successfully created.'
-    deleteOppty(oppty.id)
-  end
-
   def deleteOppty(oppty_id)
     puts "Delete Oppty: "+oppty_id.to_s
     oppty=Oppty.destroy(oppty_id)

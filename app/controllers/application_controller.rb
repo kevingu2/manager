@@ -38,6 +38,7 @@ class ApplicationController < ActionController::Base
 
   def notify 
       #iterate through all of the user's opportunities
+      puts "USER ID: " +session[:user_id].to_s
       @notifications = Notification.find_by(user_id: session[:user_id])
   end 
 
