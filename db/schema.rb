@@ -141,6 +141,7 @@ ActiveRecord::Schema.define(version: 20150825181543) do
     t.string   "message"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "status"
   end
 
   create_table "oppties", force: true do |t|
@@ -272,7 +273,6 @@ ActiveRecord::Schema.define(version: 20150825181543) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "status",     default: 2
-    t.boolean  "changeRFP"
   end
 
   add_index "user_oppties", ["oppty_id"], name: "index_user_oppties_on_oppty_id"
