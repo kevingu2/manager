@@ -45,11 +45,12 @@
         <ul class="nav navbar-nav navbar-right">
           <li id="username"><a>Welcome <%=session[:username] %></a></li>
           <li class="tab dropdown" style="max-height: 50px !important;">
-            <a href="#" class="dropdown-toggle nav-notifications" data-toggle="dropdown" style="max-height: 50px !important;">
-              <img src="/assets/notif-bell-2.png" name="notificationIcon" height="30" width="30" style="padding-bottom: 3px;">
+            <a href="#" class="dropdown-toggle nav-notifications" data-toggle="dropdown" style="max-height: 50px !important; padding-top: 10px !important;">
+              <img src="/assets/notif-bell-2.png" name="notificationIcon" height="35" width="35" style="padding-bottom: 4px;">
+              <div id="circle"><!--<%=@notifications.size %>-->18</div>
             </a> 
             <ul class="dropdown-menu" style="position: absolute !important; top: 49px !important; right: -25px !important; min-width: 300px !important;">
-              <% if @notifications != nil %>
+              <% if @notifications.size > 0 %>
                 <% @notifications.each do |o| %>
                   <li class="notification-feed" style="padding-bottom: 15px !important;">
                     <a href="#">
@@ -63,7 +64,7 @@
               <%end%>
             </ul>
           </li>
-          <li><a href=<%=sessions_destroy_path %>>Logout</a><li>
+          <li class="nav-logout"><a href=<%=sessions_destroy_path %>>Logout</a><li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>
@@ -90,6 +91,10 @@
   }
 
   .notification-feed:hover {
+    background-color: #e7e7e7 !important;
+  }
+
+  .nav-logout:hover {
     background-color: #e7e7e7 !important;
   }
 </style>

@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   #depending on user's role, they can access/update certain information
   protected
   def authorize
-    #iterate through all of the user's opportunities
+    #collect all of a user's notifications into an instance variable
     @notifications = Notification.all
     #.find_by(user_id: session[:user_id])
 
@@ -25,11 +25,17 @@ class ApplicationController < ActionController::Base
     writer=['tasks']
     manager=['allocated_tasks', 'invalid_data', 'upload_crm', 'statistics']
     if session[:role]=="Writer"
+      #collect all of a user's notifications into an instance variable
+      @notifications = Notification.where(user_id: session[:user_id])
+
       if manager.include? params[:controller]
         redirect_to invalid_entry_index_path, notice: "No Access"
       end
     end
     if session[:role]=="Manager"
+      #collect all of the notifications into an instance variable for manager
+      @notifications = Notification.all
+
       if writer.include? params[:controller]
         redirect_to invalid_entry_index_path, notice: "No Access"
       end
