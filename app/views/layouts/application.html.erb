@@ -46,7 +46,7 @@
           <li id="username"><a>Welcome <%=session[:username] %></a></li>
           <li class="tab dropdown" style="max-height: 50px !important;">
             <a href="#" class="dropdown-toggle nav-notifications" data-toggle="dropdown" style="max-height: 50px !important; padding-top: 10px !important;" 
-               onclick="resetNotifCount(<%=@new_notif_count %>)">
+               onclick="resetNotifCount(<%= session[:user_id]  %>,<%=@new_notif_count %>)">
               <img src="/assets/notif-bell-2.png" name="notificationIcon" height="35" width="35" style="padding-bottom: 4px;">
               <!-- red circle which displays the amount of new notifications for the current user -->
               <%unless @new_notif_count < 1 %>
@@ -117,8 +117,25 @@
           style.sheet.insertRule(name+"{"+rules+"}",0);
   }
 
-  function resetNotifCount(notif_count) {
-    
+  /* resets the red notification circle once the notification bell is clicked */
+  function resetNotifCount(user_id, notif_count) {
+    /* DEBUG MESSAGES
+    alert(user_id);
+    alert(notif_count);
+    */
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState == 4) {
+            if(xmlHttp.responseText==="OK"){
+                document.getElementById(circle).remove();
+            }
+        }
+    }
+
+    xmlHttp.open("Content-Type", "application/x-www-form-urlencoded");
+    xmlHttp.open("Connection", "close");
+    xmlHttp.open("delete", "http://localhost:3000/application/resetNewNotifCount?user_id="+user_id , true );
+    xmlHttp.send(null);
   }
 </script>
 
