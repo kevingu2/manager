@@ -63,7 +63,7 @@
               <%end%>
             </ul>
           </li>
-          <li><a href=<%=sessions_destroy_path %>>Logout</a><li>
+          <li class="nav-logout"><a href=<%=sessions_destroy_path %>>Logout</a><li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>
@@ -90,6 +90,10 @@
   }
 
   .notification-feed:hover {
+    background-color: #e7e7e7 !important;
+  }
+
+  .nav-logout:hover {
     background-color: #e7e7e7 !important;
   }
 </style>

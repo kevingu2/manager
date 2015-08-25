@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   #depending on user's role, they can access/update certain information
   protected
   def authorize
-    #iterate through all of the user's opportunities
+    #collect all of a user's notifications into an instance variable
     @notifications = Notification.all
     #.find_by(user_id: session[:user_id])
 
