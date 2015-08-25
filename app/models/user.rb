@@ -39,7 +39,6 @@ class User < ActiveRecord::Base
     uo
   end
 
-
   #status, 0 is unseen, 1 is seen
   def add_notification(oppty_id, title, message, status)
     notification.build(oppty_id:oppty_id, title:title, message:message, status:status)
