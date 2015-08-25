@@ -40,3 +40,18 @@
 	padding-right:0px !important;
 }
 
+#circle {
+	background-color: red;
+    width: 20px;
+    height: 20px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px; 
+    position: absolute;
+    top: 26px;
+    right: 11px;
+    color: white;
+    text-align: center;
+    font-size: 75%;
+}
+
