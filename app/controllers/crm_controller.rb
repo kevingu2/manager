@@ -85,9 +85,9 @@ class CrmController < ApplicationController
       changedRFP.each do |oppty_id|
         oppty=Oppty.find(oppty_id)
         #create notification for the manager
-        managers=User.where(role:MANAGER)
-        manager.each do|m|
-          notification=m.add_notification(oppty_id, CHANGEDRFP,oppty.opptyName+" RFP date has changed");
+        managers=User.where(role:MANAGER_ROLE)
+        managers.each do|m|
+          notification=m.add_notification(oppty_id, CHANGEDRFP,oppty.opptyName+" RFP date has changed", UNSEEN_NOTIFICATION);
           if notification.save
             puts "notification saved: "+notification.user_id.to_s
           else
@@ -97,7 +97,7 @@ class CrmController < ApplicationController
         ups=UserOppty.where(oppty_id:oppty_id).includes(:user)
         ups.each do |up|
           #create notification for the users working on the opppty
-          notification=up.user.add_notification(oppty_id, CHANGEDRFP,oppty.opptyName+" RFP date has changed");
+          notification=up.user.add_notification(oppty_id, CHANGEDRFP,oppty.opptyName+" RFP date has changed",UNSEEN_NOTIFICATION);
           if notification.save
             puts "notification saved: "+notification.user_id.to_s
           else

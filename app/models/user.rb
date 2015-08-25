@@ -11,10 +11,10 @@ class User < ActiveRecord::Base
   has_many :oppty, through: :notification
 
 
-  def add_oppty(user_id, oppty_id, status, changeRFP)
+  def add_oppty(user_id, oppty_id, status)
     uo=nil
     if !UserOppty.where(["user_id=? and oppty_id=?", user_id, oppty_id]).present?
-      uo=user_oppty.build(oppty_id: oppty_id, status: status, changeRFP:changeRFP)
+      uo=user_oppty.build(oppty_id: oppty_id, status: status)
     end
     uo
   end
@@ -39,7 +39,9 @@ class User < ActiveRecord::Base
     uo
   end
 
-  def add_notification(oppty_id, title, message)
-    notification.build(oppty_id:oppty_id, title:title, message:message)
+
+  #status, 0 is unseen, 1 is seen
+  def add_notification(oppty_id, title, message, status)
+    notification.build(oppty_id:oppty_id, title:title, message:message, status:status)
   end
 end

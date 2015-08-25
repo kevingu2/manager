@@ -11,6 +11,4 @@ function deleteOpt (id){
     xmlHttp.open("Connection", "close");
     xmlHttp.open( "delete", "/tasks/deleteOpportunity?id="+id , true );
     xmlHttp.send(null);
-
-
 }

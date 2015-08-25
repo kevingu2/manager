@@ -4,49 +4,49 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
-  before_action :authorize
-  before_action :deleteUnUploadedFile
+  before_action :authorize, :setNotification, :deleteUnUploadedFile
   protect_from_forgery with: :exception
   helper_method :getUploadedFileName
+  skip_before_action :verify_authenticity_token, only: [:resetNotification]
   CRM_PATH = File.join(Rails.root, "public", "uploads")
 
-  
-  
+
+  def resetNotification
+    json_body=JSON.parse(request.body.read)
+    user_id= json_body.fetch('user_id')
+    num_not=Notification.where(user_id: user_id, status:UNSEEN_NOTIFICATION)
+    num_not.each do|n|
+      n.update_attribute(:status, SEEN_NOTIFICATION)
+    end
+    respond_to do |format|
+      format.json { render json: {msg:"OK"}}
+    end
+  end
   #depending on user's role, they can access/update certain information
   protected
   def authorize
-    #collect all of a user's notifications into an instance variable
-    @notifications = Notification.all
-    #.find_by(user_id: session[:user_id])
-
     unless User.find_by(id: session[:user_id])
       redirect_to sessions_new_path, notice: "Please log in"
     end
     writer=['tasks']
     manager=['allocated_tasks', 'invalid_data', 'upload_crm', 'statistics']
     if session[:role]=="Writer"
-      #collect all of a user's notifications into an instance variable
-      @notifications = Notification.where(user_id: session[:user_id])
-
       if manager.include? params[:controller]
         redirect_to invalid_entry_index_path, notice: "No Access"
       end
     end
     if session[:role]=="Manager"
-      #collect all of the notifications into an instance variable for manager
-      @notifications = Notification.all
-
       if writer.include? params[:controller]
         redirect_to invalid_entry_index_path, notice: "No Access"
       end
     end
   end
 
-  def notify 
+  def setNotification
       #iterate through all of the user's opportunities
-      puts "USER ID: " +session[:user_id].to_s
-      @notifications = Notification.find_by(user_id: session[:user_id])
-  end 
+      @notifications = Notification.where(user_id: session[:user_id])
+      @num_unseen_notification= Notification.where(user_id: session[:user_id], status:UNSEEN_NOTIFICATION).size
+  end
 
   def getUploadedFileName
     @download_path=""

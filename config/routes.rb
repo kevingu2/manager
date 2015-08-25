@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   resources :user_histories
 
+  post 'application/resetNotification'
+
   get 'assign/index'
 
   post 'assign/assignUser'
@@ -22,7 +24,9 @@ Rails.application.routes.draw do
   get 'statistics/index'
 
   get 'crm/index'
+
   post 'crm/upload'
+
   post 'crm/calculateChanges'
 
   post 'crm/updateCRM'
