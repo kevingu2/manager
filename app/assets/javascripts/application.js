@@ -31,10 +31,6 @@ function resetNotification(user_id, path){
     xmlHttp.send(params);
 }
 
-window.onload = function() {
-  createScroll();
-};
-
 $(function createScroll (){
     $('#notification-scroll').slimScroll({
         height: '330px',
