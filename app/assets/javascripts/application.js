@@ -33,3 +33,14 @@ function resetNotification(user_id, path){
     xmlHttp.open( "Post", path, true );
     xmlHttp.send(params);
 }
+
+window.onload = function() {
+  createScroll();
+};
+
+$(function createScroll (){
+    $('#notification-scroll').slimScroll({
+        height: '330px',
+        width: '300px'
+    });
+});

@@ -54,20 +54,22 @@
                 </div>
               <%end%> 
             </a> 
-            <ul class="dropdown-menu" style="position: absolute !important; top: 49px !important; right: -25px !important; min-width: 300px !important;">
-              <% if @notifications.size > 0 %>
-                <% @notifications.each do |o| %>
-                  <li class="notification-feed" style="padding-bottom: 15px !important;">
-                    <a href="#">
-                      <p class="notify-title"><b><%=o.title%></b> <a class="notify-creation-date" style="float: right;"><%=o.created_at.to_date%></a><p>
-                      <p><%=o.message%></p>
-                    </a>
-                  </li>
+            <div class="dropdown-menu"  style="position: absolute !important; top: 49px !important; right: -25px !important; min-width: 300px !important;">
+              <ul id="notification-scroll" class="notification-scroll">
+                <% if @notifications.size > 0 %>
+                  <% @notifications.each do |o| %>
+                    <li class="notification-feed" style="padding-bottom: 15px !important;">
+                      <a href="#">
+                        <p class="notify-title"><b><%=o.title%></b> <a class="notify-creation-date" style="float: right;"><%=o.created_at.to_date%></a><p>
+                        <p><%=o.message%></p>
+                      </a>
+                    </li>
+                  <%end%>
+                <%else%>
+                    <li style="text-align: center; padding-left: 10px !important;">No Notifications</li>  
                 <%end%>
-              <%else%>
-                  <li style="text-align: center; padding-left: 10px !important;">No Notifications</li>  
-              <%end%>
-            </ul>
+              </ul>
+            </div>
           </li>
           <li class="nav-logout"><a href=<%=sessions_destroy_path %>>Logout</a><li>
         </ul>
@@ -104,18 +106,32 @@
   }
 </style>
 
-<script>
-  /* creates style rule programmatically after triangle logo exists */
-  function createClass(name,rules){
-      var style = document.createElement('style');
-      style.type = 'text/css';
-      document.getElementsByTagName('head')[0].appendChild(style);
-      if(!(style.sheet||{}).insertRule) 
-          (style.styleSheet || style.sheet).addRule(name, rules);
-      else
-          style.sheet.insertRule(name+"{"+rules+"}",0);
-  }
-</script>
+<%= javascript_include_tag('jquery.slimscroll.min.js') %>
 
+<script>
+  function resetNotification(user_id, path){
+  //javascript
+    console.log("reset Notification");
+    var notify_div=document.getElementById('circle');
+    notify_div.parentNode.removeChild(notify_div);
+    var params = "{'user_id':"+user_id+"}";
+    params=params.replace(/'/g, '"');
+
+    //AJAX request
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("Content-Type", "application/x-www-form-urlencoded");
+    xmlHttp.open("Content-length", params.length);
+    xmlHttp.open("Connection", "close");
+    xmlHttp.open( "Post", path, true );
+    xmlHttp.send(params);
+  }
+
+  $(function createScroll (){
+    $('#notification-scroll').slimScroll({
+        height: '330px',
+        width: '300px'
+    });
+  });
+</script>
 </body>
 </html>
