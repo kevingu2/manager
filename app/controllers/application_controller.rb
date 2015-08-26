@@ -82,6 +82,5 @@ class ApplicationController < ActionController::Base
         FileUtils.rm(item)
       end
     end
-    puts "data length: "+Dir[CRM_PATH+ '/data'].length.to_s
   end
 end

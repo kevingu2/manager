@@ -45,10 +45,14 @@
           <ul class="nav navbar-nav navbar-right">
             <li id="username"><a>Welcome <%=session[:username] %></a></li>
             <li class="tab dropdown" style="max-height: 50px !important;">
-              <a onclick="resetNotification(<%= session[:user_id]%>,'<%=application_resetNotification_url%>')" class="dropdown-toggle nav-notifications" data-toggle="dropdown" style="max-height: 50px !important; padding-top: 10px !important;">
+              <a onclick="resetNotification(<%= session[:user_id]%>,'<%=application_resetNotification_url%>')"
+                 class="dropdown-toggle nav-notifications" data-toggle="dropdown" style="max-height: 50px !important;
+                      padding-top: 10px !important;">
                 <img src="/assets/notif-bell-2.png" name="notificationIcon" height="35" width="35" style="padding-bottom: 4px;"
                 </img>
-                <div id="circle"><%=@num_unseen_notification %></div>
+                <%if @num_unseen_notification>0%>
+                    <div id="circle"><%=@num_unseen_notification %></div>
+                <%end%>
               </a>
               <ul class="dropdown-menu" style="position: absolute !important; top: 49px !important; right: -25px !important; min-width: 300px !important;">
                 <% if @notifications.size > 0 %>
@@ -100,18 +104,6 @@
     }
 </style>
 
-<script>
-    /* creates style rule programmatically after triangle logo exists */
-    function createClass(name,rules){
-        var style = document.createElement('style');
-        style.type = 'text/css';
-        document.getElementsByTagName('head')[0].appendChild(style);
-        if(!(style.sheet||{}).insertRule)
-            (style.styleSheet || style.sheet).addRule(name, rules);
-        else
-            style.sheet.insertRule(name+"{"+rules+"}",0);
-    }
-</script>
 
 </body>
 </html>

@@ -63,6 +63,8 @@ class CrmController < ApplicationController
         end
       end
     end
+
+    #updating oppty changes
     if changes.any?
       changes.each do |c|
         if History.find_by(opptyId:c) # if in history delete from history, add new one, move to history
@@ -74,6 +76,8 @@ class CrmController < ApplicationController
         end
       end
     end
+
+    #creating new oppty
     data.each do |opportunity|
       if !newIds.include? opportunity["OpptyID"] then next end # if id not supposed to be added, skip
       history= History.find_by(opptyId:opportunity["OpptyID"])
@@ -83,27 +87,28 @@ class CrmController < ApplicationController
       oppty=Oppty.new
       updateObject(oppty, opportunity)
     end
-    ids.each do |i|
-      oppty=Oppty.find_by_opptyId(i)
+
+    #moving the deleted oppty to history
+    ids.each do |id|
+      oppty=Oppty.find_by(["opptyId=?", id])
       managers=User.where(role:MANAGER_ROLE)
       managers.each do|m|
-        notification=m.add_notification(oppty.id, CHANGEDRFP,oppty.opptyName+" RFP date has changed", UNSEEN_NOTIFICATION );
+        puts m.name
+        notification=m.add_notification(oppty.id, MOVEDTOHISTORY,oppty.opptyName+" RFP date has changed", UNSEEN_NOTIFICATION );
         if notification.save
-          puts "notification saved: "+notification.user_id.to_s
-        else
-          puts "notification not saved"
+          puts "Manager notification saved"
         end
       end
+      ups=UserOppty.where(oppty_id:oppty.id).includes(:user)
       ups.each do |up|
+        puts up.user_id
         #create notification for the users working on the opppty
         notification=up.user.add_notification(oppty.id, MOVEDTOHISTORY,oppty.opptyName+" has been deleted",UNSEEN_NOTIFICATION);
         if notification.save
-          puts "notification saved: "+notification.user_id.to_s
-        else
-          puts "notification not saved"
+          puts "User notification Saved"
         end
       end
-      moveToHistory(i)
+      moveToHistory(oppty)
     end
     redirect_to crm_index_path, notice: "Successfully uploaded: "+newFileName
   end
@@ -217,8 +222,7 @@ class CrmController < ApplicationController
     object.save
   end
 
-  def moveToHistory(oppty_id)
-    oppty=Oppty.find_by(["opptyId=?", oppty_id])
+  def moveToHistory(oppty)
     if oppty.present?
       oppty_dict=oppty.attributes
       oppty_dict.delete('id')

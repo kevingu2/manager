@@ -14,11 +14,13 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require turbolinks
+//= require bootstrap-sprockets
 //= require_tree .
 
 function resetNotification(user_id, path){
     var notify_div=document.getElementById('circle');
-    notify_div.parentNode.removeChild(notify_div);
+    if(notify_div!=null)
+        notify_div.remove();
     var params = "{'user_id':"+user_id+"}";
     params=params.replace(/'/g, '"');
 
@@ -37,3 +39,13 @@ $(function createScroll (){
         width: '300px'
     });
 });
+/* creates style rule programmatically after triangle logo exists */
+function createClass(name,rules){
+    var style = document.createElement('style');
+    style.type = 'text/css';
+    document.getElementsByTagName('head')[0].appendChild(style);
+    if(!(style.sheet||{}).insertRule)
+        (style.styleSheet || style.sheet).addRule(name, rules);
+    else
+        style.sheet.insertRule(name+"{"+rules+"}",0);
+}
