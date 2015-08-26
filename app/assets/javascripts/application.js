@@ -14,11 +14,9 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require turbolinks
-//= require bootstrap-sprockets
 //= require_tree .
 
 function resetNotification(user_id, path){
-    console.log("reset Notification");
     var notify_div=document.getElementById('circle');
     notify_div.innerHTML=0;
     var params = "{'user_id':"+user_id+"}";

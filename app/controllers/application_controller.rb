@@ -46,6 +46,7 @@ class ApplicationController < ActionController::Base
       #iterate through all of the user's opportunities
       @notifications = Notification.where(user_id: session[:user_id])
       @num_unseen_notification= Notification.where(user_id: session[:user_id], status:UNSEEN_NOTIFICATION).size
+      puts "User ID: "+@num_unseen_notification.to_s
   end
 
   def getUploadedFileName
