@@ -44,26 +44,32 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li id="username"><a>Welcome <%=session[:username] %></a></li>
-          <li class="tab dropdown" style="max-height: 50px !important;">
+          <li class="tab dropdown" style="max-height: 50px !important;">               
             <a onclick="resetNotification(<%= session[:user_id]%>,'<%=application_resetNotification_url%>')" class="dropdown-toggle nav-notifications" data-toggle="dropdown" style="max-height: 50px !important; padding-top: 10px !important;">
-              <img src="/assets/notif-bell-2.png" name="notificationIcon" height="35" width="35" style="padding-bottom: 4px;"
-              </img>
-              <div id="circle"><%=@num_unseen_notification %></div>
+              <img src="/assets/notif-bell-2.png" name="notificationIcon" height="35" width="35" style="padding-bottom: 4px;"></img>
+              <!-- red circle which displays the amount of new notifications for the current user -->
+              <%unless @num_unseen_notification < 1 %>
+                <div id="circle">
+                  <%=@num_unseen_notification %> 
+                </div>
+              <%end%> 
             </a> 
-            <ul class="dropdown-menu" style="position: absolute !important; top: 49px !important; right: -25px !important; min-width: 300px !important;">
-              <% if @notifications.size > 0 %>
-                <% @notifications.each do |o| %>
-                  <li class="notification-feed" style="padding-bottom: 15px !important;">
-                    <a href="#">
-                      <p class="notify-title"><b><%=o.title%></b> <a class="notify-creation-date" style="float: right;"><%=o.created_at.to_date%></a><p>
-                      <p><%=o.message%></p>
-                    </a>
-                  </li>
+            <div class="dropdown-menu"  style="position: absolute !important; top: 49px !important; right: -25px !important; min-width: 300px !important;">
+              <ul id="notification-scroll" class="notification-scroll">
+                <% if @notifications.size > 0 %>
+                  <% @notifications.each do |o| %>
+                    <li class="notification-feed" style="padding-bottom: 15px !important;" onclick="sendFromNotification(<%= browse_index_path%>)">
+                      <a>
+                        <p class="notify-title"><b><%=o.title%></b> <a class="notify-creation-date" style="float: right;"><%=o.created_at.to_date%></a><p>
+                        <p><%=o.message%></p>
+                      </a>
+                    </li>
+                  <%end%>
+                <%else%>
+                    <li style="text-align: center; padding-left: 10px !important;">No Notifications</li>  
                 <%end%>
-              <%else%>
-                  <li style="text-align: center; padding-left: 10px !important;">No Notifications</li>  
-              <%end%>
-            </ul>
+              </ul>
+            </div>
           </li>
           <li class="nav-logout"><a href=<%=sessions_destroy_path %>>Logout</a><li>
         </ul>
@@ -100,22 +106,36 @@
   }
 </style>
 
+<%= javascript_include_tag('jquery.slimscroll.min.js') %>
+
 <script>
-  /* creates style rule programmatically after triangle logo exists */
-  function createClass(name,rules){
-      var style = document.createElement('style');
-      style.type = 'text/css';
-      document.getElementsByTagName('head')[0].appendChild(style);
-      if(!(style.sheet||{}).insertRule) 
-          (style.styleSheet || style.sheet).addRule(name, rules);
-      else
-          style.sheet.insertRule(name+"{"+rules+"}",0);
+  function resetNotification(user_id, path){
+  //javascript
+    console.log("reset Notification");
+    var notify_div=document.getElementById('circle');
+    notify_div.parentNode.removeChild(notify_div);
+    var params = "{'user_id':"+user_id+"}";
+    params=params.replace(/'/g, '"');
+
+    //AJAX request
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("Content-Type", "application/x-www-form-urlencoded");
+    xmlHttp.open("Content-length", params.length);
+    xmlHttp.open("Connection", "close");
+    xmlHttp.open( "Post", path, true );
+    xmlHttp.send(params);
   }
 
-  function resetNotifCount(notif_count) {
-    
+  function sendFromNotification(destination) {
+      //location.href = '../' + destination;
   }
+
+  $(function createScroll (){
+    $('#notification-scroll').slimScroll({
+        height: '330px',
+        width: '300px'
+    });
+  });
 </script>
-
 </body>
 </html>
