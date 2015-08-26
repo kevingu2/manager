@@ -28,9 +28,6 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
-    autoprefixer-rails (5.2.1.2)
-      execjs
-      json
     bcrypt (3.1.10)
     bcrypt (3.1.10-x86-mingw32)
     bootstrap-sass (3.2.0.2)
@@ -140,7 +137,6 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
-  autoprefixer-rails
   bcrypt (~> 3.1.7)
   bootstrap-sass (~> 3.2.0)
   coffee-rails (~> 4.0.0)
