@@ -6,36 +6,42 @@
 	<div class="col-md-6 column-wrapper">
 	  <div class="inner-column">
 		<h2 class="column-title">Upload</h2>
-		<form id="upload" method="post" action="checkDate" enctype="multipart/form-data">
-		    <input type="file" id="upl" name="upl" class="file-input"/>
-		    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+        <%if !@uploaded and !@oldOrNew.present?%>
+            <form id="upload" method="post" action="checkDate" enctype="multipart/form-data">
+                <input type="file" id="upl" name="upl" class="file-input"/>
+                <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                <button class="btn btn-lg btn-primary btn-right btn-padded" type="submit">Check Date
+                  <span class="glyphicon glyphicon-upload"></span></button>
+            </form>
+        <%end%>
+	  </div>
+      <%if @uploaded%>
+          <h3 class="filename"><%=@newFileName.gsub("new_", "").gsub("%20", " ")%></h3>
+          <br>
+          <h4 class="add">Number of Added: <%=@added%><h4/>
+          <h4 class="delete">Number of Deleted: <%=@deleted%><h4/>
+          <h4 class="update">Number of Updates: <%=@changes.length.to_s%><h4/>
+          <h4 class="equal">Number of Equal: <%=@equal%><h4/>
+          <form action ="updateCRM" method="post">
+            <input hidden=true type="string" name="old" value=<%= @oldFileName%>>
+            <input hidden=true type="string" name="new" value=<%= @newFileName%>>
+            <input hidden=true type="string" name="changes" value=<%= @changes.to_s.delete(' ')%>>
+            <input hidden=true type="string" name="changedRFP" value=<%= @changedRFP.to_s.delete(' ')%>>
+            <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
             <button class="btn btn-lg btn-primary btn-right btn-padded" type="submit">Upload
               <span class="glyphicon glyphicon-upload"></span></button>
-		</form>
-	  </div>
+          </form>
+      <%end%>
       <%if @oldOrNew.present?%>
-          <h4>Your File is <%=@oldOrNew%><h4/>
+          <h4 class="oldnew"><%=@newFileName.gsub("new_", "").gsub("%20", " ")%> is <%=@oldOrNew%><h4/>
             <form action ="calculateChanges" method="post">
               <input hidden=true type="string" name="oldFileName" value=<%= @oldFileName%>>
               <input hidden=true type="string" name="newFileName" value=<%= @newFileName%>>
               <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-              <button style= "z-index:3" type="submit">Calculate Changes</button>
+              <button class="btn btn-lg btn-primary btn-right btn-padded" type="submit">Calculate Changes
+                <span class="glyphicon glyphicon-upload"></span></button>
             </form>
       <% end%>
-      <%if @uploaded%>
-          <h4>Number of Added: <%=@added%><h4/>
-          <h4>Number of Deleted: <%=@deleted%><h4/>
-          <h4>Number of Updates: <%=@changes.length.to_s%><h4/>
-					<h4>Number of Equal: <%=@equal%><h4/>
-            <form action ="updateCRM" method="post">
-              <input hidden=true type="string" name="old" value=<%= @oldFileName%>>
-              <input hidden=true type="string" name="new" value=<%= @newFileName%>>
-			  <input hidden=true type="string" name="changes" value=<%= @changes.to_s.delete(' ')%>>
-              <input hidden=true type="string" name="changedRFP" value=<%= @changedRFP.to_s.delete(' ')%>>
-              <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
-              <button style= "z-index:3" type="submit">Submit</button>
-            </form>
-      <%end%>
     </div>
 
 	<div class="col-md-6 column-wrapper">
@@ -43,7 +49,7 @@
 		<h2 class="column-title">Download</h2>
     <p>File to be Downloaded:
       <%if @download_path!=""%>
-        <i><%=File.basename(@download_path).gsub("new_", "")%></i>
+        <i><%=@uploaded_file_name%></i>
       <%else%>
         <i>No File will be downloaded</i>
       <%end%>

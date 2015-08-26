@@ -12,5 +12,35 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
 //= require turbolinks
+//= require bootstrap-sprockets
 //= require_tree .
+
+function resetNotification(user_id, path){
+	//javascript
+    console.log("reset Notification");
+    var notify_div=document.getElementById('circle');
+    notify_div.parentNode.removeChild(notify_div);
+    var params = "{'user_id':"+user_id+"}";
+    params=params.replace(/'/g, '"');
+
+    //AJAX request
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("Content-Type", "application/x-www-form-urlencoded");
+    xmlHttp.open("Content-length", params.length);
+    xmlHttp.open("Connection", "close");
+    xmlHttp.open( "Post", path, true );
+    xmlHttp.send(params);
+}
+
+window.onload = function() {
+  createScroll();
+};
+
+$(function createScroll (){
+    $('#notification-scroll').slimScroll({
+        height: '330px',
+        width: '300px'
+    });
+});

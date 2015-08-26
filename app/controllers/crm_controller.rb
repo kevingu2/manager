@@ -1,36 +1,10 @@
 class CrmController < ApplicationController
   CRM_PATH = File.join(Rails.root, "public", "uploads")
   ACCEPTED_FORMATS = [".xlsm", ".xls"]
-  before_action :getFileName
-
-  def getFileName
-    @download_path=""
-    if Dir[CRM_PATH + '/*.xlsm'].length > 1 #if there is more than one file, delete the old one. else the new overwrote the old, don't delete
-      earliest_file_name=""
-      earliest_date=Time.new
-      Dir[CRM_PATH + '/*.xlsm'].each do |item|
-        next if item == '.' or item == '..'
-        if (File.ctime(item)<earliest_date)
-          earliest_file_name=item
-          earliest_date=File.ctime(item)
-        end
-      end
-      @download_path= earliest_file_name
-    else if Dir[CRM_PATH+'/*.xlsm'].length==1
-      @download_path=File.join(Dir[CRM_PATH+'/*.xlsm'][0])
-         end
-    end
-    puts "Download path: "+@download_path
-  end
+  before_action :getUploadedFileName
+  skip_before_action :deleteUnUploadedFile , only: [:checkDate,:updateCRM, :calculateChanges]
 
   def index
-    if Dir[CRM_PATH + '/*.xlsm'].length > 1 #if there is more than one file, delete the old one. else the new overwrote the old, don't delete
-      Dir[CRM_PATH + '/*.xlsm'].each do |item|
-        if(item!=@download_path)
-          FileUtils.rm(item)
-        end
-      end
-    end
     FileUtils.mkdir_p(CRM_PATH) unless File.directory?(CRM_PATH)
     FileUtils.mkdir_p('public/uploads/data') unless File.directory?('public/uploads/data')
     @uploaded=false
@@ -108,10 +82,27 @@ class CrmController < ApplicationController
     newIds = uploadedIds - opptyIds # new - old = new ones to add
     #change user_oppties rfp has changed
     if changedRFP.any?
-      changedRFP.each do |id|
-        ups=UserOppty.where(oppty_id:id)
+      changedRFP.each do |oppty_id|
+        oppty=Oppty.find(oppty_id)
+        #create notification for the manager
+        managers=User.where(role:MANAGER_ROLE)
+        managers.each do|m|
+          notification=m.add_notification(oppty_id, CHANGEDRFP,oppty.opptyName+" RFP date has changed", UNSEEN_NOTIFICATION);
+          if notification.save
+            puts "notification saved: "+notification.user_id.to_s
+          else
+            puts "notification not saved"
+          end
+        end
+        ups=UserOppty.where(oppty_id:oppty_id).includes(:user)
         ups.each do |up|
-          up.update(changeRFP:true)
+          #create notification for the users working on the opppty
+          notification=up.user.add_notification(oppty_id, CHANGEDRFP,oppty.opptyName+" RFP date has changed",UNSEEN_NOTIFICATION);
+          if notification.save
+            puts "notification saved: "+notification.user_id.to_s
+          else
+            puts "notification not saved"
+          end
         end
       end
     end
@@ -128,7 +119,10 @@ class CrmController < ApplicationController
     end
     data.each do |opportunity|
       if !newIds.include? opportunity["OpptyID"] then next end # if id not supposed to be added, skip
-      if History.find_by(opptyId:opportunity["OpptyID"]) then next end
+      history= History.find_by(opptyId:opportunity["OpptyID"])
+      if history.present?
+        history.destroy
+      end
       oppty=Oppty.new
       updateObject(oppty, opportunity)
     end
@@ -556,7 +550,6 @@ class CrmController < ApplicationController
           @equal += 1
         end
       else # else not in database, add it
-        if History.find_by(opptyId:opportunity["OpptyID"]) then next end
         @added += 1
       end
     end
@@ -590,14 +583,15 @@ class CrmController < ApplicationController
   def download
     #pull the database data into an excel
     #pulls and downloads the first .xlsm file from the /uploads folder
-    if @download_path!=""
-      puts `python bin/recreateExcel.py "#{@download_path}" "public/uploads/data/xl/sharedStrings.xml" "public/uploads/data/xl/worksheets/sheet2.xml"`
-      name = @download_path.gsub("new_", "")
-      File.rename @download_path, name
+    download_path=getUploadedFileName
+    if download_path!=""
+      puts `python bin/recreateExcel.py "#{download_path}" "public/uploads/data/xl/sharedStrings.xml" "public/uploads/data/xl/worksheets/sheet2.xml"`
+      name = download_path.gsub("new_", "")
+      File.rename download_path, name
       file = File.open(name, "rb")
       contents = file.read
       file.close
-      File.rename name, @download_path
+      File.rename name, download_path
       send_data(contents, :filename =>File.basename( name))
     else
       redirect_to crm_index_path, notice: "Please upload a file"

@@ -23,9 +23,9 @@
     min-height: 46px !important;
 }
 
-.writer-name {
-	line-height: 46px !important;
+.name{
 	margin: 0px !important;
+    font-size: 12px !important;
 }
 
 .un-assign-button {
@@ -34,8 +34,8 @@
 }
 .plus {
   position:relative;
-  top:15px;
-  left:30px;
+  top:10px;
+  left:70px;
   padding: 0px;
   width: 20px ;
   height: 20px ;
@@ -43,8 +43,8 @@
 }
 .redx {
   position:relative;
-  top:15px;
-  left:30px;
+  top:10px;
+  left:70px;
   padding: 0px;
   width: 20px ;
   height: 20px ;
@@ -77,12 +77,4 @@
 .assign-button:active,
 .assign-button:focus {
 	outline:0 !important;
-}
-
-.btn-assign-search {
-  padding: 0px !important; 
-  //float:right !important;
-  border-style: none; 
-  background-color: #005DA0;
-  width: 40px; height: 40px;
 }

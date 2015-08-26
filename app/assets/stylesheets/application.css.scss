@@ -10,9 +10,14 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require jquery-ui
  *= require_tree .
  *= require_self
  */
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
 [data-notify="title"] { 
 	font-weight: bold;
 }
@@ -20,8 +25,33 @@
 #username:hover{
     background-color: inherit;
 }
+
+.nav-notifications:hover{
+    background-color: #e7e7e7 !important;
+}
+
 #username{
     pointer-events: none;
     cursor: default;
+}
+
+.jumbotron {
+	padding-left:0px !important;
+	padding-right:0px !important;
+}
+
+#circle {
+	background-color: red;
+    width: 20px;
+    height: 20px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px; 
+    position: absolute;
+    top: 26px;
+    right: 11px;
+    color: white;
+    text-align: center;
+    font-size: 75%;
 }
 

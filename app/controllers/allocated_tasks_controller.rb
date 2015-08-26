@@ -21,7 +21,7 @@ class AllocatedTasksController < ApplicationController
     users=User.all
     @name_dict={}
     users.each do|u|
-      if(u.role!="Manager")
+      if(u.role=="Writer")
         @name_dict[u.id]=u.name
       end
     end

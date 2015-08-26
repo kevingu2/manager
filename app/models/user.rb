@@ -1,17 +1,20 @@
 class User < ActiveRecord::Base
-  roles = [ 'Writer', 'Manager' ]
+  roles = [WRITER_ROLE, MANAGER_ROLE ]
   validates :name, presence:true, uniqueness:true
   validates :role, presence:roles
   has_secure_password
   has_many :user_oppty, dependent: :destroy
   has_many :user_history, dependent: :destroy
+  has_many :notification, dependent: :destroy
   has_many :oppty, through: :user_oppty
   has_many :oppty, through: :user_history
+  has_many :oppty, through: :notification
 
-  def add_oppty(user_id, oppty_id, status, changeRFP)
+
+  def add_oppty(user_id, oppty_id, status)
     uo=nil
     if !UserOppty.where(["user_id=? and oppty_id=?", user_id, oppty_id]).present?
-      uo=user_oppty.build(oppty_id: oppty_id, status: status, changeRFP:changeRFP)
+      uo=user_oppty.build(oppty_id: oppty_id, status: status)
     end
     uo
   end
@@ -34,5 +37,10 @@ class User < ActiveRecord::Base
       user_oppty.destroy(uo)
     end
     uo
+  end
+
+  #status, 0 is unseen, 1 is seen
+  def add_notification(oppty_id, title, message, status)
+    notification.build(oppty_id:oppty_id, title:title, message:message, status:status)
   end
 end
