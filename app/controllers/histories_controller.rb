@@ -10,6 +10,7 @@ class HistoriesController < ApplicationController
   # GET /histories.json
   def index
     if session[:role]=="Writer"
+=begin
       if params[:invalid] == "rfpDate"
         @histories = UserHistory.where("user_id == ? and opptyName like ? and rfpDate < ? and (status2 == ? or status2 == ? or status2 == ?)", @user.id, "%#{params[:search]}%", Date.today().to_s, "P1-ID/Track", "P2-Qualification", "P3-Pursuit").includes(:history).order(params[:sort]).page(params[:page]).per_page(15)
       elsif params[:invalid] == "leadEstim"
@@ -41,10 +42,10 @@ class HistoriesController < ApplicationController
                                 "LSC", 0.0, "",
                                 "NWI", 0.0, "",
                                 "SSS", 0.0, "").includes(:history).order(params[:sort]).page(params[:page]).per_page(15)
-      else 
-        @histories = UserHistory.where("user_id == ? and opptyName like ?", @user.id, "%#{params[:search]}%").includes(:history).order(params[:sort]).page(params[:page]).per_page(15)
-      end
-
+      else
+=end
+        @histories = UserHistory.where("user_id == ?", @user.id).includes(:history).where('opptyName like "'+
+                    '%#{params[:search]}%"').references(:history).order(params[:sort]).page(params[:page]).per_page(15)
     else
       if params[:invalid] == "rfpDate"
         @histories = History.where("opptyName like ? and rfpDate < ? and (status2 == ? or status2 == ? or status2 == ?)", "%#{params[:search]}%", Date.today().to_s, "P1-ID/Track", "P2-Qualification", "P3-Pursuit").order(params[:sort]).page(params[:page]).per_page(15)

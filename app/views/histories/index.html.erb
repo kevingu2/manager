@@ -85,7 +85,14 @@
     <hr />
 
     <div id="history-data">
-      <% @histories.each do |o| %>
+      <% @histories.each do |h| %>
+        <%o=nil%>
+        <%if h.class.name=="History"
+            o=h
+        %>
+        <%else
+          o=h.history
+        end%>
         <div class="success row">
           <div class="col-md-2" style="text-align: center;"><%= o.opptyId %></div>
           <div class="col-md-6">
