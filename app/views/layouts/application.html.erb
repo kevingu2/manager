@@ -54,10 +54,11 @@
                     <div id="circle"><%=@num_unseen_notification %></div>
                 <%end%>
               </a>
-              <ul class="dropdown-menu" style="position: absolute !important; top: 49px !important; right: -25px !important; min-width: 300px !important;">
+              <div class="dropdown-menu"  style="position: absolute !important; top: 49px !important; right: -25px !important; min-width: 300px !important;">
+                <ul id="notification-scroll" class="notification-scroll">
                 <% if @notifications.size > 0 %>
                     <% @notifications.each do |o| %>
-                        <li class="notification-feed" style="padding-bottom: 15px !important;">
+                        <li onclick= "sendFromNotification()" class="notification-feed" style="padding-bottom: 15px !important;">
                           <a href="#">
                             <p class="notify-title"><b><%=o.title%></b> <a class="notify-creation-date" style="float: right;"><%=o.created_at.to_date%></a><p>
                             <p><%=o.message%></p>
@@ -68,6 +69,7 @@
                     <li style="text-align: center; padding-left: 10px !important;">No Notifications</li>
                 <%end%>
               </ul>
+              </div>
             </li>
             <li class="nav-logout"><a href=<%=sessions_destroy_path %>>Logout</a><li>
           </ul>
@@ -104,6 +106,7 @@
     }
 </style>
 
+<%= javascript_include_tag('jquery.slimscroll.min.js') %>
 
 </body>
 </html>
