@@ -17,6 +17,15 @@
 //= require bootstrap-sprockets
 //= require_tree .
 
+$(function(){
+    $('#notification-scroll').slimScroll({
+        height: '330px',
+        width: '300px'
+    });
+});
+function sendFromNotification(destination) {
+    //location.href = '../' + destination;
+}
 function resetNotification(user_id, path){
     var notify_div=document.getElementById('circle');
     if(notify_div!=null)
@@ -33,12 +42,10 @@ function resetNotification(user_id, path){
     xmlHttp.send(params);
 }
 
-$(function createScroll (){
     $('#notification-scroll').slimScroll({
         height: '330px',
         width: '300px'
     });
-});
 /* creates style rule programmatically after triangle logo exists */
 function createClass(name,rules){
     var style = document.createElement('style');
