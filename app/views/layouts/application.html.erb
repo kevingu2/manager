@@ -53,7 +53,7 @@
               <div class="dropdown-menu"  style="position: absolute !important; top: 49px !important; right: -25px !important; min-width: 300px !important;">
                 <ul id="notification-scroll" class="notification-scroll">
                 <% if @notifications.size > 0 %>
-                    <% @notifications.each do |o| %>
+                    <% @notifications.reverse_each do |o| %>
                         <li onclick="sendFromNotification('<%= o.title%>', '<%= o.oppty_id %>')" 
                           class="notification-feed" style="padding-bottom: 15px !important; cursor: pointer;">
                           <a href="#">
@@ -106,54 +106,54 @@
 <%= javascript_include_tag('jquery.slimscroll.min.js') %>
 
 <script>
-
-$(function(){
-    $('#notification-scroll').slimScroll({
-        height: '330px',
-        width: '300px'
+    $(function(){
+        $('#notification-scroll').slimScroll({
+            height: '330px',
+            width: '300px'
+        });
     });
-});
 
-function sendFromNotification(notify_title, oppty_id) {
-    /* Redirect to different places depending on the notification title */
-    if (notify_title == "RFP Date Changed") {
-        console.log("RFP Date Changed");
-        window.location = "/oppties/" + oppty_id;
-    } else if (notify_title == "Opportunity Moved To History") {
-        console.log("Opportunity Moved To History");
-        //location.href = '../' + destination;
-    } else if (notify_title == "Assigned To Task") {
-        console.log("Assigned To Task");
-        //location.href = '../' + destination;
-    }    
-}
+    function sendFromNotification(notify_title, oppty_id) {
+        /* Redirect to different places depending on the notification title */
+        if (notify_title == "RFP Date Changed") {
+            console.log("RFP Date Changed");
+            window.location = "/oppties/" + oppty_id;
+        } else if (notify_title == "Opportunity Moved To History") {
+            console.log("Opportunity Moved To History");
+            window.location = "/histories/" + oppty_id;
+        } else if (notify_title == "Assigned To Task") {
+            console.log("Assigned To Task");
+            //location.href = destination;
+        }    
+    }
 
-function resetNotification(user_id, path){
-    var notify_div=document.getElementById('circle');
-    if(notify_div!=null)
-        notify_div.remove();
-    var params = "{'user_id':"+user_id+"}";
-    params=params.replace(/'/g, '"');
+    function resetNotification(user_id, path){
+        var notify_div=document.getElementById('circle');
+        if(notify_div!=null)
+            notify_div.remove();
+        var params = "{'user_id':"+user_id+"}";
+        params=params.replace(/'/g, '"');
 
-    //AJAX request
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("Content-Type", "application/x-www-form-urlencoded");
-    xmlHttp.open("Content-length", params.length);
-    xmlHttp.open("Connection", "close");
-    xmlHttp.open( "Post", path, true );
-    xmlHttp.send(params);
-}
+        //AJAX request
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("Content-Type", "application/x-www-form-urlencoded");
+        xmlHttp.open("Content-length", params.length);
+        xmlHttp.open("Connection", "close");
+        xmlHttp.open( "Post", path, true );
+        xmlHttp.send(params);
+    }
 
-/* creates style rule programmatically after triangle logo exists */
-function createClass(name,rules){
-    var style = document.createElement('style');
-    style.type = 'text/css';
-    document.getElementsByTagName('head')[0].appendChild(style);
-    if(!(style.sheet||{}).insertRule)
-        (style.styleSheet || style.sheet).addRule(name, rules);
-    else
-        style.sheet.insertRule(name+"{"+rules+"}",0);
-}
+    /* creates style rule programmatically after triangle logo exists */
+    function createClass(name,rules){
+        var style = document.createElement('style');
+        style.type = 'text/css';
+        document.getElementsByTagName('head')[0].appendChild(style);
+        if(!(style.sheet||{}).insertRule)
+            (style.styleSheet || style.sheet).addRule(name, rules);
+        else
+            style.sheet.insertRule(name+"{"+rules+"}",0);
+    }
 </script>
+
 </body>
 </html>
