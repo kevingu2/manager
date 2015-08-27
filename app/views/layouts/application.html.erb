@@ -14,10 +14,8 @@
   <%= stylesheet_link_tag "bootstrap.min.css", media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag('html5shiv.min.js') %>
   <%= javascript_include_tag('respond.min.js') %>
-
-  
-
 </head>
+
 <body class='<%=controller.controller_name%>'>
 <!-- Static navbar -->
 <%if session[:user_id] %>
@@ -123,7 +121,11 @@
             window.location = "/histories/" + oppty_id;
         } else if (notify_title == "Assigned To Task") {
             console.log("Assigned To Task");
-            //location.href = destination;
+            if (<%=session[:role] %> == "Writer") {
+              window.location = "/tasks/index";
+            } else {
+              window.location = "/allocated_tasks/index";
+            }
         }    
     }
 
@@ -141,17 +143,6 @@
         xmlHttp.open("Connection", "close");
         xmlHttp.open( "Post", path, true );
         xmlHttp.send(params);
-    }
-
-    /* creates style rule programmatically after triangle logo exists */
-    function createClass(name,rules){
-        var style = document.createElement('style');
-        style.type = 'text/css';
-        document.getElementsByTagName('head')[0].appendChild(style);
-        if(!(style.sheet||{}).insertRule)
-            (style.styleSheet || style.sheet).addRule(name, rules);
-        else
-            style.sheet.insertRule(name+"{"+rules+"}",0);
     }
 </script>
 
