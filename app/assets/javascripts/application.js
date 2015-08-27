@@ -17,11 +17,19 @@
 //= require bootstrap-sprockets
 //= require_tree .
 
+$(function(){
+    $('#notification-scroll').slimScroll({
+        height: '330px',
+        width: '300px'
+    });
+});
+function sendFromNotification(destination) {
+    //location.href = '../' + destination;
+}
 function resetNotification(user_id, path){
-	//javascript
-    console.log("reset Notification");
     var notify_div=document.getElementById('circle');
-    notify_div.parentNode.removeChild(notify_div);
+    if(notify_div!=null)
+        notify_div.remove();
     var params = "{'user_id':"+user_id+"}";
     params=params.replace(/'/g, '"');
 
@@ -34,13 +42,17 @@ function resetNotification(user_id, path){
     xmlHttp.send(params);
 }
 
-window.onload = function() {
-  createScroll();
-};
-
-$(function createScroll (){
     $('#notification-scroll').slimScroll({
         height: '330px',
         width: '300px'
     });
-});
+/* creates style rule programmatically after triangle logo exists */
+function createClass(name,rules){
+    var style = document.createElement('style');
+    style.type = 'text/css';
+    document.getElementsByTagName('head')[0].appendChild(style);
+    if(!(style.sheet||{}).insertRule)
+        (style.styleSheet || style.sheet).addRule(name, rules);
+    else
+        style.sheet.insertRule(name+"{"+rules+"}",0);
+}

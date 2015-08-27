@@ -46,6 +46,7 @@ class ApplicationController < ActionController::Base
       #iterate through all of the user's opportunities
       @notifications = Notification.where(user_id: session[:user_id])
       @num_unseen_notification= Notification.where(user_id: session[:user_id], status:UNSEEN_NOTIFICATION).size
+      puts "User ID: "+@notifications.size.to_s
   end
 
   def getUploadedFileName
@@ -81,6 +82,5 @@ class ApplicationController < ActionController::Base
         FileUtils.rm(item)
       end
     end
-    puts "data length: "+Dir[CRM_PATH+ '/data'].length.to_s
   end
 end
