@@ -11,8 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150825181543) do
-
+ActiveRecord::Schema.define(version: 20150825171947) do
   create_table "allocated_tasks", force: true do |t|
     t.string   "title"
     t.string   "taskId"
@@ -295,7 +294,6 @@ ActiveRecord::Schema.define(version: 20150825181543) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.integer  "new_notif_count",        default: 0
   end
 
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

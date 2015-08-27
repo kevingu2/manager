@@ -49,19 +49,27 @@ class AssignController < ApplicationController
     user_id= json_body.fetch('user_id')
     oppty_id=json_body.fetch('oppty_id')
     user=User.find(user_id)
-    @user_oppty=user.add_oppty(params[:user_id], oppty_id, 3, false)
-    if !@user_oppty
+    user_oppty=user.add_oppty(params[:user_id], oppty_id, 3)
+    if !user_oppty
       redirect_to invalid_entry_index_path, notice: "User has been Assigned"
       return
     end
     respond_to do |format|
-      if @user_oppty.save
-        format.html { redirect_to @user_oppty, notice: 'Successfully Assigned User' }
+      if user_oppty.save
+        format.html { redirect_to user_oppty, notice: 'Successfully Assigned User' }
         format.json { render :show, status: :created, location: @user_oppty }
       else
         format.html { render :new }
-        format.json { render json: @user_oppty.errors, status: :unprocessable_entity }
+        format.json { render json: user_oppty.errors, status: :unprocessable_entity }
       end
+    end
+    #add a notification to the user
+    oppty=Oppty.find(oppty_id)
+    notification=user.add_notification(oppty_id ,ASSIGNEDTASK,oppty.opptyName+" has been been added to your assigned tasks",UNSEEN_NOTIFICATION);
+    if notification.save
+      puts "notification saved: "+notification.user_id.to_s
+    else
+      puts "notification not saved"
     end
   end
 

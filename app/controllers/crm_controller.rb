@@ -9,50 +9,7 @@ class CrmController < ApplicationController
     FileUtils.mkdir_p('public/uploads/data') unless File.directory?('public/uploads/data')
     @uploaded=false
   end
-  def checkDate
-    uploaded_io = params[:upl]
-    if !uploaded_io.present?
-      redirect_to crm_index_path, notice: "Please upload a file"
-      return
-    end
-    if !ACCEPTED_FORMATS.include? File.extname(uploaded_io.original_filename)
-      redirect_to crm_index_path, notice: "Please upload an XLSM or XLS file"
-      return
-    end
 
-    # get existing file in public/uploads
-    @oldFileName=nil
-    if Dir[CRM_PATH+'/*.xlsm'][0]
-      @oldFileName=File.basename(Dir[CRM_PATH+'/*.xlsm'][0])
-    end
-    # get original file's date
-    # check if older or newer
-    File.open(Rails.root.join('public', 'uploads', "new_"+uploaded_io.original_filename), 'wb') do |file|
-      file.write(uploaded_io.read)
-    end
-
-    @newFileName = "new_"+uploaded_io.original_filename.to_s
-    puts "newFileName: " + @newFileName
-    # hacks to clear uploads folder
-    # move files we care about up one directory
-    `mv public/uploads/"#{@newFileName}" public/`
-    `mv public/uploads/#{@oldFileName} public/`
-    `rm public/uploads/*` # delete everything in uploads
-    `mv public/"#{@newFileName}" public/uploads/"#{@newFileName}"` # move files back from upper directory
-    `mv public/#{@oldFileName} public/uploads/#{@oldFileName}`
-    @oldOrNew = "old"
-    if Dir[CRM_PATH+ '/*.xlsm'].length > 1 # if there is more than one file, check if older/newer
-      @oldOrNew =  `python bin/dateExtract.py "public/uploads/#{@newFileName}" "public/uploads/#{@oldFileName}"`
-    else
-      @oldOrNew = "new" # else just say it's new
-    end
-    nonSpaceName = CRM_PATH + "/" + @newFileName
-    @newFileName = @newFileName.gsub(" ", "%20")
-    File.rename(nonSpaceName, CRM_PATH + "/" + @newFileName)
-    puts "*"*30, @newFileName, "*"*30
-    render :index
-
-  end
 # after submit is pushed
   def updateCRM
     # oldFileName
@@ -87,7 +44,7 @@ class CrmController < ApplicationController
         #create notification for the manager
         managers=User.where(role:MANAGER_ROLE)
         managers.each do|m|
-          notification=m.add_notification(oppty_id, CHANGEDRFP,oppty.opptyName+" RFP date has changed", UNSEEN_NOTIFICATION);
+          notification=m.add_notification(oppty_id, CHANGEDRFP,oppty.opptyName+" RFP date has changed", UNSEEN_NOTIFICATION );
           if notification.save
             puts "notification saved: "+notification.user_id.to_s
           else
@@ -106,6 +63,8 @@ class CrmController < ApplicationController
         end
       end
     end
+
+    #updating oppty changes
     if changes.any?
       changes.each do |c|
         if History.find_by(opptyId:c) # if in history delete from history, add new one, move to history
@@ -117,6 +76,8 @@ class CrmController < ApplicationController
         end
       end
     end
+
+    #creating new oppty
     data.each do |opportunity|
       if !newIds.include? opportunity["OpptyID"] then next end # if id not supposed to be added, skip
       history= History.find_by(opptyId:opportunity["OpptyID"])
@@ -126,8 +87,28 @@ class CrmController < ApplicationController
       oppty=Oppty.new
       updateObject(oppty, opportunity)
     end
-    ids.each do |i|
-      moveToHistory(i)
+
+    #moving the deleted oppty to history
+    ids.each do |id|
+      oppty=Oppty.find_by(["opptyId=?", id])
+      managers=User.where(role:MANAGER_ROLE)
+      managers.each do|m|
+        puts m.name
+        notification=m.add_notification(oppty.id, MOVEDTOHISTORY,oppty.opptyName+" RFP date has changed", UNSEEN_NOTIFICATION );
+        if notification.save
+          puts "Manager notification saved"
+        end
+      end
+      ups=UserOppty.where(oppty_id:oppty.id).includes(:user)
+      ups.each do |up|
+        puts up.user_id
+        #create notification for the users working on the opppty
+        notification=up.user.add_notification(oppty.id, MOVEDTOHISTORY,oppty.opptyName+" has been deleted",UNSEEN_NOTIFICATION);
+        if notification.save
+          puts "User notification Saved"
+        end
+      end
+      moveToHistory(oppty)
     end
     redirect_to crm_index_path, notice: "Successfully uploaded: "+newFileName
   end
@@ -241,8 +222,7 @@ class CrmController < ApplicationController
     object.save
   end
 
-  def moveToHistory(oppty_id)
-    oppty=Oppty.find_by(["opptyId=?", oppty_id])
+  def moveToHistory(oppty)
     if oppty.present?
       oppty_dict=oppty.attributes
       oppty_dict.delete('id')
@@ -291,10 +271,50 @@ class CrmController < ApplicationController
 
   #uploading an excel file from user's computer
   def calculateChanges
-    puts "*"*30, params[:newFileName], "*"*30
-    puts params[:oldFileName]
-    @newFileName=params[:newFileName]
-    @oldFileName=params[:oldFileName]
+
+
+    uploaded_io = params[:upl]
+    if !uploaded_io.present?
+      redirect_to crm_index_path, notice: "Please upload a file"
+      return
+    end
+    if !ACCEPTED_FORMATS.include? File.extname(uploaded_io.original_filename)
+      redirect_to crm_index_path, notice: "Please upload an XLSM or XLS file"
+      return
+    end
+
+    # get existing file in public/uploads
+    @oldFileName=nil
+    if Dir[CRM_PATH+'/*.xlsm'][0]
+      @oldFileName=File.basename(Dir[CRM_PATH+'/*.xlsm'][0])
+    end
+    # get original file's date
+    # check if older or newer
+    File.open(Rails.root.join('public', 'uploads', "new_"+uploaded_io.original_filename), 'wb') do |file|
+      file.write(uploaded_io.read)
+    end
+
+    @newFileName = "new_"+uploaded_io.original_filename.to_s
+    puts "newFileName: " + @newFileName
+    # hacks to clear uploads folder
+    # move files we care about up one directory
+    `mv public/uploads/"#{@newFileName}" public/`
+    `mv public/uploads/#{@oldFileName} public/`
+    `rm public/uploads/*` # delete everything in uploads
+    `mv public/"#{@newFileName}" public/uploads/"#{@newFileName}"` # move files back from upper directory
+    `mv public/#{@oldFileName} public/uploads/#{@oldFileName}`
+    @oldOrNew = "old"
+    if Dir[CRM_PATH+ '/*.xlsm'].length > 1 # if there is more than one file, check if older/newer
+      @oldOrNew =  `python bin/dateExtract.py "public/uploads/#{@newFileName}" "public/uploads/#{@oldFileName}"`
+    else
+      @oldOrNew = "new" # else just say it's new
+    end
+    nonSpaceName = CRM_PATH + "/" + @newFileName
+    @newFileName = @newFileName.gsub(" ", "%20")
+    File.rename(nonSpaceName, CRM_PATH + "/" + @newFileName)
+    puts "*"*30, @newFileName, "*"*30
+
+
     data = `python bin/excelReader.py "public/uploads/#{@newFileName}"`
     data = JSON.parse(data)
     @changes = [] # holds list of hashes that contain what is changed

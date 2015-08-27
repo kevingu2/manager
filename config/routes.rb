@@ -25,13 +25,9 @@ Rails.application.routes.draw do
 
   get 'crm/index'
 
-  post 'crm/upload'
-
   post 'crm/calculateChanges'
 
   post 'crm/updateCRM'
-
-  post 'crm/checkDate'
 
   get 'crm/download'
 
