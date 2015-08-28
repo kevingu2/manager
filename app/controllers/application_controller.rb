@@ -42,9 +42,22 @@ class ApplicationController < ActionController::Base
   end
 
   def setNotification
-      #iterate through all of the user's opportunities
+      #a hash to hold booleans for each oppty_id, with true corresponding to 'the id is inside oppties' 
+      @notif_hash = Hash.new(false)
+      #collect user's notifications into a collection
       @notifications = Notification.where(user_id: session[:user_id])
+      #count the number of unseen notifications for display in view
       @num_unseen_notification= Notification.where(user_id: session[:user_id], status:UNSEEN_NOTIFICATION).size
+
+      #iterate through notifications
+      @notifications.each do |n|
+          #check for this notification's oppty inside of opportunity database
+          searchedForOppty = Oppty.find_by(id: n.oppty_id)   
+          #if it is, then change the hash value to true
+          if searchedForOppty != nil 
+              @notif_hash[n.oppty_id] = true
+          end
+      end
   end
 
   def getUploadedFileName
