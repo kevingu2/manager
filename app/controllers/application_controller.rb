@@ -1,6 +1,5 @@
 #authorization needed before each action
 
-
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -9,7 +8,6 @@ class ApplicationController < ActionController::Base
   helper_method :getUploadedFileName
   skip_before_action :verify_authenticity_token, only: [:resetNotification]
   CRM_PATH = File.join(Rails.root, "public", "uploads")
-
 
   def resetNotification
     json_body=JSON.parse(request.body.read)
@@ -22,6 +20,7 @@ class ApplicationController < ActionController::Base
       format.json { render json: {msg:"OK"}}
     end
   end
+
   #depending on user's role, they can access/update certain information
   protected
   def authorize

@@ -49,6 +49,8 @@ Rails.application.configure do
   config.assets.precompile += %w( allocated_tasks.js)
   config.assets.precompile += %w( assign.js)
   config.assets.precompile += %w( application.js)
+  config.assets.precompile += %w( jquery-ui.js)
+  config.assets.precompile += %w( jquery-1.10.2.js)
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end
