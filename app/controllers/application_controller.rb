@@ -12,10 +12,19 @@ class ApplicationController < ActionController::Base
   def resetNotification
     json_body=JSON.parse(request.body.read)
     user_id= json_body.fetch('user_id')
+
+    #make oppty notiifications update to status seen
     num_not=Notification.where(user_id: user_id, status:UNSEEN_NOTIFICATION)
     num_not.each do|n|
       n.update_attribute(:status, SEEN_NOTIFICATION)
     end
+
+    #make history notiifications update to status seen
+    num_not=NotificationHistory.where(user_id: user_id, status:UNSEEN_NOTIFICATION)
+    num_not.each do|nh|
+      nh.update_attribute(:status, SEEN_NOTIFICATION)
+    end
+
     respond_to do |format|
       format.json { render json: {msg:"OK"}}
     end
@@ -43,21 +52,37 @@ class ApplicationController < ActionController::Base
 
   def setNotification
       #a hash to hold booleans for each oppty_id, with true corresponding to 'the id is inside oppties' 
-      @notif_hash = Hash.new(false)
-      #collect user's notifications into a collection
+      @notif_array = []
+      #collect user's notifications for opportunities into a collection
       @notifications = Notification.where(user_id: session[:user_id])
-      #count the number of unseen notifications for display in view
-      @num_unseen_notification= Notification.where(user_id: session[:user_id], status:UNSEEN_NOTIFICATION).size
+      #collect user's notifications for histories into a collection
+      @history_notifications = NotificationHistory.where(user_id: session[:user_id])
 
-      #iterate through notifications
+      #count the number of unseen notifications for opportunities for display in view
+      @num_unseen_notification_oppty = Notification.where(user_id: session[:user_id], status:UNSEEN_NOTIFICATION).size
+      #count the number of unseen notifications for histories for display in view
+      @num_unseen_notification_history = NotificationHistory.where(user_id: session[:user_id], status:UNSEEN_NOTIFICATION).size
+      #add up both counts
+      @num_unseen_notification = @num_unseen_notification_oppty + @num_unseen_notification_history
+
+      arrayCount = 0
+
+      #fill up hash with opportunity notifications
       @notifications.each do |n|
           #check for this notification's oppty inside of opportunity database
-          searchedForOppty = Oppty.find_by(id: n.oppty_id)   
-          #if it is, then change the hash value to true
-          if searchedForOppty != nil 
-              @notif_hash[n.oppty_id] = true
-          end
+          @notif_array[arrayCount] =  n #Oppty.find_by(id: n.oppty_id) 
+          arrayCount += 1
       end
+
+      #fill up hash with history notifications
+      @history_notifications.each do |hn|
+          #check for this notification's oppty inside of opportunity database
+          @notif_array[arrayCount] = hn #History.find_by(id: hn.history_id) 
+          arrayCount += 1
+      end
+
+      #sort array by the created_at field
+      #notif_array.sort!(&:created_at)
   end
 
   def getUploadedFileName
