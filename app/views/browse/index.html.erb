@@ -228,15 +228,17 @@
           else
             newUrl = urlSplit[0];
 
-          if (urlSplit[1].indexOf('within') == -1 && select != "999999") {
-            if (urlSplit[1].indexOf('page') == -1)
-              newUrl = url + "&within=" + select;
-            else
-              newUrl = urlSplit[0]+ "?within=" + select;
-          }
-          else {
+          if (diffParts.length > 1) {
             for (i = 0; i < diffParts.length; i++) {
-              if (diffParts[i].indexOf('within') == -1 && diffParts[i].indexOf('page') == -1) {
+              if(select == 999999) {
+                if (diffParts[i].indexOf('within') == -1) {
+                  if (i != diffParts.length-1)
+                    newUrl += diffParts[i]+'&';
+                  else
+                    newUrl += diffParts[i];
+                }
+              }
+              else if (diffParts[i].indexOf('within') == -1 && diffParts[i].indexOf('page') == -1) {
                 if (i != diffParts.length-1)
                   newUrl += diffParts[i]+'&';
                 else
@@ -251,6 +253,8 @@
                 }
               }
             }
+            if (newUrl.indexOf('within') == -1 && select != 999999)
+              newUrl += "&within="+select;
           }
         }
         else if (urlSplit[1].indexOf('within') > -1 && select != "999999")
@@ -297,15 +301,17 @@
           else
             newUrl = urlSplit[0];
 
-          if (urlSplit[1].indexOf('invalid') == -1 && select != "all") {
-            if (urlSplit[1].indexOf('page') == -1)
-              newUrl = url + "&invalid=" + select;
-            else
-              newUrl = urlSplit[0]+'?'+ "invalid=" + select;
-          }
-          else {
+          if (diffParts.length > 1) {
             for (i = 0; i < diffParts.length; i++) {
-              if (diffParts[i].indexOf('invalid') == -1 && diffParts[i].indexOf('page') == -1) {
+              if(select == "all") {
+                if (diffParts[i].indexOf('invalid') == -1) {
+                  if (i != diffParts.length-1)
+                    newUrl += diffParts[i]+'&';
+                  else
+                    newUrl += diffParts[i];
+                }
+              }
+              else if (diffParts[i].indexOf('invalid') == -1 && diffParts[i].indexOf('page') == -1) {
                 if (i != diffParts.length-1)
                   newUrl += diffParts[i]+'&';
                 else
@@ -320,6 +326,8 @@
                 }
               }
             }
+            if (newUrl.indexOf('invalid') == -1 && select != "all")
+              newUrl += "&invalid="+select;
           }
         }
         else if (urlSplit[1].indexOf('invalid') > -1 && select != "all")
