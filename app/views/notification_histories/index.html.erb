@@ -1,0 +1,23 @@
+<h1>Listing notification_histories</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @notification_histories.each do |notification_history| %>
+      <tr>
+        <td><%= link_to 'Show', notification_history %></td>
+        <td><%= link_to 'Edit', edit_notification_history_path(notification_history) %></td>
+        <td><%= link_to 'Destroy', notification_history, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Notification history', new_notification_history_path %>

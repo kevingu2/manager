@@ -91,10 +91,11 @@ class CrmController < ApplicationController
     #moving the deleted oppty to history
     ids.each do |id|
       oppty=Oppty.find_by(["opptyId=?", id])
+      history=moveToHistory(oppty)
       managers=User.where(role:MANAGER_ROLE)
       managers.each do|m|
         puts m.name
-        notification=m.add_notification(oppty.id, MOVEDTOHISTORY,oppty.opptyName+" RFP date has changed", UNSEEN_NOTIFICATION );
+        notification=m.add_notification_history(history.id, MOVEDTOHISTORY,history.opptyName+" RFP date has changed", UNSEEN_NOTIFICATION );
         if notification.save
           puts "Manager notification saved"
         end
@@ -103,12 +104,11 @@ class CrmController < ApplicationController
       ups.each do |up|
         puts up.user_id
         #create notification for the users working on the opppty
-        notification=up.user.add_notification(oppty.id, MOVEDTOHISTORY,oppty.opptyName+" has been deleted",UNSEEN_NOTIFICATION);
+        notification=up.user.add_notification_history(history.id, MOVEDTOHISTORY,history.opptyName+" has been deleted",UNSEEN_NOTIFICATION);
         if notification.save
           puts "User notification Saved"
         end
       end
-      moveToHistory(oppty)
     end
     redirect_to crm_index_path, notice: "Successfully uploaded: "+newFileName
   end
@@ -220,9 +220,11 @@ class CrmController < ApplicationController
     object.fy16BPSpent           = new_dict["FY16 B&P $Spent"]
     object.fy16BPSpentPercent    = new_dict["FY16 B&P %Spent"]
     object.save
+    return object
   end
 
   def moveToHistory(oppty)
+    history=nil
     if oppty.present?
       oppty_dict=oppty.attributes
       oppty_dict.delete('id')
@@ -241,6 +243,7 @@ class CrmController < ApplicationController
     else
       puts "oppty not present"
     end
+    return history
   end
 
   def delete
