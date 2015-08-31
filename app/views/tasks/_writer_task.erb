@@ -1,7 +1,7 @@
 <ul class="nav">
     <li id="<%= @current_task.id %>">
       <br>
-      <img class="btn-x" onclick="deleteOpt(<%= @current_task.id %>)" src="/assets/redx.png" alt="X" border="0"/>
+      <img class="btn-x" onclick="confirmDelete(<%= @current_task.id %>)" src="/assets/redx.png" alt="X" border="0"/>
       <div class="task-bg">
         <h5 class="text-edit"><b><%= link_to @current_task.oppty.opptyName,
                                                                  @current_task.oppty%></b></h5>
