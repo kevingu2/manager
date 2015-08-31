@@ -55,15 +55,12 @@
                       <% if n.title == "RFP Date Changed" %>
                         <li onclick="sendFromNotification('<%= n.title%>', '<%= n.oppty_id %>')" 
                           class="notification-feed" style="padding-bottom: 15px !important; cursor: pointer;">
-<<<<<<< HEAD
                       <% elsif n.title == "Opportunity Moved To History" %>  
-                        <li onclick="sendFromNotification('<%= n.title%>', '<%= n.oppty_id %>')" 
+                        <li onclick="sendFromNotification('<%= n.title%>', '<%= n.history_id %>')" 
                           class="notification-feed" style="padding-bottom: 15px !important; cursor: pointer;">
                       <% else %>
-                        <li onclick="sendFromNotification('', '')" 
+                        <li onclick="sendFromNotification('<%= n.title%>', '')" 
                           class="notification-feed" style="padding-bottom: 15px !important; cursor: pointer;">
-=======
->>>>>>> ea80ee3ecaf5a1ce85803988e3f32681cfdd50b3
                       <% end %>    
                           <a href="#">
                             <p class="notify-title"><b><%=n.title%></b> <a class="notify-creation-date" style="float: right;"><%=n.created_at.to_date%></a><p>
@@ -132,7 +129,7 @@
             window.location = "/histories/" + id;
         } else if (notify_title == "Assigned To Task") {
             console.log("Assigned To Task");
-            if (<%=session[:role] %> == "Writer") {
+            if ("<%=session[:role] %>" == "Writer") {
               window.location = "/tasks/index";
             } else {
               window.location = "/allocated_tasks/index";

@@ -92,6 +92,7 @@ class CrmController < ApplicationController
     ids.each do |id|
       oppty=Oppty.find_by(["opptyId=?", id])
       history=moveToHistory(oppty)
+
       managers=User.where(role:MANAGER_ROLE)
       managers.each do|m|
         puts m.name
@@ -100,6 +101,7 @@ class CrmController < ApplicationController
           puts "Manager notification saved"
         end
       end
+      
       ups=UserOppty.where(oppty_id:oppty.id).includes(:user)
       ups.each do |up|
         puts up.user_id
