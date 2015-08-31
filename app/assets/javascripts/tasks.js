@@ -13,7 +13,7 @@ function deleteOpt (id){
     xmlHttp.send(null);
 }
 
-function confirmDelete(id){
+function confirmDeleteUser(id){
     r=window.confirm("Are you sure you want to delete this task?");
     if (r == true) {
         deleteOpt(id);

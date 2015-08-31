@@ -52,11 +52,8 @@
                 <ul id="notification-scroll" class="notification-scroll">
                 <% if @notif_array.size > 0 %>
                     <% @notif_array.reverse_each do |n| %>
-                      <% if n.title == "RFP Date Changed" %>  
+                      <% if n.title == "RFP Date Changed" %>
                         <li onclick="sendFromNotification('<%= n.title%>', '<%= n.oppty_id %>')" 
-                          class="notification-feed" style="padding-bottom: 15px !important; cursor: pointer;">
-                      <% else %>
-                        <li onclick="sendFromNotification('<%= n.title%>', '<%= n.history_id %>')" 
                           class="notification-feed" style="padding-bottom: 15px !important; cursor: pointer;">
                       <% end %>    
                           <a href="#">

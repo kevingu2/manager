@@ -54,7 +54,7 @@
                                   <%if o.oppty.present?%>
                                     <li id="<%= o.id%>" class="col-md-12">
                                         <h5 class="col-md-11"><%= link_to o.oppty.opptyName, o.oppty%></h5>
-                                        <img id="delete-btn-manager" class="btn-x-manager" onclick="confirmDelete(<%= o.id %>, <%= name.delete(' ') + 'ajax' %>, 0)" src="/assets/redx.png" alt="X" border="0"/>
+                                        <img id="delete-btn-manager" class="btn-x-manager" onclick="confirmDeleteManager(<%= o.id %>, <%= name.delete(' ') + 'ajax' %>, 0)" src="/assets/redx.png" alt="X" border="0"/>
                                     </li>
                                   <%end%>
                                 <%end%>
@@ -84,7 +84,7 @@
                                     <% if o.oppty.present?%>
                                         <li id="<%= o.id%>" class="col-md-12">
                                             <h5 class="col-md-11"><%= link_to o.oppty.opptyName, o.oppty%></h5>
-                                            <img id="delete-btn-manager-1" class="btn-x-manager" onclick="confirmDelete(<%= o.id %>, <%= name.delete(' ') + 'ajax' %>, 1)" src="/assets/redx.png" alt="X" border="0"/>
+                                            <img id="delete-btn-manager-1" class="btn-x-manager" onclick="confirmDeleteManager(<%= o.id %>, <%= name.delete(' ') + 'ajax' %>, 1)" src="/assets/redx.png" alt="X" border="0"/>
                                         </li>
                                     <% end %>
                                 <%end%>
@@ -114,7 +114,7 @@
                                   <%if o.oppty.present?%>
                                     <li id="<%= o.id%>" class="col-md-12">
                                         <h5 class="col-md-11"><%= link_to o.oppty.opptyName, o.oppty%></h5>
-                                        <img id="delete-btn-manager-2" class="btn-x-manager" onclick="confirmDelete(<%= o.id %>, <%= name.delete(' ') + 'ajax' %>, 2)" src="/assets/redx.png" alt="X" border="0"/>
+                                        <img id="delete-btn-manager-2" class="btn-x-manager" onclick="confirmDeleteManager(<%= o.id %>, <%= name.delete(' ') + 'ajax' %>, 2)" src="/assets/redx.png" alt="X" border="0"/>
                                     </li>
                                   <%end%>
                                 <%end%>
@@ -144,7 +144,7 @@
                                   <%if o.oppty.present?%>
                                     <li id="<%= o.id%>" class="col-md-12">
                                         <h5 class="col-md-11"><%= link_to o.oppty.opptyName, o.oppty%></h5>
-                                        <img id="delete-btn-manager-3" class="btn-x-manager" onclick="confirmDelete(<%= o.id %>, <%= name.delete(' ') + 'ajax' %>, 3)" src="/assets/redx.png" alt="X" border="0"/>
+                                        <img id="delete-btn-manager-3" class="btn-x-manager" onclick="confirmDeleteManager(<%= o.id %>, <%= name.delete(' ') + 'ajax' %>, 3)" src="/assets/redx.png" alt="X" border="0"/>
                                     </li>
                                    <%end%>
                                 <%end%>
