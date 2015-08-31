@@ -15,7 +15,7 @@ function deleteOptManager (id, nameOfRowCount, index){
 
     xmlHttp.open("Content-Type", "application/x-www-form-urlencoded");
     xmlHttp.open("Connection", "close");
-    xmlHttp.open("delete", "http://localhost:3000/allocated_tasks/deleteOpportunity?id="+id , true );
+    xmlHttp.open("delete", "/allocated_tasks/deleteOpportunity?id="+id , true );
     xmlHttp.send(null);
 }
 
@@ -28,4 +28,17 @@ function swap(targetId){
             target.style.display = "none";
         }
     }
+}
+
+function changeTasksColor (count, childNodeName) {
+    if (count >= 5) {
+        document.getElementById(childNodeName).style.backgroundColor = 'red';
+        document.getElementById(childNodeName).style.border = '1px solid white';
+    } else if (count >= 3) {
+        document.getElementById(childNodeName).style.backgroundColor = '#FED000';
+        document.getElementById(childNodeName).style.border = '1px solid white';
+    } else {
+        document.getElementById(childNodeName).style.backgroundColor = 'green';
+        document.getElementById(childNodeName).style.border = '1px solid white';
+    } 
 }
