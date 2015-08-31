@@ -55,6 +55,9 @@
                       <% if n.title == "RFP Date Changed" %>
                         <li onclick="sendFromNotification('<%= n.title%>', '<%= n.oppty_id %>')" 
                           class="notification-feed" style="padding-bottom: 15px !important; cursor: pointer;">
+                      <% else %>
+                        <li onclick="sendFromNotification('<%= n.title%>', '<%= n.history_id %>')"
+                          class="notification-feed" style="padding-bottom: 15px !important; cursor: pointer;">
                       <% end %>    
                           <a href="#">
                             <p class="notify-title"><b><%=n.title%></b> <a class="notify-creation-date" style="float: right;"><%=n.created_at.to_date%></a><p>
