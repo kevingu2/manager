@@ -21,6 +21,11 @@ ActiveRecord::Schema.define(version: 20150828185526) do
     t.datetime "updated_at"
   end
 
+  create_table "browses", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "histories", force: true do |t|
     t.string   "opptyId"
     t.string   "opptyName"
@@ -282,7 +287,7 @@ ActiveRecord::Schema.define(version: 20150828185526) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "status"
+    t.integer  "status",     default: 2
   end
 
   add_index "user_oppties", ["oppty_id"], name: "index_user_oppties_on_oppty_id"
@@ -294,6 +299,7 @@ ActiveRecord::Schema.define(version: 20150828185526) do
     t.string   "role"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "new_notif_count", default: 0
   end
 
 end
