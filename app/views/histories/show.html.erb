@@ -1,26 +1,31 @@
-<div class="jumbotron">
-  <h1 class="op-title"><%= @history.opptyName%></h1>
-  <p><b>IDIQ CA:</b> <%= @history.idiqCA%></p>
-  <p><b>Status:</b> <%= @history.status2%></p>
-  <p><b>Value:</b> <%= @history.value%></p>
-  <p><b>Percentage Win:</b> <%= @history.pWin%></p>
-  <p><b>RFP Date:</b> <%= @history.rfpDate%></p>
-  <p><b>Award Date:</b> <%= @history.awardDate%></p>
-  <p><b>Submit Date:</b> <%= @history.submitDate%></p>
-  <p><b>Number of Writers</b>:</b> <%= @numWriters%></p>
-  <p><b>Capture Manager:</b> <%= @history.captureMgr%></p>
-  <p><b>Program Manager:</b> <%= @history.programMgr%></p>
-  <p><b>SSL Organization:</b> <%= @history.sllOrg%></p>
-  <p><b>Technical Lead:</b> <%= @history.technicalLead%></p>
-  <p><b>SLL Architect:</b> <%= @history.slArch%></p>
-  <p><b>ED:</b> <%= @history.ed%></p>
-  <p><b>ON:</b> <%= @history.on%></p>
-  <p><b>ATE:</b> <%= @history.ate%></p>
-  <p><b>SL Comments:</b> <%= @history.slComments%></p>
-  <p><b>SL Director:</b> <%= @history.slDir%></p>
-  <p><b>Lead Estimator:</b> <%= @history.leadEstim%></p>
-  <p><b>Engaged:</b> <%= @history.engaged%></p>
-  <p><b>Solution:</b> <%= @history.solution%></p>
-  <p><b>Estimate:</b> <%= @history.estimate%></p>
-  <a class="btn btn-lg btn-primary btn-left" href=<%=url_for(:back)%> role="button" style="color:white">Cancel</a>
-</div>
+<body>
+  <div class="container">
+    <!-- Main component for a primary marketing message or call to action -->
+    <div class="jumbotron" style="padding-left:25px !important; padding-right:25px !important; padding-bottom:75px !important;">
+      <h2 class="op-title"><%= @history.opptyName%></h2>
+      <p><b>IDIQ CA:</b> <%= @history.idiqCA%></p>
+      <p><b>Status:</b> <%= @history.status2%></p>
+      <p><b>Value:</b> <%= @history.value%></p>
+      <p><b>Percentage Win:</b> <%= @history.pWin%></p>
+      <p><b>RFP Date:</b> <%= @history.rfpDate%></p>
+      <p><b>Award Date:</b> <%= @history.awardDate%></p>
+      <p><b>Submit Date:</b> <%= @history.submitDate%></p>
+      <p><b>Number of Writers</b>:</b> <%= @numWriters%></p>
+      <p><b>Capture Manager:</b> <%= @history.captureMgr%></p>
+      <p><b>Program Manager:</b> <%= @history.programMgr%></p>
+      <p><b>SSL Organization:</b> <%= @history.sllOrg%></p>
+      <p><b>Technical Lead:</b> <%= @history.technicalLead%></p>
+      <p><b>SLL Architect:</b> <%= @history.slArch%></p>
+      <p><b>ED:</b> <%= @history.ed%></p>
+      <p><b>ON:</b> <%= @history.on%></p>
+      <p><b>ATE:</b> <%= @history.ate%></p>
+      <p><b>SL Comments:</b> <%= @history.slComments%></p>
+      <p><b>SL Director:</b> <%= @history.slDir%></p>
+      <p><b>Lead Estimator:</b> <%= @history.leadEstim%></p>
+      <p><b>Engaged:</b> <%= @history.engaged%></p>
+      <p><b>Solution:</b> <%= @history.solution%></p>
+      <p><b>Estimate:</b> <%= @history.estimate%></p>
+      <a class="btn btn-lg btn-primary btn-left" href=<%=url_for(:back)%> role="button" style="color:white">Cancel</a>
+    </div>
+  </div>
+</body>

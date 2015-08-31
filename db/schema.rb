@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150825171947) do
+ActiveRecord::Schema.define(version: 20150828185526) do
 
   create_table "allocated_tasks", force: true do |t|
     t.string   "title"
@@ -132,6 +132,16 @@ ActiveRecord::Schema.define(version: 20150825171947) do
     t.float    "fy16BPSpent"
     t.float    "fy16BPSpentPercent"
     t.string   "coordinate"
+  end
+
+  create_table "notification_histories", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "status"
+    t.string   "title"
+    t.string   "message"
+    t.integer  "user_id"
+    t.integer  "history_id"
   end
 
   create_table "notifications", force: true do |t|

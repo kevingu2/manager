@@ -15,7 +15,7 @@ function deleteOptManager (id, nameOfRowCount, index){
 
     xmlHttp.open("Content-Type", "application/x-www-form-urlencoded");
     xmlHttp.open("Connection", "close");
-    xmlHttp.open("delete", "http://localhost:3000/allocated_tasks/deleteOpportunity?id="+id , true );
+    xmlHttp.open("delete", "/allocated_tasks/deleteOpportunity?id="+id , true );
     xmlHttp.send(null);
 }
 

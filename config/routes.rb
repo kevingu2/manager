@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :notification_histories
+
   get 'test_code/index'
 
   resources :user_histories

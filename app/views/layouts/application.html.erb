@@ -14,14 +14,8 @@
   <%= stylesheet_link_tag "bootstrap.min.css", media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag('html5shiv.min.js') %>
   <%= javascript_include_tag('respond.min.js') %>
-
-  <%= stylesheet_link_tag "jquery-ui.css", media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag('jquery-1.10.2.js') %>
-  <%= javascript_include_tag('jquery-ui.js') %>
-
-  <%= javascript_include_tag('bootstrap-notify.min.js') %>
-  <%= javascript_include_tag('jquery.growl.js') %>
 </head>
+
 <body class='<%=controller.controller_name%>'>
 <!-- Static navbar -->
 <%if session[:user_id] %>
@@ -45,7 +39,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li id="username"><a>Welcome <%=session[:username] %></a></li>
             <li class="tab dropdown" style="max-height: 50px !important;">
-              <a onclick="resetNotification(<%= session[:user_id]%>,'<%=application_resetNotification_url%>')"
+              <a onclick="resetNotification('<%= session[:user_id]%>','<%=application_resetNotification_url%>')"
                  class="dropdown-toggle nav-notifications" data-toggle="dropdown" style="max-height: 50px !important;
                       padding-top: 10px !important;">
                 <img src="/assets/notif-bell-2.png" name="notificationIcon" height="35" width="35" style="padding-bottom: 4px;"
@@ -56,18 +50,24 @@
               </a>
               <div class="dropdown-menu"  style="position: absolute !important; top: 49px !important; right: -25px !important; min-width: 300px !important;">
                 <ul id="notification-scroll" class="notification-scroll">
-                <% if @notifications.size > 0 %>
-                    <% @notifications.each do |o| %>
-                        <li onclick= "sendFromNotification()" class="notification-feed" style="padding-bottom: 15px !important;">
+                <% if @notif_array.size > 0 %>
+                    <% @notif_array.reverse_each do |n| %>
+                      <% if n.title == "RFP Date Changed" %>  
+                        <li onclick="sendFromNotification('<%= n.title%>', '<%= n.oppty_id %>')" 
+                          class="notification-feed" style="padding-bottom: 15px !important; cursor: pointer;">
+                      <% else %>
+                        <li onclick="sendFromNotification('<%= n.title%>', '<%= n.history_id %>')" 
+                          class="notification-feed" style="padding-bottom: 15px !important; cursor: pointer;">
+                      <% end %>    
                           <a href="#">
-                            <p class="notify-title"><b><%=o.title%></b> <a class="notify-creation-date" style="float: right;"><%=o.created_at.to_date%></a><p>
-                            <p><%=o.message%></p>
+                            <p class="notify-title"><b><%=n.title%></b> <a class="notify-creation-date" style="float: right;"><%=n.created_at.to_date%></a><p>
+                            <p><%=n.message%></p>
                           </a>
-                        </li>
-                    <%end%>
-                <%else%>
+                        </li>   
+                    <% end %>
+                <% else %>
                     <li style="text-align: center; padding-left: 10px !important;">No Notifications</li>
-                <%end%>
+                <% end %>
               </ul>
               </div>
             </li>
@@ -107,6 +107,49 @@
 </style>
 
 <%= javascript_include_tag('jquery.slimscroll.min.js') %>
+
+<script>
+    $(function(){
+        $('#notification-scroll').slimScroll({
+            height: '330px',
+            width: '300px'
+        });
+    });
+
+    function sendFromNotification(notify_title, id) {
+        /* Redirect to different places depending on the notification title */
+        if (notify_title == "RFP Date Changed") {
+            console.log("RFP Date Changed");
+            window.location = "/oppties/" + id;
+        } else if (notify_title == "Opportunity Moved To History") {
+            console.log("Opportunity Moved To History");
+            window.location = "/histories/" + id;
+        } else if (notify_title == "Assigned To Task") {
+            console.log("Assigned To Task");
+            if (<%=session[:role] %> == "Writer") {
+              window.location = "/tasks/index";
+            } else {
+              window.location = "/allocated_tasks/index";
+            }
+        }   
+    }
+
+    function resetNotification(user_id, path){
+        var notify_div=document.getElementById('circle');
+        if(notify_div!=null)
+            notify_div.remove();
+        var params = "{'user_id':"+user_id+"}";
+        params=params.replace(/'/g, '"');
+
+        //AJAX request
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.open("Content-Type", "application/x-www-form-urlencoded");
+        xmlHttp.open("Content-length", params.length);
+        xmlHttp.open("Connection", "close");
+        xmlHttp.open( "Post", path, true );
+        xmlHttp.send(params);
+    }
+</script>
 
 </body>
 </html>

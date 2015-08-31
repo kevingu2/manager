@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_secure_password
   has_many :user_oppty, dependent: :destroy
   has_many :user_history, dependent: :destroy
+  has_many :notification_history, dependent: :destroy
   has_many :notification, dependent: :destroy
   has_many :oppty, through: :user_oppty
   has_many :oppty, through: :user_history
@@ -42,5 +43,9 @@ class User < ActiveRecord::Base
   #status, 0 is unseen, 1 is seen
   def add_notification(oppty_id, title, message, status)
     notification.build(oppty_id:oppty_id, title:title, message:message, status:status)
+  end
+  #status, 0 is unseen, 1 is seen
+  def add_notification_history(history_id, title, message, status)
+    notification_history.build(history_id:history_id, title:title, message:message, status:status)
   end
 end
