@@ -19,6 +19,13 @@ function deleteOptManager (id, nameOfRowCount, index){
     xmlHttp.send(null);
 }
 
+function confirmDelete(id, nameOfRowCount, index){
+    r=window.confirm("Are you sure you want to delete this task?");
+    if (r == true) {
+        deleteOptManager(id, nameOfRowCount, index);
+    }
+}
+
 function swap(targetId){
     if (document.getElementById(targetId)){
         target = document.getElementById(targetId);
