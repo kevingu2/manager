@@ -9,7 +9,7 @@
             <!-- serach field holds the value that is searched -->
             <td class="col-md-10" style="padding-top: 15px !important; padding-bottom:30px !important;">
               <%= form_tag(histories_path, :method => "get", id: "search-form" ) do %>
-                <%= text_field_tag :search, params[:search], placeholder: "Search" %>
+                <%= text_field_tag :search, params[:search], placeholder: "Search Within Opportunity Name, ID, Code Name, or Customer Group" %>
                 <input id="search-button" class="btn-search" style="width: 4% !important;" type="image" src="/assets/search.png" alt="Submit_tag"> 
                 <td class="col-md-1"></td>
               <% end %>

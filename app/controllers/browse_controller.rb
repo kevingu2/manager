@@ -15,17 +15,17 @@ class BrowseController < ApplicationController
     end
 
     if params[:invalid] == "rfpDate"
-      @oppties = Oppty.where("opptyName like ? and proposalDueDate >= ? and proposalDueDate <= ? and rfpDate < ? and (status2 == ? or status2 == ? or status2 == ?)", "%#{params[:search]}%", beginDate, endDate.to_s, Date.today().to_s, "P1-ID/Track", "P2-Qualification", "P3-Pursuit").order(params[:sort]).page(params[:page]).per_page(15)
+      @oppties = Oppty.where("(opptyName like ? or opptyId like ? or codeName like ? or cgOrg like ?) and proposalDueDate >= ? and proposalDueDate <= ? and rfpDate < ? and (status2 == ? or status2 == ? or status2 == ?)", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", beginDate, endDate.to_s, Date.today().to_s, "P1-ID/Track", "P2-Qualification", "P3-Pursuit").order(params[:sort]).page(params[:page]).per_page(15)
     elsif params[:invalid] == "leadEstim"
-      @oppties = Oppty.where("opptyName like ? and proposalDueDate >= ? and proposalDueDate <= ? and (leadEstim == ? or leadEstim == ?)", "%#{params[:search]}%", beginDate, endDate.to_s, "TBD", "").order(params[:sort]).page(params[:page]).per_page(15)
+      @oppties = Oppty.where("(opptyName like ? or opptyId like ? or codeName like ? or cgOrg like ?) and proposalDueDate >= ? and proposalDueDate <= ? and (leadEstim == ? or leadEstim == ?)", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", beginDate, endDate.to_s, "TBD", "").order(params[:sort]).page(params[:page]).per_page(15)
     elsif params[:invalid] == "technicalLead"
-      @oppties = Oppty.where("opptyName like ? and proposalDueDate >= ? and proposalDueDate <= ? and (technicalLead == ? or technicalLead == ?)", "%#{params[:search]}%", beginDate, endDate.to_s, "TBD", "").order(params[:sort]).page(params[:page]).per_page(15)
+      @oppties = Oppty.where("(opptyName like ? or opptyId like ? or codeName like ? or cgOrg like ?) and proposalDueDate >= ? and proposalDueDate <= ? and (technicalLead == ? or technicalLead == ?)", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", beginDate, endDate.to_s, "TBD", "").order(params[:sort]).page(params[:page]).per_page(15)
     elsif params[:invalid] == "slDir"
-      @oppties = Oppty.where("opptyName like ? and proposalDueDate >= ? and proposalDueDate <= ? and (slDir == ? or slDir == ?)", "%#{params[:search]}%", beginDate, endDate.to_s, "TBD", "").order(params[:sort]).page(params[:page]).per_page(15)
+      @oppties = Oppty.where("(opptyName like ? or opptyId like ? or codeName like ? or cgOrg like ?) and proposalDueDate >= ? and proposalDueDate <= ? and (slDir == ? or slDir == ?)", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", beginDate, endDate.to_s, "TBD", "").order(params[:sort]).page(params[:page]).per_page(15)
     elsif params[:invalid] == "slArch"
-      @oppties = Oppty.where("opptyName like ? and proposalDueDate >= ? and proposalDueDate <= ? and (slArch == ? or slArch == ?)", "%#{params[:search]}%", beginDate, endDate.to_s, "TBD", "").order(params[:sort]).page(params[:page]).per_page(15)
+      @oppties = Oppty.where("(opptyName like ? or opptyId like ? or codeName like ? or cgOrg like ?) and proposalDueDate >= ? and proposalDueDate <= ? and (slArch == ? or slArch == ?)", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", beginDate, endDate.to_s, "TBD", "").order(params[:sort]).page(params[:page]).per_page(15)
     elsif params[:invalid] == "sllOrg"
-      @oppties = Oppty.where("opptyName like ? and proposalDueDate >= ? and proposalDueDate <= ? and
+      @oppties = Oppty.where("(opptyName like ? or opptyId like ? or codeName like ? or cgOrg like ?) and proposalDueDate >= ? and proposalDueDate <= ? and
                              ((sllOrg == ? and (tss_va == ? or tss_va == ?)) or 
                               (sllOrg == ? and (swi_va == ? or swi_va == ?)) or 
                               (sllOrg == ? and (itms_va == ? or itms_va == ?)) or 
@@ -35,7 +35,7 @@ class BrowseController < ApplicationController
                               (sllOrg == ? and (lsc_va == ? or lsc_va == ?)) or 
                               (sllOrg == ? and (nwi_va == ? or nwi_va == ?)) or 
                               (sllOrg == ? and (sss_va == ? or sss_va == ?)) )", 
-                              "%#{params[:search]}%", beginDate, endDate.to_s,
+                              "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", beginDate, endDate.to_s,
                               "TSS", 0.0, "",
                               "SWI", 0.0, "",
                               "ITMS", 0.0, "",
@@ -46,7 +46,7 @@ class BrowseController < ApplicationController
                               "NWI", 0.0, "",
                               "SSS", 0.0, "").order(params[:sort]).page(params[:page]).per_page(15)
     else 
-      @oppties = Oppty.where("opptyName like ? and proposalDueDate >= ? and proposalDueDate <= ?", "%#{params[:search]}%", beginDate, endDate.to_s).order(params[:sort]).page(params[:page]).per_page(15)
+      @oppties = Oppty.where("(opptyName like ? or opptyId like ? or codeName like ? or cgOrg like ?) and proposalDueDate >= ? and proposalDueDate <= ?", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%", beginDate, endDate.to_s).order(params[:sort]).page(params[:page]).per_page(15)
     end
 
   end

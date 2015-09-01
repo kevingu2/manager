@@ -8,7 +8,7 @@
             <td class="col-md-1"></td>
             <td class="col-md-10" style="padding-top: 15px !important;">
               <%= form_tag(browse_index_path, :method => "get", id: "search-form") do %>
-                <%= text_field_tag :search, params[:search], placeholder: "Search" %>
+                <%= text_field_tag :search, params[:search], placeholder: "Search Within Opportunity Name, ID, Code Name, or Customer Group" %>
                 <input id="search-button" class="btn-search" type="image" style="width: 4% !important;" src="/assets/search.png" alt="Submit_tag"> 
                 <td class="col-md-1"></td>
               <% end %>
