@@ -53,10 +53,31 @@ class ApplicationController < ActionController::Base
   def setNotification
       #a hash to hold booleans for each oppty_id, with true corresponding to 'the id is inside oppties' 
       @notif_array = []
+      #get all notifications
+      @allNotifications = Notification.all
       #collect user's notifications for opportunities into a collection
       @notifications = Notification.where(user_id: session[:user_id])
+      #used to hold notifications for moved opportunities
+      @notifications_moved = {}
+      #iterate through all of the notifications, moving notifications 
+      @allNotifications.each do |notif|
+        unless @notifications.includes(notif)
+          @notifications_moved.push(notif) 
+        end
+      end
+
+      #get all notifications for histories
+      @allHistoryNotifications = NotificationHistory.all
       #collect user's notifications for histories into a collection
       @history_notifications = NotificationHistory.where(user_id: session[:user_id])
+      #used to hold notifications for moved opportunities
+      @history_notifications_moved = {}
+      #iterate through all of the notifications, moving notifications 
+      @allHistoryNotifications.each do |notif_hist|
+        unless @history_notifications.includes(notif_hist)
+          @history_notifications_moved.push(notif_hist) 
+        end
+      end
 
       #count the number of unseen notifications for opportunities for display in view
       @num_unseen_notification_oppty = Notification.where(user_id: session[:user_id], status:UNSEEN_NOTIFICATION).size
@@ -74,8 +95,22 @@ class ApplicationController < ActionController::Base
           arrayCount += 1
       end
 
+      #fill up hash with opportunity notifications
+      @notifications_moved.each do |n|
+          #check for this notification's oppty inside of opportunity database
+          @notif_array[arrayCount] =  n #Oppty.find_by(id: n.oppty_id) 
+          arrayCount += 1
+      end
+
       #fill up hash with history notifications
       @history_notifications.each do |hn|
+          #check for this notification's oppty inside of opportunity database
+          @notif_array[arrayCount] = hn #History.find_by(id: hn.history_id) 
+          arrayCount += 1
+      end
+
+      #fill up hash with history notifications
+      @history_notifications_moved.each do |hn|
           #check for this notification's oppty inside of opportunity database
           @notif_array[arrayCount] = hn #History.find_by(id: hn.history_id) 
           arrayCount += 1

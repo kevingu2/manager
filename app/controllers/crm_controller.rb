@@ -92,21 +92,13 @@ class CrmController < ApplicationController
     ids.each do |id|
       oppty=Oppty.find_by(["opptyId=?", id])
       history=moveToHistory(oppty)
+
       managers=User.where(role:MANAGER_ROLE)
       managers.each do|m|
         puts m.name
         notification=m.add_notification_history(history.id, MOVEDTOHISTORY,history.opptyName+" RFP date has changed", UNSEEN_NOTIFICATION );
         if notification.save
           puts "Manager notification saved"
-        end
-      end
-      ups=UserOppty.where(oppty_id:oppty.id).includes(:user)
-      ups.each do |up|
-        puts up.user_id
-        #create notification for the users working on the opppty
-        notification=up.user.add_notification_history(history.id, MOVEDTOHISTORY,history.opptyName+" has been deleted",UNSEEN_NOTIFICATION);
-        if notification.save
-          puts "User notification Saved"
         end
       end
     end
@@ -237,6 +229,15 @@ class CrmController < ApplicationController
           puts "history saved: "+user_history.user_id.to_s
         else
           puts "history not saved"
+        end
+      end
+      ups=UserOppty.where(oppty_id:oppty.id).includes(:user)
+      ups.each do |up|
+        puts up.user_id
+        #create notification for the users working on the opppty
+        notification=up.user.add_notification_history(history.id, MOVEDTOHISTORY,history.opptyName+" has been deleted",UNSEEN_NOTIFICATION);
+        if notification.save
+          puts "User notification Saved"
         end
       end
       oppty.destroy
