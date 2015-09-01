@@ -4,11 +4,12 @@ function deleteOptManager (id, nameOfRowCount, index){
         if (xmlHttp.readyState == 4) {
             if(xmlHttp.responseText==="OK"){
                 document.getElementById(id).remove();
-                /*alert(nameOfRowCount.item(index));
-                alert(nameOfRowCount.item(index).innerText);*/
-                var count = Number(nameOfRowCount.item(index).innerText.substring(0, 1));
+                /*alert(nameOfRowCount);
+                alert(nameOfRowCount.innerText);*/
+                var count = Number(nameOfRowCount.innerText.substring(0, 1));
                 /*alert(count);*/
-                nameOfRowCount.item(index).innerText = "" + (count-1) + " tasks";
+                nameOfRowCount.innerText = "" + (count-1) + " tasks";
+                changeTasksColor(count-1,nameOfRowCount.id);
             }
         }
     }
@@ -37,15 +38,15 @@ function swap(targetId){
     }
 }
 
-function changeTasksColor (count, childNodeName) {
+function changeTasksColor (count, nodeName) {
     if (count >= 5) {
-        document.getElementById(childNodeName).style.backgroundColor = 'red';
-        document.getElementById(childNodeName).style.border = '1px solid white';
+        document.getElementById(nodeName).style.backgroundColor = 'red';
+        document.getElementById(nodeName).style.border = '1px solid white';
     } else if (count >= 3) {
-        document.getElementById(childNodeName).style.backgroundColor = '#FED000';
-        document.getElementById(childNodeName).style.border = '1px solid white';
+        document.getElementById(nodeName).style.backgroundColor = '#FED000';
+        document.getElementById(nodeName).style.border = '1px solid white';
     } else {
-        document.getElementById(childNodeName).style.backgroundColor = 'green';
-        document.getElementById(childNodeName).style.border = '1px solid white';
+        document.getElementById(nodeName).style.backgroundColor = 'green';
+        document.getElementById(nodeName).style.border = '1px solid white';
     } 
 }
