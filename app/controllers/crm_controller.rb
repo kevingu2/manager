@@ -92,6 +92,7 @@ class CrmController < ApplicationController
     ids.each do |id|
       oppty=Oppty.find_by(["opptyId=?", id])
       history=moveToHistory(oppty)
+
       managers=User.where(role:MANAGER_ROLE)
       managers.each do|m|
         puts m.name
