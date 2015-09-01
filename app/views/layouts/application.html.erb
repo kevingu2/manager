@@ -38,9 +38,8 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li id="username"><a>Welcome <%=session[:username] %></a></li>
-            <li class="tab dropdown" style="max-height: 50px !important;">
-              <a onclick="resetNotification('<%= session[:user_id]%>','<%=application_resetNotification_url%>')"
-                 class="dropdown-toggle nav-notifications" data-toggle="dropdown" style="max-height: 50px !important;
+            <li onclick="resetNotification('<%= session[:user_id]%>','<%=application_resetNotification_url%>')" class="tab dropdown" style="max-height: 50px !important;">
+              <a class="dropdown-toggle nav-notifications" data-toggle="dropdown" style="max-height: 50px !important;
                       padding-top: 10px !important;">
                 <img src="/assets/notif-bell-2.png" name="notificationIcon" height="35" width="35" style="padding-bottom: 4px;"
                 </img>
@@ -56,7 +55,7 @@
                         <li onclick="sendFromNotification('<%= n.title%>', '<%= n.oppty_id %>')" 
                           class="notification-feed" style="padding-bottom: 15px !important; cursor: pointer;">
                       <% elsif n.title == "Opportunity Moved To History" %>
-                        <li onclick="sendFromNotification('<%= n.title%>', '<%= n.history_id %>')" 
+                        <li onclick="sendFromNotification('<%= n.title%>', '<%= n.history_id %>')"
                           class="notification-feed" style="padding-bottom: 15px !important; cursor: pointer;">
                       <% else %>
                         <li onclick="sendFromNotification('<%= n.title%>', '')" 
