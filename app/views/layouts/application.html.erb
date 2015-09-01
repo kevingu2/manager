@@ -55,8 +55,11 @@
                       <% if n.title == "RFP Date Changed" %>
                         <li onclick="sendFromNotification('<%= n.title%>', '<%= n.oppty_id %>')" 
                           class="notification-feed" style="padding-bottom: 15px !important; cursor: pointer;">
-                      <% else %>
+                      <% elsif n.title == "Opportunity Moved To History" %>  
                         <li onclick="sendFromNotification('<%= n.title%>', '<%= n.history_id %>')"
+                          class="notification-feed" style="padding-bottom: 15px !important; cursor: pointer;">
+                      <% else %>
+                        <li onclick="sendFromNotification('', '')" 
                           class="notification-feed" style="padding-bottom: 15px !important; cursor: pointer;">
                       <% end %>    
                           <a href="#">

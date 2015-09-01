@@ -36,3 +36,16 @@ function swap(targetId){
         }
     }
 }
+
+function changeTasksColor (count, childNodeName) {
+    if (count >= 5) {
+        document.getElementById(childNodeName).style.backgroundColor = 'red';
+        document.getElementById(childNodeName).style.border = '1px solid white';
+    } else if (count >= 3) {
+        document.getElementById(childNodeName).style.backgroundColor = '#FED000';
+        document.getElementById(childNodeName).style.border = '1px solid white';
+    } else {
+        document.getElementById(childNodeName).style.backgroundColor = 'green';
+        document.getElementById(childNodeName).style.border = '1px solid white';
+    } 
+}
