@@ -101,16 +101,6 @@ class CrmController < ApplicationController
           puts "Manager notification saved"
         end
       end
-      
-      ups=UserOppty.where(oppty_id:oppty.id).includes(:user)
-      ups.each do |up|
-        puts up.user_id
-        #create notification for the users working on the opppty
-        notification=up.user.add_notification_history(history.id, MOVEDTOHISTORY,history.opptyName+" has been deleted",UNSEEN_NOTIFICATION);
-        if notification.save
-          puts "User notification Saved"
-        end
-      end
     end
     redirect_to crm_index_path, notice: "Successfully uploaded: "+newFileName
   end
@@ -239,6 +229,15 @@ class CrmController < ApplicationController
           puts "history saved: "+user_history.user_id.to_s
         else
           puts "history not saved"
+        end
+      end
+      ups=UserOppty.where(oppty_id:oppty.id).includes(:user)
+      ups.each do |up|
+        puts up.user_id
+        #create notification for the users working on the opppty
+        notification=up.user.add_notification_history(history.id, MOVEDTOHISTORY,history.opptyName+" has been deleted",UNSEEN_NOTIFICATION);
+        if notification.save
+          puts "User notification Saved"
         end
       end
       oppty.destroy

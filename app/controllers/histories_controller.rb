@@ -9,6 +9,9 @@ class HistoriesController < ApplicationController
   # GET /histories
   # GET /histories.json
   def index
+    puts '*'*30
+    puts params[:search]
+    puts '*'*30
     if session[:role]=="Writer"
       if params[:invalid] == "rfpDate"
         @histories = UserHistory.where("user_id == ?", @user.id).includes(:history).where("opptyName like ? and rfpDate < ? and (status2 == ? or status2 == ? or status2 == ?)", "%#{params[:search]}%", Date.today().to_s, "P1-ID/Track", "P2-Qualification", "P3-Pursuit").order(params[:sort]).page(params[:page]).per_page(15)
@@ -42,8 +45,9 @@ class HistoriesController < ApplicationController
                                 "NWI", 0.0, "",
                                 "SSS", 0.0, "").includes(:history).order(params[:sort]).page(params[:page]).per_page(15)
       else
-        @histories = UserHistory.where("user_id == ?", @user.id).includes(:history).where('opptyName like "'+
-                    '%#{params[:search]}%"').references(:history).order(params[:sort]).page(params[:page]).per_page(15)
+          @histories = UserHistory.where("user_id == ?", @user.id).includes(:history).
+              where('opptyName like ?',"%#{params[:search]}%").references(:history).
+              order(params[:sort]).page(params[:page]).per_page(15)
       end
 
     else
