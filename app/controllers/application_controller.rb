@@ -3,7 +3,8 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
-  before_action :authorize, :setNotification, :deleteUnUploadedFile
+  before_action :authorize,   unless: "Rails.env.test?"
+  before_action :setNotification, :deleteUnUploadedFile
   protect_from_forgery with: :exception
   helper_method :getUploadedFileName
   skip_before_action :verify_authenticity_token, only: [:resetNotification]

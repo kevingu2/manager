@@ -1,10 +1,10 @@
 <body>
-    <% if notice %>
-        <p id="notice"><%= notice %></p>
-    <% end %>
   <!--div class="page-wrapper"-->
 	<div class="col-md-6 column-wrapper">
 	  <div class="inner-column">
+        <% if notice %>
+            <p id="notice"><%= notice %></p>
+        <% end %>
 		<h2 class="column-title">Upload</h2>
         <%if !@uploaded and !@oldOrNew.present?%>
             <form id="upload" method="post" action="calculateChanges" enctype="multipart/form-data">

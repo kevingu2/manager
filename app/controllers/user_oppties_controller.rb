@@ -28,7 +28,7 @@ class UserOpptiesController < ApplicationController
     oppty=Oppty.find(params[:oppty_id])
     @user_oppty=@user.add_oppty(@user.id, oppty.id, 2)
     if !@user_oppty
-      redirect_to invalid_entry_index_path, notice: "Already Added Opportunity"
+      redirect_to :back, notice: "Already Added Opportunity"
       return
     end
       respond_to do |format|
