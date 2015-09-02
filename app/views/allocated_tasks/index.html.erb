@@ -1,11 +1,12 @@
 <html lang="en">
+
+<body>
 <div class="jumbotron allocated-task-bg" style="border-radius: 5px !important;">
 	<div class="textCenter" style="border-radius: 5px !important;">
 		<h2 class="title-banner" style="border-top-left-radius: 5px !important; border-top-right-radius: 5px !important;">Allocated Tasks</h2>
 
     </div>
 
-<body>
 <div class="container tasks-queue">
   <!-- Example row of columns -->
 	<div class="row">
@@ -44,9 +45,9 @@
                 <%end%>
                 <ul>
                     <li>
-                        <a class="col-md-12" href="#" onclick="swap('<%= name %>'+'assigned');return false;"> 
+                        <a id="<%= 'colorBlock' + 'name' + 'assigned'%>" class="col-md-12" href="#" onclick="swap('<%= name %>'+'assigned');return false;"> 
                             <p class="col-md-8 writer-label"><%= name %></p>
-                            <p id="<%= name.delete(' ') + 'ajax' %>" class="col-md-4 writer-label"><%= count.to_s + " tasks"%></p>
+                            <p id="<%= name.delete(' ') + 'ajax' + 'assigned'%>" class="col-md-4 writer-label"><%= count.to_s + " tasks"%></p>
                         </a>
                         <%if @assigned_writer_dict[id].present?%>
                             <ul id="<%= name + 'assigned' %>" style="display: none;">
@@ -54,7 +55,7 @@
                                   <%if o.oppty.present?%>
                                     <li id="<%= o.id%>" class="col-md-12">
                                         <h5 class="col-md-11"><%= link_to o.oppty.opptyName, o.oppty%></h5>
-                                        <img id="delete-btn-manager" class="btn-x-manager" onclick="deleteOptManager(<%= o.id %>, <%= name.delete(' ') + 'ajax' %>, 0)" src="/assets/redx.png" alt="X" border="0"/>
+                                        <img id="delete-btn-manager" class="btn-x-manager" onclick="confirmDeleteManager(<%= o.id %>, <%= name.delete(' ') + 'ajax' + 'assigned'%>)" src="/assets/redx.png" alt="X" border="0"/>
                                     </li>
                                   <%end%>
                                 <%end%>
@@ -62,6 +63,10 @@
                         <%end%>
                     </li>
                 </ul>
+                <!-- update the color of writer block depending upon the number of tasks for a specific writer -->
+                <script> 
+                    changeTasksColor(<%=count%>, "<%= name.delete(' ') + 'ajax' + 'assigned' %>")
+                </script>
             <%end%>
         </div>
         <div class="col-md-3 op-body-bg-col-label" id="navigation">
@@ -76,7 +81,7 @@
                     <li>
                         <a class="col-md-12" href="#" onclick="swap('<%= name %>'+'todo');return false;">
                             <p class="col-md-8 writer-label"><%= name %> </p>
-                            <p id="<%= name.delete(' ') + 'ajax' %>" class="col-md-4 writer-label"><%= count.to_s + " tasks"%></p>
+                            <p id="<%= name.delete(' ') + 'ajax' + 'todo' %>" class="col-md-4 writer-label"><%= count.to_s + " tasks"%></p>
                         </a>
                         <%if @todo_writer_dict[id].present? %>
                             <ul id="<%= name + 'todo' %>" style="display: none;">
@@ -84,7 +89,7 @@
                                     <% if o.oppty.present?%>
                                         <li id="<%= o.id%>" class="col-md-12">
                                             <h5 class="col-md-11"><%= link_to o.oppty.opptyName, o.oppty%></h5>
-                                            <img id="delete-btn-manager-1" class="btn-x-manager" onclick="deleteOptManager(<%= o.id %>, <%= name.delete(' ') + 'ajax' %>, 1)" src="/assets/redx.png" alt="X" border="0"/>
+                                            <img id="delete-btn-manager-1" class="btn-x-manager" onclick="confirmDeleteManager(<%= o.id %>, <%= name.delete(' ') + 'ajax' + 'todo'%>)" src="/assets/redx.png" alt="X" border="0"/>
                                         </li>
                                     <% end %>
                                 <%end%>
@@ -92,6 +97,8 @@
                         <%end%>
                     </li>
                 </ul>
+                <!-- update the color of writer block depending upon the number of tasks for a specific writer -->
+                <script> changeTasksColor(<%=count%>, "<%= name.delete(' ') + 'ajax' + 'todo' %>") </script>
             <%end%>
         </div>
         <div class="col-md-3 op-body-bg-col-label" id="navigation">
@@ -106,7 +113,7 @@
                     <li>
                         <a class="col-md-12" href="#" onclick="swap('<%= name %>'+'doing');return false;">
                             <p class="col-md-8 writer-label"><%= name %> </p>
-                            <p id="<%= name.delete(' ') + 'ajax' %>" class="col-md-4 writer-label"><%= count.to_s + " tasks"%></p>
+                            <p id="<%= name.delete(' ') + 'ajax' + 'doing'%>" class="col-md-4 writer-label"><%= count.to_s + " tasks"%></p>
                         </a>
                         <%if @doing_writer_dict[id].present?%>
                             <ul id="<%= name + 'doing'%>" style="display: none;">
@@ -114,7 +121,7 @@
                                   <%if o.oppty.present?%>
                                     <li id="<%= o.id%>" class="col-md-12">
                                         <h5 class="col-md-11"><%= link_to o.oppty.opptyName, o.oppty%></h5>
-                                        <img id="delete-btn-manager-2" class="btn-x-manager" onclick="deleteOptManager(<%= o.id %>, <%= name.delete(' ') + 'ajax' %>, 2)" src="/assets/redx.png" alt="X" border="0"/>
+                                        <img id="delete-btn-manager-2" class="btn-x-manager" onclick="confirmDeleteManager(<%= o.id %>, <%= name.delete(' ') + 'ajax' + 'doing'%>)" src="/assets/redx.png" alt="X" border="0"/>
                                     </li>
                                   <%end%>
                                 <%end%>
@@ -122,6 +129,8 @@
                         <%end%>
                     </li>
                 </ul>
+                <!-- update the color of writer block depending upon the number of tasks for a specific writer -->
+                <script> changeTasksColor(<%=count%>, "<%= name.delete(' ') + 'ajax' + 'doing' %>") </script>
             <%end%>
         </div>
         <div class="col-md-3 op-body-bg-col-label" id="navigation">
@@ -136,7 +145,7 @@
                     <li>
                         <a class="col-md-12" href="#" onclick="swap('<%= name %>'+'done');return false;">
                             <p class="col-md-8 writer-label"><%= name %> </p>
-                            <p id="<%= name.delete(' ') + 'ajax' %>" class="col-md-4 writer-label"><%= count.to_s + " tasks"%></p>
+                            <p id="<%= name.delete(' ') + 'ajax' + 'done' %>" class="col-md-4 writer-label"><%= count.to_s + " tasks"%></p>
                         </a>
                         <%if @done_writer_dict[id].present?%>
                             <ul id="<%= name + 'done'%>" style="display: none;">
@@ -144,7 +153,7 @@
                                   <%if o.oppty.present?%>
                                     <li id="<%= o.id%>" class="col-md-12">
                                         <h5 class="col-md-11"><%= link_to o.oppty.opptyName, o.oppty%></h5>
-                                        <img id="delete-btn-manager-3" class="btn-x-manager" onclick="deleteOptManager(<%= o.id %>, <%= name.delete(' ') + 'ajax' %>, 3)" src="/assets/redx.png" alt="X" border="0"/>
+                                        <img id="delete-btn-manager-3" class="btn-x-manager" onclick="confirmDeleteManager(<%= o.id %>, <%= name.delete(' ') + 'ajax' + 'done'%>)" src="/assets/redx.png" alt="X" border="0"/>
                                     </li>
                                    <%end%>
                                 <%end%>
@@ -152,12 +161,15 @@
                         <%end%>
                     </li>
                 </ul>
+                <!-- update the color of writer block depending upon the number of tasks for a specific writer -->
+                <script> changeTasksColor(<%=count%>, "<%= name.delete(' ') + 'ajax' + 'done' %>") </script>
             <%end%>
         </div>
 	</div>
 </div>
 
+</div>
+
 </body>
 
-</div>
 </html>

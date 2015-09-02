@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :notification_histories
+
   get 'test_code/index'
 
   resources :user_histories
@@ -25,13 +27,9 @@ Rails.application.routes.draw do
 
   get 'crm/index'
 
-  post 'crm/upload'
-
   post 'crm/calculateChanges'
 
   post 'crm/updateCRM'
-
-  post 'crm/checkDate'
 
   get 'crm/download'
 

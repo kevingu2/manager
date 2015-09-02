@@ -26,7 +26,7 @@ class UserOpptiesController < ApplicationController
   # POST /user_oppties.json
   def create
     oppty=Oppty.find(params[:oppty_id])
-    @user_oppty=@user.add_oppty(@user.id, oppty.id, 2, false)
+    @user_oppty=@user.add_oppty(@user.id, oppty.id, 2)
     if !@user_oppty
       redirect_to invalid_entry_index_path, notice: "Already Added Opportunity"
       return

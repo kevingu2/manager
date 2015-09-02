@@ -12,3 +12,10 @@ function deleteOpt (id){
     xmlHttp.open( "delete", "/tasks/deleteOpportunity?id="+id , true );
     xmlHttp.send(null);
 }
+
+function confirmDeleteUser(id){
+    r=window.confirm("Are you sure you want to delete this task?");
+    if (r == true) {
+        deleteOpt(id);
+    }
+}
