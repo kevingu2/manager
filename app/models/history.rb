@@ -3,5 +3,5 @@ class History < ActiveRecord::Base
   has_many :users, through: :user_histories
   has_many :users, through: :notification_histories
   has_many :notification_histories, dependent: :destroy
-  validates :opptyId, uniqueness: true
+  validates :opptyId, uniqueness: true , presence: true
 end

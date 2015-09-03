@@ -57,7 +57,7 @@ Rails.application.routes.draw do
 
   resources :user_oppties
 
-  resources :oppties
+  resources :oppties, :only=>[:edit, :show, :update]
 
   resources :users, :only => [:new, :create] 
 
