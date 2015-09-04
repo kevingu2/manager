@@ -2,7 +2,7 @@ require 'test_helper'
 
 class OpptiesControllerTest < ActionController::TestCase
   setup do
-    @oppty = oppties(:one)
+    @oppty = oppties(:oppty1)
   end
 
   test "should show oppty" do

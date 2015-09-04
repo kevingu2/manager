@@ -11,7 +11,7 @@ class HistoryTest < ActiveSupport::TestCase
     history.valid?
   end
   test "history is not valid with same OpptyId" do
-    history=History.create(oppties(:one).attributes)
+    history=History.create(histories(:history1).attributes)
     assert_equal [I18n.translate('errors.messages.taken')], history.errors[:opptyId]
     history.opptyId="changed"
     assert history.valid?

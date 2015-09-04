@@ -37,8 +37,10 @@
       <a class="btn btn-lg btn-primary btn-left oppty-btn" href=<%=url_for(:back)%> role="button">Cancel</a>
       </div class="col-md-6 writer-col-button">
       <%if session[:role]=="Writer" %>
-        <form method="post" action= <%=user_oppties_path(oppty_id: @oppty.id)%> >
+        <form method="post" action= "<%=user_oppties_path%>" >
             <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+            <input name="oppty_id" type="hidden" value="<%= @oppty.id%>">
+            <input name="user_id" type="hidden" value="<%= session[:user_id]%>">
             <button class="btn btn-lg btn-primary btn-right" type="submit">Add</button>
         </form>
       <%end%>

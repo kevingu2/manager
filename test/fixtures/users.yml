@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+user1:
   name: user1
   password_digest: <%= BCrypt::Password.create('secret') %>
   role: Writer
 
-two:
+user2:
   name: user2
   password_digest: <%= BCrypt::Password.create('secret') %>
   role: Manager

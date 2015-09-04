@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class UserOpptyTest < ActiveSupport::TestCase
+
   test "User Oppty relationship is not valid without a status" do
     up=UserOppty.new
     assert up.invalid?
