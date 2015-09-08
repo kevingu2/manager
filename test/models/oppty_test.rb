@@ -15,6 +15,5 @@ class OpptyTest < ActiveSupport::TestCase
     assert_equal [I18n.translate('errors.messages.taken')], oppty.errors[:opptyId]
     oppty.opptyId="changed"
     assert oppty.valid?
-    assert oppty.invalid?
   end
 end
