@@ -1,9 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  opptyName: hist1
-  opptyId: 11223344
-
-two:
-  opptyName: hist2
-  opptyId: 4455666677
+history1:
+  opptyId: AAUIA-ZVT6N
+  opptyName: AIR 4.0M support for warfare analysis and M&S
+  slDir: changed1
+  leadEstim: changed2
+  engaged: changed3
+  solution: changed4
+  estimate: changed5
+  slArch: changed6
+  slComments: changed7
+  coordinate: 2

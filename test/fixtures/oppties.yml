@@ -1,45 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  opptyId: opptyId1
-  opptyName: opptyName1
-  idiqCA: idiq
-  status2: p1
-  value: 15
-  pWin: 1
-  captureMgr: MyString
-  programMgr: MyString
-  proposalMgr: MyString
-  sllOrg: MyString
-  technicalLead: MyString
-  slArch: MyString
-  ed: MyString
-  'on': MyString
-  ate: MyString
-  slComments: MyString
-  rfpDate: 2015-06-30
-  awardDate: 2015-06-30
-  submitDate: 2015-06-30
-  done: false
+oppty1:
+  opptyId: AAUIA-ZVT6N
+  opptyName: AIR 4.0M support for warfare analysis and M&S
+  slDir: changed1
+  leadEstim: changed2
+  engaged: changed3
+  solution: changed4
+  estimate: changed5
+  slArch: changed6
+  slComments: changed7
+  coordinate: 2
 
-two:
-  opptyId: opptyId2
-  opptyName: opptyName2
-  idiqCA: CA
-  status2: p2
-  value: 15
-  pWin: 1
-  captureMgr: MyString
-  programMgr: MyString
-  proposalMgr: MyString
-  sllOrg: MyString
-  technicalLead: MyString
-  slArch: MyString
-  ed: MyString
-  'on': MyString
-  ate: MyString
-  slComments: MyString
-  rfpDate: 2015-06-30
-  awardDate: 2015-06-30
-  submitDate: 2015-06-30
-  done: false
+

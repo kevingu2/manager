@@ -41,6 +41,8 @@ Rails.application.routes.draw do
 
   get 'browse/index'
 
+  get 'browse/getAllOppties'
+
   get 'tasks/index'
 
   get 'sessions/new'
@@ -55,9 +57,9 @@ Rails.application.routes.draw do
 
   resources :histories
 
-  resources :user_oppties
+  resources :user_oppties, :only =>[:create]
 
-  resources :oppties
+  resources :oppties, :only=>[:edit, :show, :update]
 
   resources :users, :only => [:new, :create] 
 

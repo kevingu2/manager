@@ -6,39 +6,42 @@ class TasksController < ApplicationController
   end
 
   def updateStatus
-    json_body=JSON.parse(request.body.read)
-    id= json_body.fetch('id')
-    status=json_body.fetch('status')
+    task_param=params.permit(:status, :id)
+    id= task_param['id']
+    status=task_param['status']
+    if !id.present? or !status.present? or UserOppty.where(id:id).empty?
+      respond_to do |format|
+        format.json { render json: "ERROR"}
+      end
+      return
+    end
     userOppty=UserOppty.find(id)
-    if !userOppty.present?
-      render :index
-    end
-    if !status.present?
-      render :index
-    end
     userOppty.update(status: status)
     respond_to do |format|
-        format.html { render :index }
         format.json { render json: "OK"}
     end
   end
   
   def deleteOpportunity
-    userOppty=UserOppty.find(params[:id])
-    userOppty.delete
-    @done=UserOppty.where(user_id:session[:user_id]).where(status:0).joins(:oppty).includes(:oppty)
-    @doing=UserOppty.where(user_id:session[:user_id]).where(status:1).joins(:oppty).includes(:oppty)
-    @to_do=UserOppty.where(user_id:session[:user_id]).where(status:2).joins(:oppty).includes(:oppty)
-    @assigned=UserOppty.where(user_id:session[:user_id]).where(status:3).joins(:oppty).includes(:oppty)
-    respond_to do |format|
-      format.json { render json: "OK"}
+    userOpptyId=params[:id]
+    if userOpptyId.nil? || UserOppty.where(id: userOpptyId).empty?
+      respond_to do |format|
+        format.json { render json: "ERROR"}
+      end
+    else
+      userOppty=UserOppty.find(userOpptyId)
+      userOppty.delete
+      respond_to do |format|
+        format.json { render json: "OK"}
+      end
     end
   end
-  
+
+  protected
   def set_oppties
-    @done=UserOppty.where(user_id:session[:user_id]).where(status:0).joins(:oppty).includes(:oppty)
-    @doing=UserOppty.where(user_id:session[:user_id]).where(status:1).joins(:oppty).includes(:oppty)
-    @to_do=UserOppty.where(user_id:session[:user_id]).where(status:2).joins(:oppty).includes(:oppty)
-    @assigned=UserOppty.where(user_id:session[:user_id]).where(status:3).joins(:oppty).includes(:oppty)
+    @done=UserOppty.where(user_id:session[:user_id]).where(status:DONE).joins(:oppty).includes(:oppty)
+    @doing=UserOppty.where(user_id:session[:user_id]).where(status:DOING).joins(:oppty).includes(:oppty)
+    @to_do=UserOppty.where(user_id:session[:user_id]).where(status:TODO).joins(:oppty).includes(:oppty)
+    @assigned=UserOppty.where(user_id:session[:user_id]).where(status:ASSIGNED).joins(:oppty).includes(:oppty)
   end
 end

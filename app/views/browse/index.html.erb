@@ -8,7 +8,10 @@
             <td class="col-md-1"></td>
             <td class="col-md-10" style="padding-top: 15px !important;">
               <%= form_tag(browse_index_path, :method => "get", id: "search-form") do %>
-                <%= text_field_tag :search, params[:search], placeholder: "Search" %>
+                <%= text_field_tag :search, params[:search],
+                                   placeholder: "Search Within Opportunity Name, ID, Code Name, or Customer Group",
+                                   id: 'opptyTextField',
+                                   onkeyup: "searchOppty()"%>
                 <input id="search-button" class="btn-search" type="image" style="width: 4% !important;" src="/assets/search.png" alt="Submit_tag"> 
                 <td class="col-md-1"></td>
               <% end %>
@@ -40,10 +43,7 @@
                   <input id="all-days" name="limiting" type="radio" value="999999" checked="true">90+ Days
 
                 </div> 
-                
-                <td>
-                  <a href="#" name="radio-style-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
-                </td>
+
               </div>
             </td>
 
@@ -64,9 +64,6 @@
                   <option id="slArchField" value="slArch">Solution Architect</option>
                   <option id="sllOrgField" value="sllOrg">Service Line Lead Organization</option>
                 </select>
-                <td>
-                  <a href="#" name="invalid-btn" class="btn btn-info btn-lg glyphicon selector-button control-label-button">&#xe092;</a>
-                </td>
               </div>  
             </td>
 
@@ -88,10 +85,23 @@
                   <option id="opt7" value="proposalMgr">Proposal Managers</option>
                   <option id="opt8" value="value">Value</option>
                 </select>
-                <td>
-                  <a href="#" name="sort-btn" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
-                </td>
               </div>  
+            </td>
+            <td class="col-md-1">
+              <label class="black-text sort-dropdown-label">
+                SL Director:
+              </label>
+            </td>
+            <td class="col-md-2">
+              <div>
+                <select class="selector col-md-10" id="filter" name="filter">
+                  <option id="allSlDir" value="all">all</option>
+                  <% @allSlDir.each do |n| %>
+
+                    <option id="<%= n.delete(' ') %>" value="<%= n %>"><%= n %></option>
+                  <% end %>
+                </select>
+              </div>
             </td>
             <td class="col-md-1"></td>
           </tr>
@@ -105,7 +115,7 @@
     <div class="row" style="font-weight: bold;">
       <div class="col-md-2" style="text-align: center;"> Opportunity ID </div>
       <div class="col-md-6"> Opportunity Name </div>
-      <div class="col-md-2"> Due Date </div>
+      <div class="col-md-2" style="text-align: center;"> Proposal Due Date </div>
       <div class="col-md-2"> Invalid Field(s) </div>
     </div>
 
@@ -120,33 +130,25 @@
               <div class="regular-text a:visited"><%= link_to o.opptyName, o %></div>
               <div class="little-text"><%= o.slComments %></div>
             </div>
-            <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
+            <div class="col-md-2" style="text-align: center;"><%= o.proposalDueDate.to_s %></div>
             <div class="col-md-2">
               <% if o.rfpDate < Date.today and (o.status2 == "P1-ID/Track" or o.status2 ==  "P2-Qualification" or o.status2 == "P3-Pursuit") %>
                 <div class="regular-text"><%= "(RFP Date: " + o.rfpDate.to_s + " and status2: " + o.status2 + ")" %></div>
               <% end %>
 
-              <% if o.technicalLead == "TBD" %>
-                <div class="regular-text"><%= "(Technical Lead: " + o.technicalLead + ")" %></div>
-              <% elsif o.technicalLead == "" %>
+              <% if o.technicalLead == "TBD" or o.technicalLead == ""%>
                 <div class="regular-text"><%= "(Technical Lead: none)" %></div>
               <% end %>
 
-              <% if o.slDir == "TBD" %>
-                <div class="regular-text"><%= "(Service Line Director: " + o.slDir + ")" %></div>
-              <% elsif o.slDir == "" %>
+              <% if o.slDir == "TBD" or o.slDir == "" %>
                 <div class="regular-text"><%= "(Service Line Director: none)" %></div>
               <% end %>
 
-              <% if o.slArch == "TBD" %>
-                <div class="regular-text"><%= "(Solution Architect: " + o.slArch + ")" %></div>
-              <% elsif o.slArch == "" %>
+              <% if o.slArch == "TBD" or o.slArch == ""%>
                 <div class="regular-text"><%= "(Solution Architect: none)" %></div>
               <% end %>
 
-              <% if o.leadEstim == "TBD" %>
-                <div class="regular-text"><%= "(Lead Estimator: " + o.leadEstim + ")" %></div>
-              <% elsif o.leadEstim == "" %>
+              <% if o.leadEstim == "TBD" or o.leadEstim == ""%>
                 <div class="regular-text"><%= "(Lead Estimator: none)" %></div>
               <% end %>
 
@@ -191,290 +193,11 @@
           </div>
         <% end %>
       <% end %>
-
-      <div style="float: right !important;">
-        <div name="paginate-div"><%= will_paginate @oppties, previous_label: h("<"), next_label: h(">") %></div>
-      </div>
-
     </div>
+    <div style="float: right !important;">
+      <div name="paginate-div"><%= will_paginate @oppties, previous_label: h("<"), next_label: h(">") %></div>
+    </div>
+
   </div>
-
-  <script>
-
-    function createClass(name,rules){
-      var style = document.createElement('style');
-      style.type = 'text/css';
-      document.getElementsByTagName('head')[0].appendChild(style);
-      if(!(style.sheet||{}).insertRule) 
-        (style.styleSheet || style.sheet).addRule(name, rules);
-      else
-        style.sheet.insertRule(name+"{"+rules+"}",0);
-     }
-     createClass('html body div div div.inner-search-bar.col-md-12 table.col-md-12 tbody tr td.col-md-10 form#search-form input#search',"width: 96% !important; padding-left: 10px !important;");
-
-
-     $(document).on("click", "a[name='radio-style-btn']", function (e) {
-      var radioButtons = $("#within input:radio[name='limiting']");
-      var selectedIndex = radioButtons.index(radioButtons.filter(':checked'));
-      select = document.getElementsByName('limiting')[selectedIndex].value;
-      url = window.location.href;
-      if (window.location.href.indexOf('?') > -1) {
-        urlSplit = url.split('?');
-        if (urlSplit[1].indexOf('&') > -1) {
-          diffParts = urlSplit[1].split('&');
-          
-          if (diffParts.length > 1) 
-            newUrl = urlSplit[0]+'?';
-          else
-            newUrl = urlSplit[0];
-
-          if (diffParts.length > 1) {
-            for (i = 0; i < diffParts.length; i++) {
-              if(select == 999999) {
-                if (diffParts[i].indexOf('within') == -1) {
-                  if (i != diffParts.length-1)
-                    newUrl += diffParts[i]+'&';
-                  else
-                    newUrl += diffParts[i];
-                }
-              }
-              else if (diffParts[i].indexOf('within') == -1 && diffParts[i].indexOf('page') == -1) {
-                if (i != diffParts.length-1)
-                  newUrl += diffParts[i]+'&';
-                else
-                  newUrl += diffParts[i];
-              }
-              else if (diffParts[i].indexOf('within') > -1) {
-                if ( select != "999999") {
-                  if (i != diffParts.length-1)
-                    newUrl += "within="+select+'&';
-                  else
-                    newUrl += "within="+select;
-                }
-              }
-            }
-            if (newUrl.indexOf('within') == -1 && select != 999999)
-              newUrl += "&within="+select;
-          }
-        }
-        else if (urlSplit[1].indexOf('within') > -1 && select != "999999")
-          newUrl = urlSplit[0]+ "?within=" + select;
-        else if (urlSplit[1].indexOf('within') > -1 && select == "999999")
-          newUrl = urlSplit[0];
-        else if (urlSplit[1].indexOf('within') == -1)
-          newUrl = window.location.toString() + "&within=" + select;
-
-        if (newUrl.substring(newUrl.length-1) == '&')
-          newUrl = newUrl.substring(0, newUrl.length-1);
-
-        window.location = newUrl;
-      }
-      else if (select != "999999") {
-        newUrl = window.location.toString();
-
-        if (newUrl.substring(newUrl.length-1) == '&')
-          newUrl = newUrl.substring(0, newUrl.length-1);
-
-        window.location = newUrl + "?within=" + select;
-      }
-      else {
-        newUrl = window.location.toString();
-
-        if (newUrl.substring(newUrl.length-1) == '&')
-          newUrl = newUrl.substring(0, newUrl.length-1);
-
-        window.location = newUrl;
-      }
-    }); 
-
-
-    $(document).on("click", "a[name='invalid-btn']", function (e) {
-      select = document.getElementById('invalidDiv').value;
-      url = window.location.href;
-      if (window.location.href.indexOf('?') > -1) {
-        urlSplit = url.split('?');
-        if (urlSplit[1].indexOf('&') > -1) {
-          diffParts = urlSplit[1].split('&');
-          
-          if (diffParts.length > 1) 
-            newUrl = urlSplit[0]+'?';
-          else
-            newUrl = urlSplit[0];
-
-          if (diffParts.length > 1) {
-            for (i = 0; i < diffParts.length; i++) {
-              if(select == "all") {
-                if (diffParts[i].indexOf('invalid') == -1) {
-                  if (i != diffParts.length-1)
-                    newUrl += diffParts[i]+'&';
-                  else
-                    newUrl += diffParts[i];
-                }
-              }
-              else if (diffParts[i].indexOf('invalid') == -1 && diffParts[i].indexOf('page') == -1) {
-                if (i != diffParts.length-1)
-                  newUrl += diffParts[i]+'&';
-                else
-                  newUrl += diffParts[i];
-              }
-              else if (diffParts[i].indexOf('invalid') > -1) {
-                if ( select != "all") {
-                  if (i != diffParts.length-1)
-                    newUrl += "invalid="+select+'&';
-                  else
-                    newUrl += "invalid="+select;
-                }
-              }
-            }
-            if (newUrl.indexOf('invalid') == -1 && select != "all")
-              newUrl += "&invalid="+select;
-          }
-        }
-        else if (urlSplit[1].indexOf('invalid') > -1 && select != "all")
-          newUrl = urlSplit[0]+ "?invalid=" + select;
-        else if (urlSplit[1].indexOf('invalid') > -1 && select == "all")
-          newUrl = urlSplit[0];
-        else if (urlSplit[1].indexOf('invalid') == -1)
-          newUrl = window.location.toString() + "&invalid=" + select;
-
-        if (newUrl.substring(newUrl.length-1) == '&')
-          newUrl = newUrl.substring(0, newUrl.length-1);
-
-        window.location = newUrl;
-      }
-      else if (select != "all") {
-        newUrl = window.location.toString();
-
-        if (newUrl.substring(newUrl.length-1) == '&')
-          newUrl = newUrl.substring(0, newUrl.length-1);
-
-        window.location = newUrl + "?invalid=" + select;
-      }
-      else {
-        newUrl = window.location.toString();
-
-        if (newUrl.substring(newUrl.length-1) == '&')
-          newUrl = newUrl.substring(0, newUrl.length-1);
-
-        window.location = newUrl;
-      }
-    }); 
-
-    $(document).on("click", "a[name='sort-btn']", function (e) {
-      select = document.getElementById('sorting').value;
-      url = window.location.href;
-      if (window.location.href.indexOf('?') > -1) {
-        urlSplit = url.split('?');
-        if (urlSplit[1].indexOf('&') > -1) {
-          diffParts = urlSplit[1].split('&');
-
-          if (diffParts.length > 1) 
-            newUrl = urlSplit[0]+'?';
-          else
-            newUrl = urlSplit[0];
-
-          if (urlSplit[1].indexOf('sort') == -1 && select != "none") 
-            newUrl = url + "&sort=" + select;
-          else {
-            for (i = 0; i < diffParts.length; i++) {
-              if (diffParts[i].indexOf('sort') == -1) {
-                if (i != diffParts.length-1)
-                  newUrl += diffParts[i]+'&';
-                else
-                  newUrl += diffParts[i];
-              }
-              else if (diffParts[i].indexOf('sort') > -1) {
-                if ( select != "none") {
-                  if (i != diffParts.length-1)
-                    newUrl += "sort="+select+'&';
-                  else
-                    newUrl += "sort="+select;
-                }
-              }
-            }
-          }
-        }
-        else if (urlSplit[1].indexOf('sort') > -1 && select != "none")
-          newUrl = urlSplit[0]+ "?sort=" + select;
-        else if (urlSplit[1].indexOf('sort') > -1 && select == "none")
-          newUrl = urlSplit[0];
-        else if (urlSplit[1].indexOf('sort') == -1)
-          newUrl = window.location.toString() + "&sort=" + select;
-
-        if (newUrl.substring(newUrl.length-1) == '&')
-          newUrl = newUrl.substring(0, newUrl.length-1);
-
-        window.location = newUrl;
-      }
-      else if (select != "none") {
-        newUrl = window.location.toString();
-
-        if (newUrl.substring(newUrl.length-1) == '&')
-          newUrl = newUrl.substring(0, newUrl.length-1);
-
-        window.location = newUrl + "?sort=" + select;
-      }
-      else { 
-        newUrl = window.location.toString();
-
-        if (newUrl.substring(newUrl.length-1) == '&')
-          newUrl = newUrl.substring(0, newUrl.length-1);
-
-        window.location = newUrl;
-      }
-    });
-
-    window.onload = function() {
-
-      if (window.location.href.indexOf("within") > -1) {
-        if (window.location.href.indexOf("within=30") > -1)
-          document.getElementById("thirty_days_left").checked = true;
-        else if (window.location.href.indexOf("within=60") > -1)
-          document.getElementById("sixty_days_left").checked = true;
-        else if (window.location.href.indexOf("within=90") > -1)
-          document.getElementById("ninety_days_left").checked = true;
-        else
-          document.getElementById("all_days").checked = true;
-      }
-
-      if (window.location.href.indexOf("sort")) {
-        if (window.location.href.indexOf("opptyName") > -1)
-          document.getElementById("opt2").selected = true;
-        else if (window.location.href.indexOf("opptyId") > -1)
-          document.getElementById("opt3").selected = true;
-        else if (window.location.href.indexOf("proposalDueDate") > -1)
-          document.getElementById("opt4").selected = true;
-        else if (window.location.href.indexOf("captureMgr") > -1)
-          document.getElementById("opt5").selected = true;
-        else if (window.location.href.indexOf("programMgr") > -1)
-          document.getElementById("opt6").selected = true;
-        else if (window.location.href.indexOf("proposalMgr") > -1)
-          document.getElementById("opt7").selected = true;
-        else if (window.location.href.indexOf("value") > -1)
-          document.getElementById("opt8").selected = true;
-        else
-          document.getElementById("opt1").selected = true;
-      }
-
-      if (window.location.href.indexOf("invalid")) {
-        if (window.location.href.indexOf("rfpDate") > -1)
-          document.getElementById("rfpDateField").selected = true;
-        else if (window.location.href.indexOf("leadEstim") > -1)
-          document.getElementById("leadEstimField").selected = true;
-        else if (window.location.href.indexOf("technicalLead") > -1)
-          document.getElementById("technicalLeadField").selected = true;
-        else if (window.location.href.indexOf("slDir") > -1)
-          document.getElementById("slDirField").selected = true;
-        else if (window.location.href.indexOf("slArch") > -1)
-          document.getElementById("slArchField").selected = true;
-        else if (window.location.href.indexOf("sllOrg") > -1)
-          document.getElementById("sllOrgField").selected = true;
-        else
-          document.getElementById("allInvalidFields").selected = true;
-      }
-    }
-
-  </script>
-
 </body>
 </html>

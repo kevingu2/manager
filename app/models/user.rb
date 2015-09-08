@@ -1,7 +1,6 @@
 class User < ActiveRecord::Base
-  roles = [WRITER_ROLE, MANAGER_ROLE ]
   validates :name, presence:true, uniqueness:true
-  validates :role, presence:roles
+  validates_with RoleValidator
   has_secure_password
   has_many :user_oppty, dependent: :destroy
   has_many :user_history, dependent: :destroy
@@ -48,4 +47,7 @@ class User < ActiveRecord::Base
   def add_notification_history(history_id, title, message, status)
     notification_history.build(history_id:history_id, title:title, message:message, status:status)
   end
+
+
 end
+
