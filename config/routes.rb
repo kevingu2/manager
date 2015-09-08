@@ -41,6 +41,8 @@ Rails.application.routes.draw do
 
   get 'browse/index'
 
+  get 'browse/getAllOppties'
+
   get 'tasks/index'
 
   get 'sessions/new'

@@ -241,8 +241,6 @@ class CrmController < ApplicationController
         end
       end
       oppty.destroy
-    else
-      puts "oppty not present"
     end
     return history
   end
