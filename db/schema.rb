@@ -11,15 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150903154547) do
-
-  create_table "allocated_tasks", force: true do |t|
-    t.string   "title"
-    t.string   "taskId"
-    t.text     "comment"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(version: 20150908221753) do
 
   create_table "histories", force: true do |t|
     t.string   "opptyId"
