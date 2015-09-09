@@ -7,14 +7,9 @@
           <tr style="font-size:24px;">
             <td class="col-md-1"></td>
             <td class="col-md-10" style="padding-top: 15px !important;">
-              <%= form_tag(browse_index_path, :method => "get", id: "search-form") do %>
-                <%= text_field_tag :search, params[:search],
-                                   placeholder: "Search Within Opportunity Name, ID, Code Name, or Customer Group",
-                                   id: 'opptyTextField'%>
-              <% end %>
-                <input id="search-button" class="btn-search" type="image" style="width: 4% !important;" src="/assets/search.png" alt="Submit_tag" 
-                onclick="searchOppty()"> 
-                <td class="col-md-1"></td>
+              <%= text_field_tag :search, params[:search], style: "width:96%",placeholder: "Search Within Opportunity Name, ID, Code Name, or Customer Group" %>
+              <a href="#" name="search-button" style="width:4% !important;" class="btn btn-lg btn-search glyphicon glyphicon-search"></a>
+              <td class="col-md-1"></td>
             </td>
           </tr>
         </table>
@@ -48,7 +43,7 @@
             </td>
 
             <td class="col-md-2">
-              <label class="black-text field-label" style="padding-left:50px;">
+              <label class="black-text field-label">
                 Invalid Field:
               </label>
             </td>
@@ -68,7 +63,7 @@
             </td>
 
             <!-- drop down menu in Browse Page to sort the opportunities by a specific field -->
-            <td class="col-md-2">
+            <td class="col-md-1">
               <label class="black-text sort-dropdown-label">
                 Sort By:
               </label>
@@ -199,5 +194,196 @@
     </div>
 
   </div>
+
+  <script>
+
+      $(document).on("click", "a[name='search-button']", function (e) {
+        var keyword=document.getElementById('search').value;
+        
+        var radioButtons = $("#within input:radio[name='limiting']");
+        var selectedIndex = radioButtons.index(radioButtons.filter(':checked'));
+        var selectedDays = document.getElementsByName('limiting')[selectedIndex].value;
+        
+        var selectedInvalid = document.getElementById('invalidDiv').value;
+        
+        var selectedSort = document.getElementById('sorting').value;
+        
+        var selectedSlDir = document.getElementById('filter').value;
+        
+        count = 0;
+        tempUrl = "";
+        if (keyword != "") {
+          if (tempUrl == "")
+            tempUrl += "?search="+keyword;
+          else 
+            tempUrl += "&search="+keyword;
+          count++;
+        }
+        if (selectedDays != 999999) {
+          if (tempUrl == "")
+            tempUrl += "?within="+selectedDays;
+          else 
+            tempUrl += "&within="+selectedDays;
+          count++;
+        }
+        if (selectedInvalid != "all") {
+          if (tempUrl == "")
+            tempUrl += "?invalid="+selectedInvalid;
+          else
+            tempUrl += "&invalid="+selectedInvalid;
+          count++;
+        }
+        if (selectedSort !== "none") {
+          if (tempUrl == "")
+            tempUrl += "?sort="+selectedSort;
+          else
+            tempUrl += "&sort="+selectedSort;
+          count++;
+        }
+        if (selectedSlDir != "all") {
+          if (tempUrl == "")
+            tempUrl += "?filter="+selectedSlDir;
+          else
+            tempUrl += "&filter="+selectedSlDir;
+          count++;
+        }
+        url = window.location.href;
+        if (url.indexOf('?') > -1) {
+          urlSplit = url.split('?');
+          newUrl = urlSplit[0];
+        }
+        else
+          newUrl = url;
+
+        window.location = newUrl + tempUrl;
+      });
+
+
+      $(document).keypress(function(e) {
+        if(e.which == 13) {
+          var keyword=document.getElementById('search').value;
+        
+          var radioButtons = $("#within input:radio[name='limiting']");
+          var selectedIndex = radioButtons.index(radioButtons.filter(':checked'));
+          var selectedDays = document.getElementsByName('limiting')[selectedIndex].value;
+          
+          var selectedInvalid = document.getElementById('invalidDiv').value;
+          
+          var selectedSort = document.getElementById('sorting').value;
+          
+          var selectedSlDir = document.getElementById('filter').value;
+          
+          count = 0;
+          tempUrl = "";
+          if (keyword != "") {
+            if (tempUrl == "")
+              tempUrl += "?search="+keyword;
+            else 
+              tempUrl += "&search="+keyword;
+            count++;
+          }
+          if (selectedDays != 999999) {
+            if (tempUrl == "")
+              tempUrl += "?within="+selectedDays;
+            else 
+              tempUrl += "&within="+selectedDays;
+            count++;
+          }
+          if (selectedInvalid != "all") {
+            if (tempUrl == "")
+              tempUrl += "?invalid="+selectedInvalid;
+            else
+              tempUrl += "&invalid="+selectedInvalid;
+            count++;
+          }
+          if (selectedSort !== "none") {
+            if (tempUrl == "")
+              tempUrl += "?sort="+selectedSort;
+            else
+              tempUrl += "&sort="+selectedSort;
+            count++;
+          }
+          if (selectedSlDir != "all") {
+            if (tempUrl == "")
+              tempUrl += "?filter="+selectedSlDir;
+            else
+              tempUrl += "&filter="+selectedSlDir;
+            count++;
+          }
+          url = window.location.href;
+          if (url.indexOf('?') > -1) {
+            urlSplit = url.split('?');
+            newUrl = urlSplit[0];
+          }
+          else
+            newUrl = url;
+
+          window.location = newUrl + tempUrl;
+        }
+      });
+
+
+      window.onload = function() {
+        if (window.location.href.indexOf("within") > -1) {
+          if (window.location.href.indexOf("within=30") > -1)
+            document.getElementById("thirty_days_left").checked = true;
+          else if (window.location.href.indexOf("within=60") > -1)
+            document.getElementById("sixty_days_left").checked = true;
+          else if (window.location.href.indexOf("within=90") > -1)
+            document.getElementById("ninety_days_left").checked = true;
+          else
+            document.getElementById("all_days").checked = true;
+      }
+ 
+      if (window.location.href.indexOf("sort")) {
+        if (window.location.href.indexOf("opptyName") > -1)
+          document.getElementById("opt2").selected = true;
+        else if (window.location.href.indexOf("opptyId") > -1)
+          document.getElementById("opt3").selected = true;
+        else if (window.location.href.indexOf("proposalDueDate") > -1)
+          document.getElementById("opt4").selected = true;
+        else if (window.location.href.indexOf("captureMgr") > -1)
+          document.getElementById("opt5").selected = true;
+        else if (window.location.href.indexOf("programMgr") > -1)
+          document.getElementById("opt6").selected = true;
+        else if (window.location.href.indexOf("proposalMgr") > -1)
+          document.getElementById("opt7").selected = true;
+        else if (window.location.href.indexOf("value") > -1)
+          document.getElementById("opt8").selected = true;
+        else
+          document.getElementById("opt1").selected = true;
+      }
+ 
+      if (window.location.href.indexOf("invalid")) {
+        if (window.location.href.indexOf("rfpDate") > -1)
+          document.getElementById("rfpDateField").selected = true;
+        else if (window.location.href.indexOf("leadEstim") > -1)
+          document.getElementById("leadEstimField").selected = true;
+        else if (window.location.href.indexOf("technicalLead") > -1)
+          document.getElementById("technicalLeadField").selected = true;
+        else if (window.location.href.indexOf("slDir") > -1)
+          document.getElementById("slDirField").selected = true;
+        else if (window.location.href.indexOf("slArch") > -1)
+          document.getElementById("slArchField").selected = true;
+        else if (window.location.href.indexOf("sllOrg") > -1)
+          document.getElementById("sllOrgField").selected = true;
+        else
+          document.getElementById("allInvalidFields").selected = true;
+      }
+
+      if (window.location.href.indexOf("filter")) {
+        <% @allSlDir.each do |n| %>
+          name = "<%= n %>"
+          nameId = name.replace(/\s+/g, '');
+          name = name.replace(/ /g, "%20");
+          if(window.location.href.indexOf(name) > -1)
+            document.getElementById(nameId).selected = true;
+        <% end %>
+      }
+      else
+        document.getElementById("all").selected = true;
+      }
+
+  </script>
 </body>
 </html>
