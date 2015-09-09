@@ -7,6 +7,9 @@ class OpptiesController < ApplicationController
   # GET /oppties/1
   # GET /oppties/1.json
   def show
+    if params[:id].nil?
+      redirect_to invalid_entry_index_path, notice:"Invalid History"
+    end
     @numWriters=UserOppty.where(oppty_id: params[:id]).joins(:user).where('users.role'=>'Writer').count
   end
 

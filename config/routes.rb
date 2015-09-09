@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  resources :notification_histories
-
-  get 'test_code/index'
 
   post 'application/resetNotification'
 
@@ -53,7 +50,7 @@ Rails.application.routes.draw do
 
   get 'users/create'
 
-  resources :histories
+  resources :histories, :only=>[:show, :index]
 
   resources :user_oppties, :only =>[:create]
 
