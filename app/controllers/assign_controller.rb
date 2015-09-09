@@ -2,9 +2,14 @@ class AssignController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:assignUser, :unAssignUser]
   def index
     opptyId=params[:opptyId]
-    @oppty=Oppty.find(opptyId)
-    @assigned_writers=getAssigned(WRITER_ROLE, nil, opptyId)
-    @not_assigned_writers=getUnassigned(WRITER_ROLE, nil, opptyId)
+    if opptyId.nil?
+      redirect_to invalid_entry_index_path, 
+	notice: "Opportunity does not Exist"
+    else
+      @oppty=Oppty.find(opptyId)
+      @assigned_writers=getAssigned(WRITER_ROLE, nil, opptyId)
+      @not_assigned_writers=getUnassigned(WRITER_ROLE, nil, opptyId)
+    end
   end
 
   def searchNotAssigned

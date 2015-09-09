@@ -101,7 +101,7 @@
           </div>
           <div class="col-md-2"><%= o.proposalDueDate.to_s %></div>
           <div class="col-md-2">
-            <% if o.rfpDate < Date.today and (o.status2 == "P1-ID/Track" or o.status2 ==  "P2-Qualification" or o.status2 == "P3-Pursuit") %>
+            <% if !o.rfpDate.nil? and o.rfpDate < Date.today and (o.status2 == "P1-ID/Track" or o.status2 ==  "P2-Qualification" or o.status2 == "P3-Pursuit") %>
               <div class="regular-text"><%= "(RFP Date: " + o.rfpDate.to_s + " and status2: " + o.status2 + ")" %></div>
             <% end %>
 

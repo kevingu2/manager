@@ -20,3 +20,7 @@
 
 #uploads
 /public/uploads
+
+#README
+README.md
+README.rdoc

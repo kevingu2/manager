@@ -3,8 +3,6 @@ Rails.application.routes.draw do
 
   get 'test_code/index'
 
-  resources :user_histories
-
   post 'application/resetNotification'
 
   get 'assign/index'
@@ -47,9 +45,9 @@ Rails.application.routes.draw do
 
   get 'sessions/new'
 
-  get 'sessions/create'
-
   get 'sessions/destroy'
+
+  get 'sessions/create'
 
   post 'users/new'
 

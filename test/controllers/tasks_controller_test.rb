@@ -4,7 +4,7 @@ class TasksControllerTest < ActionController::TestCase
 
   setup do
     @user_oppty = user_oppties(:userOppty1)
-    @add={id:@user_oppty.id, status:DONE }
+    @add={'id'=>@user_oppty.id, 'status'=>DONE }	
   end
 
   test "should get index" do
@@ -24,13 +24,20 @@ class TasksControllerTest < ActionController::TestCase
   end
 
   test "update User Opportunity" do
-    put :updateStatus, @add, format: 'json'
-    assert_equal DONE, Collection.find(user_oppty(:one)).status
+    assert_no_difference('UserOppty.count') do
+      put :updateStatus, :format=>:json, :id=>@add['id'], 
+	      :status=>@add['status']
+    end
+    assert_equal DONE, UserOppty.find(@add['id']).status
     assert_equal "OK", response.body
-    @add={}
-    put :updateStatus, @add, format: 'json'
+    
+    @new_add={status: TODO}
+    assert_no_difference('UserOppty.count') do
+       put :updateStatus, :format=>:json, :id=>@new_add['id'], 
+	      :status=>@new_add['status']
+    end
     assert_equal "ERROR", response.body
-    assert_equal DONE, Collection.find(user_oppty(:one)).status
+    assert_equal DONE, UserOppty.find(@add['id']).status
   end
 
 end
