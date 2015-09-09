@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class UploadCrmControllerTest < ActionController::TestCase
+class CrmControllerTest < ActionController::TestCase
   test "should get index" do
     get :index
     assert_response :success

@@ -13,11 +13,10 @@ class UserTest < ActiveSupport::TestCase
     user.valid?
   end
   test "user must have a unique name" do
-    user=User.create(users(:one).attributes)
+    user=User.create(users(:user1).attributes)
     assert_equal [I18n.translate('errors.messages.taken')], user.errors[:name]
     user.name="test"
     assert user.valid?
-
   end
   def new_user(role, name)
     User.new(name: name,

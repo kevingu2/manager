@@ -5,15 +5,9 @@ class SessionsControllerTest < ActionController::TestCase
     get :new
     assert_response :success
   end
-
-  test "should get create" do
-    get :create
-    assert_response :success
-  end
-
-  test "should get destroy" do
+  test "should logout" do
     get :destroy
-    assert_response :success
+    assert_redirected_to sessions_new_path 
   end
 
 end
