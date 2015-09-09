@@ -15,103 +15,12 @@ function searchOppty(){
     var invalidSort=document.getElementById('invalidDiv').value;
     var opptyFieldSort=document.getElementById('sorting').value;
     var slDirSort=document.getElementById('filter').value;
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() {
-        if (xmlHttp.readyState == 4) {
-            var oppties=JSON.parse(xmlHttp.responseText);
-            var allDaysDiv=document.getElementById("allDays");
-            while (allDaysDiv.firstChild) {
-                allDaysDiv.removeChild(allDaysDiv.firstChild);
-            }
-            var j=0;
-            for(var key in oppties){
-                if(j==15)
-                    break;
-                var media_row_div = document.createElement('div');
-                media_row_div.setAttribute('class', 'media row');
-
-                //opptyId
-                var opptyIdDiv=document.createElement('div');
-                opptyIdDiv.setAttribute('class', 'col-md-2');
-                opptyIdDiv.setAttribute('style', 'text-align: center;');
-                opptyIdDiv.innerHTML=oppties[key].opptyId;
-                media_row_div.appendChild(opptyIdDiv);
-
-                //opptyName and sl comments
-                var nameCommentRowDiv=document.createElement('div');
-                nameCommentRowDiv.setAttribute('class', 'col-md-6');
-                var nameDiv=document.createElement('div');
-                nameDiv.setAttribute('class', "regular-text a:visited");
-                var nameLink=document.createElement('a');
-                nameLink.innerHTML=oppties[key].opptyName;
-                //TODO fix url
-                var oppty_path="http://localhost:3000/oppties";
-                nameLink.href=oppty_path+'/'+oppties[key].id;
-                nameDiv.appendChild(nameLink);
-                var slCommentsDiv=document.createElement('div');
-                slCommentsDiv.setAttribute('class', 'little-text');
-                slCommentsDiv.innerHTML=oppties[key].slComments;
-                nameCommentRowDiv.appendChild(nameDiv);
-                nameCommentRowDiv.appendChild(slCommentsDiv);
-                media_row_div.appendChild(nameCommentRowDiv);
-
-                //Proposal Date
-                var proposalDiv=document.createElement('div');
-                proposalDiv.setAttribute('class', 'col-md-2');
-                proposalDiv.setAttribute('style','text-align: center;');
-                proposalDiv.innerHTML=oppties[key].proposalDueDate;
-                media_row_div.appendChild(proposalDiv);
-
-                //invalid
-                var invalidDiv=document.createElement('div');
-                invalidDiv.setAttribute('class','col-md-2');
-                var today = new Date();
-                var rfpDate=new Date(oppties[key].rfpDate);
-                if(rfpDate<today && invalid_status.indexOf(oppties[key].status2)>-1){
-                    var invalidRFPDiv=document.createElement('div');
-                    invalidRFPDiv.setAttribute('class', 'regular-text')
-                    invalidRFPDiv.innerHTML="(RFP Date: "+oppties[key].rfpDate+
-                            " and status: "+ oppties[key].status2+")";
-                    invalidDiv.appendChild(invalidRFPDiv);
-                }
-                for(var i=0; i< leadsKey.length; i++) {
-                    var leadVal=oppties[key][leadsKey[i]];
-                    if (leadVal == TBD || leadVal == "") {
-                        var invalidLeadDiv = document.createElement('div');
-                        invalidLeadDiv.setAttribute('class', 'regular-text');
-                        invalidLeadDiv.innerHTML = "("+leadsTitle[i]+": none)";
-                        invalidDiv.appendChild(invalidLeadDiv);
-                    }
-                }
-
-                var sllOrgVal=oppties[key]['sllOrg'];
-                var sllOrgValKey=sllOrgVal.toLowerCase()+'_va';
-                if(parseFloat(oppties[key][sllOrgValKey])===0 ||
-                        oppties[key][sllOrgValKey]==""){
-                     var invalidSSLOrg=document.createElement('div');
-                     invalidSSLOrg.setAttribute('class', 'regular-text');
-                     if(parseFloat(oppties[key][sllOrgValKey])===0)
-                        invalidSSLOrg.innerHTML="(SLL Organization: "+sllOrgVal+" and "+sllOrgValKey+": $0.0)";
-                     else if(oppties[key][sllOrgValKey]==""){
-                        invalidSSLOrg.innerHTML="(SLL Organization: "+sllOrgVal+" and "+sllOrgValKey+": none)";
-                     }
-                     invalidDiv.appendChild(invalidSSLOrg);
-                }
-                j++;
-                media_row_div.appendChild(invalidDiv);
-                allDaysDiv.appendChild(media_row_div);
-
-            }
-
-        }
-    }
-    xmlHttp.open("Content-Type", "application/x-www-form-urlencoded");
-    xmlHttp.open("Connection", "close");
-    xmlHttp.open( "Get", '/browse/getAllOppties?'+
+    var URL='/browse/getAllOppties?'+
         'keyword='+keyword+
         '&day='+daySort+
         '&invalid='+invalidSort+
         '&opptyField='+opptyFieldSort+
-        '&slDir='+slDirSort, true );
-    xmlHttp.send( null );
+        '&slDir='+slDirSort;
+    console.log(URL);
+
 }
