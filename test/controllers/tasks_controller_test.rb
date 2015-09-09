@@ -12,7 +12,7 @@ class TasksControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should destroy opportunity" do
+  test "should destroy writer's opportunity" do
     assert_difference('UserOppty.count', -1) do
       delete :deleteOpportunity,:format => :json, :id=> @user_oppty.id
     end
@@ -24,11 +24,13 @@ class TasksControllerTest < ActionController::TestCase
   end
 
   test "update User Opportunity" do
-    put :updateStatus,@add, :format=>:json
+    put :updateStatus, @add, format: 'json'
+    assert_equal DONE, Collection.find(user_oppty(:one)).status
     assert_equal "OK", response.body
     @add={}
-    put :updateStatus,@add, :format=>:json
+    put :updateStatus, @add, format: 'json'
     assert_equal "ERROR", response.body
+    assert_equal DONE, Collection.find(user_oppty(:one)).status
   end
 
 end
