@@ -119,6 +119,15 @@
   border: 1px solid #333;
 }
 
+#navigation li li  {
+  width: 97% !important;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin: 5px !important;
+  z-index: 9999;
+  text-align: center;
+}
+
 #navigation li li a {
   text-decoration: none;
   padding: 3px 3px 3px 17px;
