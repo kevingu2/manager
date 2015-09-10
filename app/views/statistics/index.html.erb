@@ -15,6 +15,7 @@
             <!--onchange="yearChange()"-->
             <select id="yearSelector" class="selector">
               <option value="-1" selected="true">All</option>
+              <option value="2017">2017</option>
               <option value="2016">2016</option>
               <option value="2015">2015</option>
               <option value="2014">2014</option>
@@ -311,7 +312,7 @@
             chartdata[9].proposals = <%=@rfpMonths2014[9]%>;
             chartdata[10].proposals = <%=@rfpMonths2014[10]%>;
             chartdata[11].proposals = <%=@rfpMonths2014[11]%>;
-          } 
+          }           
           else if (yearValue == 2015) {
             chartdata[0].proposals = <%=@rfpMonths2015[0]%>;
             chartdata[1].proposals = <%=@rfpMonths2015[1]%>;
@@ -339,7 +340,22 @@
             chartdata[9].proposals = <%=@rfpMonths2016[9]%>;
             chartdata[10].proposals = <%=@rfpMonths2016[10]%>;
             chartdata[11].proposals = <%=@rfpMonths2016[11]%>;
-          } else {
+          } 
+          else if (yearValue == 2017) {
+            chartdata[0].proposals = <%=@rfpMonths2017[0]%>;
+            chartdata[1].proposals = <%=@rfpMonths2017[1]%>;
+            chartdata[2].proposals = <%=@rfpMonths2017[2]%>;
+            chartdata[3].proposals = <%=@rfpMonths2017[3]%>;
+            chartdata[4].proposals = <%=@rfpMonths2017[4]%>;
+            chartdata[5].proposals = <%=@rfpMonths2017[5]%>;
+            chartdata[6].proposals = <%=@rfpMonths2017[6]%>;
+            chartdata[7].proposals = <%=@rfpMonths2017[7]%>;
+            chartdata[8].proposals = <%=@rfpMonths2017[8]%>;
+            chartdata[9].proposals = <%=@rfpMonths2017[9]%>;
+            chartdata[10].proposals = <%=@rfpMonths2017[10]%>;
+            chartdata[11].proposals = <%=@rfpMonths2017[11]%>;
+          } 
+          else {
             chartdata[0].proposals = <%=@rfpMonths[0]%>;
             chartdata[1].proposals = <%=@rfpMonths[1]%>;
             chartdata[2].proposals = <%=@rfpMonths[2]%>;
@@ -396,7 +412,22 @@
             chartdata[9].proposals = <%=@milMonths2016[9]%>;
             chartdata[10].proposals = <%=@milMonths2016[10]%>;
             chartdata[11].proposals = <%=@milMonths2016[11]%>;
-          } else {
+          } 
+          else if (yearValue == 2017) {
+            chartdata[0].proposals = <%=@milMonths2017[0]%>;
+            chartdata[1].proposals = <%=@milMonths2017[1]%>;
+            chartdata[2].proposals = <%=@milMonths2017[2]%>;
+            chartdata[3].proposals = <%=@milMonths2017[3]%>;
+            chartdata[4].proposals = <%=@milMonths2017[4]%>;
+            chartdata[5].proposals = <%=@milMonths2017[5]%>;
+            chartdata[6].proposals = <%=@milMonths2017[6]%>;
+            chartdata[7].proposals = <%=@milMonths2017[7]%>;
+            chartdata[8].proposals = <%=@milMonths2017[8]%>;
+            chartdata[9].proposals = <%=@milMonths2017[9]%>;
+            chartdata[10].proposals = <%=@milMonths2017[10]%>;
+            chartdata[11].proposals = <%=@milMonths2017[11]%>;
+          } 
+          else {
             chartdata[0].proposals = <%=@milMonths[0]%>;
             chartdata[1].proposals = <%=@milMonths[1]%>;
             chartdata[2].proposals = <%=@milMonths[2]%>;

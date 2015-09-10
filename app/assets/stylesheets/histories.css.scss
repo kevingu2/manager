@@ -30,6 +30,14 @@
 	float: left !important;
 }
 
+input#history-search{
+	border:1px solid;
+	border-color: black;
+	height: 40px;
+	padding: 8px !important; 
+	font-size: 20px;
+}
+
 .pagination {
 	margin-right: 10px !important;
 	background-color: transparent !important;
