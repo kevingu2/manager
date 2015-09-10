@@ -88,7 +88,7 @@
                                 <% @todo_writer_dict[id].each do |o|%>
                                     <% if o.oppty.present?%>
                                         <li id="<%= o.id%>" class="col-md-12">
-                                            <h5 class="col-md-11"><%= link_to o.oppty.opptyName, o.oppty%></h5>
+                                            <h5 class="col-md-11"><%= link_to o.oppty.opptyName, o.oppty, style: "border: 0px !important;"%></h5>
                                             <img id="delete-btn-manager-1" class="btn-x-manager" onclick="confirmDeleteManager(<%= o.id %>, <%= name.delete(' ') + 'ajax' + 'todo'%>)" src="/assets/redx.png" alt="X" border="0"/>
                                         </li>
                                     <% end %>
@@ -120,7 +120,7 @@
                                 <% @doing_writer_dict[id].each do |o|%>
                                   <%if o.oppty.present?%>
                                     <li id="<%= o.id%>" class="col-md-12">
-                                        <h5 class="col-md-11"><%= link_to o.oppty.opptyName, o.oppty%></h5>
+                                        <h5 class="col-md-11"><%= link_to o.oppty.opptyName, o.oppty, style: "border: 0px !important;"%></h5>
                                         <img id="delete-btn-manager-2" class="btn-x-manager" onclick="confirmDeleteManager(<%= o.id %>, <%= name.delete(' ') + 'ajax' + 'doing'%>)" src="/assets/redx.png" alt="X" border="0"/>
                                     </li>
                                   <%end%>
@@ -152,7 +152,7 @@
                                 <% @done_writer_dict[id].each do |o|%>
                                   <%if o.oppty.present?%>
                                     <li id="<%= o.id%>" class="col-md-12">
-                                        <h5 class="col-md-11"><%= link_to o.oppty.opptyName, o.oppty%></h5>
+                                        <h5 class="col-md-11"><%= link_to o.oppty.opptyName, o.oppty, style: "border: 0px !important;"%></h5>
                                         <img id="delete-btn-manager-3" class="btn-x-manager" onclick="confirmDeleteManager(<%= o.id %>, <%= name.delete(' ') + 'ajax' + 'done'%>)" src="/assets/redx.png" alt="X" border="0"/>
                                     </li>
                                    <%end%>
