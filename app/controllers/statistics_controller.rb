@@ -35,8 +35,6 @@ class StatisticsController < ApplicationController
     (0..@allYears.length).each do |i|
       # a zero-initialized array to hold the RFP counts for months for each year
       @allRFPMonths[i] = Array.new(12,0)
-      # a zero-initialized array to hold the mil counts for months for each year
-      @allMilMonths[i] = Array.new(12,0)
     end
 
     @oppties.each do |n|
@@ -51,23 +49,6 @@ class StatisticsController < ApplicationController
         (0..@allYears.length).each do |i|
           #fill up the rfpMonths arrays
           if year == @allYears[i] then @allRFPMonths[i][month-1] += 1 end
-        end
-      end
-      
-      if !n.awardDate.nil?
-        month1 = n.awardDate.mon
-        year1 = n.awardDate.year
-        valid1 = n.status2
-
-        #fill up the milMonths arrays 
-        if n.value != nil and valid1 == 'W1-Won' then
-          #fill up the milMonths array 
-          @milMonths[month1-1] += n.value
-
-          (0..@allYears.length).each do |i|
-            #fill up the milMonths arrays
-            if year1 == @allYears[i] then @allMilMonths[i][month1-1] += n.value end
-          end
         end
       end
     end
@@ -87,7 +68,60 @@ class StatisticsController < ApplicationController
           if year == @allYears[i] then @allRFPMonths[i][month-1] += 1 end
         end
       end
+    end
 
+    #at this point @rfpMonths has the RFP counts for each month
+
+    @allYearsMil = Array.new
+    #iterate through all opportunities and get the year of rfp's and add it to allYears array
+    @oppties.each do |n|
+      if !n.awardDate.nil? and n.status2 == 'W1-Won'
+        unless @allYearsMil.include?(n.awardDate.year)
+          @allYearsMil.push(n.awardDate.year)
+        end
+      end
+    end
+    @histories.each do |n|
+      if !n.awardDate.nil? and n.status2 == 'W1-Won'
+        unless @allYearsMil.include?(n.awardDate.year)
+          @allYearsMil.push(n.awardDate.year)
+        end
+      end
+    end
+    #sort the @allYears array
+    @allYearsMil = @allYearsMil.sort
+
+    #creating arrays
+    @milMonths = Array.new(12,0)
+    @allMilMonths = Array.new
+
+    #iterat through all years and create a zero-initialized arrays for each year
+    (0..@allYearsMil.length).each do |i|
+      # a zero-initialized array to hold the mil counts for months for each year
+      @allMilMonths[i] = Array.new(12,0)
+    end
+
+    @oppties.each do |n|
+      if !n.awardDate.nil?
+        month1 = n.awardDate.mon
+        year1 = n.awardDate.year
+        valid1 = n.status2
+
+        #fill up the milMonths arrays 
+        if n.value != nil and valid1 == 'W1-Won' then
+          #fill up the milMonths array 
+          @milMonths[month1-1] += n.value
+
+          (0..@allYearsMil.length).each do |i|
+            #fill up the milMonths arrays
+            if year1 == @allYearsMil[i] then @allMilMonths[i][month1-1] += n.value end
+          end
+        end
+      end
+    end
+    
+    #iterate through all of the histories
+    @histories.each do |hist|
       if !hist.awardDate.nil?
         #get month of this particular opportunity
         month1 = hist.awardDate.mon
@@ -99,21 +133,21 @@ class StatisticsController < ApplicationController
           #fill up the milMonths array 
           @milMonths[month1-1] += hist.value
 
-          (0..@allYears.length).each do |i|
+          (0..@allYearsMil.length).each do |i|
             #fill up the rfpMonths arrays
-            if year1 == @allYears[i] then @allRFPMonths[i][month1-1] += hist.value end
+            if year1 == @allYearsMil[i] then @allRFPMonths[i][month1-1] += hist.value end
           end
         end
       end
     end
 
-    #at this point @rfpMonths has the RFP counts for each month
+
     #at this point @milMonths has the millions of $ counts for each month
 
     
     (0..11).each do |i|
       @milMonths[i] = ( @milMonths[i] * 10.0).round / 10.0
-      (0..@allYears.length).each do |l|
+      (0..@allYearsMil.length).each do |l|
         if @allMilMonths[i] != nil
           @allMilMonths[i][l] = ( @allMilMonths[i][l] * 10.0).round / 10.0
         end

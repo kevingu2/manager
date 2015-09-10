@@ -14,7 +14,7 @@
           <div>
             <!--onchange="yearChange()"-->
             <select id="yearSelector" class="selector">
-              <option id="allSlDir" value="-1">all</option>
+              <option id="all" value="-1">All</option>
               <% @allYears.each do |n| %>
                 <option id="<%= n %>" value=<%= n %>><%= n %></option>
               <% end %>
@@ -121,6 +121,23 @@
       /* Select the RFP by rfpMonths graph */
       $(document).on("click","a[name='rfpByMonths']", function (e) {
         document.getElementById("chart-title").innerHTML = "Request for Proposals by Month";
+        var selector = document.getElementById("yearSelector");
+        while (selector.hasChildNodes()) {
+          selector.removeChild(selector.lastChild);
+        }
+        var x = document.createElement("OPTION");
+        x.setAttribute("value", -1);
+        var t = document.createTextNode("All");
+        x.appendChild(t);
+        selector.appendChild(x);
+        <% @allYears.each do |n| %>
+          var x = document.createElement("OPTION");
+          x.setAttribute("value", <%= n %>);
+          var t = document.createTextNode("<%= n %>");
+          x.appendChild(t);
+          selector.appendChild(x);
+        <% end %>
+        
         document.getElementById("yearSelector").value = -1;
 
         var chartdata = [ {
@@ -202,6 +219,25 @@
       /* Select the Millions of Dollars by rfpMonths graph */
       $(document).on("click","a[name='milsByMonths']", function (e) {
         document.getElementById("chart-title").innerHTML = "Millions $ Awarded by Month";
+
+        var selector = document.getElementById("yearSelector");
+        while (selector.hasChildNodes()) {
+          selector.removeChild(selector.lastChild);
+        }
+        var x = document.createElement("OPTION");
+        x.setAttribute("value", -1);
+        var t = document.createTextNode("All");
+        x.appendChild(t);
+        selector.appendChild(x);
+        <% @allYearsMil.each do |n| %>
+          var x = document.createElement("OPTION");
+          x.setAttribute("value", <%= n %>);
+          var t = document.createTextNode("<%= n %>");
+          x.appendChild(t);
+          selector.appendChild(x);
+        <% end %>
+
+
         document.getElementById("yearSelector").value = -1;
         var chartdata = [ {
           "Month": "January",
@@ -312,13 +348,13 @@
           }
         }
         else if (document.getElementById("chart-title").innerHTML == "Millions $ Awarded by Month") {
-          var tempAllYears = <%= @allYears %>;
+          var tempAllYearsMil = <%= @allYearsMil %>;
           var tempAllMilMonths = <%= @allMilMonths%>;
           var tempMilMonths = <%= @milMonths %>;
 
-          if (tempAllYears.indexOf(parseInt(yearValue)) > -1) {
+          if (tempAllYearsMil.indexOf(parseInt(yearValue)) > -1) {
             for (i = 0; i < 12; i++)
-              chartdata[i].proposals = tempAllMilMonths[tempAllYears.indexOf(parseInt(yearValue))][i];
+              chartdata[i].proposals = tempAllMilMonths[tempAllYearsMil.indexOf(parseInt(yearValue))][i];
           }
           else {
             for (i = 0; i < 12; i++)
