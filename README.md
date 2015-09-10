@@ -39,20 +39,13 @@ This website allows managers to upload .xlsm files with a list of all the opport
 
 **Step 2:** Install [Rails Installer](http://railsinstaller.org/en) which includes the updated version of Ruby
 
-####Windows
-**Step 3:** Install [Node Js](https://nodejs.org/en/)
+**step 3:** Install Rails
 
-####Mac
-**Step 3:** Install ruby if you haven't
+**Step 4:** Go into the project directory and run "rake db:mgirate" to set up the database
 
-**Step 4:** Run "gem install rails --version 4.0.0 --no-ri --no-rdoc" on the command line
+**Step 5:** Run "rake test test" and make sure all the tests pass
 
-**Step 5:** Go into the project directory and run "rake db:mgirate" to set up the database
+**Step 6:** Run "rail s" to start the rails server
 
-**Step 6:** Run "rake test test" and make sure all the tests pass
+**Step 7:** Go to localhost:3000 in your browser and you should see the login page
 
-**Step 7:** Run "rail s" to start the rails server
-
-**Step 8:** Go to localhost:3000 in your browser and you should see the login page
-
-![image](DocumentPics/login.png =300x200)
