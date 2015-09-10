@@ -75,27 +75,13 @@
 	margin: 0px !important;
 }
 
-
-.red-cross {
-	background-color: red !important;
-	margin:0; 
-	padding-top:10px !important; 
-	padding-left: 0px !important; 
-	padding-right:20px !important; 
-	border:0px !important;
-	border-color: transparent !important;
-	a {
-		color: red !important;
-		&:visited {
-		color: red !important;
-		}
-	}
-}
-
 .btn-x-manager {
 	width: 15px !important;
 	height: 15px !important;
     cursor: pointer;
+    position: absolute !important;
+	right: 1% !important;
+	top: 3% !important;
 }
 #navigation ul {
   list-style-type: none;
