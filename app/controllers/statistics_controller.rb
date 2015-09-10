@@ -7,11 +7,13 @@ class StatisticsController < ApplicationController
     @rfpMonths2014 = Array.new(12,0)
     @rfpMonths2015 = Array.new(12,0)
     @rfpMonths2016 = Array.new(12,0)
+    @rfpMonths2017 = Array.new(12,0)
     # a zero-initialized array to hold the mil counts for months for each year
     @milMonths = Array.new(12,0)
     @milMonths2014 = Array.new(12,0)
     @milMonths2015 = Array.new(12,0)
     @milMonths2016 = Array.new(12,0) 
+    @milMonths2017 = Array.new(12,0) 
 
   	#get all Oppty objects from database into the @oppties collection
     @oppties = Oppty.all
@@ -34,6 +36,9 @@ class StatisticsController < ApplicationController
 
         #fill up the rfpMonths2016 array 
         if year == 2016 then @rfpMonths2016[month-1] += 1 end
+
+        #fill up the rfpMonths2017 array 
+        if year == 2016 then @rfpMonths2017[month-1] += 1 end
       end
     end
   	
@@ -58,6 +63,9 @@ class StatisticsController < ApplicationController
 
         #fill up the rfpMonths2016 array 
         if year == 2016 then @rfpMonths2016[month-1] += 1 end
+
+        #fill up the rfpMonths2016 array 
+        if year == 2017 then @rfpMonths2017[month-1] += 1 end
       end
     end
 
@@ -84,6 +92,9 @@ class StatisticsController < ApplicationController
 
           #fill up the milMonths2016 array 
           if year == 2016 then @milMonths2016[month-1] += opp.value end
+
+          #fill up the milMonths2017 array 
+          if year == 2017 then @milMonths2017[month-1] += opp.value end
         end
       end
     end
@@ -109,6 +120,9 @@ class StatisticsController < ApplicationController
 
           #fill up the milMonths2016 array 
           if year == 2016 then @milMonths2016[month-1] += hist.value end
+
+          #fill up the milMonths2017 array 
+          if year == 2017 then @milMonths2017[month-1] += hist.value end
         end
       end
     end
@@ -119,6 +133,7 @@ class StatisticsController < ApplicationController
       @milMonths2014[i] = ( @milMonths2014[i] * 10.0).round / 10.0
       @milMonths2015[i] = ( @milMonths2015[i] * 10.0).round / 10.0
       @milMonths2016[i] = ( @milMonths2016[i] * 10.0).round / 10.0
+      @milMonths2017[i] = ( @milMonths2017[i] * 10.0).round / 10.0
     end
     #at this point @milMonths is now rounded to 1 precision point
   end
