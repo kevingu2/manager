@@ -38,7 +38,7 @@ class StatisticsController < ApplicationController
         if year == 2016 then @rfpMonths2016[month-1] += 1 end
 
         #fill up the rfpMonths2017 array 
-        if year == 2016 then @rfpMonths2017[month-1] += 1 end
+        if year == 2017 then @rfpMonths2017[month-1] += 1 end
       end
     end
   	
