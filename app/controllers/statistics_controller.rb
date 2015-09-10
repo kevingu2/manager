@@ -2,52 +2,79 @@
 
 class StatisticsController < ApplicationController
   def index
-  	# a zero-initialized array to hold the RFP counts for months for each year
-    @rfpMonths = Array.new(12,0)
-    @rfpMonths2014 = Array.new(12,0)
-    @rfpMonths2015 = Array.new(12,0)
-    @rfpMonths2016 = Array.new(12,0)
-    @rfpMonths2017 = Array.new(12,0)
-    # a zero-initialized array to hold the mil counts for months for each year
-    @milMonths = Array.new(12,0)
-    @milMonths2014 = Array.new(12,0)
-    @milMonths2015 = Array.new(12,0)
-    @milMonths2016 = Array.new(12,0) 
-    @milMonths2017 = Array.new(12,0) 
-
-  	#get all Oppty objects from database into the @oppties collection
+    #get all Opportunity objects from database into the @oppties collection
     @oppties = Oppty.all
+    #get all History objects from database into the @histories collection
+    @histories = History.all
 
-	  #iterate through all of the oppurtunitie
-    @oppties.each do |opp|
-  		#get month of this particular opportunity
-      if !opp.rfpDate.nil?
-        month = opp.rfpDate.mon
-        year = opp.rfpDate.year
+    @allYears = Array.new
+    #iterate through all opportunities and get the year of rfp's and add it to allYears array
+    @oppties.each do |n|
+      if !n.rfpDate.nil?
+        unless @allYears.include?(n.rfpDate.year)
+          @allYears.push(n.rfpDate.year)
+        end
+      end
+    end
+    @histories.each do |n|
+      if !n.rfpDate.nil?
+        unless @allYears.include?(n.rfpDate.year)
+          @allYears.push(n.rfpDate.year)
+        end
+      end
+    end
+    #sort the @allYears array
+    @allYears = @allYears.sort
+
+    #creating arrays
+    @rfpMonths = Array.new(12,0)
+    @allRFPMonths = Array.new
+    @milMonths = Array.new(12,0)
+    @allMilMonths = Array.new
+    #iterat through all years and create a zero-initialized arrays for each year
+    (0..@allYears.length).each do |i|
+      # a zero-initialized array to hold the RFP counts for months for each year
+      @allRFPMonths[i] = Array.new(12,0)
+      # a zero-initialized array to hold the mil counts for months for each year
+      @allMilMonths[i] = Array.new(12,0)
+    end
+
+    @oppties.each do |n|
+      #get month and year of each particular opportunity
+      if !n.rfpDate.nil?
+        month = n.rfpDate.mon
+        year = n.rfpDate.year
 
         #fill up the rfpMonths array 
         @rfpMonths[month-1] += 1
 
-        #fill up the rfpMonths2014 array 
-        if year == 2014 then @rfpMonths2014[month-1] += 1 end
- 
-        #fill up the rfpMonths2015 array 
-        if year == 2015 then @rfpMonths2015[month-1] += 1 end
+        (0..@allYears.length).each do |i|
+          #fill up the rfpMonths arrays
+          if year == @allYears[i] then @allRFPMonths[i][month-1] += 1 end
+        end
+      end
+      
+      if !n.awardDate.nil?
+        month1 = n.awardDate.mon
+        year1 = n.awardDate.year
+        valid1 = n.status2
 
-        #fill up the rfpMonths2016 array 
-        if year == 2016 then @rfpMonths2016[month-1] += 1 end
+        #fill up the milMonths arrays 
+        if n.value != nil and valid1 == 'W1-Won' then
+          #fill up the milMonths array 
+          @milMonths[month1-1] += n.value
 
-        #fill up the rfpMonths2017 array 
-        if year == 2017 then @rfpMonths2017[month-1] += 1 end
+          (0..@allYears.length).each do |i|
+            #fill up the milMonths arrays
+            if year1 == @allYears[i] then @allMilMonths[i][month1-1] += n.value end
+          end
+        end
       end
     end
   	
-  	#get all Oppty objects from database into the @oppties collection
-    @histories = History.all
-
-	  #iterate through all of the oppurtunities
+	  #iterate through all of the histories
     @histories.each do |hist|
-  		#get month of this particular opportunity
+  		#get month and year of each particular history
       if !hist.rfpDate.nil?
         month = hist.rfpDate.mon
         year = hist.rfpDate.year
@@ -55,85 +82,42 @@ class StatisticsController < ApplicationController
         #fill up the rfpMonths array 
         @rfpMonths[month-1] += 1
 
-        #fill up the rfpMonths2014 array 
-        if year == 2014 then @rfpMonths2014[month-1] += 1 end
+        (0..@allYears.length).each do |i|
+          #fill up the rfpMonths arrays
+          if year == @allYears[i] then @allRFPMonths[i][month-1] += 1 end
+        end
+      end
 
-        #fill up the rfpMonths2015 array 
-        if year == 2015 then @rfpMonths2015[month-1] += 1 end
+      if !hist.awardDate.nil?
+        #get month of this particular opportunity
+        month1 = hist.awardDate.mon
+        year1 = hist.awardDate.year
+        valid1 = hist.status2
 
-        #fill up the rfpMonths2016 array 
-        if year == 2016 then @rfpMonths2016[month-1] += 1 end
+        #fill up the milMonths arrays 
+        if hist.value != nil and valid1 == 'W1-Won' then
+          #fill up the milMonths array 
+          @milMonths[month1-1] += hist.value
 
-        #fill up the rfpMonths2016 array 
-        if year == 2017 then @rfpMonths2017[month-1] += 1 end
+          (0..@allYears.length).each do |i|
+            #fill up the rfpMonths arrays
+            if year1 == @allYears[i] then @allRFPMonths[i][month1-1] += hist.value end
+          end
+        end
       end
     end
 
     #at this point @rfpMonths has the RFP counts for each month
-
-    #iterate through all of the oppurtunities
-    @oppties.each do |opp|
-      #get month of this particular opportunity
-      if !opp.awardDate.nil?
-        month = opp.awardDate.mon
-        year = opp.awardDate.year
-        valid = opp.status2
-
-        #fill up the milMonths arrays 
-        if opp.value != nil and valid == 'W1-Won' then
-          #fill up the milMonths array 
-          @milMonths[month-1] += opp.value
-
-          #fill up the milMonths2014 array 
-          if year == 2014 then @milMonths2014[month-1] += opp.value end
-
-          #fill up the milMonths2015 array 
-          if year == 2015 then @milMonths2015[month-1] += opp.value end
-
-          #fill up the milMonths2016 array 
-          if year == 2016 then @milMonths2016[month-1] += opp.value end
-
-          #fill up the milMonths2017 array 
-          if year == 2017 then @milMonths2017[month-1] += opp.value end
-        end
-      end
-    end
-
-    #iterate through all of the oppurtunities
-    @histories.each do |hist|
-      if !hist.awardDate.nil?
-        #get month of this particular opportunity
-        month = hist.awardDate.mon
-        year = hist.awardDate.year
-        valid = hist.status2
-
-        #fill up the milMonths arrays 
-        if hist.value != nil and valid == 'W1-Won' then
-          #fill up the milMonths array 
-          @milMonths[month-1] += hist.value
-
-          #fill up the milMonths2015 array 
-          if year == 2014 then @milMonths2014[month-1] += hist.value end
- 
-          #fill up the milMonths2015 array 
-          if year == 2015 then @milMonths2015[month-1] += hist.value end
-
-          #fill up the milMonths2016 array 
-          if year == 2016 then @milMonths2016[month-1] += hist.value end
-
-          #fill up the milMonths2017 array 
-          if year == 2017 then @milMonths2017[month-1] += hist.value end
-        end
-      end
-    end
-  	
     #at this point @milMonths has the millions of $ counts for each month
+
+    
     (0..11).each do |i|
       @milMonths[i] = ( @milMonths[i] * 10.0).round / 10.0
-      @milMonths2014[i] = ( @milMonths2014[i] * 10.0).round / 10.0
-      @milMonths2015[i] = ( @milMonths2015[i] * 10.0).round / 10.0
-      @milMonths2016[i] = ( @milMonths2016[i] * 10.0).round / 10.0
-      @milMonths2017[i] = ( @milMonths2017[i] * 10.0).round / 10.0
+      (0..@allYears.length).each do |l|
+        if @allMilMonths[i] != nil
+          @allMilMonths[i][l] = ( @allMilMonths[i][l] * 10.0).round / 10.0
+        end
+      end
     end
     #at this point @milMonths is now rounded to 1 precision point
   end

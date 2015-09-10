@@ -95,7 +95,6 @@
                 <select class="selector col-md-10" id="filter" name="filter">
                   <option id="allSlDir" value="all">all</option>
                   <% @allSlDir.each do |n| %>
-
                     <option id="<%= n.delete(' ') %>" value="<%= n %>"><%= n %></option>
                   <% end %>
                 </select>
