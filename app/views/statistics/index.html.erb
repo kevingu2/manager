@@ -12,14 +12,12 @@
         <div class="selector-year-container">
           <p class="selector-label">Select Year:</p>
           <div>
-            <!--onchange="yearChange()"-->
-            <select id="yearSelector" class="selector">
+            <select id="yearSelector" class="selector col-md-12" onchange="yearChange()">
               <option id="all" value="-1">All</option>
               <% @allYears.each do |n| %>
                 <option id="<%= n %>" value=<%= n %>><%= n %></option>
               <% end %>
             </select>
-            <a href="#yearChange" name="yearButton" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
           </div>  
         </div>
         <br>
@@ -329,7 +327,7 @@
       createClass('html body #chartdiv div.amcharts-main-div div.amcharts-chart-div a',"visibility: hidden !important;");
 
       /* changes graphs depending on the year selected */
-      $(document).on("click","a[name='yearButton']", function (e) {
+      function yearChange() {
         /* obtain selected year from dropdown menu */
         yearValue = document.getElementById("yearSelector").value;
 
@@ -398,7 +396,7 @@
           "enabled": true
         }
         });
-      });
+      }
     </script>
   </body>
 </html>
