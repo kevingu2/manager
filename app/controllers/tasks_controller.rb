@@ -6,10 +6,12 @@ class TasksController < ApplicationController
   end
 
   def updateStatus
-    task_param=params.permit(:status, :id)
-    id= task_param['id']
-    status=task_param['status']
-    if !id.present? or !status.present? or UserOppty.where(id:id).empty?
+    json_body=JSON.parse(request.body.read)
+    id= json_body.fetch('id')
+    status=json_body.fetch('status')
+    puts "id: "+id.to_s
+    puts "status: "+status.to_s
+    if id.nil? or status.nil? or UserOppty.where(id:id).empty?
       respond_to do |format|
         format.json { render json: "ERROR"}
       end
