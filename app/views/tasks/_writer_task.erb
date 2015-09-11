@@ -5,7 +5,13 @@
       <div class="task-bg">
         <h5 class="text-edit"><b><%= link_to @current_task.oppty.opptyName,
                                                                  @current_task.oppty%></b></h5>
-        <p>Due in <%= (@current_task.oppty.proposalDueDate-Date.today).to_i %> days</p>
+        <%= if (@current_task.oppty.proposalDueDate-Date.today).to_i < 0 %>
+        	<p> Past Due (<%= (@current_task.oppty.proposalDueDate-Date.today).to_i %> days ago)</p>
+        <%= elsif (@current_task.oppty.proposalDueDate-Date.today).to_i < 0%>
+        	<p> Due Today </p>
+        <%= else %>
+        	<p> Due in (<%= (@current_task.oppty.proposalDueDate-Date.today).to_i %> days </p>
+        <% end %>	
       </div>
     </li>
  </ul>
