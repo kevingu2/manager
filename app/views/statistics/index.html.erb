@@ -12,15 +12,12 @@
         <div class="selector-year-container">
           <p class="selector-label">Select Year:</p>
           <div>
-            <!--onchange="yearChange()"-->
-            <select id="yearSelector" class="selector">
-              <option value="-1" selected="true">All</option>
-              <option value="2017">2017</option>
-              <option value="2016">2016</option>
-              <option value="2015">2015</option>
-              <option value="2014">2014</option>
+            <select id="yearSelector" class="selector col-md-12" onchange="yearChange()">
+              <option id="all" value="-1">All</option>
+              <% @allYears.each do |n| %>
+                <option id="<%= n %>" value=<%= n %>><%= n %></option>
+              <% end %>
             </select>
-            <a href="#yearChange" name="yearButton" class="btn btn-info btn-lg glyphicon selector-button">&#xe092;</a>
           </div>  
         </div>
         <br>
@@ -122,6 +119,23 @@
       /* Select the RFP by rfpMonths graph */
       $(document).on("click","a[name='rfpByMonths']", function (e) {
         document.getElementById("chart-title").innerHTML = "Request for Proposals by Month";
+        var selector = document.getElementById("yearSelector");
+        while (selector.hasChildNodes()) {
+          selector.removeChild(selector.lastChild);
+        }
+        var x = document.createElement("OPTION");
+        x.setAttribute("value", -1);
+        var t = document.createTextNode("All");
+        x.appendChild(t);
+        selector.appendChild(x);
+        <% @allYears.each do |n| %>
+          var x = document.createElement("OPTION");
+          x.setAttribute("value", <%= n %>);
+          var t = document.createTextNode("<%= n %>");
+          x.appendChild(t);
+          selector.appendChild(x);
+        <% end %>
+        
         document.getElementById("yearSelector").value = -1;
 
         var chartdata = [ {
@@ -203,6 +217,25 @@
       /* Select the Millions of Dollars by rfpMonths graph */
       $(document).on("click","a[name='milsByMonths']", function (e) {
         document.getElementById("chart-title").innerHTML = "Millions $ Awarded by Month";
+
+        var selector = document.getElementById("yearSelector");
+        while (selector.hasChildNodes()) {
+          selector.removeChild(selector.lastChild);
+        }
+        var x = document.createElement("OPTION");
+        x.setAttribute("value", -1);
+        var t = document.createTextNode("All");
+        x.appendChild(t);
+        selector.appendChild(x);
+        <% @allYearsMil.each do |n| %>
+          var x = document.createElement("OPTION");
+          x.setAttribute("value", <%= n %>);
+          var t = document.createTextNode("<%= n %>");
+          x.appendChild(t);
+          selector.appendChild(x);
+        <% end %>
+
+
         document.getElementById("yearSelector").value = -1;
         var chartdata = [ {
           "Month": "January",
@@ -294,155 +327,39 @@
       createClass('html body #chartdiv div.amcharts-main-div div.amcharts-chart-div a',"visibility: hidden !important;");
 
       /* changes graphs depending on the year selected */
-      $(document).on("click","a[name='yearButton']", function (e) {
+      function yearChange() {
         /* obtain selected year from dropdown menu */
         yearValue = document.getElementById("yearSelector").value;
 
         if (document.getElementById("chart-title").innerHTML == "Request for Proposals by Month") {
-          if (yearValue == 2014) {
-            chartdata[0].proposals = <%=@rfpMonths2014[0]%>;
-            chartdata[1].proposals = <%=@rfpMonths2014[1]%>;
-            chartdata[2].proposals = <%=@rfpMonths2014[2]%>;
-            chartdata[3].proposals = <%=@rfpMonths2014[3]%>;
-            chartdata[4].proposals = <%=@rfpMonths2014[4]%>;
-            chartdata[5].proposals = <%=@rfpMonths2014[5]%>;
-            chartdata[6].proposals = <%=@rfpMonths2014[6]%>;
-            chartdata[7].proposals = <%=@rfpMonths2014[7]%>;
-            chartdata[8].proposals = <%=@rfpMonths2014[8]%>;
-            chartdata[9].proposals = <%=@rfpMonths2014[9]%>;
-            chartdata[10].proposals = <%=@rfpMonths2014[10]%>;
-            chartdata[11].proposals = <%=@rfpMonths2014[11]%>;
-          }           
-          else if (yearValue == 2015) {
-            chartdata[0].proposals = <%=@rfpMonths2015[0]%>;
-            chartdata[1].proposals = <%=@rfpMonths2015[1]%>;
-            chartdata[2].proposals = <%=@rfpMonths2015[2]%>;
-            chartdata[3].proposals = <%=@rfpMonths2015[3]%>;
-            chartdata[4].proposals = <%=@rfpMonths2015[4]%>;
-            chartdata[5].proposals = <%=@rfpMonths2015[5]%>;
-            chartdata[6].proposals = <%=@rfpMonths2015[6]%>;
-            chartdata[7].proposals = <%=@rfpMonths2015[7]%>;
-            chartdata[8].proposals = <%=@rfpMonths2015[8]%>;
-            chartdata[9].proposals = <%=@rfpMonths2015[9]%>;
-            chartdata[10].proposals = <%=@rfpMonths2015[10]%>;
-            chartdata[11].proposals = <%=@rfpMonths2015[11]%>;
+          var tempAllYears = <%= @allYears %>;
+          var tempAllRFPMonths = <%= @allRFPMonths %>;
+          var tempRFPMonths = <%= @rfpMonths %>;
+
+          if (tempAllYears.indexOf(parseInt(yearValue)) > -1) {
+            for (i = 0; i < 12; i++)
+              chartdata[i].proposals = tempAllRFPMonths[tempAllYears.indexOf(parseInt(yearValue))][i];
           }
-          else if (yearValue == 2016) {
-            chartdata[0].proposals = <%=@rfpMonths2016[0]%>;
-            chartdata[1].proposals = <%=@rfpMonths2016[1]%>;
-            chartdata[2].proposals = <%=@rfpMonths2016[2]%>;
-            chartdata[3].proposals = <%=@rfpMonths2016[3]%>;
-            chartdata[4].proposals = <%=@rfpMonths2016[4]%>;
-            chartdata[5].proposals = <%=@rfpMonths2016[5]%>;
-            chartdata[6].proposals = <%=@rfpMonths2016[6]%>;
-            chartdata[7].proposals = <%=@rfpMonths2016[7]%>;
-            chartdata[8].proposals = <%=@rfpMonths2016[8]%>;
-            chartdata[9].proposals = <%=@rfpMonths2016[9]%>;
-            chartdata[10].proposals = <%=@rfpMonths2016[10]%>;
-            chartdata[11].proposals = <%=@rfpMonths2016[11]%>;
-          } 
-          else if (yearValue == 2017) {
-            chartdata[0].proposals = <%=@rfpMonths2017[0]%>;
-            chartdata[1].proposals = <%=@rfpMonths2017[1]%>;
-            chartdata[2].proposals = <%=@rfpMonths2017[2]%>;
-            chartdata[3].proposals = <%=@rfpMonths2017[3]%>;
-            chartdata[4].proposals = <%=@rfpMonths2017[4]%>;
-            chartdata[5].proposals = <%=@rfpMonths2017[5]%>;
-            chartdata[6].proposals = <%=@rfpMonths2017[6]%>;
-            chartdata[7].proposals = <%=@rfpMonths2017[7]%>;
-            chartdata[8].proposals = <%=@rfpMonths2017[8]%>;
-            chartdata[9].proposals = <%=@rfpMonths2017[9]%>;
-            chartdata[10].proposals = <%=@rfpMonths2017[10]%>;
-            chartdata[11].proposals = <%=@rfpMonths2017[11]%>;
-          } 
           else {
-            chartdata[0].proposals = <%=@rfpMonths[0]%>;
-            chartdata[1].proposals = <%=@rfpMonths[1]%>;
-            chartdata[2].proposals = <%=@rfpMonths[2]%>;
-            chartdata[3].proposals = <%=@rfpMonths[3]%>;
-            chartdata[4].proposals = <%=@rfpMonths[4]%>;
-            chartdata[5].proposals = <%=@rfpMonths[5]%>; 
-            chartdata[6].proposals = <%=@rfpMonths[6]%>;
-            chartdata[7].proposals = <%=@rfpMonths[7]%>;
-            chartdata[8].proposals = <%=@rfpMonths[8]%>;
-            chartdata[9].proposals = <%=@rfpMonths[9]%>;
-            chartdata[10].proposals = <%=@rfpMonths[10]%>;
-            chartdata[11].proposals = <%=@rfpMonths[11]%>;
+            for (i = 0; i < 12; i++)
+              chartdata[i].proposals = tempRFPMonths[i];
           }
         }
         else if (document.getElementById("chart-title").innerHTML == "Millions $ Awarded by Month") {
-          if (yearValue == 2014) {
-            chartdata[0].proposals = <%=@milMonths2014[0]%>;
-            chartdata[1].proposals = <%=@milMonths2014[1]%>;
-            chartdata[2].proposals = <%=@milMonths2014[2]%>;
-            chartdata[3].proposals = <%=@milMonths2014[3]%>;
-            chartdata[4].proposals = <%=@milMonths2014[4]%>;
-            chartdata[5].proposals = <%=@milMonths2014[5]%>;
-            chartdata[6].proposals = <%=@milMonths2014[6]%>;
-            chartdata[7].proposals = <%=@milMonths2014[7]%>;
-            chartdata[8].proposals = <%=@milMonths2014[8]%>;
-            chartdata[9].proposals = <%=@milMonths2014[9]%>;
-            chartdata[10].proposals = <%=@milMonths2014[10]%>;
-            chartdata[11].proposals = <%=@milMonths2014[11]%>;
-          } 
-          else if (yearValue == 2015) {
-            chartdata[0].proposals = <%=@milMonths2015[0]%>;
-            chartdata[1].proposals = <%=@milMonths2015[1]%>;
-            chartdata[2].proposals = <%=@milMonths2015[2]%>;
-            chartdata[3].proposals = <%=@milMonths2015[3]%>;
-            chartdata[4].proposals = <%=@milMonths2015[4]%>;
-            chartdata[5].proposals = <%=@milMonths2015[5]%>;
-            chartdata[6].proposals = <%=@milMonths2015[6]%>;
-            chartdata[7].proposals = <%=@milMonths2015[7]%>;
-            chartdata[8].proposals = <%=@milMonths2015[8]%>;
-            chartdata[9].proposals = <%=@milMonths2015[9]%>;
-            chartdata[10].proposals = <%=@milMonths2015[10]%>;
-            chartdata[11].proposals = <%=@milMonths2015[11]%>;
+          var tempAllYearsMil = <%= @allYearsMil %>;
+          var tempAllMilMonths = <%= @allMilMonths%>;
+          var tempMilMonths = <%= @milMonths %>;
+
+          if (tempAllYearsMil.indexOf(parseInt(yearValue)) > -1) {
+            for (i = 0; i < 12; i++)
+              chartdata[i].proposals = tempAllMilMonths[tempAllYearsMil.indexOf(parseInt(yearValue))][i];
           }
-          else if (yearValue == 2016) {
-            chartdata[0].proposals = <%=@milMonths2016[0]%>;
-            chartdata[1].proposals = <%=@milMonths2016[1]%>;
-            chartdata[2].proposals = <%=@milMonths2016[2]%>;
-            chartdata[3].proposals = <%=@milMonths2016[3]%>;
-            chartdata[4].proposals = <%=@milMonths2016[4]%>;
-            chartdata[5].proposals = <%=@milMonths2016[5]%>;
-            chartdata[6].proposals = <%=@milMonths2016[6]%>;
-            chartdata[7].proposals = <%=@milMonths2016[7]%>;
-            chartdata[8].proposals = <%=@milMonths2016[8]%>;
-            chartdata[9].proposals = <%=@milMonths2016[9]%>;
-            chartdata[10].proposals = <%=@milMonths2016[10]%>;
-            chartdata[11].proposals = <%=@milMonths2016[11]%>;
-          } 
-          else if (yearValue == 2017) {
-            chartdata[0].proposals = <%=@milMonths2017[0]%>;
-            chartdata[1].proposals = <%=@milMonths2017[1]%>;
-            chartdata[2].proposals = <%=@milMonths2017[2]%>;
-            chartdata[3].proposals = <%=@milMonths2017[3]%>;
-            chartdata[4].proposals = <%=@milMonths2017[4]%>;
-            chartdata[5].proposals = <%=@milMonths2017[5]%>;
-            chartdata[6].proposals = <%=@milMonths2017[6]%>;
-            chartdata[7].proposals = <%=@milMonths2017[7]%>;
-            chartdata[8].proposals = <%=@milMonths2017[8]%>;
-            chartdata[9].proposals = <%=@milMonths2017[9]%>;
-            chartdata[10].proposals = <%=@milMonths2017[10]%>;
-            chartdata[11].proposals = <%=@milMonths2017[11]%>;
-          } 
           else {
-            chartdata[0].proposals = <%=@milMonths[0]%>;
-            chartdata[1].proposals = <%=@milMonths[1]%>;
-            chartdata[2].proposals = <%=@milMonths[2]%>;
-            chartdata[3].proposals = <%=@milMonths[3]%>;
-            chartdata[4].proposals = <%=@milMonths[4]%>;
-            chartdata[5].proposals = <%=@milMonths[5]%>; 
-            chartdata[6].proposals = <%=@milMonths[6]%>;
-            chartdata[7].proposals = <%=@milMonths[7]%>;
-            chartdata[8].proposals = <%=@milMonths[8]%>;
-            chartdata[9].proposals = <%=@milMonths[9]%>;
-            chartdata[10].proposals = <%=@milMonths[10]%>;
-            chartdata[11].proposals = <%=@milMonths[11]%>;
+            for (i = 0; i < 12; i++)
+              chartdata[i].proposals = tempMilMonths[i];
           }
         }
-      
+        
         var chart = AmCharts.makeChart( "chartdiv", {
         "type": "serial",
         "theme": "light",
@@ -479,7 +396,7 @@
           "enabled": true
         }
         });
-      });
+      }
     </script>
   </body>
 </html>

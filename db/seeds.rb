@@ -11,3 +11,4 @@ History.delete_all
 UserOppty.delete_all
 UserHistory.delete_all
 Notification.delete_all
+NotificationHistory.delete_all

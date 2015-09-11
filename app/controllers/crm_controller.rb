@@ -96,7 +96,7 @@ class CrmController < ApplicationController
       managers=User.where(role:MANAGER_ROLE)
       managers.each do|m|
         puts m.name
-        notification=m.add_notification_history(history.id, MOVEDTOHISTORY,history.opptyName+" RFP date has changed", UNSEEN_NOTIFICATION );
+        notification=m.add_notification_history(history.id, MOVEDTOHISTORY,history.opptyName+" has moved to history", UNSEEN_NOTIFICATION );
         if notification.save
           puts "Manager notification saved"
         end
