@@ -9,7 +9,7 @@ class CrmController < ApplicationController
     FileUtils.mkdir_p('public/uploads/data') unless File.directory?('public/uploads/data')
     @uploaded=false
   end
-  
+
 #test
 # after submit is pushed
   def updateCRM

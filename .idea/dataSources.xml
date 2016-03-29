@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="3663696271">
+  <component name="DataSourceManagerImpl" format="xml" hash="1850723637">
     <data-source source="LOCAL" name="Rails crm_manager: development" uuid="97508fce-64b3-4d5c-9773-9a39e27f5374">
       <driver-ref>sqlite.xerial</driver-ref>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
