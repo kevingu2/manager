@@ -41,7 +41,7 @@ gem 'coffee-script-source', '1.8.0'
 
 gem 'will_paginate'
 
-gem 'therubyracer', :platforms => :ruby
+#gem 'therubyracer', :platforms => :ruby
 
 gem 'sidekiq', '3.2.5'
 
@@ -50,3 +50,15 @@ gem 'jquery-ui-rails'
 gem 'bootstrap-sass', '~> 3.2.0'
 
 gem 'autoprefixer-rails'
+
+gem 'figaro'
+
+gem 'puma'
+
+group :development do
+  gem 'capistrano'
+  gem 'capistrano3-puma'
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rvm'
+end
