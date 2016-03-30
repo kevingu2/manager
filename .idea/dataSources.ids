@@ -299,4 +299,10 @@
       <index name="index_users_on_reset_password_token" unique="true" columns="reset_password_token"/>
     </table>
   </data-source>
+  <data-source source="LOCAL" name="Rails crm_manager: production" uuid="dd81e357-e38a-4747-9b10-8f1bb6645d02">
+    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
+  </data-source>
+  <data-source source="LOCAL" name="Rails crm_manager: cucumber" uuid="6c230b0e-cafa-4ebb-8b3b-a321950220d6">
+    <database-info product="" version="" jdbc-version="" driver-name="" driver-version=""/>
+  </data-source>
 </component>

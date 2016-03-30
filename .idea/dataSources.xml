@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="1850723637">
+  <component name="DataSourceManagerImpl" format="xml" hash="2190171686">
     <data-source source="LOCAL" name="Rails crm_manager: development" uuid="97508fce-64b3-4d5c-9773-9a39e27f5374">
       <driver-ref>sqlite.xerial</driver-ref>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
@@ -11,6 +11,18 @@
       <driver-ref>sqlite.xerial</driver-ref>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db/test.sqlite3</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails crm_manager: production" uuid="dd81e357-e38a-4747-9b10-8f1bb6645d02">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:project_production</jdbc-url>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails crm_manager: cucumber" uuid="6c230b0e-cafa-4ebb-8b3b-a321950220d6">
+      <driver-ref>postgresql</driver-ref>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql:project_test</jdbc-url>
       <libraries />
     </data-source>
   </component>
