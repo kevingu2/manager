@@ -20,7 +20,7 @@
         <% if notice %>
               <p id="notice"><%= notice %></p>
           <% end %>
-          <img class="form-signin-logo" src="/assets/saic-logo-social-small.png"
+          <img class="form-signin-logo" src=<%= asset_path 'saic-logo-social-small.png' %>
                height="139" width="300" style="margin-bottom: 10px;">
         <%= form_for @user do |f| %>
           <% if @user.errors.any? %>

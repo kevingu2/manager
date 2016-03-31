@@ -25,7 +25,7 @@
 					    	<p class="name"><%=w.name+" ("+w.role+")"%></p>
 						</div>
 						<div class="col-md-6 row-item">
-                          <img class="plus" onclick="assign(<%= @oppty.id%>, <%= w.id%>)" src="/assets/plus_btn.png" alt="+" border="0"/>
+                          <img class="plus" onclick="assign(<%= @oppty.id%>, <%= w.id%>)" src=<%= asset_path 'plus_btn.png' %> alt="+" border="0"/>
 						</div>
 					</div>
 				<%end%>
@@ -53,7 +53,7 @@
 				    		<p class="name"><%=w.user.name+" ("+w.user.role+")"%></p>
 						</div>
 						<div class="col-md-6 row-item">
-                          <img class="redx" onclick="unassign(<%= @oppty.id%>, <%= w.user.id%>)" src="/assets/redx.png" alt="+" border="0"/>
+                          <img class="redx" onclick="unassign(<%= @oppty.id%>, <%= w.user.id%>)" src= <%= asset_path 'redx.png' %> alt="+" border="0"/>
 						</div>
 					</div>
 				<%end%>

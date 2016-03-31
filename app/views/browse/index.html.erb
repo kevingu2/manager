@@ -9,7 +9,7 @@
               <td class="col-md-10" style="padding-top: 15px !important;">
                 <%= text_field_tag :search, params[:search], style: "width:94%;",placeholder: "Search Within Opportunity Name, ID, Code Name, or Customer Group" %>
                 <a href="#" name="search-button" style="width:5.5% !important; height: 100% !important;" >
-                  <img src="/assets/search.png" alt="Click to Search" 
+                  <img src= <%= asset_path 'search.png' %> alt="Click to Search"
                   style="width:42px !important; height:40px !important; padding: 0px !important; margin-bottom: 9px !important; background-color: #005DA0; border-radius: 0px !important; position: absolute !important; left: 86.6% !important; border: 1px black solid !important;" class="btn"/>
                 </a>
               <td class="col-md-1"></td>

@@ -22,7 +22,7 @@
     <nav class="navbar navbar-default navbar-static-top" style="max-height: 50px !important;">
       <div class="container-fluid">
         <div id="navbar" class="navbar-collapse collapse">
-          <img class="nav-logo" src="/assets/saic-logo-social-small-grey.png" height="50" width="108">
+          <img class="nav-logo" src= <%= asset_path 'saic-logo-social-small-grey.png' %> height="50" width="108">
           <ul class="nav navbar-nav">
             <%if session[:role]=="Writer" %>
                 <li class="tab nav-tasks"><a href=<%= tasks_index_path%>>Assigned Tasks</a></li>
@@ -41,7 +41,7 @@
             <li onclick="resetNotification('<%= session[:user_id]%>','<%=application_resetNotification_url%>')" class="tab dropdown" style="max-height: 50px !important;">
               <a class="dropdown-toggle nav-notifications" data-toggle="dropdown" style="max-height: 50px !important;
                       padding-top: 10px !important;">
-                <img src="/assets/notif-bell-2.png" name="notificationIcon" height="35" width="35" style="padding-bottom: 4px;"
+                <img src=<%= asset_path 'notif-bell-2.png' %>  height="35" width="35" style="padding-bottom: 4px;"
                 </img>
                 <%if @num_unseen_notification>0%>
                     <div id="circle"><%=@num_unseen_notification %></div>
