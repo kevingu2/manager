@@ -27,8 +27,9 @@ class CrmController < ApplicationController
     Oppty.find_each do |o|
       opptyIds.push(o.opptyId) # get all ids in database
     end
-    `python bin/ripExcel.py "public/uploads/#{newFileName}" "public/uploads/data/"`
-    data = `python bin/excelReader.py "public/uploads/#{newFileName}"` # get parsed excel data
+
+    `python bin/ripExcel.py "#{Rails.root.join('public', 'uploads', newFileName)}" "#{Rails.root.join('public', 'uploads', 'data')}"`
+    data = `python bin/excelReader.py "#{Rails.root.join('public', 'uploads', newFileName)}"` # get parsed excel data
     data = JSON.parse(data)
     uploadedIds = [] # holds uploaded ids
     data_hash={}
@@ -317,8 +318,7 @@ class CrmController < ApplicationController
     File.rename(nonSpaceName, CRM_PATH + "/" + @newFileName)
     puts "*"*30, @newFileName, "*"*30
 
-
-    data = `python bin/excelReader.py "public/uploads/#{@newFileName}"`
+    data = `python bin/excelReader.py "#{Rails.root.join('public', 'uploads', @newFileName)}"`
     data = JSON.parse(data)
     @changes = [] # holds list of hashes that contain what is changed
     @changedRFP=[] # holds the list oppty_id of oppties that have their rfp changed
