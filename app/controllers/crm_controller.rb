@@ -28,8 +28,8 @@ class CrmController < ApplicationController
       opptyIds.push(o.opptyId) # get all ids in database
     end
 
-    `python bin/ripExcel.py "#{Rails.root.join('uploads', newFileName)}" "#{Rails.root.join('uploads', 'data')}"`
-    data = `python bin/excelReader.py "#{Rails.root.join('uploads', newFileName)}"` # get parsed excel data
+    `python bin/ripExcel.py "#{Rails.root.join('public', 'uploads', newFileName)}" "#{Rails.root.join('public', 'uploads', 'data')}"`
+    data = `python bin/excelReader.py "#{Rails.root.join('public', 'uploads', newFileName)}"` # get parsed excel data
     data = JSON.parse(data)
     uploadedIds = [] # holds uploaded ids
     data_hash={}
@@ -275,8 +275,6 @@ class CrmController < ApplicationController
 
   #uploading an excel file from user's computer
   def calculateChanges
-
-
     uploaded_io = params[:upl]
     if !uploaded_io.present?
       redirect_to crm_index_path, notice: "Please upload a file"
@@ -299,14 +297,17 @@ class CrmController < ApplicationController
     end
 
     @newFileName = "new_"+uploaded_io.original_filename.to_s
-    puts "newFileName: " + @newFileName
     # hacks to clear uploads folder
     # move files we care about up one directory
-    `mv public/uploads/"#{@newFileName}" public/`
-    `mv public/uploads/#{@oldFileName} public/`
-    `rm public/uploads/*` # delete everything in uploads
-    `mv public/"#{@newFileName}" public/uploads/"#{@newFileName}"` # move files back from upper directory
-    `mv public/#{@oldFileName} public/uploads/#{@oldFileName}`
+    `mv "#{Rails.root.join('public', 'uploads', @newFileName)}" "#{Rails.root.join('public')}"`
+    if @oldFileName !=nil
+      `mv "#{Rails.root.join('public', 'uploads', @oldFileName)}" "#{Rails.root.join('public')}"`
+    end
+    `rm "#{Rails.root.join('public', 'uploads', '*')}"` # delete everything in uploads
+    `mv "#{Rails.root.join('public', @newFileName)}" "#{Rails.root.join('public', 'uploads', @newFileName)}"` # move files back from upper directory
+    if @oldFileName !=nil
+      `mv "#{Rails.root.join('public', @oldFileName)}" "#{Rails.root.join('public', 'uploads', @oldFileName)}"`
+    end
     @oldOrNew = "old"
     if Dir[CRM_PATH+ '/*.xlsm'].length > 1 # if there is more than one file, check if older/newer
       @oldOrNew =  `python bin/dateExtract.py "public/uploads/#{@newFileName}" "public/uploads/#{@oldFileName}"`
