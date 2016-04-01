@@ -27,7 +27,7 @@ function assign(oppty_id, user_id){
     var name = document.getElementById(user_id).cloneNode(true);
     document.getElementById(user_id).remove();
     var buttonElem=name.getElementsByTagName("img")[0];
-    buttonElem.src='/assets/redx.png';
+    buttonElem.src= "<%= asset_path 'redx.png' %>";
     buttonElem.class='redx';
     buttonElem.onclick=function (){unassign(oppty_id, user_id)};
     var assigned=document.getElementById('outer-assigned-row');
@@ -51,7 +51,7 @@ function unassign(oppty_id, user_id){
     document.getElementById(user_id).remove();
     var buttonElem=name.getElementsByTagName("img")[0];
     buttonElem.class='plus';
-    buttonElem.src='/assets/plus_btn.png';
+    buttonElem.src="<%= asset_path 'plus_btn.png' %>";
     buttonElem.onclick=function(){assign(oppty_id, user_id)};
     var unassigned=document.getElementById('outer-not-assigned-row');
     unassigned.appendChild(name);
@@ -92,7 +92,7 @@ function search_not_assigned(oppty_id){
                 })();
                 console.log("onclick");
                 console.log(img.onclick);
-                img.src='/assets/plus_btn.png';
+                img.src= "<%= asset_path 'plus_btn.png' %>"
                 img.alt='+';
                 img.border='0';
                 button_div.appendChild(img);
@@ -139,7 +139,7 @@ function search_assigned(oppty_id){
                         unassign(oppty_id,current_id);
                     }
                 })();
-                img.src='/assets/redx.png';
+                img.src= "<%= asset_path 'redx.png' %>";
                 img.alt='+';
                 img.border='0';
                 button_div.appendChild(img);
