@@ -28,8 +28,8 @@ class CrmController < ApplicationController
       opptyIds.push(o.opptyId) # get all ids in database
     end
 
-    `python bin/ripExcel.py "#{Rails.root.join('uploads', newFileName)}" "#{Rails.root.join('public', 'uploads', 'data')}"`
-    data = `python bin/excelReader.py "#{Rails.root.join('public', 'uploads', newFileName)}"` # get parsed excel data
+    `python bin/ripExcel.py "#{Rails.root.join('uploads', newFileName)}" "#{Rails.root.join('uploads', 'data')}"`
+    data = `python bin/excelReader.py "#{Rails.root.join('uploads', newFileName)}"` # get parsed excel data
     data = JSON.parse(data)
     uploadedIds = [] # holds uploaded ids
     data_hash={}
