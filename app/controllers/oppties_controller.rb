@@ -35,8 +35,7 @@ class OpptiesController < ApplicationController
         arg = arg[0..-3]
         arg <<"]"
       end
-
-      puts `python bin/xmlEditor.py "#{Rails.root.join('public', 'uploads', 'data', 'xl', 'sharedStrings.xml')}" "#{Rails.root.join('public', 'uploads', 'data', 'xl', 'worksheets', 'sheet2.xml')}" "#{arg}"`
+      puts `python "#{Rails.root.join('lib', 'tasks', 'xmlEditor.py')}" "#{Rails.root.join('public', 'uploads', 'data', 'xl', 'sharedStrings.xml')}" "#{Rails.root.join('public', 'uploads', 'data', 'xl', 'worksheets', 'sheet2.xml')}" "#{arg}"`
       if @oppty.update(oppty_params)
         format.html { redirect_to @oppty, notice: 'Oppty was successfully updated.' }
         format.json { render :show, status: :ok, location: @oppty }

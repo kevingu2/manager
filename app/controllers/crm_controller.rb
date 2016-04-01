@@ -28,8 +28,8 @@ class CrmController < ApplicationController
       opptyIds.push(o.opptyId) # get all ids in database
     end
 
-    `python bin/ripExcel.py "#{Rails.root.join('public', 'uploads', newFileName)}" "#{Rails.root.join('public', 'uploads', 'data')}"`
-    data = `python bin/excelReader.py "#{Rails.root.join('public', 'uploads', newFileName)}"` # get parsed excel data
+    `python "#{Rails.root.join('lib', 'tasks', 'ripExcel.py')}" "#{Rails.root.join('public', 'uploads', newFileName)}" "#{Rails.root.join('public', 'uploads', 'data')}"`
+    data = `python "#{Rails.root.join('lib', 'tasks', 'excelReader.py')} " "#{Rails.root.join('public', 'uploads', newFileName)}"` # get parsed excel data
     data = JSON.parse(data)
     uploadedIds = [] # holds uploaded ids
     data_hash={}
@@ -310,7 +310,7 @@ class CrmController < ApplicationController
     end
     @oldOrNew = "old"
     if Dir[CRM_PATH+ '/*.xlsm'].length > 1 # if there is more than one file, check if older/newer
-      @oldOrNew =  `python bin/dateExtract.py "public/uploads/#{@newFileName}" "public/uploads/#{@oldFileName}"`
+      @oldOrNew =  `python "#{Rails.root.join('lib', 'tasks', 'dateExtract.py')}" "public/uploads/#{@newFileName}" "public/uploads/#{@oldFileName}"`
     else
       @oldOrNew = "new" # else just say it's new
     end
@@ -318,8 +318,7 @@ class CrmController < ApplicationController
     @newFileName = @newFileName.gsub(" ", "%20")
     File.rename(nonSpaceName, CRM_PATH + "/" + @newFileName)
     puts "*"*30, @newFileName, "*"*30
-
-    data = `python bin/excelReader.py "#{Rails.root.join('public', 'uploads', @newFileName)}"`
+    data = `python "#{Rails.root.join('lib', 'tasks', 'excelReader.py')}" "#{Rails.root.join('public', 'uploads', @newFileName)}"`
     data = JSON.parse(data)
     @changes = [] # holds list of hashes that contain what is changed
     @changedRFP=[] # holds the list oppty_id of oppties that have their rfp changed
@@ -609,7 +608,7 @@ class CrmController < ApplicationController
     #pulls and downloads the first .xlsm file from the /uploads folder
     download_path=getUploadedFileName
     if download_path!=""
-      puts `python bin/recreateExcel.py "#{download_path}" "public/uploads/data/xl/sharedStrings.xml" "public/uploads/data/xl/worksheets/sheet2.xml"`
+      puts `python "#{Rails.root.join('lib', 'tasks', 'recreateExcel.py')}" "#{download_path}" "public/uploads/data/xl/sharedStrings.xml" "public/uploads/data/xl/worksheets/sheet2.xml"`
       name = download_path.gsub("new_", "")
       File.rename download_path, name
       file = File.open(name, "rb")
