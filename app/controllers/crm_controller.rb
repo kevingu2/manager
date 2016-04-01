@@ -29,7 +29,7 @@ class CrmController < ApplicationController
     end
 
     `python "#{Rails.root.join('lib', 'tasks', 'ripExcel.py')}" "#{Rails.root.join('public', 'uploads', newFileName)}" "#{Rails.root.join('public', 'uploads', 'data')}"`
-    data = `python "#{Rails.root.join('lib', 'tasks', 'excelReader.py')} " "#{Rails.root.join('public', 'uploads', newFileName)}"` # get parsed excel data
+    data = `python "#{Rails.root.join('lib', 'tasks', 'excelReader.py')}" "#{Rails.root.join('public', 'uploads', newFileName)}"` # get parsed excel data
     data = JSON.parse(data)
     uploadedIds = [] # holds uploaded ids
     data_hash={}
