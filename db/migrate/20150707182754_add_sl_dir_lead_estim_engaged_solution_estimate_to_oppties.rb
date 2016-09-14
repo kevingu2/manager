@@ -1,9 +1,9 @@
 class AddSlDirLeadEstimEngagedSolutionEstimateToOppties < ActiveRecord::Migration
   def change
-    add_column :oppties, :slDir, :String
-    add_column :oppties, :leadEstim, :String
-    add_column :oppties, :engaged, :String
-    add_column :oppties, :solution, :String
-    add_column :oppties, :estimate, :String
+    add_column :oppties, :slDir, :string
+    add_column :oppties, :leadEstim, :string
+    add_column :oppties, :engaged, :string
+    add_column :oppties, :solution, :string
+    add_column :oppties, :estimate, :string
   end
 end

@@ -32,16 +32,16 @@ class AssignController < ApplicationController
 
   def getAssigned(role, keyword,opptyId)
     if keyword.present?
-      return UserOppty.where(oppty_id: opptyId).joins('join (select * from users where role="'+role+'" and name LIKE"'+"%#{keyword}%"+'")u
+      return UserOppty.where(oppty_id: opptyId).joins('join (select * from users where role=\''+role+'\' and name LIKE"'+"%#{keyword}%"+'")u
                                       on user_oppties.user_id=u.id').includes(:user)
     else
-      return UserOppty.where(oppty_id: opptyId).joins('join (select * from users where role="'+role+'")u
+      return UserOppty.where(oppty_id: opptyId).joins('join (select * from users where role=\''+role+'\')u
                                       on user_oppties.user_id=u.id').includes(:user)
     end
   end
   def getUnassigned(role, keyword, opptyId)
     if keyword.present?
-      return User.where("role == ? and name LIKE ?", role, "%#{keyword}%").where('Not Exists(select * from user_oppties
+      return User.where("role == ? and name LIKE ?", '\''+role+'\'', "%#{keyword}%").where('Not Exists(select * from user_oppties
                                          where oppty_id=? and users.id=user_id)', opptyId)
     else
        return User.where(role: "Writer").where('Not Exists(select * from user_oppties

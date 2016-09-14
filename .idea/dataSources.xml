@@ -4,7 +4,7 @@
     <data-source source="LOCAL" name="Rails crm_manager: development" uuid="97508fce-64b3-4d5c-9773-9a39e27f5374">
       <driver-ref>sqlite.xerial</driver-ref>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db/development.sqlite3</jdbc-url>
+      <jdbc-url>jdbc:postgresql:my_app_development</jdbc-url>
       <libraries />
     </data-source>
     <data-source source="LOCAL" name="Rails crm_manager: test" uuid="655e4d96-9623-4499-a8c2-56cad47b068f">

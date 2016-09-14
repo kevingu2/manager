@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150909153814) do
+ActiveRecord::Schema.define(version: 20150909153645) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "histories", force: true do |t|
     t.string   "opptyId"
@@ -265,8 +268,8 @@ ActiveRecord::Schema.define(version: 20150909153814) do
     t.datetime "updated_at"
   end
 
-  add_index "user_histories", ["history_id"], name: "index_user_histories_on_history_id"
-  add_index "user_histories", ["user_id"], name: "index_user_histories_on_user_id"
+  add_index "user_histories", ["history_id"], name: "index_user_histories_on_history_id", using: :btree
+  add_index "user_histories", ["user_id"], name: "index_user_histories_on_user_id", using: :btree
 
   create_table "user_oppties", force: true do |t|
     t.integer  "oppty_id"
@@ -276,8 +279,8 @@ ActiveRecord::Schema.define(version: 20150909153814) do
     t.integer  "status"
   end
 
-  add_index "user_oppties", ["oppty_id"], name: "index_user_oppties_on_oppty_id"
-  add_index "user_oppties", ["user_id"], name: "index_user_oppties_on_user_id"
+  add_index "user_oppties", ["oppty_id"], name: "index_user_oppties_on_oppty_id", using: :btree
+  add_index "user_oppties", ["user_id"], name: "index_user_oppties_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name"

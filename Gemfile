@@ -2,8 +2,8 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.4'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.3.10'
+# Use postgres as the database for Active Record
+gem 'pg', '0.18.4'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 # Use Uglifier as compressor for JavaScript assets
@@ -54,6 +54,10 @@ gem 'autoprefixer-rails'
 gem 'figaro'
 
 gem 'puma'
+
+gem 'rails_12factor', group: :production
+
+ruby "2.3.1"
 
 group :development do
   gem 'capistrano'

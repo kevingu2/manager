@@ -2,13 +2,13 @@ class AllocatedTasksController < ApplicationController
 	skip_before_action :verify_authenticity_token
 
   def index
-    assigned_writer=UserOppty.where(status: 3).joins('join (select * from users where role="Writer")u
+    assigned_writer=UserOppty.where(status: 3).joins('join (select * from users where role=\'Writer\')u
                                       on user_oppties.user_id=u.id').includes(:user, :oppty)
-    todo_writer=UserOppty.where(status: 2).joins('join (select * from users where role="Writer")u
+    todo_writer=UserOppty.where(status: 2).joins('join (select * from users where role=\'Writer\')u
                                       on user_oppties.user_id=u.id').includes(:user, :oppty)
-    doing_writer=UserOppty.where(status: 1).joins('join (select * from users where role="Writer")u
+    doing_writer=UserOppty.where(status: 1).joins('join (select * from users where role=\'Writer\')u
                                       on user_oppties.user_id=u.id').includes(:user, :oppty)
-    done_writer=UserOppty.where(status: 0).joins('join (select * from users where role="Writer")u
+    done_writer=UserOppty.where(status: 0).joins('join (select * from users where role=\'Writer\')u
                                       on user_oppties.user_id=u.id').includes(:user, :oppty)
     
 

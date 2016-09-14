@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     if @user.save
       redirect_to sessions_new_path
     else
-      redirect_to users_new_path, notice: "Invalid username or password. Try again."
+      redirect_to users_new_path, notice: "Error with Server."
     end
   end
 

@@ -16,7 +16,7 @@ class BrowseController < ApplicationController
     end
     @allSlDir.sort_by!{ |e| e.downcase }
     @oppties=searchOppty(params[:search], params[:within], params[:invalid], params[:sort], params[:filter]).page(params[:page]).per_page(15)
-
+    print @oppties
     respond_to do |format|
       format.html { render :index}
       format.json { render json: @oppties}
@@ -119,7 +119,7 @@ class BrowseController < ApplicationController
                                "NWI", 0.0, "",
                                "SSS", 0.0, "").order(opptyField)
       else
-        oppties = Oppty.where("(opptyName like ? or opptyId like ? or codeName like ? or cgOrg like ?) and proposalDueDate >= ? and proposalDueDate <= ?", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", beginDate, endDate.to_s).order(opptyField)
+        oppties = Oppty.where("(\"opptyName\" like ? or \"opptyId\" like ? or \"codeName\" like ? or \"cgOrg\" like ?) and \"proposalDueDate\" >= ? and \"proposalDueDate\" <= ?", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", "%#{keyword}%", beginDate, endDate.to_s).order(opptyField)
       end
       return oppties
     end
